@@ -84,6 +84,12 @@ app.all('/',(req,res)=>{
 			pair_key varchar(50),
 			pair_value text
 		);
+		create table if not exists blog_posts(
+			id int primary key auto_increment,
+			name varchar(200),
+			text text,
+			last_modification_time varchar(100)
+		);
 	`)
 	//paired_data is where we store key values
 
@@ -399,15 +405,72 @@ app.all('/',(req,res)=>{
 				rm.send()
 			})
 		case "new_blog_post":
-
+			connection.query(`insert into blogs (name,text,last_modification_time) 
+			values ("${params.name}","${params.text}","${params.last_modification_time}")`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				rm.set_result(true)
+				rm.send()
+			})
 		case "modify_blog_post":
-			break;
+			connection.query(`select * from blogs where id=${params.blog_post_id}`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				var old_data = results[0]
+				var new_data = {
+					name : "name" in params ? params['name'] : old_data['name'],
+					text : "text" in params ? params['text'] : old_data['text'],
+					last_modification_time : "last_modification_time" in params ? params['last_modification_time'] : old_data['last_modification_time'],
+				}
+				connection.query(`
+				insert into blog_posts
+				(name,text,last_modification_time)
+				values 
+				("${new_data['name']}","${new_data['text']}","${new_data['last_modification_time']}")
+				`,(error,results)=>{
+					if(error){
+						rm.add_error(error)
+						rm.send()
+					}
+					rm.set_result(true)
+					rm.send()
+				})
+			})
 		case "get_blog_posts_ids":
-			break;
+			connection.query(`select * from blog_posts`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				var ids = []
+				results.forEach(result=>{
+					ids.push(result.id)
+				})
+				rm.set_result(ids)
+				rm.send()
+			})
 		case "get_blog_posts":
-			break;
+			connection.query(`select * from blog_posts`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				rm.set_result(results)
+				rm.send()
+			})
 		case "get_blog_post":
-			break;
+			connection.query(`select * from blog_posts where id=${params.id}`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				rm.set_result(results)
+				rm.send()
+			})
 		case "share_blog_post":
 			break;
 
