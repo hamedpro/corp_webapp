@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "install_common_codes": "git clone https://github.com/hamedpro/common-codes && rm -rf ./common-codes/.git/",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
@@ -10,9 +11,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "multiparty": "^4.2.3",
     "mysql": "^2.18.1",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
