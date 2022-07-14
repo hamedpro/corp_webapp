@@ -2,3 +2,7 @@ think about a backup system
 a part to collect user suggestions and ...
 add a blog part
 Link to social media 
+publish a package which give us what params every api task need and which column does a table have
+make sure where lines must happen each after another it happens properly
+write something to measure how much time is required for every api task 
+work on react native also

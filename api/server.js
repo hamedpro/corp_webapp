@@ -3,6 +3,7 @@ var cors = require('cors')
 var response_manager = require('../common-codes/custom_api_system/dev/express_response_manager')
 var mysql = require('mysql')
 var multiparty = require('multiparty');
+var nodemailer = require('nodemailer');
 var app = express()
 app.use(cors())
 
@@ -60,10 +61,32 @@ app.all('/',(req,res)=>{
 			id int primary key auto_increment,
 			username varchar(50),
 			text text,
-			is_proceed varchar(20),
+			is_proceed varchar(20) default "false",
 			proceeded_by varchar(50)
 		);
+		create table if not exists subscribed_emails(
+			id int primary key auto_increment,
+			username varchar(50),
+			email varchar(50)
+		);
+		create table if not exists subscribed_phone_numbers(
+			id int primary key auto_increment,
+			username varchar(50),
+			phone_number int(15)
+		);
+		create table if not exists support_tickets_comments(
+			id int primary key auto_increment,
+			support_ticket_id int(10),
+			text text
+		);
+		create table if not exists paired_data(
+			id int primary key auto_increment,
+			pair_key varchar(50),
+			pair_value text
+		);
 	`)
+	//paired_data is where we store key values
+
 	//product_specs inside products table should contain ->
 	// -> a json stringified array of key values -- also for ex pros and cons fields
 	//todo take care about length of texts and max length of cells
@@ -205,37 +228,178 @@ app.all('/',(req,res)=>{
 			break;
 		case "change_product_user_review":
 			break;
-		case "sub_to_sms":
-			
-			break;
+		case "sub_to_sms": 
+			connection.query(`
+				If Not Exists(select * from subscribed_emails where username="${params.username}")
+				Begin
+				insert into subscribed_emails (username,email) values ('${params.username}','${params.email}')
+				End
+			`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}else{
+					rm.set_result(true)
+					rm.send()
+				}
+			})
 		case "sub_to_email":
-			break;
+			connection.query(`
+				If Not Exists(select * from subscribed_phone_numbers where username="${params.username}")
+				Begin
+				insert into subscribed_phone_numbers (username,phone_number) values ('${params.username}',${params.phone_number})
+				End
+			`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}else{
+					rm.set_result(true)
+					rm.send()
+				}
+			})
 		case "send_sms":
-			break;
+			// params : text , phone_numbers_array
+			var http = require('http');
+
+			var options = {
+			host: 'localhost',
+			port:4000,
+			path : "/",
+			method:"GET"
+			};
+
+			http.request(options, response=>{
+				var str = '';
+
+				response.on('data', function (chunk) {
+					str += chunk;
+				});
+
+				response.on('end',function(){
+					console.log(str);
+				});
+			}).end();
 		case "send_email":
-			break;
-		case "send_sms_to_all":
-			break;
-		case "send_email_to_all":
-			break;
+			// params : email_addresses , text
+			var transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: 'youremail@gmail.com',
+				pass: 'yourpassword'
+			}
+			});
+
+			var mailOptions = {
+			from: 'youremail@gmail.com',
+			to: 'myfriend@yahoo.com',
+			subject: 'Sending Email using Node.js',
+			text: 'That was easy!'
+			};
+
+			transporter.sendMail(mailOptions, function(error, info){
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}else{
+					rm.set_result(info.response)
+					rm.send()
+				}
+			});
+		
 		case "new_support_ticket":
-			break;
+			connection.query(`
+				insert into support_tickets (username,text)
+				values ('${params.username}','${params.text}')
+			`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}else{
+					rm.set_result(true)
+					rm.send()
+				}
+			})
 		case "delete_support_ticket":
-			break;
+			connection.query(`delete from support_tickets where id = ${params.id}`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}else{
+					rm.set_result(true)
+					rm.send()
+				}
+			})
 		case "toggle_support_ticket":
+			connection.query(`select is_proceed from support_tickets where id=${params.id}`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				var new_string = results[0].is_proceed == "true" ? "false" : "true"
+				connection.query(`update support_tickets set is_proceed = "${new_string}"`,(error,results)=>{
+					if(error){
+						rm.add_error(error)
+						rm.send()
+					}
+					rm.set_result(true)
+					rm.send()
+				})
+			})
 			break;
 		case "comment_support_ticket":
-			break;
+			connection.query(`insert into support_tickets_comments (support_ticket_id,text) values (${params.support_ticket_id},'${params.text}')`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				rm.set_result(true)
+				rm.send()
+			})
 		case "update_support_ticket_comment":
-			break;
+			connection.query(`update support_tickets_comments set text = '${params.new_text}'`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					em.send()
+				}
+				rm.set_result(true)
+				rm.send()
+			})
 		case "delete_support_ticket_comment":
-			break;
-		case "get_support_tickets":
+			connection.query(`delete from support_tickets_comments where id=${params.id}`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				rm.set_result(true)
+				rm.send()
+			})
+		case "get_support_tickets_ids":
+			connection.query(`select * from support_tickets`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				var ids = []
+				results.forEach(result=>{
+					ids.push(result.id)
+				})
+				rm.set_result(ids)
+				rm.send()
+			})
+			
 			break;
 		case "set_company_data":
-			break;
+			connection.query(`insert into paired_data (pair_key,pair_value) values ("company_data","${params.company_data}")`,(error,results)=>{
+				if(error){
+					rm.add_error(error)
+					rm.send()
+				}
+				rm.set_result(true)
+				rm.send()
+			})
 		case "new_blog_post":
-			break;
+
 		case "modify_blog_post":
 			break;
 		case "get_blog_posts_ids":
