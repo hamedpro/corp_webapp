@@ -6,3 +6,4 @@ publish a package which give us what params every api task need and which column
 make sure where lines must happen each after another it happens properly
 write something to measure how much time is required for every api task 
 work on react native also
+configure webserver to add ability of accessing paths from outside the react router dom
