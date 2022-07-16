@@ -1,12 +1,13 @@
 {
-  "name": "vite-project",
+  "name": "corp_webapp",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start" : "nodemon ./api/server.js & vite",
-    "start_api" : "nodemon ./api/server.js",
-    "install_common_codes": "git clone https://github.com/hamedpro/common-codes && rm -rf ./common-codes/.git/",
-    "build": "tsc && vite build"
+    "start" : "vite &nodemon ./api/server.cjs",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -14,15 +15,14 @@
     "multiparty": "^4.2.3",
     "mysql": "^2.18.1",
     "nodemailer": "^6.7.7",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "@vitejs/plugin-react": "^1.3.0",
-    "typescript": "^4.6.3",
-    "vite": "^2.9.9"
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.0.0",
+    "vite": "^3.0.0"
   }
 }
