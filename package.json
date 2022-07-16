@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start" : "vite &nodemon ./api/server.cjs",
-    "dev": "vite",
+    "start": "node ./before_npm_start.cjs && npx tailwindcss -i ./src/input.css -o ./src/output.css --watch & vite & nodemon ./api/server.cjs",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -23,6 +22,7 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",
+    "tailwindcss": "^3.1.6",
     "vite": "^3.0.0"
   }
 }

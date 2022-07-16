@@ -1,5 +1,5 @@
 export default function AdminDashboard(){
   return(
-    <p>admin dashboard is here</p>
+    <p className="bg-blue-200">admin dashboard is here</p>
   )
 }

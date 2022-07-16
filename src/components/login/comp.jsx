@@ -1,5 +1,5 @@
 import { useContext } from "react";
 
 export default function Login() {
-  return <p>login page is here</p>;
+  return <p className="bg-green-300">login page is here</p>;
 }

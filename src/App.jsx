@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import "./output.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ApiTestPage from "./components/api_tests/comp.jsx";
 import AdminDashboard from "./components/admin_dashboard/comp.jsx";
