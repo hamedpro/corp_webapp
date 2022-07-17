@@ -459,14 +459,29 @@ app.all("/", (req, res) => {
       break;
     case "set_company_data":
       connection.query(
-        `insert into paired_data (pair_key,pair_value) values ("company_data","${params.company_data}")`,
+        `insert into paired_data (pair_key,pair_value) values ("company_data",'${params.company_data}')`,
         (error, results) => {
           if (error) {
             rm.add_error(error);
             rm.send();
+          } else {
+            rm.send();
           }
-          rm.set_result(true);
-          rm.send();
+        }
+      );
+      break;
+    case "get_company_data":
+      connection.query(
+        `select * from paired_data where pair_key = "company_data"`,
+        (error, result) => {
+          if (error) {
+            rm.add_error(error);
+            rm.send();
+          } else {
+            rm.set_result(result);
+            console.log("llll");
+            rm.send();
+          }
         }
       );
     case "new_blog_post":

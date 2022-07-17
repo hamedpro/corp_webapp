@@ -16,7 +16,7 @@ import Root from "./components/root/comp.jsx";
 import SupportTicket from "./components/support_ticket/comp.jsx";
 import SupprotTickets from "./components/support_tickets/comp.jsx";
 import MainFooter from "./components/main_footer/comp.jsx";
-
+import UpdateCompanyData from "./components/admin_dashboard/update_company_data/comp.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -30,10 +30,14 @@ function App() {
           path="/new-support-ticket"
           element={<NewSupportTicket />}
         ></Route>
+        <Route
+          path="/admin-dashboard/update_company_data"
+          element={<UpdateCompanyData />}
+        />
         <Route path="/product" element={<Product />}></Route>
         <Route path="/products" element={<Products />}></Route>
         <Route path="/register" element={<Register />}></Route>
-        <Route path="/Root" element={<Root />}></Route>
+        <Route path="/" element={<Root />}></Route>
         <Route path="/support-ticket" element={<SupportTicket />}></Route>
         <Route path="/support-tickets" element={<SupprotTickets />}></Route>
       </Routes>
