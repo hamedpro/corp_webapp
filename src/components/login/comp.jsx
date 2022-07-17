@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+//import global_context from "../../global_context";
 export default function Login() {
   var navigate = useNavigate();
+  //var context = useContext(global_context);
   function login(username, password) {
     customAjax({
       params: {
@@ -15,6 +17,7 @@ export default function Login() {
       (data) => {
         if (data.result) {
           alert("auth was performed");
+          // context.set_context_data({ username }); // todo take care to not override existing data in context data state in app.jsx
           navigate("/");
         } else {
           alert("username or password was incorrect please try again");
