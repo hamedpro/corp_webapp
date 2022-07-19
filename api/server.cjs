@@ -67,7 +67,8 @@ app.all("/", (req, res) => {
     create table if not exists support_tickets_comments(
       id int primary key auto_increment,
       support_ticket_id int(10),
-      text text
+      text text,
+      username varchar(200)
     );
     create table if not exists paired_data(
       id int primary key auto_increment,
@@ -400,7 +401,7 @@ app.all("/", (req, res) => {
           }
           var new_string = results[0].is_proceed == "true" ? "false" : "true";
           connection.query(
-            `update support_tickets set is_proceed = "${new_string}"`,
+            `update support_tickets set is_proceed = "${new_string}", proceeded_by = "${params.proceeded_by}"`,
             (error, results) => {
               if (error) {
                 rm.add_error(error);
@@ -415,7 +416,7 @@ app.all("/", (req, res) => {
       break;
     case "comment_support_ticket":
       connection.query(
-        `insert into support_tickets_comments (support_ticket_id,text) values (${params.support_ticket_id},'${params.text}')`,
+        `insert into support_tickets_comments (support_ticket_id,text,username) values (${params.support_ticket_id},'${params.text}','${params.username}')`,
         (error, results) => {
           if (error) {
             rm.add_error(error);
