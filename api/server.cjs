@@ -45,9 +45,11 @@ app.all("/", (req, res) => {
       time varchar(50),
       is_user_a_customer varchar(10)
     );
-    create table if not exists supprot_tickets(
+    create table if not exists support_tickets(
       id int primary key auto_increment,
       username varchar(50),
+      title varchar(200),
+      type varchar(50),
       text text,
       is_proceed varchar(20) default "false",
       proceeded_by varchar(50)
@@ -87,7 +89,7 @@ app.all("/", (req, res) => {
     }
   );
   //paired_data is where we store key values
-
+  //support_tickets.type can have these values : bug,suggestion,other
   //product_specs inside products table should contain ->
   // -> a json stringified array of key values -- also for ex pros and cons fields
   //todo take care about length of texts and max length of cells
@@ -285,6 +287,7 @@ app.all("/", (req, res) => {
           }
         }
       );
+      break;
     case "sub_to_email":
       connection.query(
         `
@@ -303,6 +306,7 @@ app.all("/", (req, res) => {
           }
         }
       );
+      break;
     case "send_sms":
       // params : text , phone_numbers_array
       var http = require("http");
@@ -327,6 +331,7 @@ app.all("/", (req, res) => {
           });
         })
         .end();
+      break;
     case "send_email":
       // params : email_addresses , text
       var transporter = nodemailer.createTransport({
@@ -353,12 +358,12 @@ app.all("/", (req, res) => {
           rm.send();
         }
       });
-
+      break;
     case "new_support_ticket":
       connection.query(
         `
-        insert into support_tickets (username,text)
-        values ('${params.username}','${params.text}')
+        insert into support_tickets (username,text,title,type)
+        values ('${params.username}','${params.text}','${params.title}','${params.type}')
       `,
         (error, results) => {
           if (error) {
@@ -370,6 +375,7 @@ app.all("/", (req, res) => {
           }
         }
       );
+      break;
     case "delete_support_ticket":
       connection.query(
         `delete from support_tickets where id = ${params.id}`,
@@ -383,6 +389,7 @@ app.all("/", (req, res) => {
           }
         }
       );
+      break;
     case "toggle_support_ticket":
       connection.query(
         `select is_proceed from support_tickets where id=${params.id}`,
@@ -418,6 +425,7 @@ app.all("/", (req, res) => {
           rm.send();
         }
       );
+      break;
     case "update_support_ticket_comment":
       connection.query(
         `update support_tickets_comments set text = '${params.new_text}'`,
@@ -430,6 +438,7 @@ app.all("/", (req, res) => {
           rm.send();
         }
       );
+      break;
     case "delete_support_ticket_comment":
       connection.query(
         `delete from support_tickets_comments where id=${params.id}`,
@@ -442,17 +451,28 @@ app.all("/", (req, res) => {
           rm.send();
         }
       );
-    case "get_support_tickets_ids":
+      break;
+    case "get_support_ticket_comments":
+      connection.query(
+        `select * from support_tickets_comments where support_ticket_id = ${params.support_ticket_id}`,
+        (error, result) => {
+          if (error) {
+            rm.add_error(error);
+            rm.send();
+          } else {
+            rm.set_result(result);
+            rm.send();
+          }
+        }
+      );
+      break;
+    case "get_support_tickets":
       connection.query(`select * from support_tickets`, (error, results) => {
         if (error) {
           rm.add_error(error);
           rm.send();
         }
-        var ids = [];
-        results.forEach((result) => {
-          ids.push(result.id);
-        });
-        rm.set_result(ids);
+        rm.set_result(results);
         rm.send();
       });
 
@@ -484,6 +504,7 @@ app.all("/", (req, res) => {
           }
         }
       );
+      break;
     case "new_blog_post":
       connection.query(
         `insert into blogs (name,text,last_modification_time) 
@@ -497,6 +518,7 @@ app.all("/", (req, res) => {
           rm.send();
         }
       );
+      break;
     case "modify_blog_post":
       connection.query(
         `select * from blogs where id=${params.blog_post_id}`,
@@ -532,6 +554,7 @@ app.all("/", (req, res) => {
           );
         }
       );
+      break;
     case "get_blog_posts_ids":
       connection.query(`select * from blog_posts`, (error, results) => {
         if (error) {
@@ -545,6 +568,7 @@ app.all("/", (req, res) => {
         rm.set_result(ids);
         rm.send();
       });
+      break;
     case "get_blog_posts":
       connection.query(`select * from blog_posts`, (error, results) => {
         if (error) {
@@ -554,6 +578,7 @@ app.all("/", (req, res) => {
         rm.set_result(results);
         rm.send();
       });
+      break;
     case "get_blog_post":
       connection.query(
         `select * from blog_posts where id=${params.id}`,
@@ -566,6 +591,7 @@ app.all("/", (req, res) => {
           rm.send();
         }
       );
+      break;
     case "share_blog_post":
       break;
   }

@@ -18,6 +18,7 @@ export default function Login() {
         if (data.result) {
           alert("auth was performed");
           // context.set_context_data({ username }); // todo take care to not override existing data in context data state in app.jsx
+          localStorage.setItem("username", username);
           navigate("/");
         } else {
           alert("username or password was incorrect please try again");
@@ -33,24 +34,33 @@ export default function Login() {
   }
   return (
     <>
-      <h1>login page</h1>
-      <hr />
-      <p>username:</p>
-      <input id="username_input" />
-      <p>password:</p>
-      <input id="password_input" />
+      <div className="w-full border border-blue-200 rounded mx-auto my-2 p-3">
+        <h1 className="text-lg">login page</h1>
+        <hr className="my-2" />
+        <p>username:</p>
+        <input
+          className="px-1 border border-blue-200 rounded"
+          id="username_input"
+        />
+        <p>password:</p>
+        <input
+          className="px-1 border border-blue-200 rounded"
+          id="password_input"
+        />
 
-      <button
-        onClick={() => {
-          login(
-            document.getElementById("username_input").value,
-            document.getElementById("password_input").value
-          );
-        }}
-        id="login_button"
-      >
-        login
-      </button>
+        <button
+          onClick={() => {
+            login(
+              document.getElementById("username_input").value,
+              document.getElementById("password_input").value
+            );
+          }}
+          id="login_button"
+          className="block border border-black mt-2 rounded p-2 py-1"
+        >
+          login
+        </button>
+      </div>
     </>
   );
 }
