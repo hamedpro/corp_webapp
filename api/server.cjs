@@ -274,6 +274,17 @@ app.all("/", (req, res) => {
       break;
     case "change_product_user_review":
       break;
+    case "get_products":
+      connection.query(`select * from products`, (error, result) => {
+        if (error) {
+          rm.add_error(error);
+          rm.send();
+        } else {
+          rm.set_result(result);
+          rm.send();
+        }
+      });
+      break;
     case "sub_to_sms":
       connection.query(
         `

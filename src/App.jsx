@@ -43,7 +43,7 @@ function App() {
             path="/admin-dashboard/update_company_data"
             element={<UpdateCompanyData />}
           />
-          <Route path="/product" element={<Product />}></Route>
+          <Route path="/product/:product_id" element={<Product />}></Route>
           <Route path="/products" element={<Products />}></Route>
           <Route path="/new-product" element={<NewProduct />}></Route>
           <Route path="/register" element={<Register />}></Route>
