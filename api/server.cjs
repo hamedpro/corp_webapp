@@ -139,18 +139,20 @@ app.all("/", (req, res) => {
       break;
     case "toggle_user_admin_state":
       connection.query(
-        `select is_admin from users where username = "${params.username}"`,
+        `select is_admin from users where id = ${Number(params.id)}`,
         (error, results) => {
           var new_is_admin_string =
             results[0].is_admin == "true" ? "false" : "true";
           connection.query(
-            `upadte users set is_admin = "${new_is_admin_string}" where username = "${params.username}"`,
+            `update users set is_admin = "${new_is_admin_string}" where id = ${Number(
+              params.id
+            )}`,
             (error) => {
               if (error) {
                 rm.add_error(error), rm.send();
               } else {
                 rm.set_result(true);
-                em.send();
+                rm.send();
               }
             }
           );
@@ -169,6 +171,24 @@ app.all("/", (req, res) => {
           } else {
             rm.set_result(results[0].password == params.password);
             rm.send();
+          }
+        }
+      );
+      break;
+    case "change_password":
+      connection.query(
+        `select * from users where username = "${params.username}"`,
+        (error, result) => {
+          if (result[0].password == params.old_password) {
+            connection.query(
+              `update users set password = "${params.new_password}" where username= "${params.username}"`,
+              (err) => {
+                rm.set_result(true);
+                rm.send();
+              }
+            );
+          } else {
+            rm.add_error("the_old_pass_was_not_correct");
           }
         }
       );

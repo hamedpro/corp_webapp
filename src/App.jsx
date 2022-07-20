@@ -19,6 +19,7 @@ import MainFooter from "./components/main_footer/comp.jsx";
 import UpdateCompanyData from "./components/admin_dashboard/update_company_data/comp.jsx";
 import context from "./global_context";
 import NewProduct from "./components/new-product/comp";
+import User from "./components/user/comp.jsx";
 function App() {
   const [c, set_c] = useState({
     header: {
@@ -43,7 +44,9 @@ function App() {
             path="/admin-dashboard/update_company_data"
             element={<UpdateCompanyData />}
           />
+
           <Route path="/product/:product_id" element={<Product />}></Route>
+          <Route path="/user/:username" element={<User />}></Route>
           <Route path="/products" element={<Products />}></Route>
           <Route path="/new-product" element={<NewProduct />}></Route>
           <Route path="/register" element={<Register />}></Route>
