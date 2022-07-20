@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import "./output.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -27,6 +27,19 @@ function App() {
       back_button: true,
     },
   });
+  useEffect(() => {
+    var title =
+      window.location.pathname == "/"
+        ? "corp_webapp"
+        : window.location.pathname;
+    var back_button = window.location.pathname != "/";
+    set_c({
+      header: {
+        title,
+        back_button,
+      },
+    });
+  }, [window.location.href]);
   return (
     <context.Provider value={{ c, set_c }}>
       <BrowserRouter>

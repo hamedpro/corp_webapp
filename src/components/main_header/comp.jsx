@@ -18,8 +18,13 @@ export default function MainHeader() {
     <div
       className={`mx-auto w-full border border-blue-200 bg-blue-200 rounded mt-2 flex items-center flex-row p-2`}
     >
-      {context_data.c.header.back_button ? <BackButton /> : null}
-      <span className="px-2">{context_data.c.header.title}</span>
+      <div className="w-1/2">
+        {context_data.c.header.back_button ? <BackButton /> : null}
+        <span className="px-2">{context_data.c.header.title}</span>
+      </div>
+      <div className="w-1/2 flex flex-row justify-end">
+        <div className="w-6 h-6 bg-blue-500 border border-white rounded"></div>
+      </div>
     </div>
   );
 }
