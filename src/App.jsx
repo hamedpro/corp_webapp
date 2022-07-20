@@ -18,6 +18,7 @@ import SupprotTickets from "./components/support_tickets/comp.jsx";
 import MainFooter from "./components/main_footer/comp.jsx";
 import UpdateCompanyData from "./components/admin_dashboard/update_company_data/comp.jsx";
 import context from "./global_context";
+import NewProduct from "./components/new-product/comp";
 function App() {
   const [c, set_c] = useState({
     header: {
@@ -44,6 +45,7 @@ function App() {
           />
           <Route path="/product" element={<Product />}></Route>
           <Route path="/products" element={<Products />}></Route>
+          <Route path="/new-product" element={<NewProduct />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/" element={<Root />}></Route>
           <Route

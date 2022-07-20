@@ -184,7 +184,11 @@ app.all("/", (req, res) => {
       break;
     case "new_product":
       connection.query(
-        `insert into products (name,description,product_specs,price) values ('${params.name}','${params.description}','${params.product_specs}','${params.price}')`,
+        `insert into products (name,description,product_specs,price) values ('${
+          params.name
+        }','${params.description}','${params.product_specs}',${Number(
+          params.price
+        )})`,
         (error) => {
           if (error) {
             rm.add_error(error);
