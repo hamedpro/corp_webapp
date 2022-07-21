@@ -1,8 +1,10 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import context from "../../global_context";
 
 function BackButton() {
   var context_data = useContext(context);
+
   var handler = () => {
     window.history.back();
   };
@@ -14,16 +16,48 @@ function BackButton() {
 }
 export default function MainHeader() {
   var context_data = useContext(context);
+  var nav = useNavigate();
   return (
     <div
       className={`mx-auto w-full border border-blue-200 bg-blue-200 rounded mt-2 flex items-center flex-row p-2`}
     >
-      <div className="w-1/2">
+      <div className="w-3/4 flex flex-row items-center">
         {context_data.c.header.back_button ? <BackButton /> : null}
         <span className="px-2">{context_data.c.header.title}</span>
       </div>
-      <div className="w-1/2 flex flex-row justify-end">
-        <div className="w-6 h-6 bg-blue-500 border border-white rounded"></div>
+      <div className="w-1/4 flex flex-row justify-end">
+        <div
+          onClick={
+            window.localStorage.getItem("username") === null
+              ? () => {
+                  nav("/login");
+                }
+              : () => {
+                  nav("/user/" + window.localStorage.getItem("username"));
+                }
+          }
+          className="cursor-pointer px-1 text-white bg-blue-500 border rounded flex justify-center items-center"
+        >
+          {window.localStorage.getItem("username") === null ? (
+            <b>login</b>
+          ) : (
+            <>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="white"
+                className="bi bi-person-fill mr-2"
+                viewBox="0 0 16 16"
+              >
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              </svg>
+              <b className="cursor-pointer">
+                @{window.localStorage.getItem("username")}
+              </b>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

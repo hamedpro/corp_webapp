@@ -10,3 +10,5 @@ configure webserver to add ability of accessing paths from outside the react rou
 nodemon or node shut down server.cjs when something goes wrong but in a lot of cases error can be ignored 
 
 when testing for req per second i saw that after a few seconds of server working good i face the error header cannot be written after it is send (after around 45-60 reqs)
+
+if its required acording to license terms of packages im using, add their names and ... to a file in root before final publish 

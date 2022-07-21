@@ -10,6 +10,21 @@ export default function Product() {
     price: "loading ...",
     product_specs: "[]",
   });
+  function upload_files() {
+    var files = document.getElementById("files_input").files;
+    var form = new FormData();
+    for (var i = 0; i < files.length; i++) {
+      form.append(i, files[i]);
+    }
+    fetch(
+      "http://localhost:4000?task_name=upload_product_images&product_id=" +
+        product_id,
+      {
+        method: "POST",
+        body: form,
+      }
+    );
+  }
   function fetch_data() {
     customAjax({
       params: {
@@ -56,6 +71,17 @@ export default function Product() {
             })}
           </tbody>
         </table>
+      </div>
+      <div className="mx-auto border border-blue-400 rounded mt-2 p-2">
+        <h1 className="text-lg">product specs:</h1>
+        <hr className="mb-2" />
+        <input type="file" id="files_input" multiple />
+        <button
+          onClick={upload_files}
+          className="border border-blue-400 rounded"
+        >
+          upload files
+        </button>
       </div>
     </>
   );

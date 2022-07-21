@@ -2,8 +2,9 @@ var express = require("express");
 var cors = require("cors");
 var response_manager = require("../common-codes/custom_api_system/dev/express_response_manager.cjs");
 var mysql = require("mysql");
-var multiparty = require("multiparty");
+var formidable = require("formidable");
 var nodemailer = require("nodemailer");
+var fs = require("fs");
 var app = express();
 app.use(cors());
 
@@ -272,6 +273,51 @@ app.all("/", (req, res) => {
           }
         }
       );
+      break;
+    case "upload_product_images":
+      var product_images_dir = "./uploaded/product_images";
+      if (!fs.existsSync(product_images_dir)) {
+        fs.mkdirSync(product_images_dir);
+      }
+
+      form = formidable({ uploadDir: "./uploaded/product_images" });
+      form.parse(req, (err, fields, files) => {
+        /* if (err) {
+          next(err);
+          return;
+        } */
+        Object.keys(files).forEach((file_name) => {
+          var images_count_of_this_product = 0;
+          var dir_files_names = fs.readdirSync("./uploaded/product_images/");
+          dir_files_names.forEach((filenamei) => {
+            if (
+              filenamei
+                .split("/")
+                [filenamei.split("/").length - 1].split("-")[0] ==
+              params.product_id
+            ) {
+              images_count_of_this_product += 1;
+            }
+          });
+          var filepath = files[file_name]["filepath"];
+          var dest = filepath.split("/");
+          dest.pop();
+          var file_extension =
+            files[file_name]["originalFilename"].split(".")[
+              files[file_name]["originalFilename"].split(".").length - 1
+            ];
+          dest.push(
+            `${params.product_id}-${
+              images_count_of_this_product + 1
+            }.${file_extension}`
+          );
+          dest = dest.join("/");
+          console.log(`moving from ${filepath} to ${dest}`);
+          fs.renameSync(filepath, dest);
+        });
+        rm.set_result(true);
+        rm.send();
+      });
       break;
     case "new_product_user_review":
       connection.query(

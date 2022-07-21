@@ -39,7 +39,7 @@ function App() {
         back_button,
       },
     });
-  }, [window.location.href]);
+  }, [location]); //todo : this doesnt update when using nav("x") on home page
   return (
     <context.Provider value={{ c, set_c }}>
       <BrowserRouter>
