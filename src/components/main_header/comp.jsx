@@ -1,10 +1,8 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import context from "../../global_context";
 
 function BackButton() {
-  var context_data = useContext(context);
-
   var handler = () => {
     window.history.back();
   };
@@ -15,15 +13,19 @@ function BackButton() {
   );
 }
 export default function MainHeader() {
-  var context_data = useContext(context);
+  var [back_button, set_back_button] = useState(false);
+  var loc = useLocation();
+  useEffect(() => {
+    set_back_button(window.location.pathname != "/");
+  }, [loc]);
   var nav = useNavigate();
   return (
     <div
       className={`mx-auto w-full border border-blue-200 bg-blue-200 rounded mt-2 flex items-center flex-row p-2`}
     >
       <div className="w-3/4 flex flex-row items-center">
-        {context_data.c.header.back_button ? <BackButton /> : null}
-        <span className="px-2">{context_data.c.header.title}</span>
+        {back_button ? <BackButton /> : null}
+        <span className="px-2">corp_webapp</span>
       </div>
       <div className="w-1/4 flex flex-row justify-end">
         <div

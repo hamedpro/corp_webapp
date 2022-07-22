@@ -7,6 +7,7 @@ var nodemailer = require("nodemailer");
 var fs = require("fs");
 var app = express();
 app.use(cors());
+app.use(express.static("./uploaded/"));
 
 //configuring mysql databases and tables =>
 app.all("/", (req, res) => {
@@ -319,6 +320,19 @@ app.all("/", (req, res) => {
         rm.send();
       });
       break;
+    case "get_product_images_count":
+      //todo take care to re assigning numbers when modifying photos
+      var file_names = fs.readdirSync("./uploaded/product_images");
+      var count = 0;
+      file_names.forEach((file_name) => {
+        if (file_name.split("-")[0] == params.product_id) {
+          count += 1;
+        }
+      });
+      rm.set_result(count);
+      rm.send();
+      break;
+
     case "new_product_user_review":
       connection.query(
         `

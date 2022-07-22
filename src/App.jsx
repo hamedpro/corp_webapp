@@ -20,30 +20,13 @@ import UpdateCompanyData from "./components/admin_dashboard/update_company_data/
 import context from "./global_context";
 import NewProduct from "./components/new-product/comp";
 import User from "./components/user/comp.jsx";
+import NavBar from "./components/nav_bar/comp";
 function App() {
-  const [c, set_c] = useState({
-    header: {
-      title: "corp_webapp",
-      back_button: true,
-    },
-  });
-  useEffect(() => {
-    var title =
-      window.location.pathname == "/"
-        ? "corp_webapp"
-        : window.location.pathname;
-    var back_button = window.location.pathname != "/";
-    set_c({
-      header: {
-        title,
-        back_button,
-      },
-    });
-  }, [location]); //todo : this doesnt update when using nav("x") on home page
   return (
-    <context.Provider value={{ c, set_c }}>
+    <context.Provider value={{}}>
       <BrowserRouter>
         <MainHeader />
+        <NavBar />
         <Routes>
           <Route path="/api_test_page" element={<ApiTestPage />}></Route>
           <Route path="/admin-dashboard" element={<AdminDashboard />}></Route>

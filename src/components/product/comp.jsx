@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+import ConfirmModal from "../ConfirmModal/comp.jsx";
 export default function Product() {
+  const [confirm_modal_visibility, set_confirm_modal_visibility] =
+    useState(false);
   var product_id = useParams().product_id;
   const [product, set_product] = useState({
     id: "loading ...",
@@ -44,6 +47,19 @@ export default function Product() {
   }, []);
   return (
     <>
+      <ConfirmModal
+        visibility={confirm_modal_visibility}
+        title="confirm delete"
+        text="are you sure ..."
+        on_confirm={() => {
+          alert("confirmed");
+          set_confirm_modal_visibility(false);
+        }}
+        on_reject={() => {
+          alert("rejected");
+          set_confirm_modal_visibility(false);
+        }}
+      />
       <div className="mx-auto border border-blue-400 rounded mt-2 p-2">
         <h1>product page</h1>
         <hr />
