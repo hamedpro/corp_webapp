@@ -21,6 +21,10 @@ import context from "./global_context";
 import NewProduct from "./components/new-product/comp";
 import User from "./components/user/comp.jsx";
 import NavBar from "./components/nav_bar/comp";
+import Blog from "./components/blog/comp";
+import Blogs from "./components/blogs/comp";
+import NewBlog from "./components/new_blog/comp";
+
 function App() {
   return (
     <context.Provider value={{}}>
@@ -52,6 +56,9 @@ function App() {
             element={<SupportTicket />}
           ></Route>
           <Route path="/support-tickets" element={<SupprotTickets />}></Route>
+          <Route path="/blog/:blog_id" element={<Blog />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/new-blog" element={<NewBlog />} />
         </Routes>
         <MainFooter />
       </BrowserRouter>

@@ -8,6 +8,7 @@ var fs = require("fs");
 var app = express();
 app.use(cors());
 app.use(express.static("./uploaded/"));
+var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 
 //configuring mysql databases and tables =>
 app.all("/", (req, res) => {
@@ -215,9 +216,22 @@ app.all("/", (req, res) => {
           if (error) {
             rm.add_error(error);
             rm.send();
+          } else {
+            connection.query(`select * from products`, (error, result) => {
+              if (error) {
+                rm.add_error(error);
+                rm.send();
+              } else {
+                if (result[result.length - 1].name == params.name) {
+                  rm.set_result(result[result.length - 1].id);
+                  rm.send();
+                } else {
+                  rm.add_error("error in getting id of inserted row");
+                  rm.send();
+                }
+              }
+            });
           }
-          rm.set_result(true);
-          rm.send();
         }
       );
       break;
@@ -320,6 +334,19 @@ app.all("/", (req, res) => {
         rm.send();
       });
       break;
+    case "new_user_profile_image":
+      var dir = "./uploaded/profile_images";
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+      }
+      custom_upload({
+        req,
+        files_names: [params.username],
+        uploadDir: dir,
+      });
+      rm.set_result(true);
+      rm.send();
+      break;
     case "get_product_images_count":
       //todo take care to re assigning numbers when modifying photos
       var file_names = fs.readdirSync("./uploaded/product_images");
@@ -332,7 +359,6 @@ app.all("/", (req, res) => {
       rm.set_result(count);
       rm.send();
       break;
-
     case "new_product_user_review":
       connection.query(
         `

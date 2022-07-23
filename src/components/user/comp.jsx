@@ -8,6 +8,21 @@ export default function User() {
     username: "loading...",
     is_admin: "loading...",
   });
+  function upload_the_photo() {
+    var form = new FormData();
+    var file = document.getElementById("profile_image_input").files[0];
+    form.append("image", file);
+    fetch(
+      "http://localhost:4000?task_name=new_user_profile_image&username=" +
+        username,
+      {
+        method: "POST",
+        body: form,
+      }
+    )
+      .then((res) => res.text())
+      .then((res) => console.log(res));
+  }
   function change_password() {
     var old_password = prompt("enter your old password:");
     var new_password = prompt("enter your new password: ");
@@ -63,6 +78,10 @@ export default function User() {
         <h1>options</h1>
         <hr />
         <p onClick={change_password}>change my password</p>
+      </div>
+      <div className="mx-auto border border-blue-400 rounded mt-2 p-2">
+        <input id="profile_image_input" type="file" />
+        <button onClick={upload_the_photo}>upload the photo</button>
       </div>
     </>
   );

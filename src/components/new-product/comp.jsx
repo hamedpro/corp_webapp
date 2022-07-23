@@ -34,11 +34,23 @@ export default function NewProduct() {
       },
     }).then(
       (data) => {
-        if (data.result) {
-          alert("done");
-        } else {
-          alert("result field was not true");
+        console.log(data);
+        var form = new FormData();
+        var files = document.getElementById("images_input").files;
+        var files_length = files.length;
+        for (var i = 0; i < files_length; i++) {
+          form.append(i, files[i]);
         }
+        fetch(
+          "http://localhost:4000?task_name=upload_product_images&product_id=" +
+            data.result,
+          {
+            method: "POST",
+            body: form,
+          }
+        )
+          .then((data) => data.text())
+          .then((data) => console.log(data));
       },
       (error) => {
         console.log(error);
@@ -107,7 +119,9 @@ export default function NewProduct() {
       </table>
       <p>price:</p>
       <CustomInput id="price_input" />
-
+      <p>images : </p>
+      <br />
+      <input id="images_input" type="file" multiple />
       <button
         onClick={submit_new_product}
         className="block border border-blue-400 rounded mt-4 hover:text-white hover:bg-blue-600 px-2 py-1"
