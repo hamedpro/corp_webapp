@@ -5,9 +5,12 @@ function custom_upload({
   req,
   files_names, // array with struc like this : ["file1.txt","file2.js"]
   uploadDir = "./",
+  onSuccess = () => {},
+  onReject = () => {},
 }) {
   var form = formidable({ uploadDir });
   form.parse(req, (err, fields, files) => {
+    //todo catch errors
     Object.keys(files).forEach((file, index) => {
       var to;
       if (!uploadDir.endsWith("/")) {
@@ -19,11 +22,14 @@ function custom_upload({
         "." +
         arr_last_item(files[file]["originalFilename"].split("."));
       var from = files[file]["filepath"];
-
-      fs.renameSync(from, to);
-      console.log(`moving from ${from} to ${to}`);
+      try {
+        fs.renameSync(from, to);
+      } catch (e) {
+        onReject();
+      }
     });
   });
+  onSuccess();
 }
 module.exports = {
   custom_upload,

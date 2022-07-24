@@ -87,8 +87,7 @@ app.all("/", (req, res) => {
   `,
     (error) => {
       if (error) {
-        rm.add_error(error);
-        rm.send();
+        rm.send_error(error);
       }
     }
   );
@@ -99,8 +98,7 @@ app.all("/", (req, res) => {
   //todo take care about length of texts and max length of cells
   var params = req.query;
   if (!("task_name" in req.query)) {
-    rm.add_error("there is no task_name field present in your request");
-    rm.send();
+    rm.send_error("there is no task_name field present in your request");
   }
 
   switch (req.query.task_name) {
@@ -109,56 +107,60 @@ app.all("/", (req, res) => {
         `select * from users where username = '${params.username}'`,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
             if (results.length == 0) {
               connection.query(
                 `insert into users (username,password) values ('${params.username}','${params.password}');`,
                 (error) => {
                   if (error) {
-                    rm.add_error(error);
-                    rm.send();
+                    rm.send_error(error);
                   } else {
-                    rm.set_result(true);
-                    rm.send();
+                    rm.send_result(true);
                   }
                 }
               );
             } else {
-              rm.add_error("username is taken by another user");
-              rm.send();
+              rm.send_error("username is taken by another user");
             }
           }
         }
       );
-
       break;
     case "get_users":
       connection.query(`select * from users`, (error, results) => {
-        rm.set_result(results);
-        rm.send();
+        if (error) {
+          rm.send_error(error);
+        } else {
+          rm.send_result(results);
+        }
       });
       break;
     case "toggle_user_admin_state":
+      if (isNaN(Number(params.id))) {
+        rm.send_error('given "id" is not a number');
+      }
       connection.query(
         `select is_admin from users where id = ${Number(params.id)}`,
         (error, results) => {
-          var new_is_admin_string =
-            results[0].is_admin == "true" ? "false" : "true";
-          connection.query(
-            `update users set is_admin = "${new_is_admin_string}" where id = ${Number(
-              params.id
-            )}`,
-            (error) => {
-              if (error) {
-                rm.add_error(error), rm.send();
-              } else {
-                rm.set_result(true);
-                rm.send();
+          if (error) {
+            rm.send_error(error);
+          } else {
+            var new_is_admin_string =
+              results[0].is_admin == "true" ? "false" : "true";
+            connection.query(
+              `update users set is_admin = "${new_is_admin_string}" where id = ${Number(
+                params.id
+              )}`,
+              (error) => {
+                if (error) {
+                  rm.send_error(error);
+                } else {
+                  rm.send_result(true);
+                }
               }
-            }
-          );
+            );
+          }
         }
       );
       break;
@@ -169,11 +171,9 @@ app.all("/", (req, res) => {
         `select password from users where username = "${params.username}"`,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
-            rm.set_result(results[0].password == params.password);
-            rm.send();
+            rm.send_result(results[0].password == params.password);
           }
         }
       );
@@ -182,16 +182,23 @@ app.all("/", (req, res) => {
       connection.query(
         `select * from users where username = "${params.username}"`,
         (error, result) => {
-          if (result[0].password == params.old_password) {
-            connection.query(
-              `update users set password = "${params.new_password}" where username= "${params.username}"`,
-              (err) => {
-                rm.set_result(true);
-                rm.send();
-              }
-            );
+          if (error) {
+            rm.send_error(error);
           } else {
-            rm.add_error("the_old_pass_was_not_correct");
+            if (result[0].password == params.old_password) {
+              connection.query(
+                `update users set password = "${params.new_password}" where username= "${params.username}"`,
+                (err) => {
+                  if (err) {
+                    rm.send_error(err);
+                  } else {
+                    rm.send_result(true);
+                  }
+                }
+              );
+            } else {
+              rm.send_error("the_old_pass_was_not_correct");
+            }
           }
         }
       );
@@ -200,34 +207,37 @@ app.all("/", (req, res) => {
       connection.query(
         `select * from users where username = '${params.username}'`,
         (error, results) => {
-          rm.set_result(results.length == 0);
-          rm.send();
+          if (error) {
+            rm.send_error(error);
+          } else {
+            rm.send_result(results.length == 0);
+          }
         }
       );
       break;
     case "new_product":
+      if (isNaN(params.price)) {
+        rm.send_error('given "price" must be number');
+      }
       connection.query(
-        `insert into products (name,description,product_specs,price) values ('${
-          params.name
-        }','${params.description}','${params.product_specs}',${Number(
-          params.price
-        )})`,
+        `insert into products 
+        (name,description,product_specs,price) 
+        values
+        ('${params.name}','${params.description}','${
+          params.product_specs
+        }',${Number(params.price)})`,
         (error) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
             connection.query(`select * from products`, (error, result) => {
               if (error) {
-                rm.add_error(error);
-                rm.send();
+                rm.send_error(error);
               } else {
                 if (result[result.length - 1].name == params.name) {
-                  rm.set_result(result[result.length - 1].id);
-                  rm.send();
+                  rm.send_result(result[result.length - 1].id);
                 } else {
-                  rm.add_error("error in getting id of inserted row");
-                  rm.send();
+                  rm.send_error("error in getting id of inserted row");
                 }
               }
             });
@@ -235,56 +245,42 @@ app.all("/", (req, res) => {
         }
       );
       break;
-    case "new_product_photo":
-      //must be fixed
-      var form = new multiparty.Form();
-      form.parse(req, function (err, fields, files) {
-        var dir = __dirname + "/products_files/";
-        if (!fs.existsSync(dir)) {
-          fs.mkdirSync(dir);
-        }
-        // todo add ability to save multiple files at once
-        res.write(JSON.stringify(files));
-        //fs.copyFileSync(files.file[0]["path"], dir + params.product_id + ".jpg")
-        //above line's paths are relative to path of stating server so take care
-        res.end();
-      });
-      break;
     case "update_product_data":
-      var old_data;
       connection.query(
         `select * from products where id = ${params.product_id}`,
         (error, results) => {
-          old_data = results[0];
-        }
-      );
-      var new_data = {
-        name: "name" in params ? params["name"] : old_data["name"],
-        name:
-          "description" in params
-            ? params["description"]
-            : old_data["description"],
-        name:
-          "product_specs" in params
-            ? params["product_specs"]
-            : old_data["product_specs"],
-        name: "price" in params ? params["price"] : old_data["price"],
-      };
-      connection.query(
-        `
-      update products 
-      set name="${new_data.name}",
-      description="${new_data.description}",
-      product_specs="${new_data.product_specs}",
-      price="${new_data.price}" 
-      where id= ${params.product_id}`,
-        (err) => {
-          if (err) {
-            rm.add_error(err);
-            rm.send();
+          if (error) {
+            rm.send_error(error);
           } else {
-            rm.set_result(true);
-            rm.send();
+            var old_data = results[0];
+            var new_data = {
+              name: "name" in params ? params["name"] : old_data["name"],
+              name:
+                "description" in params
+                  ? params["description"]
+                  : old_data["description"],
+              name:
+                "product_specs" in params
+                  ? params["product_specs"]
+                  : old_data["product_specs"],
+              name: "price" in params ? params["price"] : old_data["price"],
+            };
+            connection.query(
+              `
+            update products 
+            set name="${new_data.name}",
+            description="${new_data.description}",
+            product_specs="${new_data.product_specs}",
+            price="${new_data.price}" 
+            where id= ${params.product_id}`,
+              (err) => {
+                if (err) {
+                  rm.send_error(err);
+                } else {
+                  rm.send_result(true);
+                }
+              }
+            );
           }
         }
       );
@@ -327,11 +323,14 @@ app.all("/", (req, res) => {
             }.${file_extension}`
           );
           dest = dest.join("/");
-          console.log(`moving from ${filepath} to ${dest}`);
-          fs.renameSync(filepath, dest);
+          try {
+            fs.rename(filepath, dest);
+          } catch (e) {
+            rm.send_error(e);
+          }
+          // todo : make sure to undo uncompleted task if its required when it is terminated during its work (in all application)
         });
-        rm.set_result(true);
-        rm.send();
+        rm.send_result(true);
       });
       break;
     case "new_user_profile_image":
@@ -343,9 +342,15 @@ app.all("/", (req, res) => {
         req,
         files_names: [params.username],
         uploadDir: dir,
+        onSuccess: () => {
+          rm.send_result(true);
+        },
+        onReject: () => {
+          rm.send_error(
+            "there was an error inside node js custom upload function"
+          );
+        },
       });
-      rm.set_result(true);
-      rm.send();
       break;
     case "get_product_images_count":
       //todo take care to re assigning numbers when modifying photos
@@ -356,11 +361,11 @@ app.all("/", (req, res) => {
           count += 1;
         }
       });
-      rm.set_result(count);
-      rm.send();
+      rm.send_result(count);
       break;
     case "new_product_user_review":
       connection.query(
+        //todo : add type check for query params
         `
         insert into reviews
         (username,rating_from_five,pros,cons,text,time,is_user_a_customer)
@@ -370,11 +375,10 @@ app.all("/", (req, res) => {
       `,
         (err) => {
           if (err) {
-            rm.add_error(err);
-            rm.send();
+            rm.send_error(err);
+          } else {
+            rm.send_result(true);
           }
-          rm.set_result(true);
-          rm.send();
         }
       );
       break;
@@ -383,11 +387,9 @@ app.all("/", (req, res) => {
     case "get_products":
       connection.query(`select * from products`, (error, result) => {
         if (error) {
-          rm.add_error(error);
-          rm.send();
+          rm.send_error(error);
         } else {
-          rm.set_result(result);
-          rm.send();
+          rm.send_result(result);
         }
       });
       break;
@@ -401,16 +403,18 @@ app.all("/", (req, res) => {
       `,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
-            rm.set_result(true);
-            rm.send();
+            rm.send_result(true);
           }
         }
       );
       break;
     case "sub_to_email":
+      if (isNaN(params.phone_number)) {
+        rm.send_error("given 'phone_number' must be a number");
+      }
+      //check if res.send and ... are async take care about their line orders
       connection.query(
         `
         If Not Exists(select * from subscribed_phone_numbers where username="${params.username}")
@@ -420,11 +424,9 @@ app.all("/", (req, res) => {
       `,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
-            rm.set_result(true);
-            rm.send();
+            rm.send_result(true);
           }
         }
       );
@@ -473,11 +475,9 @@ app.all("/", (req, res) => {
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          rm.add_error(error);
-          rm.send();
+          rm.send_error(error);
         } else {
-          rm.set_result(info.response);
-          rm.send();
+          rm.send_result(info.response);
         }
       });
       break;
@@ -489,25 +489,24 @@ app.all("/", (req, res) => {
       `,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
-            rm.set_result(true);
-            rm.send();
+            rm.send_result(true);
           }
         }
       );
       break;
     case "delete_support_ticket":
+      if (isNaN(params.id)) {
+        rm.send_error("given 'id' must be a number");
+      }
       connection.query(
         `delete from support_tickets where id = ${params.id}`,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
-            rm.set_result(true);
-            rm.send();
+            rm.send_result(true);
           }
         }
       );
@@ -517,34 +516,32 @@ app.all("/", (req, res) => {
         `select is_proceed from support_tickets where id=${params.id}`,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
-          }
-          var new_string = results[0].is_proceed == "true" ? "false" : "true";
-          connection.query(
-            `update support_tickets set is_proceed = "${new_string}", proceeded_by = "${params.proceeded_by}"`,
-            (error, results) => {
-              if (error) {
-                rm.add_error(error);
-                rm.send();
+            rm.send_error(error);
+          } else {
+            var new_string = results[0].is_proceed == "true" ? "false" : "true";
+            connection.query(
+              `update support_tickets set is_proceed = "${new_string}", proceeded_by = "${params.proceeded_by}"`,
+              (error, results) => {
+                if (error) {
+                  rm.send_error(error);
+                } else {
+                  rm.send_result(true);
+                }
               }
-              rm.set_result(true);
-              rm.send();
-            }
-          );
+            );
+          }
         }
       );
       break;
     case "comment_support_ticket":
       connection.query(
         `insert into support_tickets_comments (support_ticket_id,text,username) values (${params.support_ticket_id},'${params.text}','${params.username}')`,
-        (error, results) => {
+        (error) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
+          } else {
+            rm.send_result(true);
           }
-          rm.set_result(true);
-          rm.send();
         }
       );
       break;
@@ -553,11 +550,10 @@ app.all("/", (req, res) => {
         `update support_tickets_comments set text = '${params.new_text}'`,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            em.send();
+            rm.send_error(error);
+          } else {
+            rm.send_result(true);
           }
-          rm.set_result(true);
-          rm.send();
         }
       );
       break;
@@ -566,11 +562,10 @@ app.all("/", (req, res) => {
         `delete from support_tickets_comments where id=${params.id}`,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
+          } else {
+            rm.send_result(true);
           }
-          rm.set_result(true);
-          rm.send();
         }
       );
       break;
@@ -579,11 +574,9 @@ app.all("/", (req, res) => {
         `select * from support_tickets_comments where support_ticket_id = ${params.support_ticket_id}`,
         (error, result) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
-            rm.set_result(result);
-            rm.send();
+            rm.send_result(result);
           }
         }
       );
@@ -591,23 +584,20 @@ app.all("/", (req, res) => {
     case "get_support_tickets":
       connection.query(`select * from support_tickets`, (error, results) => {
         if (error) {
-          rm.add_error(error);
-          rm.send();
+          rm.send_error(error);
+        } else {
+          rm.send_result(results);
         }
-        rm.set_result(results);
-        rm.send();
       });
-
       break;
     case "set_company_data":
       connection.query(
         `insert into paired_data (pair_key,pair_value) values ("company_data",'${params.company_data}')`,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
-            rm.send();
+            rm.send_result(false);
           }
         }
       );
@@ -617,12 +607,9 @@ app.all("/", (req, res) => {
         `select * from paired_data where pair_key = "company_data"`,
         (error, result) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
           } else {
-            rm.set_result(result);
-            console.log("llll");
-            rm.send();
+            rm.send_result(result);
           }
         }
       );
@@ -631,13 +618,12 @@ app.all("/", (req, res) => {
       connection.query(
         `insert into blogs (name,text,last_modification_time) 
       values ("${params.name}","${params.text}","${params.last_modification_time}")`,
-        (error, results) => {
+        (error) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
+          } else {
+            rm.send_result(true);
           }
-          rm.set_result(true);
-          rm.send();
         }
       );
       break;
@@ -646,59 +632,56 @@ app.all("/", (req, res) => {
         `select * from blogs where id=${params.blog_post_id}`,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
-          }
-          var old_data = results[0];
-          var new_data = {
-            name: "name" in params ? params["name"] : old_data["name"],
-            text: "text" in params ? params["text"] : old_data["text"],
-            last_modification_time:
-              "last_modification_time" in params
-                ? params["last_modification_time"]
-                : old_data["last_modification_time"],
-          };
-          connection.query(
-            `
-        insert into blog_posts
-        (name,text,last_modification_time)
-        values 
-        ("${new_data["name"]}","${new_data["text"]}","${new_data["last_modification_time"]}")
-        `,
-            (error, results) => {
-              if (error) {
-                rm.add_error(error);
-                rm.send();
+            rm.send_error(error);
+          } else {
+            var old_data = results[0];
+            var new_data = {
+              name: "name" in params ? params["name"] : old_data["name"],
+              text: "text" in params ? params["text"] : old_data["text"],
+              last_modification_time:
+                "last_modification_time" in params
+                  ? params["last_modification_time"]
+                  : old_data["last_modification_time"],
+            };
+            connection.query(
+              `
+          insert into blog_posts
+          (name,text,last_modification_time)
+          values 
+          ("${new_data["name"]}","${new_data["text"]}","${new_data["last_modification_time"]}")
+          `,
+              (error, results) => {
+                if (error) {
+                  rm.send_error(error);
+                } else {
+                  rm.send_result(true);
+                }
               }
-              rm.set_result(true);
-              rm.send();
-            }
-          );
+            );
+          }
         }
       );
       break;
     case "get_blog_posts_ids":
       connection.query(`select * from blog_posts`, (error, results) => {
         if (error) {
-          rm.add_error(error);
-          rm.send();
+          rm.send_error(error);
+        } else {
+          var ids = [];
+          results.forEach((result) => {
+            ids.push(result.id);
+          });
+          rm.send_result(ids);
         }
-        var ids = [];
-        results.forEach((result) => {
-          ids.push(result.id);
-        });
-        rm.set_result(ids);
-        rm.send();
       });
       break;
     case "get_blog_posts":
       connection.query(`select * from blog_posts`, (error, results) => {
         if (error) {
-          rm.add_error(error);
-          rm.send();
+          rm.send_error(error);
+        } else {
+          rm.send_result(results);
         }
-        rm.set_result(results);
-        rm.send();
       });
       break;
     case "get_blog_post":
@@ -706,11 +689,10 @@ app.all("/", (req, res) => {
         `select * from blog_posts where id=${params.id}`,
         (error, results) => {
           if (error) {
-            rm.add_error(error);
-            rm.send();
+            rm.send_error(error);
+          } else {
+            rm.send_result(results);
           }
-          rm.set_result(results);
-          rm.send();
         }
       );
       break;
