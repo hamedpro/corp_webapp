@@ -2,6 +2,91 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax";
 export default function AdminDashboard() {
+  function ProductsSection() {
+    const [products, set_products] = useState([]);
+    function update_products_section() {
+      customAjax({
+        params: {
+          task_name: "get_products",
+        },
+      }).then(
+        (data) => {
+          set_products(data.result);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    useEffect(() => {
+      update_products_section();
+    }, []);
+    var modify_product = {
+      name: (product_id) => {}, // we were here
+      description: (product_id) => {},
+      specs: (product_id) => {},
+      price: (product_id) => {},
+    };
+    //adding fetch_data to end of each func :
+    for (prop in modify_product) {
+      modify_product[prop] = () => {
+        modify_product[prop]();
+        update_products_section();
+      };
+    }
+    return (
+      <div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
+        <h1>products:</h1>
+        <hr />
+        <table className="cutom_border">
+          <tbody>
+            <tr>
+              <th>id</th>
+              <th>name</th>
+              <th>description</th>
+              <th>specs as json</th>
+              <th>price</th>
+            </tr>
+            {products.map((product) => {
+              return (
+                <tr>
+                  <td>{product.id}</td>
+                  <td>
+                    {product.name}
+                    <b onClick={() => modify_product.name(product.id)}>
+                      {" "}
+                      (modify)
+                    </b>
+                  </td>
+                  <td>
+                    {product.description}
+                    <b onClick={() => modify_product.description(product.id)}>
+                      {" "}
+                      (modify)
+                    </b>
+                  </td>
+                  <td>
+                    {product.specs}
+                    <b onClick={() => modify_product.specs(product.id)}>
+                      {" "}
+                      (modify)
+                    </b>
+                  </td>
+                  <td>
+                    {product.price}
+                    <b onClick={() => modify_product.price(product.id)}>
+                      {" "}
+                      (modify)
+                    </b>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
   const [users, set_users] = useState([]);
   function fetch_data() {
     customAjax({
@@ -42,6 +127,30 @@ export default function AdminDashboard() {
     fetch_data();
   }, []);
   var nav = useNavigate();
+  var modify_user = {
+    change_username: (username) => {
+      var new_username = window.prompt("enter new username here :");
+      customAjax({
+        params: {
+          task_name: "change_username",
+          old_username: username,
+          new_username,
+        },
+      })
+        .then(
+          (data) => {
+            alert("done");
+          },
+          (error) => {
+            alert("there was an error and it is loged in console");
+            console.log(error);
+          }
+        )
+        .finally(() => {
+          fetch_data();
+        });
+    },
+  };
   return (
     <>
       <div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
@@ -84,15 +193,27 @@ export default function AdminDashboard() {
               return (
                 <tr key={user.id}>
                   <td>{user.id}</td>
-                  <td>{user.username}</td>
-                  <td>{user.is_admin}</td>
                   <td>
-                    <p onClick={() => toggle_user_admin(user.id)}>
-                      {user.is_admin == "true"
-                        ? "remove admin privileges"
-                        : "make the user admin "}
-                    </p>
+                    {user.username}
+                    <b
+                      onClick={() => modify_user.change_username(user.username)}
+                      className="cursor-pointer"
+                    >
+                      {" "}
+                      (modify)
+                    </b>
                   </td>
+                  <td>
+                    {user.is_admin}{" "}
+                    <b
+                      className="cursor-pointer"
+                      onClick={() => toggle_user_admin(user.id)}
+                    >
+                      {" "}
+                      (toggle)
+                    </b>
+                  </td>
+                  <td></td>
                 </tr>
               );
             })}

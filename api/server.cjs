@@ -164,7 +164,17 @@ app.all("/", (req, res) => {
         }
       );
       break;
-    case "update_user_data":
+    case "change_username":
+      connection.query(
+        `update users set username = '${params.new_username}' where username = '${params.old_username}'`,
+        (error, result) => {
+          if (error) {
+            rm.send_error(error);
+          } else {
+            rm.send();
+          }
+        }
+      );
       break;
     case "verify_user_password":
       connection.query(
@@ -697,6 +707,34 @@ app.all("/", (req, res) => {
       );
       break;
     case "share_blog_post":
+      break;
+    case "get_paths_of_images_of_a_product":
+      var file_names = fs.readdirSync("./uploaded/product_images");
+      var needed_file_names = [];
+      file_names.forEach((file_name) => {
+        if (file_name.split("-")[0] == params.product_id) {
+          needed_file_names.push(file_name);
+        }
+      });
+      rm.send_result(needed_file_names);
+      break;
+    case "delete_product":
+      var file_names = fs.readdirSync("./uploaded/product_images");
+      file_names.forEach((file_name) => {
+        if (file_name.split("-")[0] == params.product_id) {
+          fs.unlinkSync("./uploaded/product_images/" + file_name);
+        }
+      });
+      connection.query(
+        `delete from products where id = ${Number(params.product_id)}`,
+        (error, result) => {
+          if (error) {
+            rm.send_error(error);
+          } else {
+            rm.send_result(result);
+          }
+        }
+      );
       break;
   }
 });

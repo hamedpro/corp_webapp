@@ -13,6 +13,7 @@ export default function Product() {
     price: "loading ...",
     product_specs: "[]",
   });
+
   function upload_files() {
     var files = document.getElementById("files_input").files;
     var form = new FormData();
@@ -71,6 +72,7 @@ export default function Product() {
       <div className="mx-auto border border-blue-400 rounded mt-2 p-2">
         <h1 className="text-lg">product specs:</h1>
         <hr className="mb-2" />
+
         <table className="custom_border">
           <tbody>
             <tr>

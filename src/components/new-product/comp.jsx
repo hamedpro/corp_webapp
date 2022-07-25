@@ -34,7 +34,6 @@ export default function NewProduct() {
       },
     }).then(
       (data) => {
-        console.log(data);
         var form = new FormData();
         var files = document.getElementById("images_input").files;
         var files_length = files.length;
