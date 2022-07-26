@@ -736,6 +736,43 @@ app.all("/", (req, res) => {
         }
       );
       break;
+    case "change_product_name":
+      connection.query(
+        `update products set name = '${params.new_name}' where id= ${params.product_id}`,
+        (error) => {
+          if (error) {
+            rm.send_error();
+          } else {
+            rm.send();
+          }
+        }
+      );
+      break;
+    case "change_product_description":
+      connection.query(
+        `update products set description = '${params.new_description}' where id = ${params.product_id}`,
+        (error) => {
+          if (error) {
+            rm.send_error(error);
+          } else {
+            rm.send();
+          }
+        }
+      );
+      break;
+    case "change_product_price":
+      connection.query(
+        `update products set price = ${params.new_price} where id = ${Number(
+          params.product_id
+        )}`,
+        (error) => {
+          if (error) {
+            rm.send_error(error);
+          } else {
+            rm.send();
+          }
+        }
+      );
   }
 });
 app.listen(4000, () => {
