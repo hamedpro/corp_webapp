@@ -70,6 +70,50 @@ export default function ProductsSection() {
         }
       );
     }
+    function change_spec_value(spec_id) {
+      customAjax({
+        params: {
+          task_name: "change_spec_value",
+          product_id: props.product_id,
+          spec_id,
+          new_spec_value: window.prompt("enter new spec value here"),
+        },
+      })
+        .then(
+          () => {
+            alert("done");
+          },
+          (error) => {
+            alert("something went wrong");
+            console.log(error);
+          }
+        )
+        .finally(() => {
+          fetch_data();
+        });
+    }
+    function change_spec_key(spec_id) {
+      customAjax({
+        params: {
+          task_name: "change_spec_key",
+          product_id: props.product_id,
+          spec_id,
+          new_spec_key: window.prompt("enter new spec key here"),
+        },
+      })
+        .then(
+          () => {
+            alert("done");
+          },
+          (error) => {
+            alert("something went wrong");
+            console.log(error);
+          }
+        )
+        .finally(() => {
+          fetch_data();
+        });
+    }
     return (
       <>
         <table>
@@ -82,8 +126,14 @@ export default function ProductsSection() {
             {staged_specs.map((spec) => {
               return (
                 <tr key={spec.id}>
-                  <td>{spec.key}</td>
-                  <td>{spec.value}</td>
+                  <td>
+                    {spec.key}{" "}
+                    <b onClick={() => change_spec_key(spec.id)}>edit</b>
+                  </td>
+                  <td>
+                    {spec.value}{" "}
+                    <b onClick={() => change_spec_value(spec.id)}>edit</b>
+                  </td>
                   <td onClick={() => handle_delete(spec.id)}>delete this</td>
                 </tr>
               );

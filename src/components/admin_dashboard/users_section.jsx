@@ -27,15 +27,21 @@ export default function UsersSection() {
             old_username: payload.old_username,
             new_username: window.prompt("enter new username here"),
           },
-        }).then(
-          (data) => {
-            alert("done");
-          },
-          (error) => {
-            alert("something went wrong, details are available in dev console");
-            console.log(error);
-          }
-        );
+        })
+          .then(
+            (data) => {
+              alert("done");
+            },
+            (error) => {
+              alert(
+                "something went wrong, details are available in dev console"
+              );
+              console.log(error);
+            }
+          )
+          .finally(() => {
+            fetch_data();
+          });
         break;
       case "is_admin":
         customAjax({

@@ -15,3 +15,4 @@ if its required acording to license terms of packages im using, add their names 
 take care about todos inside the codes
 add count in store and buying basket
 if output.css (which is where tailwind writes required classNames) needs to be created before build or dev_watch create it first 
+uploading images in products section of admin-dashboard is not working properly

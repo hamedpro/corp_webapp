@@ -784,11 +784,13 @@ app.all("/", (req, res) => {
           );
           var this_product = products[0];
           var specs = JSON.parse(this_product["product_specs"]);
-          var new_spec_id =
-            Math.max.apply(
-              Math,
-              specs.map((spec) => spec.id)
-            ) + 1;
+          var new_spec_id = 0;
+          specs.forEach((spec) => {
+            if (spec.id > new_spec_id) {
+              new_spec_id = spec.id;
+            }
+          });
+          new_spec_id += 1;
           specs.push({
             id: new_spec_id,
             key: params.spec_key,
@@ -838,6 +840,69 @@ app.all("/", (req, res) => {
           }
         }
       );
+      break;
+    case "change_spec_key":
+      connection.query(
+        `select * from products where id = ${Number(params.product_id)}`,
+        (error, result) => {
+          if (error) {
+            rm.send_error(error);
+          } else {
+            var specs = JSON.parse(result[0]["product_specs"]);
+            var index = null;
+            for (var i = 0; i < specs.length; i++) {
+              if (specs[i].id == Number(params.spec_id)) {
+                index = i;
+              }
+            }
+            specs[index].key = params.new_spec_key;
+            connection.query(
+              `update products set product_specs = '${JSON.stringify(
+                specs
+              )}' where id = ${Number(params.product_id)}`,
+              (error, result) => {
+                if (error) {
+                  rm.send_error(error);
+                } else {
+                  rm.send();
+                }
+              }
+            );
+          }
+        }
+      );
+      break;
+    case "change_spec_value":
+      connection.query(
+        `select * from products where id = ${Number(params.product_id)}`,
+        (error, result) => {
+          if (error) {
+            rm.send_error(error);
+          } else {
+            var specs = JSON.parse(result[0]["product_specs"]);
+            var index = null;
+            for (var i = 0; i < specs.length; i++) {
+              if (specs[i].id == Number(params.spec_id)) {
+                index = i;
+              }
+            }
+            specs[index].value = params.new_spec_value;
+            connection.query(
+              `update products set product_specs = '${JSON.stringify(
+                specs
+              )}' where id = ${Number(params.product_id)}`,
+              (error, result) => {
+                if (error) {
+                  rm.send_error(error);
+                } else {
+                  rm.send();
+                }
+              }
+            );
+          }
+        }
+      );
+      break;
   }
 });
 app.listen(4000, () => {
