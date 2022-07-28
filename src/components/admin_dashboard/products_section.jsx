@@ -1,6 +1,102 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax";
+import ShowDataModal from "../show_data_modal/comp";
 export default function ProductsSection() {
+  const Specs = (props) => {
+    const [specs, set_specs] = useState([]);
+    const [staged_specs, set_staged_specs] = useState([]);
+    var fetch_data = () => {
+      customAjax({
+        params: {
+          task_name: "get_products",
+          product_id: props.product_id,
+        },
+      }).then((data) => {
+        set_specs(
+          JSON.parse(
+            data.result.filter(
+              (product) => product.id == Number(props.product_id)
+            )[0].product_specs
+          )
+        );
+        set_staged_specs(
+          JSON.parse(
+            data.result.filter(
+              (product) => product.id == Number(props.product_id)
+            )[0].product_specs
+          )
+        );
+      });
+    };
+    useEffect(() => {
+      fetch_data();
+    }, []);
+    function handle_delete(spec_id) {
+      customAjax({
+        params: {
+          task_name: "delete_spec",
+          product_id: props.product_id,
+          spec_id,
+        },
+      }).then(
+        (data) => {
+          fetch_data();
+        },
+        (error) => {
+          alert("something went wrong while deleting the spec");
+          console.log(error);
+        }
+      );
+    }
+    function handle_add_new_spec() {
+      var spec_key = window.prompt("enter spec key :");
+      var spec_value = window.prompt("enter spec value :");
+
+      customAjax({
+        params: {
+          task_name: "add_new_spec",
+          spec_key,
+          spec_value,
+          product_id: props.product_id,
+        },
+      }).then(
+        (data) => {
+          alert("done");
+          fetch_data();
+        },
+        (error) => {
+          alert("something went wrong when asking server to add new spec");
+          console.log(error);
+        }
+      );
+    }
+    return (
+      <>
+        <table>
+          <tbody>
+            <tr>
+              <th>key</th>
+              <th>value</th>
+              <th>options</th>
+            </tr>
+            {staged_specs.map((spec) => {
+              return (
+                <tr key={spec.id}>
+                  <td>{spec.key}</td>
+                  <td>{spec.value}</td>
+                  <td onClick={() => handle_delete(spec.id)}>delete this</td>
+                </tr>
+              );
+            })}
+            <tr>
+              <td onClick={handle_add_new_spec}>add new spec here</td>
+            </tr>
+          </tbody>
+        </table>
+      </>
+    );
+  };
+
   const [products, set_products] = useState([]);
   function update_products_section() {
     customAjax({
@@ -68,6 +164,12 @@ export default function ProductsSection() {
           });
         break;
       case "specs":
+        var product_id = Number(payload.product_id);
+        window.localStorage.setItem("product_id", product_id);
+        set_pop_up_data({
+          title: "changing specs of product #" + payload.product_id,
+          visibility: true,
+        });
         break;
       case "price":
         var new_price = window.prompt("enter the new price of this product:");
@@ -97,86 +199,74 @@ export default function ProductsSection() {
     }
   };
   return (
-    <div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
-      <h1>products:</h1>
-      <hr />
-      <table className="custom_border">
-        <tbody>
-          <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>description</th>
-            <th>specs as json</th>
-            <th>price</th>
-          </tr>
-          {products.map((product) => {
-            return (
-              <tr key={product.id}>
-                <td>{product.id}</td>
-                <td>
-                  {product.name}
-                  <b
-                    onClick={() =>
-                      modify_product({
-                        task: "name",
-                        payload: { product_id: product.id },
-                      })
-                    }
-                  >
-                    {" "}
-                    (modify)
-                  </b>
-                </td>
-                <td>
-                  {product.description}
-                  <b
-                    onClick={() =>
-                      modify_product({
-                        task: "description",
-                        payload: { product_id: product.id },
-                      })
-                    }
-                  >
-                    {" "}
-                    (modify)
-                  </b>
-                </td>
-                <td>
-                  {product.specs}
-                  <b
-                    onClick={() =>
-                      modify_product({
-                        task: "specs",
-                        payload: {
-                          product_id: product.id,
-                          old_specs: product.specs,
-                        },
-                      })
-                    }
-                  >
-                    {" "}
-                    (modify)
-                  </b>
-                </td>
-                <td>
-                  {product.price}
-                  <b
-                    onClick={() =>
-                      modify_product({
-                        task: "price",
-                        payload: { product_id: product.id },
-                      })
-                    }
-                  >
-                    {" "}
-                    (modify)
-                  </b>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
+        <h1>products:</h1>
+        <hr />
+        <table className="custom_border">
+          <tbody>
+            <tr>
+              <th>id</th>
+              <th>name</th>
+              <th>description</th>
+              <th>specs as json</th>
+              <th>price</th>
+            </tr>
+            {products.map((product) => {
+              return (
+                <tr key={product.id}>
+                  <td>{product.id}</td>
+                  <td>
+                    {product.name}
+                    <b
+                      onClick={() =>
+                        modify_product({
+                          task: "name",
+                          payload: { product_id: product.id },
+                        })
+                      }
+                    >
+                      {" "}
+                      (modify)
+                    </b>
+                  </td>
+                  <td>
+                    {product.description}
+                    <b
+                      onClick={() =>
+                        modify_product({
+                          task: "description",
+                          payload: { product_id: product.id },
+                        })
+                      }
+                    >
+                      {" "}
+                      (modify)
+                    </b>
+                  </td>
+                  <td>
+                    <Specs product_id={product.id} />
+                  </td>
+                  <td>
+                    {product.price}
+                    <b
+                      onClick={() =>
+                        modify_product({
+                          task: "price",
+                          payload: { product_id: product.id },
+                        })
+                      }
+                    >
+                      {" "}
+                      (modify)
+                    </b>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }

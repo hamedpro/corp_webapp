@@ -773,6 +773,71 @@ app.all("/", (req, res) => {
           }
         }
       );
+      break;
+    case "add_new_spec":
+      connection.query(`select * from products`, (error, result) => {
+        if (error) {
+          rm.send_error(error);
+        } else {
+          var products = result.filter(
+            (product) => product.id == Number(params.product_id)
+          );
+          var this_product = products[0];
+          var specs = JSON.parse(this_product["product_specs"]);
+          var new_spec_id =
+            Math.max.apply(
+              Math,
+              specs.map((spec) => spec.id)
+            ) + 1;
+          specs.push({
+            id: new_spec_id,
+            key: params.spec_key,
+            value: params.spec_value,
+          });
+          connection.query(
+            `update products set product_specs = '${JSON.stringify(
+              specs
+            )}' where id= ${Number(params.product_id)}`,
+            (error, result) => {
+              if (error) {
+                rm.send_error(error);
+              } else {
+                rm.send();
+              }
+            }
+          );
+        }
+      });
+      break;
+    case "delete_spec":
+      connection.query(
+        `select product_specs from products where id = ${Number(
+          params.product_id
+        )}`,
+        (error, result) => {
+          if (error) {
+            rm.send_error(error);
+          } else {
+            console.log(JSON.stringify(result));
+            var old_specs = JSON.parse(result[0]["product_specs"]);
+            var new_specs = JSON.stringify(
+              old_specs.filter((spec) => spec.id != Number(params.spec_id))
+            );
+            connection.query(
+              `update products set product_specs = '${new_specs}' where id = ${Number(
+                params.product_id
+              )}`,
+              (error, result) => {
+                if (error) {
+                  rm.send_error(error);
+                } else {
+                  rm.send();
+                }
+              }
+            );
+          }
+        }
+      );
   }
 });
 app.listen(4000, () => {
