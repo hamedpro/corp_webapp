@@ -334,13 +334,14 @@ app.all("/", (req, res) => {
           );
           dest = dest.join("/");
           try {
-            fs.rename(filepath, dest);
+            fs.renameSync(filepath, dest);
           } catch (e) {
-            rm.send_error(e);
+            rm.add_error(e);
           }
+
           // todo : make sure to undo uncompleted task if its required when it is terminated during its work (in all application)
         });
-        rm.send_result(true);
+        rm.send();
       });
       break;
     case "new_user_profile_image":
