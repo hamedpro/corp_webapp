@@ -21,7 +21,7 @@ export default function Products() {
 		}, []);
 		return (
 			<div
-				onClick={() => nav("/product/" + id)}
+				onClick={() => nav("/products/" + id)}
 				className="cursor-pointer my-2 w-5/12 block border border-1 border-blue-400 rounded mx-auto relative p-1"
 			>
 				<div className="relative border border-blue-400 rounded w-10/12 min-h-28 mx-auto my-2 bg-blue-500 rounded flex items-center justify-center">
