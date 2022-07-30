@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+import "./styles.css";
+import UsersReviews from "./user_reviews";
 export default function Product() {
 	var product_id = useParams().product_id;
 	const [product, set_product] = useState({
@@ -70,8 +72,9 @@ export default function Product() {
 	return (
 		<>
 			<div className="mx-auto border border-blue-400 rounded mt-2 p-2">
-				<div className="flex justify-center align-center relative mx-auto mt-0 mb-1 rounded bg-blue-100 h-48 w-full">
+				<div className="relative flex justify-center align-center relative mx-auto mt-0 mb-1 rounded bg-blue-100 min-h-48 w-11/12">
 					<button
+						className="product_page__image_back"
 						onClick={() => {
 							image_back();
 						}}
@@ -82,12 +85,13 @@ export default function Product() {
 						<>there is not any product image uploaded for this product</>
 					) : (
 						<img
-							className="h-full"
+							className="w-full"
 							src={image_sources[current_image_index]}
 							alt="product image"
 						/>
 					)}
 					<button
+						className="product_page__image_next"
 						onClick={() => {
 							image_next();
 						}}
@@ -123,10 +127,8 @@ export default function Product() {
 					</tbody>
 				</table>
 			</div>
-			<div className="mx-auto border border-blue-400 rounded mt-2 p-2">
-				<h1 className="text-lg">product specs:</h1>
-				<hr className="mb-2" />
-			</div>
+
+			<UsersReviews product_id={Number(product_id)} />
 		</>
 	);
 }
