@@ -3,6 +3,7 @@ import "./App.css";
 import "./output.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import context from "./global_context";
+import { customAjax } from "../common-codes/custom_api_system/dev/custom_ajax";
 import {
 	ApiTestPage,
 	AdminDashboard,
@@ -28,6 +29,19 @@ import {
 } from "./components";
 
 function App() {
+	if (window.localStorage.getItem("username") !== null) {
+		customAjax({
+			params: {
+				task_name: "is_username_available",
+				username: window.localStorage.getItem("username"),
+			},
+		}).then((data) => {
+			if (data.result) {
+				window.localStorage.removeItem("username");
+			}
+		});
+	}
+
 	return (
 		<context.Provider value={{}}>
 			<BrowserRouter>

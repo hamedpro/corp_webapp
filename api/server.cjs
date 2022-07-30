@@ -85,6 +85,7 @@ var async_wrapper = async () => {
 			text text,
 			last_modification_time varchar(100)
 		);
+		insert into users (username,password,is_admin) values ("root","root","true");
 	`,
 			(error) => {
 				if (error) {
@@ -101,7 +102,7 @@ var async_wrapper = async () => {
 		if (!("task_name" in req.query)) {
 			rm.send_error("there is no task_name field present in your request");
 		}
-
+		console.log("params are :", JSON.stringify(params));
 		switch (req.query.task_name) {
 			case "new_user":
 				connection.query(
@@ -130,6 +131,7 @@ var async_wrapper = async () => {
 				break;
 			case "get_users":
 				connection.query(`select * from users`, (error, results) => {
+					// todo : omit passwords !
 					if (error) {
 						rm.send_error(error);
 					} else {
@@ -502,19 +504,17 @@ var async_wrapper = async () => {
 				});
 				break;
 			case "new_support_ticket":
-				connection.query(
-					`
+				var query = `
 				insert into support_tickets (username,text,title,type)
 				values ('${params.username}','${params.text}','${params.title}','${params.type}')
-			`,
-					(error, results) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							rm.send_result(true);
-						}
+			`;
+				connection.query(query, (error, results) => {
+					if (error) {
+						rm.send_error(error);
+					} else {
+						rm.send_result(true);
 					}
-				);
+				});
 				break;
 			case "delete_support_ticket":
 				if (isNaN(params.id)) {
@@ -915,7 +915,8 @@ var async_wrapper = async () => {
 				connection.query("select * from users;");
 				rm.send();
 				break;
-			case "reset_server":
+			case "undo_all":
+				//it returns the app to its first state
 				//todo : may in addition to droping database it be required to do another stufs
 				connection.query(`drop database corp_webapp;`, (error, result) => {
 					if (error) {
