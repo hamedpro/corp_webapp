@@ -26,9 +26,10 @@ const user_reviews = (props) => {
 				numbers.forEach((number) => (total += number));
 				return total / numbers.length;
 			};
-			set_avg_rating(
-				Math.round(average(data.result.map((review) => Number(review.rating_from_five))))
+			var tmp = Math.round(
+				average(data.result.map((review) => Number(review.rating_from_five)))
 			);
+			set_avg_rating(isNaN(tmp) ? "unknown" : tmp);
 		});
 	}
 	useEffect(() => {

@@ -350,6 +350,13 @@ var async_wrapper = async () => {
 				if (!fs.existsSync(dir)) {
 					fs.mkdirSync(dir);
 				}
+				//deleting photo if it does exist
+				var profile_images = fs.readdirSync(dir);
+				profile_images.forEach((pi) => {
+					if (pi.split(".")[0] == params.username) {
+						fs.rmSync("./uploaded/profile_images/" + pi);
+					}
+				});
 				custom_upload({
 					req,
 					files_names: [params.username],
@@ -925,6 +932,19 @@ var async_wrapper = async () => {
 						rm.send();
 					}
 				});
+				break;
+			case "get_profile_image_src":
+				var profile_images = fs.readdirSync("./uploaded/profile_images/");
+				if (
+					profile_images.filter((pi) => pi.split(".")[0] == params.username).length == 1
+				) {
+					var profile_image_src =
+						"http://localhost:4000/profile_images/" +
+						profile_images.find((pi) => pi.split(".")[0] == params.username);
+					rm.send_result(profile_image_src);
+				} else {
+					rm.send_result(null);
+				}
 				break;
 		}
 	});
