@@ -26,6 +26,7 @@ import {
 	Blog,
 	Blogs,
 	NewBlog,
+	Terms,
 } from "./components";
 
 function App() {
@@ -46,7 +47,7 @@ function App() {
 		<context.Provider value={{}}>
 			<BrowserRouter>
 				<MainHeader />
-				<NavBar />
+				{/* <NavBar /> */}
 				<Routes>
 					<Route path="/api_test_page" element={<ApiTestPage />}></Route>
 					<Route path="/admin-dashboard" element={<AdminDashboard />}></Route>
@@ -72,6 +73,7 @@ function App() {
 					<Route exact path="/blog-posts/:blog_id" element={<Blog />} />
 					<Route exact path="/blog-posts" element={<Blogs />} />
 					<Route path="/new-blog-post" element={<NewBlog />} />
+					<Route path="/terms" element={<Terms />} />
 				</Routes>
 				<MainFooter />
 			</BrowserRouter>

@@ -16,8 +16,7 @@ export default function MainHeader() {
 			/>
 			<div className="h-16 w-full"></div>
 			<div
-				className={` top-0 fixed h-16 w-full flex items-center flex-row p-2 border-b border-gray-300`}
-				style={{ backgroundColor: "rgba(255,255,255,0.90)" }}
+				className={`bg-stone-100 top-0 fixed h-16 w-full flex items-center flex-row p-2 border-b border-gray-300`}
 			>
 				<div className="w-3/4 flex flex-row items-center">
 					<Button

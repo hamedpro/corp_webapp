@@ -19,3 +19,5 @@ export { default as NavBar } from "./nav_bar/comp";
 export { default as Blog } from "./blog/comp";
 export { default as Blogs } from "./blogs/comp";
 export { default as NewBlog } from "./new_blog/comp";
+export { default as LinkLikeP } from "./LinkLikeP/comp";
+export { default as Terms } from "./terms/comp";
