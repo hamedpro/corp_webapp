@@ -69,9 +69,9 @@ function App() {
 						exact
 					></Route>
 					<Route exact path="/support-tickets" element={<SupprotTickets />}></Route>
-					<Route exact path="/blogs/:blog_id" element={<Blog />} />
-					<Route exact path="/blogs" element={<Blogs />} />
-					<Route path="/new-blog" element={<NewBlog />} />
+					<Route exact path="/blog-posts/:blog_id" element={<Blog />} />
+					<Route exact path="/blog-posts" element={<Blogs />} />
+					<Route path="/new-blog-post" element={<NewBlog />} />
 				</Routes>
 				<MainFooter />
 			</BrowserRouter>
