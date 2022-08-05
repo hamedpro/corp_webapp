@@ -15,7 +15,9 @@ var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_que
 var async_wrapper = async () => {
 	app.all("/", async (req, res) => {
 		var rm = new response_manager(res);
-
+		if (!fs.existsSync("./uploaded")) {
+			fs.mkdirSync("./uploaded");
+		}
 		var connection = mysql.createConnection({
 			user: "root",
 			password: "mysqlpassword",
@@ -88,15 +90,15 @@ var async_wrapper = async () => {
 			rm.send_error(output.error);
 			return; // it terminates app.all function
 		}
-		output = await cq(connection, `select * from users where username = "root"`);
+		output = await cq(connection, "select * from users where username = 'root'");
 		if (output.error) {
-			rm.send_error(error);
+			rm.send_error(output.error);
 			return;
 		}
 		if (output.result.length == 0) {
 			output = await cq(
 				connection,
-				`insert into users (username,password,is_admin) values ("root","root","true")`
+				"insert into users (username,password,is_admin) values ('root','root','true')"
 			);
 			if (output.error) {
 				rm.send_error(output.error);
@@ -924,6 +926,7 @@ var async_wrapper = async () => {
 					if (error) {
 						rm.send_error(error);
 					} else {
+						fs.rmSync("./uploaded", { recursive: true, force: true });
 						rm.send();
 					}
 				});

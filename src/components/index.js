@@ -21,3 +21,4 @@ export { default as Blogs } from "./blogs/comp";
 export { default as NewBlog } from "./new_blog/comp";
 export { default as LinkLikeP } from "./LinkLikeP/comp";
 export { default as Terms } from "./terms/comp";
+export { default as FirstSetup } from "./first_setup/comp";

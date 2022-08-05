@@ -21,6 +21,7 @@ export default function MainFooter() {
 						variant="contained"
 						color="success"
 						className="flex items-center"
+						onClick={() => scroll(0, 0)}
 					>
 						<span>go to top</span>
 						<KeyboardArrowUpRoundedIcon />

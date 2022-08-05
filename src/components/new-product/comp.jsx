@@ -21,7 +21,7 @@ function cloned_array(arr) {
 export default function NewProduct() {
 	const [specs, set_specs] = useState([]);
 	const [count, set_count] = useState(0);
-	function submit_new_product() {
+	async function submit_new_product() {
 		customAjax({
 			params: {
 				task_name: "new_product",

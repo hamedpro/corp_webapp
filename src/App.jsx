@@ -27,6 +27,7 @@ import {
 	Blogs,
 	NewBlog,
 	Terms,
+	FirstSetup,
 } from "./components";
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
 					<Route exact path="/blog-posts" element={<Blogs />} />
 					<Route path="/new-blog-post" element={<NewBlog />} />
 					<Route path="/terms" element={<Terms />} />
+					<Route path="/first-setup" element={<FirstSetup />} />
 				</Routes>
 				<MainFooter />
 			</BrowserRouter>
