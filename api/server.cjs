@@ -10,9 +10,10 @@ app.use(cors());
 app.use(express.static("./uploaded/"));
 var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 var util = require("util");
-//configuring mysql databases and tables =>
+var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_query
+
 var async_wrapper = async () => {
-	app.all("/", (req, res) => {
+	app.all("/", async (req, res) => {
 		var rm = new response_manager(res);
 
 		var connection = mysql.createConnection({
@@ -22,7 +23,9 @@ var async_wrapper = async () => {
 			host: "localhost",
 			multipleStatements: true,
 		});
-		connection.query(
+
+		var output = await cq(
+			connection,
 			`
 			create database if not exists corp_webapp;
 		use corp_webapp;
@@ -30,7 +33,11 @@ var async_wrapper = async () => {
 			id int primary key auto_increment,
 			username varchar(50) ,
 			password varchar(50) , 
-			is_admin varchar(20) default "false"
+			is_admin varchar(20) default "false",
+			is_subscribed_to_email varchar(20) default "false",
+			is_subscribed_to_sms varchar(20) default "false",
+			email varchar(100),
+			phone_number varchar(15)
 		);
 		create table if not exists products(
 			id int primary key auto_increment,
@@ -58,16 +65,7 @@ var async_wrapper = async () => {
 			is_proceed varchar(20) default "false",
 			proceeded_by varchar(50)
 		);
-		create table if not exists subscribed_emails(
-			id int primary key auto_increment,
-			username varchar(50),
-			email varchar(50)
-		);
-		create table if not exists subscribed_phone_numbers(
-			id int primary key auto_increment,
-			username varchar(50),
-			phone_number int(15)
-		);
+		
 		create table if not exists support_tickets_comments(
 			id int primary key auto_increment,
 			support_ticket_id int(10),
@@ -84,26 +82,39 @@ var async_wrapper = async () => {
 			name varchar(200),
 			text text,
 			last_modification_time varchar(100)
+		);`
 		);
-		insert into users (username,password,is_admin) values ("root","root","true");
-	`,
-			(error) => {
-				if (error) {
-					rm.send_error(error);
-				}
+		if (output.error) {
+			rm.send_error(output.error);
+			return; // it terminates app.all function
+		}
+		output = await cq(connection, `select * from users where username = "root"`);
+		if (output.error) {
+			rm.send_error(error);
+			return;
+		}
+		if (output.result.length == 0) {
+			output = await cq(
+				connection,
+				`insert into users (username,password,is_admin) values ("root","root","true")`
+			);
+			if (output.error) {
+				rm.send_error(output.error);
+				return;
 			}
-		);
-		//paired_data is where we store key values
-		//support_tickets.type can have these values : bug,suggestion,other
+		}
+		//support_tickets->type can have these values : bug,suggestion,other
 		//product_specs inside products table should contain ->
 		// -> a json stringified array of key values -- also for ex pros and cons fields
 		//todo take care about length of texts and max length of cells
+
 		var params = req.query;
 		if (!("task_name" in req.query)) {
 			rm.send_error("there is no task_name field present in your request");
+			return;
 		}
-		console.log("params are :", JSON.stringify(params));
 		switch (req.query.task_name) {
+			//todo : use custom_query in all app
 			case "new_user":
 				connection.query(
 					`select * from users where username = '${params.username}'`,
@@ -142,6 +153,7 @@ var async_wrapper = async () => {
 			case "toggle_user_admin_state":
 				if (isNaN(Number(params.id))) {
 					rm.send_error('given "id" is not a number');
+					break;
 				}
 				connection.query(
 					`select is_admin from users where id = ${Number(params.id)}`,
@@ -170,7 +182,7 @@ var async_wrapper = async () => {
 			case "change_username":
 				connection.query(
 					`update users set username = '${params.new_username}' where username = '${params.old_username}'`,
-					(error, result) => {
+					(error) => {
 						if (error) {
 							rm.send_error(error);
 						} else {
@@ -231,6 +243,7 @@ var async_wrapper = async () => {
 			case "new_product":
 				if (isNaN(params.price)) {
 					rm.send_error('given "price" must be number');
+					break;
 				}
 				connection.query(
 					`insert into products 
@@ -266,15 +279,15 @@ var async_wrapper = async () => {
 							var old_data = results[0];
 							var new_data = {
 								name: "name" in params ? params["name"] : old_data["name"],
-								name:
+								description:
 									"description" in params
 										? params["description"]
 										: old_data["description"],
-								name:
+								product_specs:
 									"product_specs" in params
 										? params["product_specs"]
 										: old_data["product_specs"],
-								name: "price" in params ? params["price"] : old_data["price"],
+								price: "price" in params ? params["price"] : old_data["price"],
 							};
 							connection.query(
 								`
@@ -424,40 +437,27 @@ var async_wrapper = async () => {
 					}
 				});
 				break;
-			case "sub_to_sms":
+			case "sub_to_email":
 				connection.query(
-					`
-				If Not Exists(select * from subscribed_emails where username="${params.username}")
-				Begin
-				insert into subscribed_emails (username,email) values ('${params.username}','${params.email}')
-				End
-			`,
-					(error, results) => {
+					`update users set is_subscribed_to_email = "true" where username = "${params.username}"`,
+					(error) => {
 						if (error) {
 							rm.send_error(error);
 						} else {
-							rm.send_result(true);
+							rm.send();
 						}
 					}
 				);
 				break;
-			case "sub_to_email":
-				if (isNaN(params.phone_number)) {
-					rm.send_error("given 'phone_number' must be a number");
-				}
+			case "sub_to_sms":
 				//check if res.send and ... are async take care about their line orders
 				connection.query(
-					`
-				If Not Exists(select * from subscribed_phone_numbers where username="${params.username}")
-				Begin
-				insert into subscribed_phone_numbers (username,phone_number) values ('${params.username}',${params.phone_number})
-				End
-			`,
-					(error, results) => {
+					`update users set is_subscribed_to_sms = "true" where username = "${params.username}"`,
+					(error) => {
 						if (error) {
 							rm.send_error(error);
 						} else {
-							rm.send_result(true);
+							rm.send();
 						}
 					}
 				);
@@ -526,17 +526,15 @@ var async_wrapper = async () => {
 			case "delete_support_ticket":
 				if (isNaN(params.id)) {
 					rm.send_error("given 'id' must be a number");
+					break;
 				}
-				connection.query(
-					`delete from support_tickets where id = ${params.id}`,
-					(error, results) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							rm.send_result(true);
-						}
+				connection.query(`delete from support_tickets where id = ${params.id}`, (error) => {
+					if (error) {
+						rm.send_error(error);
+					} else {
+						rm.send_result(true);
 					}
-				);
+				});
 				break;
 			case "toggle_support_ticket":
 				connection.query(
@@ -548,11 +546,11 @@ var async_wrapper = async () => {
 							var new_string = results[0].is_proceed == "true" ? "false" : "true";
 							connection.query(
 								`update support_tickets set is_proceed = "${new_string}", proceeded_by = "${params.proceeded_by}"`,
-								(error, results) => {
+								(error) => {
 									if (error) {
 										rm.send_error(error);
 									} else {
-										rm.send_result(true);
+										rm.send();
 									}
 								}
 							);
@@ -575,7 +573,7 @@ var async_wrapper = async () => {
 			case "update_support_ticket_comment":
 				connection.query(
 					`update support_tickets_comments set text = '${params.new_text}'`,
-					(error, results) => {
+					(error) => {
 						if (error) {
 							rm.send_error(error);
 						} else {
@@ -587,7 +585,7 @@ var async_wrapper = async () => {
 			case "delete_support_ticket_comment":
 				connection.query(
 					`delete from support_tickets_comments where id=${params.id}`,
-					(error, results) => {
+					(error) => {
 						if (error) {
 							rm.send_error(error);
 						} else {
@@ -620,7 +618,7 @@ var async_wrapper = async () => {
 			case "set_company_data":
 				connection.query(
 					`insert into paired_data (pair_key,pair_value) values ("company_data",'${params.company_data}')`,
-					(error, results) => {
+					(error) => {
 						if (error) {
 							rm.send_error(error);
 						} else {
@@ -672,12 +670,12 @@ var async_wrapper = async () => {
 							};
 							connection.query(
 								`
-					insert into blog_posts
-					(name,text,last_modification_time)
-					values 
-					("${new_data["name"]}","${new_data["text"]}","${new_data["last_modification_time"]}")
-					`,
-								(error, results) => {
+								insert into blog_posts
+								(name,text,last_modification_time)
+								values 
+								("${new_data["name"]}","${new_data["text"]}","${new_data["last_modification_time"]}")
+								`,
+								(error) => {
 									if (error) {
 										rm.send_error(error);
 									} else {
@@ -817,7 +815,7 @@ var async_wrapper = async () => {
 							`update products set product_specs = '${JSON.stringify(
 								specs
 							)}' where id= ${Number(params.product_id)}`,
-							(error, result) => {
+							(error) => {
 								if (error) {
 									rm.send_error(error);
 								} else {
@@ -835,7 +833,6 @@ var async_wrapper = async () => {
 						if (error) {
 							rm.send_error(error);
 						} else {
-							console.log(JSON.stringify(result));
 							var old_specs = JSON.parse(result[0]["product_specs"]);
 							var new_specs = JSON.stringify(
 								old_specs.filter((spec) => spec.id != Number(params.spec_id))
@@ -919,8 +916,6 @@ var async_wrapper = async () => {
 				);
 				break;
 			case "pg":
-				connection.query("select * from users;");
-				rm.send();
 				break;
 			case "undo_all":
 				//it returns the app to its first state
@@ -945,6 +940,30 @@ var async_wrapper = async () => {
 				} else {
 					rm.send_result(null);
 				}
+				break;
+			//add modify user case to modify subscribed email and ...
+			//also add case to unsubscribe email and ...
+			case "update_email":
+				var output = await cq(
+					connection,
+					`update users set email = "${params.new_email}" where username = "${params.username}"`
+				);
+				if (output.error) {
+					rm.send_error(output.error);
+					break;
+				} else {
+					rm.send();
+				}
+				break;
+			case "update_phone_number":
+				var output = await cq(
+					connection,
+					`update users set phone_number = "${params.new_phone_number}" where username = "${params.username}"`
+				);
+				if (output.error) {
+					rm.send_error(output.error);
+				}
+				rm.send();
 				break;
 		}
 	});

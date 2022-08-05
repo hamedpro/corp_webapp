@@ -12,7 +12,9 @@ import { red } from "@mui/material/colors";
 import ImageIcon from "@mui/icons-material/Image";
 import WorkIcon from "@mui/icons-material/Work";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
+import { useNavigate } from "react-router-dom";
 export default function Root() {
+	var nav = useNavigate();
 	return (
 		<>
 			<div className="mt-2mx-auto border-blue-200 border-b w-full p-2 flex flex-row bg-stone-600 text-stone-100">
@@ -32,6 +34,7 @@ export default function Root() {
 							<Button
 								variant="outlined"
 								sx={{ color: "white", borderColor: red[50] }}
+								onClick={() => nav("/products")}
 							>
 								explore products
 							</Button>
@@ -47,7 +50,12 @@ export default function Root() {
 						talk to support agents any time you have a problem or question about
 						anything only by opening a new support ticket
 					</Typography>
-					<Button variant="contained" color="info" sx={{ mt: 2 }}>
+					<Button
+						variant="contained"
+						color="info"
+						sx={{ mt: 2 }}
+						onClick={() => nav("/new-support-ticket")}
+					>
 						new support ticket
 					</Button>
 				</div>

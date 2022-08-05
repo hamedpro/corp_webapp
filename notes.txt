@@ -17,3 +17,8 @@ add count in store and buying basket
 if output.css (which is where tailwind writes required classNames) needs to be created before build or dev_watch create it first 
 custom ajax is not working and resolve the promise despite there is an error in errors field
 when setting up database for first time we also create an admin user with username and password = "root"
+crop images when its needed and image frame is square 
+instead of this system of adding errors in json reponse and add result : true when we want to tell user nothing went wrong implent a way if there is not any error it means the task is done also with status always be 200
+write a good documentaion specially about api and its diffrent errors and add code to errors 
+i passed an async function to app.all func of express -> take care about this : passing async functions as callback express js
+build a diagram documentation of what is going on in all website
