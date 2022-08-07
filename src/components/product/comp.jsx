@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
 import "./styles.css";
 import UsersReviews from "./user_reviews";
+import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import FixedBarDown from "./fixed_bar_down";
 export default function Product() {
 	var product_id = useParams().product_id;
 	const [product, set_product] = useState({
@@ -71,7 +74,8 @@ export default function Product() {
 	}
 	return (
 		<>
-			<div className="mx-auto border border-blue-400 rounded mt-2 p-2">
+			<FixedBarDown price={product.price} product_id={product.id} />
+			<div className="mx-auto border border-blue-400 mt-2 p-2 mx-1">
 				<div className="relative flex justify-center align-center relative mx-auto mt-0 mb-1 rounded bg-blue-100 min-h-48 w-11/12">
 					<button
 						className="product_page__image_back"
@@ -79,7 +83,7 @@ export default function Product() {
 							image_back();
 						}}
 					>
-						back
+						<ArrowBackIosNewRoundedIcon />
 					</button>
 					{image_sources.length == 0 ? (
 						<>there is not any product image uploaded for this product</>
@@ -96,17 +100,22 @@ export default function Product() {
 							image_next();
 						}}
 					>
-						next
+						<ArrowForwardIosRoundedIcon />
 					</button>
 				</div>
-				<h1>product page</h1>
-				<hr />
-				<p>product id : {product.id}</p>
-				<p>product name : {product.name}</p>
-				<p>product description : {product.description}</p>
-				<p>product price : {product.price}</p>
+				<div className="mx-2 w-full mt-2">
+					<h1>
+						#{product.id} : {product.name}
+					</h1>
+					<p>product price : {product.price}</p>
+				</div>
 			</div>
-			<div className="mx-auto border border-blue-400 rounded mt-2 p-2">
+			<div className="mx-auto border border-blue-400 mx-1 mt-2 p-2">
+				<h1>product description:</h1>
+				<hr />
+				{product.description}
+			</div>
+			<div className="mx-auto border border-blue-400 mx-1 mt-2 p-2">
 				<h1 className="text-lg">product specs:</h1>
 				<hr className="mb-2" />
 

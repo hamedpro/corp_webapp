@@ -29,7 +29,7 @@ import {
 	Terms,
 	FirstSetup,
 } from "./components";
-
+import ReviewsPage from "./components/product/reviews_page";
 function App() {
 	if (window.localStorage.getItem("username") !== null) {
 		customAjax({
@@ -60,6 +60,11 @@ function App() {
 						element={<UpdateCompanyData />}
 					/>
 					<Route exact path="/products/:product_id" element={<Product />}></Route>
+					<Route
+						exact
+						path="/products/:product_id/reviews"
+						element={<ReviewsPage />}
+					></Route>
 					<Route path="/user/:username" element={<User />}></Route>
 					<Route exact path="/products" element={<Products />}></Route>
 					<Route path="/new-product" element={<NewProduct />}></Route>

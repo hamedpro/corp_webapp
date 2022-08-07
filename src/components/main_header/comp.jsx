@@ -16,7 +16,7 @@ export default function MainHeader() {
 			/>
 			<div className="h-16 w-full"></div>
 			<div
-				className={`bg-stone-100 top-0 fixed h-16 w-full flex items-center flex-row p-2 border-b border-gray-300`}
+				className={`bg-stone-100 z-50 top-0 fixed h-16 w-full flex items-center flex-row p-2 border-b border-gray-300`}
 			>
 				<div className="w-3/4 flex flex-row items-center">
 					<Button
@@ -30,7 +30,7 @@ export default function MainHeader() {
 							borderRadius: "10px",
 							border: "1px solid lightgray",
 						}}
-						onClick={() => set_header_menu_visibility(true)}
+						onClick={() => set_header_menu_visibility(!header_menu_visibility)}
 					>
 						<MenuRounded />
 					</Button>
