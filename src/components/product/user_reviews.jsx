@@ -63,16 +63,29 @@ const user_reviews = (props) => {
 							see more
 						</LinkLikeP>
 					</div>
-					<div className="flex">
+					<div className="flex w-full h-40 space-x-2" style={{ overflowX: "scroll" }}>
 						{reviews.map((review, index) => {
 							if (index <= 2 && index + 1 <= reviews.length) {
 								return (
 									<React.Fragment key={index}>
-										<ReviewItem review={review} />
+										<ReviewItem
+											review={review}
+											className="shrink-0 mr-2 w-2/3"
+										/>
 									</React.Fragment>
 								);
 							}
 						})}
+						<div className="w-2/3 border bg-blue-400 text-white h-full flex justify-center items-center flex-col shrink-0">
+							<h1 className="text-center mb-2">want to share your exprience ?</h1>
+							<Button
+								size="small"
+								variant="contained"
+								onClick={() => nav(`/products/${props.product_id}/reviews`)}
+							>
+								add a new review
+							</Button>
+						</div>
 					</div>
 				</div>
 			</>

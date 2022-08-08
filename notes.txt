@@ -23,3 +23,30 @@ write a good documentaion specially about api and its diffrent errors and add co
 i passed an async function to app.all func of express -> take care about this : passing async functions as callback express js
 build a diagram documentation of what is going on in all website
 sometimes i get max connection error in mysql , maybe in every request server after ending response remains active fix it
+
+fix the following log  : 
+---
+        node:events:491
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (/home/hamedpro/coding/corp-webapp/node_modules/mysql/lib/protocol/Protocol.js:112:13)
+    at Socket.<anonymous> (/home/hamedpro/coding/corp-webapp/node_modules/mysql/lib/Connection.js:94:28)
+    at Socket.<anonymous> (/home/hamedpro/coding/corp-webapp/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (node:events:525:35)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Emitted 'error' event on Connection instance at:
+    at Connection._handleProtocolError (/home/hamedpro/coding/corp-webapp/node_modules/mysql/lib/Connection.js:423:8)
+    at Protocol.emit (node:events:513:28)
+    at Protocol._delegateError (/home/hamedpro/coding/corp-webapp/node_modules/mysql/lib/protocol/Protocol.js:398:10)
+    at Protocol.end (/home/hamedpro/coding/corp-webapp/node_modules/mysql/lib/protocol/Protocol.js:116:8)
+    at Socket.<anonymous> (/home/hamedpro/coding/corp-webapp/node_modules/mysql/lib/Connection.js:94:28)
+    [... lines matching original stack trace ...]
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  fatal: true,
+  code: 'PROTOCOL_CONNECTION_LOST'
+}
+
+---

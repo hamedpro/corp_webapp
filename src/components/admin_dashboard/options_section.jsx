@@ -5,7 +5,7 @@ export default function OptionsSection() {
 	var nav = useNavigate();
 	function change_my_own_password() {
 		alert("you will be redirected to your user account page becuse you can do it there");
-		nav("/user/" + window.localStorage.getItem("username"));
+		nav("/users/" + window.localStorage.getItem("username"));
 	}
 	function undo_all() {
 		customAjax({

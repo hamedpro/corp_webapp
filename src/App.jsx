@@ -48,7 +48,7 @@ function App() {
 		<context.Provider value={{}}>
 			<BrowserRouter>
 				<MainHeader />
-				{/* <NavBar /> */}
+				<NavBar />
 				<Routes>
 					<Route path="/api_test_page" element={<ApiTestPage />}></Route>
 					<Route path="/admin-dashboard" element={<AdminDashboard />}></Route>
@@ -65,7 +65,7 @@ function App() {
 						path="/products/:product_id/reviews"
 						element={<ReviewsPage />}
 					></Route>
-					<Route path="/user/:username" element={<User />}></Route>
+					<Route exact path="/users/:username" element={<User />}></Route>
 					<Route exact path="/products" element={<Products />}></Route>
 					<Route path="/new-product" element={<NewProduct />}></Route>
 					<Route path="/register" element={<Register />}></Route>

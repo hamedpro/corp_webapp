@@ -23,7 +23,7 @@ export default function ReviewsPage() {
 		);
 	}
 	useEffect(fetch_data, []);
-	//todo add layout of adding new review here
+	//todo add layout of adding new review here (instead of using window.prompt and ...)
 	function add_new_review() {
 		var d = new Date();
 		customAjax({
@@ -68,6 +68,7 @@ export default function ReviewsPage() {
 
 			<hr />
 			{reviews.map((review, index) => {
+				//put limit on count of shown reviews if count is too high
 				return (
 					<React.Fragment key={index}>
 						<ReviewItem review={review} className="mt-2" />

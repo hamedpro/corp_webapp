@@ -932,6 +932,7 @@ var async_wrapper = async () => {
 				});
 				break;
 			case "get_profile_image_src":
+				// todo ./uploaded/profile_images/ does not exists
 				var profile_images = fs.readdirSync("./uploaded/profile_images/");
 				if (
 					profile_images.filter((pi) => pi.split(".")[0] == params.username).length == 1

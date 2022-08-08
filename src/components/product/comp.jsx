@@ -111,30 +111,22 @@ export default function Product() {
 				</div>
 			</div>
 			<div className="mx-auto border border-blue-400 mx-1 mt-2 p-2">
-				<h1>product description:</h1>
+				<h1 className="mb-1">description:</h1>
 				<hr />
-				{product.description}
+				<p className="mt-1">{product.description}</p>
 			</div>
 			<div className="mx-auto border border-blue-400 mx-1 mt-2 p-2">
 				<h1 className="text-lg">product specs:</h1>
 				<hr className="mb-2" />
-
-				<table className="custom_border">
-					<tbody>
-						<tr>
-							<th>key</th>
-							<th>value</th>
-						</tr>
-						{JSON.parse(product.product_specs).map((spec) => {
-							return (
-								<tr key={spec.id}>
-									<td>{spec.key}</td>
-									<td>{spec.value}</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
+				{/* add option for report data incorrect which opens pop up to open a new support ticket */}
+				{JSON.parse(product.product_specs).map((spec) => {
+					return (
+						<div className="flex" key={spec.id}>
+							<p className="text-stone-600 mr-1">{spec.key}</p>:
+							<p className="ml-1">{spec.value}</p>
+						</div>
+					);
+				})}
 			</div>
 
 			<UsersReviews product_id={Number(product_id)} />

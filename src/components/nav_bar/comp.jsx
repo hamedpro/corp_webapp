@@ -23,8 +23,9 @@ export default function NavBar() {
       set_paths(tmp);
     });
   }, [loc]);
+  //todo add link style to options below 
   return (
-    <div className="px-2 flex flex-row items-center mx-auto w-full border border-blue-400 rounded mt-2">
+    <div className="px-2 flex flex-row items-center mx-1 mt-2 border py-1 border-stone-300">
       {paths.map((path, index) => {
         return (
           <React.Fragment key={index}>
