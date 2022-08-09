@@ -7,6 +7,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 uploaded/*
+uploaded/*/*
+src/roboto/*
 node_modules
 dist
 dist-ssr

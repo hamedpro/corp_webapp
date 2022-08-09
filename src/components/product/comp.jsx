@@ -74,7 +74,6 @@ export default function Product() {
 	}
 	return (
 		<>
-			
 			<div className="mx-auto border border-blue-400 mt-2 p-2 mx-1">
 				<div className="relative flex justify-center align-center relative mx-auto mt-0 mb-1 rounded bg-blue-100 min-h-48 w-11/12">
 					<button
@@ -110,7 +109,7 @@ export default function Product() {
 				</div>
 				<AddToShoppingBagBar price={product.price} product_id={product.id} />
 			</div>
-			
+
 			<div className="mx-auto border border-blue-400 mx-1 mt-2 p-2">
 				<h1 className="mb-1">description:</h1>
 				<hr />

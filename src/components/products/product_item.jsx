@@ -24,7 +24,10 @@ export default function ProductItem({ id, name, price }) {
 		alert("this feature is not implented yet");
 	}
 	return (
-		<div className="cursor-pointer w-6/12 block border mx-auto relative border-stone-200 hover:scale-105 hover:z-10 hover:bg-white" onClick={() => nav("/products/" + id)}>
+		<div
+			className="cursor-pointer w-6/12 block border mx-auto relative border-stone-200 hover:scale-105 hover:z-10 hover:bg-white"
+			onClick={() => nav("/products/" + id)}
+		>
 			<div className="relative border w-full min-h-16 mx-auto bg-blue-500 flex items-center justify-center">
 				{the_image_src === null ? (
 					<div className="h-24 flex justify-center items-center">
@@ -38,9 +41,7 @@ export default function ProductItem({ id, name, price }) {
 					/>
 				)}
 			</div>
-			<p className="mx-auto mx-1 mt-1">
-				{name}
-			</p>
+			<p className="mx-auto mx-1 mt-1">{name}</p>
 			<div className="flex min-h-0 h-8 p-1">{price} toman</div>
 		</div>
 	);
