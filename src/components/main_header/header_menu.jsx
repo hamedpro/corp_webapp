@@ -40,14 +40,12 @@ const HeaderMenu = (props) => {
 	}
 	return (
 		<>
-			
 			<div
 				className="fixed bg-gray-300 h-full w-full z-40"
 				style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
 				onClick={() => props.hide_header_menu()}
 			></div>
 			<div className="bg-white fixed w-4/5 h-full p-0 m-0 z-50">
-			<div className="h-16 relative"></div>
 				<div className="flex flex-row h-16 p-2 items-center">
 					<div className="pr-3 w-2/5  flex flex-col h-full">
 						<div className="w-full h-2/3 bg-blue-400 rounded"></div>
@@ -69,7 +67,10 @@ const HeaderMenu = (props) => {
 							</Button>
 						) : (
 							<ButtonGroup size="small" color="success" className="min-w-0">
-								<Button className="text-sm" onClick={()=>nav('/users/'+username)}>
+								<Button
+									className="text-sm"
+									onClick={() => nav("/users/" + username)}
+								>
 									<p>@{username}</p>
 								</Button>
 								<Button onClick={log_out_button}>

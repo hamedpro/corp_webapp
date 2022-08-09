@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import "./App.css";
 import "./output.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import context from "./global_context";
 import { customAjax } from "../common-codes/custom_api_system/dev/custom_ajax";
 import {
 	ApiTestPage,
@@ -45,7 +44,6 @@ function App() {
 	}
 
 	return (
-		<context.Provider value={{}}>
 			<BrowserRouter>
 				<MainHeader />
 				<NavBar />
@@ -84,7 +82,6 @@ function App() {
 				</Routes>
 				<MainFooter />
 			</BrowserRouter>
-		</context.Provider>
 	);
 }
 

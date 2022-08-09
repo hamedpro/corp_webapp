@@ -954,6 +954,6 @@ app.all("/", async (req, res) => {
 			break;
 	}
 });
-app.listen(4000, () => {
+var server = app.listen(4000, () => {
 	console.log("server is listening on port 4000");
 });
