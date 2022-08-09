@@ -17,7 +17,7 @@ export default function Root() {
 	var nav = useNavigate();
 	return (
 		<>
-			<div className="mt-2mx-auto border-blue-200 border-b w-full p-2 flex flex-row bg-stone-600 text-stone-100">
+			<div className="mt-2 mx-auto border-blue-200 border-b w-full p-2 flex flex-row bg-stone-600 text-stone-100">
 				<div className="w-1/3 min-h-0 flex justify-center items-center mx-2">
 					<div className="h-32 w-32 bg-blue-400 rounded my-16"></div>
 				</div>

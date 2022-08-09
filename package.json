@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css --watch & vite & nodemon ./api/server.cjs",
+    "start": "npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css --watch & vite --host & nodemon ./api/server.cjs",
     "build": "vite build",
     "preview": "vite preview"
   },

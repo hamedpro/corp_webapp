@@ -50,3 +50,10 @@ Emitted 'error' event on Connection instance at:
 }
 
 ---
+
+add readme md and explain how to run the app for first time
+add support for development on another OSs
+
+when pretiere extension is enabled in some cases when i save file it doesnt update output.css (pretiere is set to format on save)
+check if it should be reported to pretiere extension or not
+add multi language and theme mode (dark or light) support 

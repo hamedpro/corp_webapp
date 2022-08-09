@@ -85,7 +85,7 @@ export default function SubToSmsTab() {
 	}
 	useEffect(fetch_data, []);
 	return (
-		<div className="border border-blue-400 rounded rounded mx-2 mb-2 px-4">
+		<>
 			<div className="mx-auto h-20 w-20 rounded-full bg-blue-400 mt-3 flex justify-center items-center">
 				<NotificationsActiveRoundedIcon
 					sx={{ width: "80%", height: "80%", color: "white" }}
@@ -156,6 +156,6 @@ export default function SubToSmsTab() {
 					</div>
 				) : null}
 			</div>
-		</div>
+		</>
 	);
 }
