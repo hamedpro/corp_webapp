@@ -22,8 +22,6 @@ instead of this system of adding errors in json reponse and add result : true wh
 write a good documentaion specially about api and its diffrent errors and add code to errors 
 i passed an async function to app.all func of express -> take care about this : passing async functions as callback express js
 build a diagram documentation of what is going on in all website
-sometimes i get max connection error in mysql , maybe in every request server after ending response remains active fix it
-
 fix the following log  : 
 ---
         node:events:491
