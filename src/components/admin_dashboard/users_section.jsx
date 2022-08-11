@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax";
+import { customAjax } from "../../../src/custom_ajax.js";
 export default function UsersSection() {
 	const [users, set_users] = useState([]);
 	function fetch_data() {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+import { customAjax } from "../../../src/custom_ajax.js";
 import { Button } from "@mui/material";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
 export default function ProductItem({ id, name, price }) {

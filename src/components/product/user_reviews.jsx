@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax";
+import { customAjax } from "../../../src/custom_ajax.js";
 import Button from "@mui/material/Button";
 import TotalRating from "./total_rating";
 import LinkLikeP from "../LinkLikeP/comp";

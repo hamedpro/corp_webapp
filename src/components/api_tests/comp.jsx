@@ -1,4 +1,4 @@
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax";
+import { customAjax } from "../../../src/custom_ajax.js";
 export default function ApiTestPage() {
 	return (
 		<>

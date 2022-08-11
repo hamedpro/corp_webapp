@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+import { customAjax } from "../../../src/custom_ajax.js";
 //import global_context from "../../global_context";
 export default function Login() {
 	var navigate = useNavigate();

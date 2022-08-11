@@ -1,4 +1,4 @@
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+import { customAjax } from "../../../src/custom_ajax.js";
 import Button from "@mui/material/Button";
 export default function CompanyInfo() {
 	function get_data() {

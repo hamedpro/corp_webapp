@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+import { customAjax } from "../../../src/custom_ajax.js";
 export default function Register() {
 	var navigator = useNavigate();
 	function register() {

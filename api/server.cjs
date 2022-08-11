@@ -1,6 +1,6 @@
 var express = require("express");
 var cors = require("cors");
-var response_manager = require("../common-codes/custom_api_system/dev/express_response_manager.cjs");
+var response_manager = require("./express_response_manager.cjs");
 var mysql = require("mysql");
 var formidable = require("formidable");
 var nodemailer = require("nodemailer");

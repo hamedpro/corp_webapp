@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax";
+import { customAjax } from "../../../src/custom_ajax.js";
 import ShowDataModal from "../show_data_modal/comp";
 export default function ProductsSection() {
 	const Specs = (props) => {

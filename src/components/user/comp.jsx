@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+import { customAjax } from "../../../src/custom_ajax.js";
 export default function User() {
 	var username = useParams().username;
 	const [user, set_user] = useState({

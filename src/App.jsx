@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import "./App.css";
 import "./output.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { customAjax } from "../common-codes/custom_api_system/dev/custom_ajax";
+import { customAjax } from "../src/custom_ajax.js";
 import {
 	ApiTestPage,
 	AdminDashboard,

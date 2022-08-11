@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax";
+import { customAjax } from "../../../src/custom_ajax.js";
 
 export default function NewSupportTicket() {
 	function new_supprot_ticket() {

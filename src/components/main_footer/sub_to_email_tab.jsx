@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Typography, TextField } from "@mui/material";
 import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax";
+import { customAjax } from "../../../src/custom_ajax.js";
 import { useEffect, useState } from "react";
 import { BurstModeTwoTone } from "@mui/icons-material";
 import { LinkLikeP } from "../";

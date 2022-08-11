@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+import { customAjax } from "../../../src/custom_ajax.js";
 import LoggedInAdmin from "./LoggedInAdmin.jsx";
 import NotLoggedIn from "./NotLoggedIn.jsx";
 import LoggedInButNotAdmin from "./LoggedInButNotAdmin.jsx";

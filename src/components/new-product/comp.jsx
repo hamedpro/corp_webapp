@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./s.css";
-import { customAjax } from "../../../common-codes/custom_api_system/dev/custom_ajax.js";
+import { customAjax } from "../../../src/custom_ajax.js";
 function CustomInput({ id }) {
 	return <input id={id} className="border border-green-400 rounded px-2 py-1" />;
 }
