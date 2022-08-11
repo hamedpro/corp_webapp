@@ -14,7 +14,7 @@ export default function ProductItem({ id, name, price }) {
 			},
 		}).then((data) => {
 			if (data.result.length != 0) {
-				set_the_image_src("http://localhost:4000/product_images/" + data["result"][0]);
+				set_the_image_src("http://"+window.location.hostname+":4000/product_images/" + data["result"][0]);
 			} else {
 				set_the_image_src(null);
 			}

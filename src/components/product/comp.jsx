@@ -53,7 +53,7 @@ export default function Product() {
 			},
 		}).then((data) => {
 			set_image_sources(
-				data.result.map((file_name) => "http://localhost:4000/product_images/" + file_name)
+				data.result.map((file_name) => "http://"+window.location.hostname+":4000/product_images/" + file_name)
 			);
 		});
 	}, []);

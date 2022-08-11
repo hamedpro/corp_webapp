@@ -1,1 +1,0 @@
-GET http://localhost:4000?task_name=get_profile_image_src&username=roott

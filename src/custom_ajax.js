@@ -10,7 +10,7 @@ export function object_to_url({ path, params = {} }) {
 	return path_with_query;
 }
 export async function customAjax({
-	path = "http://localhost:4000",
+	path = "http://" + window.location.hostname + ":4000",
 	params = {},
 	method = "GET",
 	parse_json = true,

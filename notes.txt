@@ -57,3 +57,5 @@ check if it should be reported to pretiere extension or not
 add multi language and theme mode (dark or light) support 
 
 reserve a product for a specific time when user adds it to shopping bag
+
+add https support - also care about updating static urls with point to http 

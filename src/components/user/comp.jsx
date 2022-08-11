@@ -13,7 +13,7 @@ export default function User() {
 		var form = new FormData();
 		var file = document.getElementById("profile_image_input").files[0];
 		form.append("image", file);
-		fetch("http://localhost:4000?task_name=new_user_profile_image&username=" + username, {
+		fetch("http://"+window.location.hostname+":4000?task_name=new_user_profile_image&username=" + username, {
 			method: "POST",
 			body: form,
 		})
