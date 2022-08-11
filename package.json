@@ -4,9 +4,8 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"start": "npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css --watch & vite --host & nodemon ./api/server.cjs",
-		"build": "vite build",
-		"preview": "vite preview"
+		"dev": "npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css --watch & vite --host & nodemon ./api/server.cjs",
+		"start_production": "(rm -rf ./dist && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css && vite build --base ./ ) && (node ./api/server.cjs & http-server --cors -o -c 1 ./dist)"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.9.3",

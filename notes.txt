@@ -59,3 +59,6 @@ add multi language and theme mode (dark or light) support
 reserve a product for a specific time when user adds it to shopping bag
 
 add https support - also care about updating static urls with point to http 
+add ability to run server from out of project root (becuse of some relative paths)
+
+in start production script of package json take care about -> server is not up and client makes a request
