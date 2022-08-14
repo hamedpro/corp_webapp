@@ -52,7 +52,7 @@ function App() {
 	return (
 		<AppContext.Provider value={{ AppContextState, setAppContextState }}>
 			<BrowserRouter>
-				<div className="relative w-full h-full overflow-x-hidden">
+				<div className="absolute w-full h-full overflow-x-hidden">
 					<Modal is_visible={AppContextState.is_modal_visible}>
 						{AppContextState.modal_content}
 					</Modal>
