@@ -5,6 +5,7 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import "./styles.css";
 import {
 	AccountCircleRounded,
 	AddBusinessRounded,
@@ -41,14 +42,14 @@ const HeaderMenu = (props) => {
 	}
 	return (
 		<>
-			<div
+			{/* <div
 				className="fixed bg-gray-300 h-full w-full z-40"
 				style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
 				onClick={() => props.hide_header_menu()}
-			></div>
+			></div> */}
 			{/* todo export the above fixed div as a background component for pop ups and modals and 
-			update every where which use this or something like this */} 
-			<div className="bg-white fixed w-4/5 h-full p-0 m-0 z-50 overflow-y-auto">
+			update every where which use this or something like this */}
+			<div className="bg-white fixed w-full p-0 m-0 z-50 overflow-y-auto top-16 header_menu">
 				<div className="flex flex-row h-16 p-2 items-center border border-stone-300 m-1 rounded">
 					<div className="pr-3 w-2/6  h-full flex flex-col justify-center">
 						<div className="w-full h-2/3 bg-blue-400 rounded"></div>
@@ -72,11 +73,15 @@ const HeaderMenu = (props) => {
 							<div
 								className="w-fit mx-2 cursor-pointer flex break-all space-x-1 bg-blue-400 p-1 rounded justify-end items-center"
 								style={{}}
-								onClick={()=>nav('/users/'+username)}
+								onClick={() => nav("/users/" + username)}
 							>
-								
-								<AccountCircleRounded sx={{fontSize : "11px"}}/>
-								<span className="break-words inline-block text-xs" style={{fontSize : "11px"}}>dashboard</span>
+								<AccountCircleRounded sx={{ fontSize: "11px" }} />
+								<span
+									className="break-words inline-block text-xs"
+									style={{ fontSize: "11px" }}
+								>
+									dashboard
+								</span>
 							</div>
 						)}
 					</div>

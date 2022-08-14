@@ -92,13 +92,14 @@ app.all("/", async (req, res) => {
 			id int primary key auto_increment,
 			username varchar(50),
 			product_ids json,
-			status varchar(40),
+			status varchar(40), # submited payed finished todo add deliver data here 
 			time varchar(20)
 		);
-		create table if not exists shopping_cards(
+		create table if not exists shopping_card_items(
 			id int primary key auto_increment,
 			username varchar(20),
-			product_ids json,
+			product_id int,
+			count int(8),
 			time varchar(20)
 		);
 		create table if not exists blog_comments(
@@ -183,27 +184,26 @@ app.all("/", async (req, res) => {
 				// todo : omit passwords !
 				if (error) {
 					rm.send_error(error);
-				} else {
-					var modified_results = results.map((user) => {
-						var modified_user = user;
-						var profile_images = fs.readdirSync("./uploaded/profile_images/");
-						//todo make sure paths and logics works also on windows and mac os
-						modified_user.has_profile_image = false;
-						modified_user.profile_image_file_name = null;
-						profile_images.forEach((pi) => {
-							if (
-								pi.split("/")[pi.split("/").length - 1].split(".")[0] ==
-								user.username
-							) {
-								modified_user.has_profile_image = true;
-								modified_user.profile_image_file_name =
-									pi.split("/")[pi.split("/").length - 1];
-							}
-						});
-						return modified_user;
-					});
-					rm.send_result(modified_results);
+					return;
 				}
+				var modified_results = results.map((user) => {
+					var modified_user = user;
+					var profile_images = fs.readdirSync("./uploaded/profile_images/");
+					//todo make sure paths and logics works also on windows and mac os
+					modified_user.has_profile_image = false;
+					modified_user.profile_image_file_name = null;
+					profile_images.forEach((pi) => {
+						if (
+							pi.split("/")[pi.split("/").length - 1].split(".")[0] == user.username
+						) {
+							modified_user.has_profile_image = true;
+							modified_user.profile_image_file_name =
+								pi.split("/")[pi.split("/").length - 1];
+						}
+					});
+					return modified_user;
+				});
+				rm.send_result(modified_results);
 			});
 			break;
 		case "toggle_user_admin_state":
@@ -971,6 +971,12 @@ app.all("/", async (req, res) => {
 				}
 			});
 			break;
+		case "drop_database":
+			var o = await cq(con, "drop database corp_webapp");
+			if (o.error) {
+				rm.send_error(o.error);
+			}
+			rm.send();
 		case "has_user_profile_image":
 			// todo ./uploaded/profile_images/ does not exists
 			var profile_images = fs.readdirSync("./uploaded/profile_images/");
@@ -1009,9 +1015,46 @@ app.all("/", async (req, res) => {
 		case "delete_user":
 			break;
 		case "add_a_order":
-			//open a order from shopping card and
-			//empty shopping card
+			/*
+				what it does ? 
+				select all product ids from this user's shopping card items
+				insert them as a order in a new order
+				delete all selected shopping card items from shopping card items
+			*/
+			//todo check error handling of this
+			var o = await cq(
+				con,
+				`select * from shopping_card_items where username = '${params.username}'`
+			);
+			if (o.error) {
+				rm.send_error(error);
+				break;
+			}
+			var product_ids = o.result.map((shopping_card_item) => {
+				return Number(shopping_card_item.product_id);
+			});
+			var output = await cq(
+				con,
+				`insert into orders (username,product_ids,status,time) values ('${
+					params.username
+				}','${JSON.stringify(product_ids)}','submited','${new Date().getTime()}')`
+			);
+			if (output.error) {
+				rm.send_error(output.error);
+				break;
+			}
+			output = await cq(
+				con,
+				`delete from shopping_card_items where username = '${params.username}'`
+			);
+			if (output.error) {
+				rm.send_error(error);
+			}
+			rm.send();
 			break;
+		case "remove_a_order":
+			break;
+		//todo add ability to another changes to the order and its products
 		//todo complete these cases
 		case "add_like_to_a_blog":
 			break;
@@ -1027,6 +1070,40 @@ app.all("/", async (req, res) => {
 			/* admin checks the comment for illegal things
 			before publishing it publicly */
 			break;
+		case "get_user_orders":
+			var o = await cq(con, `select * from orders where username = '${params.username}'`);
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
+			rm.send_result(o.result);
+			break;
+		case "update_shopping_card_item":
+			var o = cq(
+				con,
+				`delete from shopping_card_items where product_id = ${Number(params.product_id)}`
+			);
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
+			if (Number(params.count) !== 0) {
+				o = await cq(
+					con,
+					`insert into shopping_card_items (username ,product_id ,time,count) values ('${
+						params.username
+					}',${Number(params.product_id)},'${new Date().getTime()}',${Number(
+						params.count
+					)})`
+				);
+				if (o.error) {
+					rm.send_error(o.output);
+					break;
+				}
+			}
+			rm.send();
+		//todo check for duplicate cases
+		//todo add con to cq itself and take just one arg
 	}
 });
 var server = app.listen(4000, () => {
