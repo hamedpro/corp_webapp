@@ -1,28 +1,73 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
+import { toHHMMSS } from "../../common.js";
+import { AppContext } from "../../AppContext";
+import Modal from "../Modal/Modal.jsx";
+import { HideImageRounded, KeyboardBackspaceRounded } from "@mui/icons-material";
+import { Button } from "@mui/material";
+import Section from "../section/comp.jsx";
+import ListItem from "../list_item/comp.jsx";
+function Item(props) {
+	return (
+		<div
+			className={
+				"flex justify-center items-center rounded-xl px-2 py-1 text-xs cursor-pointer duration-400" +
+				(props.primary
+					? " bg-blue-600 text-white hover:bg-blue-800 "
+					: " bg-white text-blue-800 border border-blue-300 hover:border-blue-800 ")
+			}
+			onClick={props.onClick}
+		>
+			{props.children}
+		</div>
+	);
+}
 export default function User() {
+	var nav = useNavigate();
 	var username = useParams().username;
 	const [user, set_user] = useState({
 		id: "loading...",
 		username: "loading...",
 		is_admin: "loading...",
 	});
-	var [profile_image_src, set_profile_image_src] = useState(null);
+	var [userStatus, setUserStatus] = useState("loading");
 	function upload_the_photo() {
+		var file_input = document.getElementById("profile_image_input");
+		if (file_input.length == 0) {
+			alert("profile image input was empty");
+			return;
+		}
 		var form = new FormData();
-		var file = document.getElementById("profile_image_input").files[0];
+		var file = file_input.files[0];
 		form.append("image", file);
-		fetch("http://"+window.location.hostname+":4000?task_name=new_user_profile_image&username=" + username, {
-			method: "POST",
-			body: form,
-		})
-			.then((data) => data.json())
-			.then((data) => {
-				if (data.result) {
-					alert("done");
+		fetch(
+			"http://" +
+				window.location.hostname +
+				":4000?task_name=new_user_profile_image&username=" +
+				username,
+			{
+				method: "POST",
+				body: form,
+			}
+		)
+			.then(
+				(data) => data.json(),
+				(error) => {
+					alert("error in uploading photo. details are available in console");
+					console.log(error);
 				}
-			})
+			)
+			.then(
+				(data) => {
+					if (data.result) {
+						alert("done");
+					}
+				},
+				(error) => {
+					//todo handle error here and convert simple fetchs to customAjax
+				}
+			)
 			.finally(() => {
 				fetch_data();
 			});
@@ -37,6 +82,7 @@ export default function User() {
 				old_password,
 				new_password,
 			},
+			verbose: true,
 		})
 			.then(
 				(data) => {
@@ -60,6 +106,19 @@ export default function User() {
 		}).then(
 			(data) => {
 				set_user(data.result.filter((i) => i.username == username)[0]);
+
+				//setting userStatus
+				if (window.localStorage.getItem("username") === null) {
+					setUserStatus("not_logged_in");
+				} else {
+					var logged_user = data.result.find(
+						(user) => user.username === window.localStorage.getItem("username")
+					);
+
+					setUserStatus(
+						logged_user.is_admin === "true" || logged_user.username === username
+					);
+				}
 			},
 			(error) => {
 				console.log(error);
@@ -67,61 +126,198 @@ export default function User() {
 		);
 		customAjax({
 			params: {
-				task_name: "get_profile_image_src",
+				task_name: "has_user_profile_image",
 				username,
 			},
+			verbose: true,
 		}).then((data) => {
-			set_profile_image_src(data.result);
+			set_has_user_profile_image(data.result);
+			//handle errors in these cases
 		});
 	}
 
-	useEffect(() => {
-		fetch_data();
-	}, []);
-
-	return (
-		<>
-			<div
-				className={`mx-auto border 
-      border-blue-400 rounded mt-2 p-2 flex items-center`}
-			>
-				<div className="w-2/6 border border-blue-400">
-					{profile_image_src === null ? (
-						<h1>profile image is not uploaded</h1>
-					) : (
-						<img
-							className="w-full min-h-10 border border-blue-400"
-							src={profile_image_src}
+	var tmp = useContext(AppContext); //todo  check if we have to sync it in every change
+	function Options() {
+		//todo add background opacity 0.5 to it add it globally in a way
+		// that could be enable using AppContext
+		return (
+			<>
+				<div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-2/3 max-h-full bg-blue-500 rounded-xl p-2 flex space-y-1 flex-col">
+					<div className="flex space-x-1 mb-2 items-center">
+						<KeyboardBackspaceRounded
+							sx={{ color: "lightgray" }}
+							className="hover:bg-blue-800 duration-400 rounded"
+							onClick={hide_options_modal}
 						/>
-					)}
+						<h1 className="text-white text-lg ">other options</h1>
+					</div>
+					<div
+						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
+						onClick={change_password}
+					>
+						change my password
+					</div>
+					<div
+						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
+						onClick={() => alert("this feature will be added soon!")}
+					>
+						my pending orders
+					</div>{" "}
+					{/* todo add this feature */}
+					<div
+						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
+						onClick={() => alert("this feature will be added soon!")}
+					>
+						change username
+					</div>{" "}
+					{/* todo add this feature */}
+					<div
+						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
+						onClick={() => alert("this feature will be added soon!")}
+					>
+						change bio
+					</div>{" "}
+					{/* todo add this feature */}
+					<div
+						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
+						onClick={() => alert("this feature will be added soon!")}
+					>
+						delete account
+					</div>{" "}
+					{/* todo add this feature */}
+					<div
+						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
+						onClick={() => alert("this feature will be added soon!")}
+					>
+						unsubscribe emails
+					</div>{" "}
+					{/* todo add this feature */}
+					<div
+						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
+						onClick={() => alert("this feature will be added soon!")}
+					>
+						unsubscribe sms service
+					</div>{" "}
+					{/* todo add this feature */}
 				</div>
-				<div className="w-4/6 border border-blue-400">
-					<h1>user account</h1>
-					<hr />
-					<p>user_id: {user.id}</p>
-					<p>username: {user.username}</p>
-					<p>is_admin: {user.is_admin}</p>
-				</div>
+			</>
+		);
+	}
+	function show_other_options_in_modal() {
+		tmp.setAppContextState({
+			is_modal_visible: true,
+			modal_content: <Options />,
+		});
+	}
+	function hide_options_modal() {
+		tmp.setAppContextState({
+			is_modal_visible: false,
+			modal_content: tmp.AppContextState.modal_content,
+		});
+	}
+	useEffect(fetch_data, []);
+	if (userStatus == "loading") {
+		return (
+			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
+				<h1 className="text-center">LOADING YOUR DATA ...</h1>
 			</div>
-			<div className="mx-auto border border-blue-400 rounded mt-2 p-2">
-				<h1>options</h1>
-				<hr />
-				<p onClick={change_password}>change my password</p>
+		);
+	}
+	if (userStatus == "not_logged_in") {
+		return (
+			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
+				<h1>you've not logged in</h1>
+				<p className="text-center">
+					you should either login as @{username} or be an admin to access informations of
+					this page
+				</p>
+				<Button variant="outlined" onClick={() => nav("/login")}>
+					login
+				</Button>
+			</div>
+			//todo : for this kind of auth stuffs create a common solution
+		);
+	}
+	if (typeof userStatus == "boolean" && userStatus === false) {
+		return (
+			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
+				<h1>you have not permission to access this page</h1>
+				<p className="text-center">
+					you should either login as @{username} or be an admin to access informations of
+					this page
+				</p>
+				<Button variant="outlined" onClick={() => nav("/login")}>
+					login into another account
+				</Button>
+			</div>
+		);
+	}
+	if (typeof userStatus == "boolean" && userStatus === true) {
+		return (
+			<>
 				<input
 					onChange={upload_the_photo}
 					id="profile_image_input"
 					type="file"
 					className="hidden"
 				/>
-				<p
-					onClick={() => {
-						document.getElementById("profile_image_input").click();
-					}}
+				<div
+					className={`mx-1 border 
+      border-red-400 rounded mt-4 relative`}
 				>
-					upload new profile image
-				</p>
-			</div>
-			<div className="mx-auto border border-blue-400 rounded mt-2 p-2"></div>
-		</>
-	);
+					<div className="cover_image rounded-t bg-blue-400 h-20 w-full mb-6"></div>
+					<div
+						style={{ left: Math.round((1 / 8) * 100) + "%" }}
+						className="bg-blue-500 flex flex-col justify-center items-center profile_photo_frame absolute -translate-y-4 rounded-full border-2 border-blue-300 overflow-hidden top-0 h-28 w-28"
+					>
+						{!user.has_profile_image ? (
+							<>
+								{" "}
+								{/* todo add animations add skeleton loading or ... to all app  */}
+								<HideImageRounded sx={{ color: "white", mb: 1 }} />
+								<h1 className="text-white text-center text-sm">
+									profile image is not uploaded
+								</h1>
+							</>
+						) : (
+							<img
+								className="w-full h-full min-h-10 border border-blue-400"
+								src={
+									/* switch to https */
+									"http://" +
+									window.location.hostname +
+									":4000/profile_images/" +
+									user.profile_image_file_name
+								}
+							/>
+						)}
+					</div>
+					<div className="px-6">
+						<h1 className="text-lg">{user.username}</h1>
+						<h5 className="text-sm text-stone-500">
+							has subscribed from {new Date().getTime() - user.time} milliseconds ago
+						</h5>
+					</div>
+					<div className="flex overflow-auto space-x-1 px-6 mt-3">
+						<Item onClick={() => alert("clicked!")} primary={true}>
+							orders history
+						</Item>
+						<Item
+							onClick={() => {
+								document.getElementById("profile_image_input").click();
+							}}
+						>
+							set new profile image
+						</Item>
+						<Item onClick={show_other_options_in_modal}>...</Item>
+					</div>
+					<Section title="orders">
+						<ListItem
+							items={["hamed: 2", "negin: hamed", "girlfriend: iam very old"]}
+						/>
+					</Section>
+				</div>
+			</>
+		);
+	}
 }

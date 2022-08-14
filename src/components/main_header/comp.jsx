@@ -23,8 +23,8 @@ export default function MainHeader() {
 						sx={{
 							minHeight: 0,
 							minWidth: 0,
-							width: "30px",
-							height: 30,
+							width: "33px",
+							height: "33px",
 							padding: 1,
 							borderRadius: "10px",
 							border: "1px solid lightgray",
@@ -33,7 +33,7 @@ export default function MainHeader() {
 					>
 						<MenuRounded />
 					</Button>
-					<span className="px-2">corp_webapp</span>
+					<h1 className="px-2 text-lg m-0 p-0 bg-sky-600 rounded-lg pb-1 text-white ml-2 rounded ">corp_webapp</h1>
 				</div>
 				<div className="w-1/4 flex flex-row justify-end"></div>
 			</div>

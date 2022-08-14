@@ -13,9 +13,12 @@ var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_que
 
 app.all("/", async (req, res) => {
 	var rm = new response_manager(res);
-	if (!fs.existsSync("./uploaded")) {
-		fs.mkdirSync("./uploaded");
-	}
+	["./uploaded", "./uploaded/profile_images", "./uploaded/product_images"].forEach((path) => {
+		if (!fs.existsSync(path)) {
+			fs.mkdirSync(path);
+		}
+	});
+
 	var con = mysql.createConnection({
 		user: "root",
 		password: "mysqlpassword",
@@ -38,7 +41,8 @@ app.all("/", async (req, res) => {
 			is_subscribed_to_email varchar(20) default "false",
 			is_subscribed_to_sms varchar(20) default "false",
 			email varchar(100),
-			phone_number varchar(15)
+			phone_number varchar(15),
+			time varchar(20)
 		);
 		create table if not exists products(
 			id int primary key auto_increment,
@@ -83,8 +87,38 @@ app.all("/", async (req, res) => {
 			name varchar(200),
 			text text,
 			last_modification_time varchar(100)
-		);`
+		);
+		create table if not exists orders (
+			id int primary key auto_increment,
+			username varchar(50),
+			product_ids json,
+			status varchar(40),
+			time varchar(20)
+		);
+		create table if not exists shopping_cards(
+			id int primary key auto_increment,
+			username varchar(20),
+			product_ids json,
+			time varchar(20)
+		);
+		create table if not exists blog_comments(
+			id int primary key auto_increment,
+			username varchar(20),
+			blog_id int(10),
+			title varchar(100),
+			text text,
+			time varchar(20),
+			verification_status varchar(20),
+			verifier_username varchar(20)
+		)
+		`
 	);
+	//in blog comments -> verf_status : rejected , pending, accepted
+	//todo add ability to reserve each product when adding to --
+	//shopping card seperatly
+	//todo also check for all comments for todo
+	//todo also check inside the code for todos and make a  --
+	//app for it
 	if (output.error) {
 		rm.send_error(output.error);
 		return; // it terminates app.all function
@@ -142,12 +176,33 @@ app.all("/", async (req, res) => {
 			);
 			break;
 		case "get_users":
+			//todo add his shopping card as a prop
+			//todo add his orders here
+
 			con.query(`select * from users`, (error, results) => {
 				// todo : omit passwords !
 				if (error) {
 					rm.send_error(error);
 				} else {
-					rm.send_result(results);
+					var modified_results = results.map((user) => {
+						var modified_user = user;
+						var profile_images = fs.readdirSync("./uploaded/profile_images/");
+						//todo make sure paths and logics works also on windows and mac os
+						modified_user.has_profile_image = false;
+						modified_user.profile_image_file_name = null;
+						profile_images.forEach((pi) => {
+							if (
+								pi.split("/")[pi.split("/").length - 1].split(".")[0] ==
+								user.username
+							) {
+								modified_user.has_profile_image = true;
+								modified_user.profile_image_file_name =
+									pi.split("/")[pi.split("/").length - 1];
+							}
+						});
+						return modified_user;
+					});
+					rm.send_result(modified_results);
 				}
 			});
 			break;
@@ -916,17 +971,12 @@ app.all("/", async (req, res) => {
 				}
 			});
 			break;
-		case "get_profile_image_src":
+		case "has_user_profile_image":
 			// todo ./uploaded/profile_images/ does not exists
 			var profile_images = fs.readdirSync("./uploaded/profile_images/");
-			if (profile_images.filter((pi) => pi.split(".")[0] == params.username).length == 1) {
-				var profile_image_src =
-					"http://localhost:4000/profile_images/" +
-					profile_images.find((pi) => pi.split(".")[0] == params.username);
-				rm.send_result(profile_image_src);
-			} else {
-				rm.send_result(null);
-			}
+
+			profile_images.filter((pi) => pi.split(".")[0] == params.username).length == 1;
+
 			break;
 		//add modify user case to modify subscribed email and ...
 		//also add case to unsubscribe email and ...
@@ -951,6 +1001,31 @@ app.all("/", async (req, res) => {
 				rm.send_error(output.error);
 			}
 			rm.send();
+			break;
+		case "submit_new_shopping_card":
+			//reserve all products for 5 hours if its not disabled by admin
+			//add getTime of when you're submitting it
+			break;
+		case "delete_user":
+			break;
+		case "add_a_order":
+			//open a order from shopping card and
+			//empty shopping card
+			break;
+		//todo complete these cases
+		case "add_like_to_a_blog":
+			break;
+		case "remove_like_from_a_blog":
+			break;
+		case "new_blog_comment":
+			break;
+		case "delete_blog_comment":
+			break;
+		case "change_blog_comment":
+			break;
+		case "verify_blog_comment":
+			/* admin checks the comment for illegal things
+			before publishing it publicly */
 			break;
 	}
 });

@@ -22,3 +22,6 @@ export { default as NewBlog } from "./new_blog/comp";
 export { default as LinkLikeP } from "./LinkLikeP/comp";
 export { default as Terms } from "./terms/comp";
 export { default as FirstSetup } from "./first_setup/comp";
+export { default as Users } from "./users/comp";
+export { default as Modal } from "./Modal/Modal";
+export { default as Section } from "./section/comp.jsx";
