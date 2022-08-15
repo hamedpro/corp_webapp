@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Typography, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { useState, useEffect } from "react";
-import { BurstModeTwoTone } from "@mui/icons-material";
 import { LinkLikeP } from "../";
 export default function SubToSmsTab() {
 	var [sms_sub_status, set_sms_sub_status] = useState(null); // not_logged_in , without_phone_number , subscripted , ready
@@ -86,44 +85,32 @@ export default function SubToSmsTab() {
 	useEffect(fetch_data, []);
 	return (
 		<>
-			<div className="mx-auto h-20 w-20 rounded-full bg-blue-400 mt-3 flex justify-center items-center">
+			<div className="mx-auto h-16 w-16 rounded-full bg-blue-400 mt-3 flex justify-center items-center">
 				<NotificationsActiveRoundedIcon
 					sx={{ width: "80%", height: "80%", color: "white" }}
 				/>
 			</div>
-			<Typography variant="h4" sx={{ textAlign: "center" }}>
-				subscribe to sms
-			</Typography>
-			<p style={{ textAlign: "center" }} className="text-stone-700">
+			<h4 className="text-2xl text-center mt-1">subscribe to sms</h4>
+			<p className="text-center text-sm mx-auto w-3/4 text-stone-300">
 				enter your phone number if you want to get notified everytime we send offer
 				suggesstions and news to the users
 			</p>
 			<div className="flex items-center my-3">
 				{sms_sub_status == "without_phone_number" ? (
-					<>
-						<div className="w-3/4">
-							<TextField
-								label="enter your phone number here"
-								color="primary"
-								id="phone_number_input"
-							/>
-						</div>
-						<div className="w-1/4">
-							<Button
-								onClick={update_phone_number_and_sub}
-								variant="contained"
-								sx={{
-									minHeight: 0,
-									minWidth: 0,
-									width: "100%",
-									height: "100%",
-								}}
-								size="small"
-							>
-								subscribe
-							</Button>
-						</div>
-					</>
+					<div className="flex flex-col justify-center w-3/4 mx-auto">
+						<input
+							type="text"
+							id="phone_number_input"
+							placeholder="your phone number"
+						/>
+
+						<button
+							onClick={update_phone_number_and_sub}
+							className="w-full mt-2 bg-blue-400 rounded"
+						>
+							subscribe
+						</button>
+					</div>
 				) : null}
 				{sms_sub_status == "not_logged_in" ? (
 					<div className="flex flex-col justify-center items-center w-full">

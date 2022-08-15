@@ -1,13 +1,15 @@
 @keyframes custom_animation {
 	from {
 		opacity: 0;
+		top: 50%;
+		left: 100%;
 	}
 	to {
-		transform: translateX(-120%) translateY(-50%);
 		top: 50%;
 		opacity: 1;
 		top: 50%;
 		left: 100%;
+		transform: translateX(-120%);
 		position: absolute;
 	}
 }
@@ -26,9 +28,7 @@
 	animation-duration: 400ms;
 	display: block;
 	animation-fill-mode: forwards;
-	top: 50%;
-	opacity: 0;
-	left: 100%;
+
 	transform: translateY(-50%);
 	position: absolute;
 }
