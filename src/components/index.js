@@ -25,3 +25,4 @@ export { default as FirstSetup } from "./first_setup/comp";
 export { default as Users } from "./users/comp";
 export { default as Modal } from "./Modal/Modal";
 export { default as Section } from "./section/comp.jsx";
+export { default as ShoppingCardPage } from "./shopping_card_page/comp";

@@ -15,6 +15,9 @@ export default function ListItem(props) {
 			) : (
 				<div className="mr-2">{props.beforeItems}</div>
 			)}
+			{typeof props.image_src == "undefined" || props.image_src === null ? null : (
+				<img src={props.image_src} className="w-1/3 mr-2" />
+			)}
 			{props.items.map((item, index) => {
 				return (
 					<React.Fragment key={index}>

@@ -31,6 +31,9 @@ import {
 	Modal,
 } from "./components";
 import ReviewsPage from "./components/product/reviews_page";
+import Orders from "./components/orders/comp";
+import Order from "./components/order/comp";
+import { ShoppingCardPage } from "./components";
 import { AppContext } from "./AppContext.js";
 function App() {
 	if (window.localStorage.getItem("username") !== null) {
@@ -60,6 +63,13 @@ function App() {
 					<NavBar />
 					<Routes>
 						<Route path="/api_test_page" element={<ApiTestPage />} />
+						<Route exact path="/users/:username/orders" element={<Orders />} />
+						<Route exact path="/users/:username/orders/:order_id" element={<Order />} />
+						<Route
+							exact
+							path="/users/:username/shopping-card"
+							element={<ShoppingCardPage />}
+						/>
 						<Route path="/admin-dashboard" element={<AdminDashboard />} />
 						<Route path="/company-info" element={<CompanyInfo />} />
 						<Route path="/login" element={<Login />} />

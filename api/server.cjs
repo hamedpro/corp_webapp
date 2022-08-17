@@ -484,7 +484,22 @@ app.all("/", async (req, res) => {
 				if (error) {
 					rm.send_error(error);
 				} else {
-					rm.send_result(result);
+					var modified_results = result;
+					modified_results.map((o) => {
+						var oo = o;
+
+						var file_names = fs.readdirSync("./uploaded/product_images");
+						var needed_file_names = [];
+						file_names.forEach((file_name) => {
+							if (file_name.split("-")[0] == o.id) {
+								needed_file_names.push(file_name);
+							} //todo we have a case "get image path names of a product" also so we are
+							//breaking the single source of truth rule , also check all app for this rule
+						});
+						oo.images_path_names = needed_file_names;
+						return oo;
+					});
+					rm.send_result(modified_results);
 				}
 			});
 			break;
