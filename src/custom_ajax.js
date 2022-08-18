@@ -21,11 +21,7 @@ export async function customAjax({
 		params,
 	});
 	if (verbose) {
-		console.log({
-			what_is_it: "a fetch request is going to be happened with this datails",
-			path: path_with_query,
-			method,
-		});
+		console.log("path which is gonna fetch: " + path_with_query);
 	}
 	var fetch_response = await fetch(path_with_query, {
 		method,

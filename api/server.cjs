@@ -93,7 +93,8 @@ app.all("/", async (req, res) => {
 			username varchar(50),
 			product_ids json,
 			status varchar(40), # submited payed finished todo add deliver data here 
-			time varchar(20)
+			time varchar(20),
+			name varchar(20)
 		);
 		create table if not exists shopping_card_items(
 			id int primary key auto_increment,
@@ -234,6 +235,10 @@ app.all("/", async (req, res) => {
 				}
 			);
 			break;
+		//todo add checks for types and forexample when accessing user -
+		// check if the user even exists or not !
+		//todo convert to typescript
+		//todo : use ssr
 		case "change_username":
 			con.query(
 				`update users set username = '${params.new_username}' where username = '${params.old_username}'`,
@@ -242,6 +247,8 @@ app.all("/", async (req, res) => {
 						rm.send_error(error);
 					} else {
 						rm.send();
+						/* todo show this error to user
+						and suggest him/her to register */
 					}
 				}
 			);
@@ -253,7 +260,11 @@ app.all("/", async (req, res) => {
 					if (error) {
 						rm.send_error(error);
 					} else {
-						rm.send_result(results[0].password == params.password);
+						if (results.length === 0) {
+							rm.send_error("there is not any user with that username");
+						} else {
+							rm.send_result(results[0].password == params.password);
+						}
 					}
 				}
 			);
@@ -1029,7 +1040,7 @@ app.all("/", async (req, res) => {
 			break;
 		case "delete_user":
 			break;
-		case "add_a_order":
+		case "submit_a_new_order":
 			/*
 				what it does ? 
 				select all product ids from this user's shopping card items
@@ -1048,11 +1059,14 @@ app.all("/", async (req, res) => {
 			var product_ids = o.result.map((shopping_card_item) => {
 				return Number(shopping_card_item.product_id);
 			});
+			console.log(product_ids);
 			var output = await cq(
 				con,
-				`insert into orders (username,product_ids,status,time) values ('${
-					params.username
-				}','${JSON.stringify(product_ids)}','submited','${new Date().getTime()}')`
+				`insert into orders (name,username,product_ids,status,time) values ('${
+					params.name
+				}','${params.username}','${JSON.stringify(
+					product_ids
+				)}','submited','${new Date().getTime()}')`
 			);
 			if (output.error) {
 				rm.send_error(output.error);
@@ -1064,8 +1078,14 @@ app.all("/", async (req, res) => {
 			);
 			if (output.error) {
 				rm.send_error(error);
+				break;
 			}
-			rm.send();
+			output = await cq(con, `select * from orders where username = '${params.username}'`);
+			if (output.error) {
+				rm.send_error(output.error);
+				break;
+			}
+			rm.send_result(output.result[output.result.length - 1]["id"]);
 			break;
 		case "remove_a_order":
 			break;
@@ -1102,13 +1122,13 @@ app.all("/", async (req, res) => {
 				rm.send_error(o.error);
 				break;
 			}
-			if (Number(params.count) !== 0) {
+			if (Number(params.new_count) !== 0) {
 				o = await cq(
 					con,
 					`insert into shopping_card_items (username ,product_id ,time,count) values ('${
 						params.username
 					}',${Number(params.product_id)},'${new Date().getTime()}',${Number(
-						params.count
+						params.new_count
 					)})`
 				);
 				if (o.error) {
@@ -1117,6 +1137,18 @@ app.all("/", async (req, res) => {
 				}
 			}
 			rm.send();
+			break;
+		case "get_shopping_card_items":
+			var o = await cq(
+				con,
+				`select * from shopping_card_items where username ='${params.username}'`
+			);
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
+			rm.send_result(o.result);
+			break;
 		//todo check for duplicate cases
 		//todo add con to cq itself and take just one arg
 	}

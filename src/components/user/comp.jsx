@@ -4,7 +4,7 @@ import { customAjax } from "../../../src/custom_ajax.js";
 import { toHHMMSS } from "../../common.js";
 import { AppContext } from "../../AppContext";
 import Modal from "../Modal/Modal.jsx";
-import { HideImageRounded, KeyboardBackspaceRounded } from "@mui/icons-material";
+import { HideImageRounded, KeyboardBackspaceRounded, WindowOutlined } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import Section from "../section/comp.jsx";
 import ListItem from "../list_item/comp.jsx";
@@ -82,7 +82,6 @@ export default function User() {
 				old_password,
 				new_password,
 			},
-			verbose: true,
 		})
 			.then(
 				(data) => {
@@ -129,7 +128,6 @@ export default function User() {
 				task_name: "has_user_profile_image",
 				username,
 			},
-			verbose: true,
 		}).then((data) => {
 			set_has_user_profile_image(data.result);
 			//handle errors in these cases
@@ -199,6 +197,16 @@ export default function User() {
 						unsubscribe sms service
 					</div>{" "}
 					{/* todo add this feature */}
+					<div
+						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
+						onClick={() => {
+							hide_options_modal();
+							window.localStorage.removeItem("username");
+							nav("/");
+						}}
+					>
+						logout
+					</div>
 				</div>
 			</>
 		);
@@ -299,7 +307,7 @@ export default function User() {
 						</h5>
 					</div>
 					<div className="flex overflow-auto space-x-1 px-6 mt-3">
-						<Item onClick={() => alert("clicked!")} primary={true}>
+						<Item onClick={() => nav("/users/" + username + "/orders")} primary={true}>
 							orders history
 						</Item>
 						<Item

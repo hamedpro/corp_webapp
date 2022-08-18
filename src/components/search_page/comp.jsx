@@ -4,6 +4,7 @@ import Section from "../section/comp";
 import { customAjax } from "../../custom_ajax";
 import ListItem from "../list_item/comp";
 import { useNavigate } from "react-router-dom";
+import ProductListItem from "../product_list_item/comp";
 export default function SearchModal(props) {
 	var nav = useNavigate();
 	var [search_results, set_search_results] = useState(null);
@@ -28,7 +29,6 @@ export default function SearchModal(props) {
 				var products = data.result;
 				set_search_results(
 					products.filter((product) => {
-						console.log(JSON.stringify(product));
 						return JSON.stringify(product).includes(key);
 					})
 				);
@@ -69,20 +69,13 @@ export default function SearchModal(props) {
 							items = items.concat([result.name, result.price + " toman"]);
 							return (
 								<React.Fragment key={index}>
-									<ListItem
+									<ProductListItem
 										items={items}
 										onClick={() => {
 											nav("products/" + result.id);
 											props.hide_func();
 										}}
-										image_src={
-											result.images_path_names.length !== 0
-												? "http://" +
-												  location.hostname +
-												  ":4000/product_images/" +
-												  result.images_path_names[0]
-												: null
-										}
+										images_path_names={result.images_path_names}
 									/>
 								</React.Fragment>
 							);

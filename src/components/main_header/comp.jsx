@@ -36,6 +36,8 @@ export default function MainHeader() {
 			set_username(window.localStorage.getItem("username"));
 		}, 1000);
 	}, []);
+	//todo hash password before saving to db
+	//todo auth use using jwt
 	var [is_search_modal_visible, set_is_search_modal_visible] = useState(false);
 	return (
 		<>
@@ -72,18 +74,21 @@ export default function MainHeader() {
 							corp_webapp
 						</h1>
 						<div className="ml-auto flex space-x-2">
-							<CustomButton>
-								<LocalMallRounded sx={{ color: "blue" }} />
-							</CustomButton>
-
 							{username === null ? (
 								<CustomButton onClick={() => nav("/login")}>
 									<LoginRounded sx={{ color: "blue" }} />
 								</CustomButton>
 							) : (
-								<CustomButton onClick={() => nav("/users/" + username)}>
-									<PersonRounded sx={{ color: "blue" }} />
-								</CustomButton>
+								<>
+									<CustomButton
+										onClick={() => nav("/users/" + username + "/shopping-card")}
+									>
+										<LocalMallRounded sx={{ color: "blue" }} />
+									</CustomButton>
+									<CustomButton onClick={() => nav("/users/" + username)}>
+										<PersonRounded sx={{ color: "blue" }} />
+									</CustomButton>
+								</>
 							)}
 						</div>
 					</div>
