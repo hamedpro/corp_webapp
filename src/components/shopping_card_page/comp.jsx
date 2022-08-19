@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
-import ListItem from "../list_item/comp";
-import ProductListItem from "../product_list_item/comp";
 import Section from "../section/comp";
-import { trim_text_if_its_long } from "../../common";
-import { DeleteRounded } from "@mui/icons-material";
+import { InfoRounded } from "@mui/icons-material";
 import { ShoppingCardItem } from "./shopping_card_item";
+import { Alert } from "../alert/comp";
 export default function ShoppingCardPage() {
 	var nav = useNavigate();
 	var username = useParams().username;
-	var [shopping_card_items, set_shopping_card_items] = useState([]);
+	var [shopping_card_items, set_shopping_card_items] = useState(null);
 	function fetch_data() {
 		customAjax({
 			params: {
@@ -25,15 +23,18 @@ export default function ShoppingCardPage() {
 					},
 				}).then(
 					(get_products_data) => {
-						set_shopping_card_items(
-							data.result.map((shopping_card_item) => {
-								var tmp = shopping_card_item;
-								tmp.product = get_products_data.result.find(
-									(i) => i.id == shopping_card_item.product_id
-								);
-								return tmp;
-							})
-						);
+						var oz = data.result.map((shopping_card_item) => {
+							var tmp = shopping_card_item;
+							tmp.product = get_products_data.result.find(
+								(i) => i.id == shopping_card_item.product_id
+							);
+							return tmp;
+						});
+						if (oz.length !== 0) {
+							set_shopping_card_items(oz);
+						} else {
+							set_shopping_card_items(null);
+						}
 					},
 					(error) => {
 						console.log(error);
@@ -54,7 +55,6 @@ export default function ShoppingCardPage() {
 				name: window.prompt("enter a name for your new order"),
 				username,
 			},
-			verbose: true,
 		}).then(
 			(data) => {
 				nav("/orders/" + data.result);
@@ -67,21 +67,34 @@ export default function ShoppingCardPage() {
 
 	return (
 		<div className="flex flex-col">
-			<Section title="my shopping card">
-				{shopping_card_items.map((shopping_card_item, index) => {
-					return (
-						<React.Fragment key={index}>
-							<ShoppingCardItem
-								shopping_card_item={shopping_card_item}
-								update_shopping_card_items_func={() => {
-									fetch_data();
-								}}
-							/>
-						</React.Fragment>
-					);
-				})}
+			<Section title="my shopping card" className="mb-2">
+				{shopping_card_items === null ? (
+					<h1 className="mx-2">
+						<Alert icon={<InfoRounded />}>
+							you have'nt added any product to your shopping card yet
+						</Alert>
+					</h1>
+				) : (
+					<>
+						{shopping_card_items.map((shopping_card_item, index) => {
+							return (
+								<React.Fragment key={index}>
+									<ShoppingCardItem
+										shopping_card_item={shopping_card_item}
+										update_shopping_card_items_func={() => {
+											fetch_data();
+										}}
+									/>
+								</React.Fragment>
+							);
+						})}
+					</>
+				)}
 			</Section>
-			<button className="w-full h-8 mx-2 text-white bg-blue-500" onClick={submit_new_order}>
+			<button
+				className="h-8 mx-1 text-white bg-blue-500 rounded hover:bg-blue-600 duration-300"
+				onClick={submit_new_order}
+			>
 				submit them as an order
 			</button>
 		</div>

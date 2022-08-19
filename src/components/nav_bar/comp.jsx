@@ -32,17 +32,22 @@ export default function NavBar() {
 	return (
 		<div
 			className={
-				"px-2 flex flex-row items-center mx-1 mt-2 border py-1 border-stone-300" +
+				"px-1 flex flex-row items-center mx-1 mt-2 border py-1 border-stone-300" +
 				(is_nav_bar_visible ? " " : " hidden")
 			}
 		>
 			{paths.map((path, index) => {
 				return (
 					<React.Fragment key={index}>
-						<b className="mx-1 cursor-pointer" onClick={() => nav(path.link)}>
+						<p className="mx-1 cursor-pointer text-xs" onClick={() => nav(path.link)}>
 							{path.name}
-						</b>
-						<p style={{ display: index == paths.length - 1 ? "none" : "block" }}>/</p>
+						</p>
+						<p
+							className="text-xs text-stone-400"
+							style={{ display: index == paths.length - 1 ? "none" : "block" }}
+						>
+							/
+						</p>
 					</React.Fragment>
 				);
 			})}

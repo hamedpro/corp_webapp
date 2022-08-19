@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
+import Section from "../section/comp";
 //import global_context from "../../global_context";
 export default function Login() {
 	var navigate = useNavigate();
@@ -31,14 +32,16 @@ export default function Login() {
 		);
 	}
 	return (
-		<>
-			<div className="w-full border border-blue-200 rounded mx-auto my-2 p-3">
-				<h1 className="text-lg">login page</h1>
-				<hr className="my-2" />
+		<Section title="login">
+			<div className="px-2">
 				<p>username:</p>
 				<input className="px-1 border border-blue-200 rounded" id="username_input" />
 				<p>password:</p>
-				<input className="px-1 border border-blue-200 rounded" id="password_input" />
+				<input
+					className="px-1 border border-blue-200 rounded"
+					id="password_input"
+					type="password"
+				/>
 
 				<button
 					onClick={() => {
@@ -48,11 +51,11 @@ export default function Login() {
 						);
 					}}
 					id="login_button"
-					className="block border border-black mt-2 rounded p-2 py-1"
+					className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-600 duration-300"
 				>
 					login
 				</button>
 			</div>
-		</>
+		</Section>
 	);
 }

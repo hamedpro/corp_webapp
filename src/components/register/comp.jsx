@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
+import Section from "../section/comp";
 export default function Register() {
 	var navigator = useNavigate();
 	function register() {
@@ -24,19 +25,23 @@ export default function Register() {
 		);
 	}
 	return (
-		<div className="border border-blue-400 rounded mx-auto w-full mt-2 p-2">
-			<h1>register page</h1>
-			<hr />
-			<p>username:</p>
-			<input id="username_input" className="border border-blue-400 rounded" />
-			<p>password:</p>
-			<input id="password_input" className="border border-blue-400 rounded" />
-			<button
-				className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-600"
-				onClick={register}
-			>
-				register new user
-			</button>
-		</div>
+		<Section title="register">
+			<div className="px-2">
+				<p>username:</p>
+				<input id="username_input" className="border border-blue-400 rounded px-1" />
+				<p>password:</p>
+				<input
+					id="password_input"
+					className="border border-blue-400 rounded px-1"
+					type="password"
+				/>
+				<button
+					className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-600 duration-300"
+					onClick={register}
+				>
+					register new user
+				</button>
+			</div>
+		</Section>
 	);
 }

@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
 import Section from "../section/comp";
 import ListItem from "../list_item/comp";
+import React from "react";
+import { OrdersPageOrder } from "./orders_page_order";
 export default function Orders() {
 	var nav = useNavigate();
 	var username = useParams().username;
@@ -11,7 +13,7 @@ export default function Orders() {
 	function fetch_data() {
 		customAjax({
 			params: {
-				task_name: "get_orders",
+				task_name: "get_user_orders",
 				username,
 			},
 		}).then(
@@ -32,8 +34,12 @@ export default function Orders() {
 	return (
 		<>
 			<Section title="my orders list">
-				{orders.map((order) => {
-					return <h1>{JSON.stringify(order)}</h1>;
+				{orders.map((order, index) => {
+					return (
+						<React.Fragment key={index}>
+							<OrdersPageOrder order={order} />
+						</React.Fragment>
+					);
 				})}
 			</Section>
 		</>

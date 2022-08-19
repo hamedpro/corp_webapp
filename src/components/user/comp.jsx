@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { toHHMMSS } from "../../common.js";
-import { AppContext } from "../../AppContext";
-import Modal from "../Modal/Modal.jsx";
-import { HideImageRounded, KeyboardBackspaceRounded, WindowOutlined } from "@mui/icons-material";
+import { HideImageRounded } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import Section from "../section/comp.jsx";
-import ListItem from "../list_item/comp.jsx";
+import { OrdersPageOrder } from "../orders/orders_page_order.jsx";
+import React from "react";
+import { OptionsSection } from "./options_section.jsx";
 function Item(props) {
 	return (
 		<div
@@ -24,6 +23,7 @@ function Item(props) {
 	);
 }
 export default function User() {
+	var [orders_to_show, set_orders_to_show] = useState([]);
 	var nav = useNavigate();
 	var username = useParams().username;
 	const [user, set_user] = useState({
@@ -72,31 +72,7 @@ export default function User() {
 				fetch_data();
 			});
 	}
-	function change_password() {
-		var old_password = prompt("enter your old password:");
-		var new_password = prompt("enter your new password: ");
-		customAjax({
-			params: {
-				task_name: "change_password",
-				username: window.localStorage.getItem("username"),
-				old_password,
-				new_password,
-			},
-		})
-			.then(
-				(data) => {
-					if (data.result) {
-						alert("done");
-					}
-				},
-				(error) => {
-					console.log(error);
-				}
-			)
-			.finally(() => {
-				fetch_data();
-			});
-	}
+
 	function fetch_data() {
 		customAjax({
 			params: {
@@ -132,96 +108,21 @@ export default function User() {
 			set_has_user_profile_image(data.result);
 			//handle errors in these cases
 		});
-	}
 
-	var tmp = useContext(AppContext); //todo  check if we have to sync it in every change
-	function Options() {
-		//todo add background opacity 0.5 to it add it globally in a way
-		// that could be enable using AppContext
-		return (
-			<>
-				<div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-2/3 max-h-full bg-blue-500 rounded-xl p-2 flex space-y-1 flex-col">
-					<div className="flex space-x-1 mb-2 items-center">
-						<KeyboardBackspaceRounded
-							sx={{ color: "lightgray" }}
-							className="hover:bg-blue-800 duration-400 rounded"
-							onClick={hide_options_modal}
-						/>
-						<h1 className="text-white text-lg ">other options</h1>
-					</div>
-					<div
-						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
-						onClick={change_password}
-					>
-						change my password
-					</div>
-					<div
-						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
-						onClick={() => alert("this feature will be added soon!")}
-					>
-						my pending orders
-					</div>{" "}
-					{/* todo add this feature */}
-					<div
-						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
-						onClick={() => alert("this feature will be added soon!")}
-					>
-						change username
-					</div>{" "}
-					{/* todo add this feature */}
-					<div
-						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
-						onClick={() => alert("this feature will be added soon!")}
-					>
-						change bio
-					</div>{" "}
-					{/* todo add this feature */}
-					<div
-						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
-						onClick={() => alert("this feature will be added soon!")}
-					>
-						delete account
-					</div>{" "}
-					{/* todo add this feature */}
-					<div
-						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
-						onClick={() => alert("this feature will be added soon!")}
-					>
-						unsubscribe emails
-					</div>{" "}
-					{/* todo add this feature */}
-					<div
-						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
-						onClick={() => alert("this feature will be added soon!")}
-					>
-						unsubscribe sms service
-					</div>{" "}
-					{/* todo add this feature */}
-					<div
-						className="text-blue-800 rounded-lg px-1 bg-stone-300 w-full cursor-pointer"
-						onClick={() => {
-							hide_options_modal();
-							window.localStorage.removeItem("username");
-							nav("/");
-						}}
-					>
-						logout
-					</div>
-				</div>
-			</>
+		customAjax({
+			params: {
+				task_name: "get_user_orders",
+				username,
+			},
+		}).then(
+			(data) => {
+				var orders = data.result;
+				set_orders_to_show(orders.slice(0, 3));
+			},
+			(error) => {
+				console.log(error);
+			}
 		);
-	}
-	function show_other_options_in_modal() {
-		tmp.setAppContextState({
-			is_modal_visible: true,
-			modal_content: <Options />,
-		});
-	}
-	function hide_options_modal() {
-		tmp.setAppContextState({
-			is_modal_visible: false,
-			modal_content: tmp.AppContextState.modal_content,
-		});
 	}
 	useEffect(fetch_data, []);
 	if (userStatus == "loading") {
@@ -271,7 +172,7 @@ export default function User() {
 				/>
 				<div
 					className={`mx-1 border 
-      border-red-400 rounded mt-4 relative`}
+      border-red-400 rounded mt-4 relative pb-2`}
 				>
 					<div className="cover_image rounded-t bg-blue-400 h-20 w-full mb-6"></div>
 					<div
@@ -301,9 +202,9 @@ export default function User() {
 						)}
 					</div>
 					<div className="px-6">
-						<h1 className="text-lg">{user.username}</h1>
+						<h1 className="text-lg">@{user.username}</h1>
 						<h5 className="text-sm text-stone-500">
-							has subscribed from {new Date().getTime() - user.time} milliseconds ago
+							has subscribed from {new Date(Number(user.time)).toDateString()}
 						</h5>
 					</div>
 					<div className="flex overflow-auto space-x-1 px-6 mt-3">
@@ -317,12 +218,17 @@ export default function User() {
 						>
 							set new profile image
 						</Item>
-						<Item onClick={show_other_options_in_modal}>...</Item>
+						<Item>...</Item>
 					</div>
+					<OptionsSection after_options={fetch_data} />
 					<Section title="orders">
-						<ListItem
-							items={["hamed: 2", "negin: hamed", "girlfriend: iam very old"]}
-						/>
+						{orders_to_show.map((order, index) => {
+							return (
+								<React.Fragment key={index}>
+									<OrdersPageOrder order={order} />
+								</React.Fragment>
+							);
+						})}
 					</Section>
 				</div>
 			</>
