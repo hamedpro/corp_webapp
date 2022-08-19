@@ -4,8 +4,9 @@ import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsAct
 import { customAjax } from "../../../src/custom_ajax.js";
 import { useState, useEffect } from "react";
 import { LinkLikeP } from "../";
+import { TopUi } from "./top_ui.jsx";
 export default function SubToSmsTab() {
-	var [sms_sub_status, set_sms_sub_status] = useState(null); // not_logged_in , without_phone_number , subscripted , ready
+	var [sms_sub_status, set_sms_sub_status] = useState(null); // not_logged_in , without_phone_number , subscribed , ready
 	var nav = useNavigate();
 	//add fetch data interval for 1 sec / note 2 : note 1 is not good , think about a way to recalc data when something related does change
 	function subscribe_to_sms() {
@@ -84,24 +85,20 @@ export default function SubToSmsTab() {
 	}
 	useEffect(fetch_data, []);
 	return (
-		<>
-			<div className="mx-auto h-16 w-16 rounded-full bg-blue-400 mt-3 flex justify-center items-center">
-				<NotificationsActiveRoundedIcon
-					sx={{ width: "80%", height: "80%", color: "white" }}
-				/>
-			</div>
-			<h4 className="text-2xl text-center mt-1">subscribe to sms</h4>
-			<p className="text-center text-sm mx-auto w-3/4 text-stone-300">
-				enter your phone number if you want to get notified everytime we send offer
-				suggesstions and news to the users
-			</p>
+		<div className="w-3/4 mx-auto ">
+			<TopUi
+				title="subscribe to sms"
+				content="enter your phone number if you want to get notified everytime we send offer
+			suggesstions and news to the users"
+			/>
 			<div className="flex items-center my-3">
 				{sms_sub_status == "without_phone_number" ? (
-					<div className="flex flex-col justify-center w-3/4 mx-auto">
+					<div className="flex flex-col justify-center mx-auto">
 						<input
 							type="text"
 							id="phone_number_input"
 							placeholder="your phone number"
+							className="px-1 w-full"
 						/>
 
 						<button
@@ -126,7 +123,7 @@ export default function SubToSmsTab() {
 					<div className="flex flex-col justify-center items-center w-full">
 						<Button
 							variant="outlined"
-							sx={{ mb: 1 }}
+							sx={{ mb: 1, borderColor: "gray", color: "white" }}
 							color="primary"
 							onClick={subscribe_to_sms}
 						>
@@ -143,6 +140,6 @@ export default function SubToSmsTab() {
 					</div>
 				) : null}
 			</div>
-		</>
+		</div>
 	);
 }

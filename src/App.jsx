@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "./output.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -6,7 +6,6 @@ import { customAjax } from "../src/custom_ajax.js";
 import {
 	ApiTestPage,
 	AdminDashboard,
-	ChangeDataModal,
 	CompanyInfo,
 	Login,
 	MainHeader,
@@ -35,6 +34,7 @@ import Orders from "./components/orders/comp";
 import Order from "./components/order/comp";
 import { ShoppingCardPage } from "./components";
 import { AppContext } from "./AppContext.js";
+import { PG } from "./components/pg/pg";
 function App() {
 	if (window.localStorage.getItem("username") !== null) {
 		customAjax({
@@ -63,6 +63,7 @@ function App() {
 					<NavBar />
 					<Routes>
 						<Route path="/api_test_page" element={<ApiTestPage />} />
+						<Route path="/pg" element={<PG />} />
 						<Route exact path="/users/:username/orders" element={<Orders />} />
 						<Route exact path="/users/:username/orders/:order_id" element={<Order />} />
 						<Route
