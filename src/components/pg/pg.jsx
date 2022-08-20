@@ -6,6 +6,5 @@ export function PG() {
 	}
 	//this component is a playGround
 	//it's used for testing features or ...
-	var name = "hamed";
 	return <h1></h1>;
 }

@@ -53,7 +53,10 @@ export default function Product() {
 			},
 		}).then((data) => {
 			set_image_sources(
-				data.result.map((file_name) => "http://"+window.location.hostname+":4000/product_images/" + file_name)
+				data.result.map(
+					(file_name) =>
+						"http://" + window.location.hostname + ":4000/product_images/" + file_name
+				)
 			);
 		});
 	}, []);
@@ -75,33 +78,37 @@ export default function Product() {
 	return (
 		<>
 			<div className="mx-auto border border-blue-400 mt-2 p-2 mx-1">
-				<div className="relative flex justify-center align-center relative mx-auto mt-0 mb-1 rounded bg-blue-100 min-h-48 w-11/12">
-					<button
-						className="product_page__image_back"
-						onClick={() => {
-							image_back();
-						}}
-					>
-						<ArrowBackIosNewRoundedIcon />
-					</button>
-					{image_sources.length == 0 ? (
-						<>there is not any product image uploaded for this product</>
-					) : (
+				{image_sources.length == 0 ? (
+					<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
+						there is not any product image uploaded for this product
+					</div>
+				) : (
+					<div className="relative flex justify-center align-center relative mx-auto mt-0 mb-1 rounded bg-blue-100 min-h-48 w-11/12">
+						<button
+							className="product_page__image_back"
+							onClick={() => {
+								image_back();
+							}}
+						>
+							<ArrowBackIosNewRoundedIcon />
+						</button>
+
 						<img
 							className="w-full"
 							src={image_sources[current_image_index]}
 							alt="product image"
 						/>
-					)}
-					<button
-						className="product_page__image_next"
-						onClick={() => {
-							image_next();
-						}}
-					>
-						<ArrowForwardIosRoundedIcon />
-					</button>
-				</div>
+						<button
+							className="product_page__image_next"
+							onClick={() => {
+								image_next();
+							}}
+						>
+							<ArrowForwardIosRoundedIcon />
+						</button>
+					</div>
+				)}
+
 				<div className="mx-2 w-full mt-2">
 					<h1>
 						#{product.id} : {product.name}
@@ -118,7 +125,7 @@ export default function Product() {
 			<div className="mx-auto border border-blue-400 mx-1 mt-2 p-2">
 				<h1 className="text-lg">product specs:</h1>
 				<hr className="mb-2" />
-				{/* add option for report data incorrect which opens pop up to open a new support ticket */}
+				{/*todo add option for report data incorrect which opens pop up to open a new support ticket */}
 				{JSON.parse(product.product_specs).map((spec) => {
 					return (
 						<div className="flex" key={spec.id}>

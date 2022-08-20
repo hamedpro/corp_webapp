@@ -29,7 +29,12 @@ const user_reviews = (props) => {
 	useEffect(() => {
 		fetch_data();
 	}, []);
-
+	//todo check whether this product is written by someone who
+	//has bought this product from here or not
+	//todo add ability to add media to user reviews and like them
+	//todo add faq to all website
+	//todo add question ask section to every product
+	//todo show related products of every product
 	if (reviews.length == 0) {
 		return (
 			<div className="border border-blue-400 mx-1 mt-2 px-1 py-2">

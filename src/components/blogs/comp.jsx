@@ -1,8 +1,18 @@
+import { InfoRounded } from "@mui/icons-material";
+import Section from "../section/comp";
+import { Alert } from "../alert/comp";
 export default function Blogs() {
 	return (
 		<>
-			<p>BLogs page</p>
-			<p>coming soon! : this page is under development</p>
+			<Section title="blog posts">
+				<div className="px-2">
+					<Alert icon={<InfoRounded sx={{ color: "white" }} />}>
+						this feature will be implented soon ! track the development in github link
+						in footer
+					</Alert>
+					{/* todo */}
+				</div>
+			</Section>
 		</>
 	);
 }

@@ -28,6 +28,7 @@ import {
 	FirstSetup,
 	Users,
 	Modal,
+	NewProductReview,
 } from "./components";
 import ReviewsPage from "./components/product/reviews_page";
 import Orders from "./components/orders/comp";
@@ -64,6 +65,10 @@ function App() {
 					<Routes>
 						<Route path="/api_test_page" element={<ApiTestPage />} />
 						<Route path="/pg" element={<PG />} />
+						<Route
+							path="/products/:product_id/new-product-review"
+							element={<NewProductReview />}
+						/>
 						<Route exact path="/users/:username/orders" element={<Orders />} />
 						<Route exact path="/users/:username/orders/:order_id" element={<Order />} />
 						<Route

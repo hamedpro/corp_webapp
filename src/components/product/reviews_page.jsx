@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReviewItem from "./review_item";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { Button } from "@mui/material";
 export default function ReviewsPage() {
 	var params = useParams();
 	var [reviews, set_reviews] = useState([]);
+	var nav = useNavigate();
 	function fetch_data() {
 		customAjax({
 			params: {
@@ -57,7 +58,7 @@ export default function ReviewsPage() {
 			<div className="flex items-center my-2">
 				<h1>user reviews:</h1>
 				<Button
-					onClick={add_new_review}
+					onClick={() => nav(`/products/${params.product_id}/new-product-review`)}
 					variant="outlined"
 					size="small"
 					sx={{ ml: "auto" }}

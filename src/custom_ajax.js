@@ -21,14 +21,14 @@ export async function customAjax({
 		params,
 	});
 	if (verbose) {
-		console.log("path which is gonna fetch: " + path_with_query);
+		console.log("path which is gonna be fetched: " + path_with_query);
 	}
 	var fetch_response = await fetch(path_with_query, {
 		method,
 	});
-	if (fetch_response.status == 200) {
+	if (fetch_response.ok) {
+		var res_plain_text = await fetch_response.text();
 		if (parse_json) {
-			var res_plain_text = await fetch_response.text();
 			try {
 				return JSON.parse(res_plain_text);
 			} catch (error) {

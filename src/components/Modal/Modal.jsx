@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Modal(props) {
-	/* during development of the component you want to inject into this
+	/* during development of the component that you want to inject into this
     use it directly inside your component and inject that modal child component into it */
 	return (
 		<div
