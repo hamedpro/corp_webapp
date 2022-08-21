@@ -1,28 +1,8 @@
-.product_page__image_back {
-	top: 50%;
-	transform: translateX(-50%);
-	border-radius: 10px;
-	background-color: lightgray;
+.image_change_button {
+	background-color: lightskyblue;
+	border-radius: 4px;
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	width: 30px;
-	height: 30px;
-	left: 0px;
-	position: absolute;
-	font-size: small;
-}
-.product_page__image_next {
-	font-size: small;
-	position: absolute;
-	top: 50%;
-	right: 0px;
-	transform: translateX(50%);
-	border-radius: 10px;
-	background-color: lightgray;
-	display: flex;
 	align-items: center;
-	justify-content: center;
-	height: 30px;
-	width: 30px;
+	padding: 2px;
 }

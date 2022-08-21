@@ -6,6 +6,8 @@ import UsersReviews from "./user_reviews";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import AddToShoppingBagBar from "./AddToShoppingBagBar";
+import Section from "../section/comp.jsx";
+import { CircleOutlined, CircleRounded } from "@mui/icons-material";
 export default function Product() {
 	var product_id = useParams().product_id;
 	const [product, set_product] = useState({
@@ -84,28 +86,37 @@ export default function Product() {
 					</div>
 				) : (
 					<div className="relative flex justify-center align-center relative mx-auto mt-0 mb-1 rounded bg-blue-100 min-h-48 w-11/12">
-						<button
-							className="product_page__image_back"
-							onClick={() => {
-								image_back();
-							}}
-						>
-							<ArrowBackIosNewRoundedIcon />
-						</button>
+						<div className="absolute w-1/4 left-1 bottom-1 flex flex-col bg-blue-200 opacity-50 pt-1 rounded ">
+							<div className="flex justify-between px-1">
+								<button onClick={image_back} className="image_change_button">
+									<ArrowBackIosNewRoundedIcon fontSize="small" />
+								</button>
+								<button onClick={image_next} className="image_change_button">
+									<ArrowForwardIosRoundedIcon fontSize="small" />
+								</button>
+							</div>
+							<div className="flex px-2 image_change_dots_container">
+								{image_sources.map((image_src, index) => {
+									return (
+										<span key={index}>
+											{" "}
+											{/* read about react keys in depth becuse may there be a problem when we use index as key */}
+											{index == current_image_index ? (
+												<CircleRounded sx={{ fontSize: 10 }} />
+											) : (
+												<CircleOutlined sx={{ fontSize: 10 }} />
+											)}
+										</span>
+									);
+								})}
+							</div>
+						</div>
 
 						<img
 							className="w-full"
 							src={image_sources[current_image_index]}
 							alt="product image"
 						/>
-						<button
-							className="product_page__image_next"
-							onClick={() => {
-								image_next();
-							}}
-						>
-							<ArrowForwardIosRoundedIcon />
-						</button>
 					</div>
 				)}
 
@@ -116,25 +127,25 @@ export default function Product() {
 				</div>
 				<AddToShoppingBagBar price={product.price} product_id={product.id} />
 			</div>
-
-			<div className="mx-auto border border-blue-400 mx-1 mt-2 p-2">
-				<h1 className="mb-1">description:</h1>
-				<hr />
-				<p className="mt-1">{product.description}</p>
-			</div>
-			<div className="mx-auto border border-blue-400 mx-1 mt-2 p-2">
-				<h1 className="text-lg">product specs:</h1>
-				<hr className="mb-2" />
-				{/*todo add option for report data incorrect which opens pop up to open a new support ticket */}
-				{JSON.parse(product.product_specs).map((spec) => {
-					return (
-						<div className="flex" key={spec.id}>
-							<p className="text-stone-600 mr-1">{spec.key}</p>:
-							<p className="ml-1">{spec.value}</p>
-						</div>
-					);
-				})}
-			</div>
+			{/* todo add a div h full w full into Section comp and inject styles into that */}
+			<Section title="description">
+				<div className="mx-2">
+					<p className="mt-1">{product.description}</p>
+				</div>
+			</Section>
+			<Section title="product specifications:">
+				<div className="mx-2">
+					{/*todo add option for report data incorrect which opens pop up to open a new support ticket */}
+					{JSON.parse(product.product_specs).map((spec) => {
+						return (
+							<div className="flex" key={spec.id}>
+								<p className="text-stone-600 mr-1">{spec.key}</p>:
+								<p className="ml-1">{spec.value}</p>
+							</div>
+						);
+					})}
+				</div>
+			</Section>
 
 			<UsersReviews product_id={Number(product_id)} />
 		</>
