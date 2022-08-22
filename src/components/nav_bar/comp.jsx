@@ -1,4 +1,4 @@
-import { NearMe } from "@mui/icons-material";
+import { NearMe, Place } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -37,7 +37,7 @@ export default function NavBar() {
 				(is_nav_bar_visible ? " " : " hidden")
 			}
 		>
-			<NearMe fontSize="small" color="primary" className="mr-1" />
+			<Place fontSize="small" color="primary" className="mr-1" />
 			{paths.map((path, index) => {
 				return (
 					<React.Fragment key={index}>

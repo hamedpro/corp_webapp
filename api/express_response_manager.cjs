@@ -4,7 +4,7 @@ module.exports = class response_manager {
 	response;
 	errors = [];
 	result;
-	mysql_connection;
+	mysql_connection = null;
 	constructor(response) {
 		this.response = response;
 	}
@@ -23,7 +23,9 @@ module.exports = class response_manager {
 				result: this.result,
 			})
 		);
-		this.mysql_connection.end();
+		if (this.mysql_connection !== null) {
+			this.mysql_connection.end();
+		}
 	};
 	send_error = (error) => {
 		this.add_error(error);
