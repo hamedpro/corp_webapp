@@ -95,7 +95,7 @@ export default function SubToEmailTab() {
 					<input
 						type="text"
 						id="email_subscription_input"
-						className="my-2 px-1 w-full"
+						className="my-2 px-1 w-full text-black rounded"
 						placeholder="your email address"
 					/>
 

@@ -98,7 +98,7 @@ export default function SubToSmsTab() {
 							type="text"
 							id="phone_number_input"
 							placeholder="your phone number"
-							className="px-1 w-full"
+							className="px-1 w-full text-black rounded"
 						/>
 
 						<button

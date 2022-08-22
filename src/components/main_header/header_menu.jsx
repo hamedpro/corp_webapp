@@ -40,7 +40,7 @@ const HeaderMenu = (props) => {
 			></div> */}
 			{/* todo export the above fixed div as a background component for pop ups and modals and 
 			update every where which use this or something like this */}
-			<div className="bg-white fixed w-full p-0 m-0 z-40 overflow-y-auto top-20 header_menu">
+			<div className="bg-white fixed w-full p-0 m-0 z-40 overflow-y-auto top-28 header_menu overflow-x-hidden">
 				<Section title={"routes"}>
 					<ListItem
 						items={["home"]}

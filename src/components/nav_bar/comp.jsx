@@ -1,3 +1,4 @@
+import { NearMe } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -32,18 +33,22 @@ export default function NavBar() {
 	return (
 		<div
 			className={
-				"px-1 flex flex-row items-center mx-1 mt-2 border py-1 border-stone-300" +
+				"px-1 flex flex-row items-center mx-1 mt-2 py-1" +
 				(is_nav_bar_visible ? " " : " hidden")
 			}
 		>
+			<NearMe fontSize="small" color="primary" className="mr-1" />
 			{paths.map((path, index) => {
 				return (
 					<React.Fragment key={index}>
-						<p className="mx-1 cursor-pointer text-xs" onClick={() => nav(path.link)}>
+						<p
+							className="mx-1 cursor-pointer text-sm text-stone-600"
+							onClick={() => nav(path.link)}
+						>
 							{path.name}
 						</p>
 						<p
-							className="text-xs text-stone-400"
+							className="text-sm text-stone-400"
 							style={{ display: index == paths.length - 1 ? "none" : "block" }}
 						>
 							/

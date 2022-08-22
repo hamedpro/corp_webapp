@@ -21,7 +21,7 @@ export default function MainHeader() {
 			<button
 				onClick={props.onClick}
 				className={
-					"border border-stone-400 rounded-lg flex items-center justify-center" +
+					"border border-sky-600 rounded-lg flex items-center justify-center h-10 w-10 p-1" +
 					" " +
 					(typeof props.className == "undefined" ? "" : props.className)
 				}
@@ -49,44 +49,38 @@ export default function MainHeader() {
 				hide_header_menu={() => set_header_menu_visibility(false)}
 				visibility={header_menu_visibility}
 			/>
-			<div className="h-20 w-full"></div>
+			<div className="h-28 w-full"></div>
 			<div
-				className={`bg-stone-100 z-30 top-0 fixed h-20 w-full flex items-start pt-2 flex-row p-2 border-b border-gray-300`}
+				className={`bg-sky-700 z-30 top-0 fixed h-28 w-full flex items-start pt-2 flex-row p-2 border-b border-gray-300`}
 			>
 				<div className="flex flex-col w-full h-full">
 					<div className="w-full flex flex-row items-center">
-						<Button
-							variant="outlined"
-							sx={{
-								minHeight: 0,
-								minWidth: 0,
-								width: "33px",
-								height: "33px",
-								padding: 1,
-								borderRadius: "10px",
-								border: "1px solid lightgray",
-							}}
+						<CustomButton
+							className="h-10 w-10 border border-stone-300 rounded-xl p-1 flex justify-center items-center"
 							onClick={() => set_header_menu_visibility(!header_menu_visibility)}
 						>
-							<MenuRounded />
-						</Button>
-						<h1 className="px-2 text-lg m-0 p-0 bg-sky-600 rounded-lg pb-1 text-white ml-2 rounded ">
+							<MenuRounded fontSize="large" style={{ color: "lightgray" }} />
+						</CustomButton>
+						<h1 className="px-2 text-lg m-0 p-0 bg-sky-600 rounded-lg pb-1 text-white ml-2 rounded h-10 flex items-center">
 							corp_webapp
 						</h1>
 						<div className="ml-auto flex space-x-2">
 							{username === null ? (
 								<CustomButton onClick={() => nav("/login")}>
-									<LoginRounded sx={{ color: "blue" }} />
+									<LoginRounded sx={{ color: "white" }} fontSize="large" />
 								</CustomButton>
 							) : (
 								<>
 									<CustomButton
 										onClick={() => nav("/users/" + username + "/shopping-card")}
 									>
-										<LocalMallRounded sx={{ color: "blue" }} />
+										<LocalMallRounded
+											sx={{ color: "white" }}
+											fontSize="large"
+										/>
 									</CustomButton>
 									<CustomButton onClick={() => nav("/users/" + username)}>
-										<PersonRounded sx={{ color: "blue" }} />
+										<PersonRounded sx={{ color: "white" }} fontSize="large" />
 									</CustomButton>
 								</>
 							)}
@@ -95,11 +89,11 @@ export default function MainHeader() {
 
 					<div className="flex mt-2 mb-2 w-full">
 						<div
-							className="border border-gray-300 rounded-lg flex items-center w-full"
+							className="border border-gray-400 rounded-lg flex items-center h-10 w-full mt-2 px-2 space-x-1"
 							onClick={() => set_is_search_modal_visible(true)}
 						>
 							<SearchRounded sx={{ color: "blue" }} />
-							<h1 className="text-gray-500 text-sm">type something here</h1>
+							<h1 className="text-gray-100">type something here</h1>
 						</div>
 					</div>
 				</div>
