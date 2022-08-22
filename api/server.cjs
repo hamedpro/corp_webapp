@@ -19,12 +19,20 @@ app.all("/", async (req, res) => {
 			fs.mkdirSync(path);
 		}
 	});
-
+	var dotenv_keys = ["mysql_host", "mysql_user", "mysql_password", "mysql_port"];
+	for (var i = 0; i < dotenv_keys.length; i++) {
+		if (!Object.keys(process.env).includes(dotenv_keys[i])) {
+			rm.send_error(
+				"tried to access one of mysql configurations from .env but it didn't exist"
+			);
+			return;
+		}
+	}
 	var con = mysql.createConnection({
-		user: "root",
-		password: "mysqlpassword",
-		port: 3306,
-		host: "localhost",
+		user: process.env.mysql_user,
+		password: process.env.mysql_password,
+		port: Number(process.env.mysql_port),
+		host: process.env.mysql_host,
 		multipleStatements: true,
 	});
 	//add error handling for createConnection

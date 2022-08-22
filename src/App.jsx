@@ -27,7 +27,6 @@ import {
 	Terms,
 	FirstSetup,
 	Users,
-	Modal,
 	NewProductReview,
 } from "./components";
 import ReviewsPage from "./components/product/reviews_page";
@@ -50,16 +49,12 @@ function App() {
 		});
 	}
 	var [AppContextState, setAppContextState] = useState({
-		is_modal_visible: false,
-		modal_content: <></>,
+		language: "fa", // possible values right now = "fa" & "en"
 	});
 	return (
 		<AppContext.Provider value={{ AppContextState, setAppContextState }}>
 			<BrowserRouter>
 				<div className="absolute w-full h-full overflow-x-hidden">
-					<Modal is_visible={AppContextState.is_modal_visible}>
-						{AppContextState.modal_content}
-					</Modal>
 					<MainHeader />
 					<NavBar />
 					<Routes>
