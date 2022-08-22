@@ -65,3 +65,5 @@ in start production script of package json take care about -> server is not up a
 sometimes after making changes to a jsx component file an error appear in console saying that file does not contains a default export but it does
 when trying to change password with task_name = change_password i got error : cannot read property of undefined (password) current line :216
 tailwind watch i think either not work or work very slowly even with pretier disabled sometimes i see changes when i save the file for 2nd time 
+every price in this app should be in toman
+add support for discount

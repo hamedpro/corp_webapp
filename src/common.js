@@ -29,3 +29,12 @@ export function trim_text_if_its_long(string, max_length) {
 		return tmp.join("");
 	}
 }
+export function clone_simple_object(object_to_clone) {
+	/* as it's obvious from it's name just use this 
+	func for objects like {a:"hamed",b:"negin"} */
+	var cloned_object = {};
+	Object.keys(object_to_clone).forEach((key) => {
+		cloned_object[key] = object_to_clone[key];
+	});
+	return cloned_object;
+}
