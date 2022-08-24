@@ -1,5 +1,10 @@
+import { useContext } from "react";
+import { AppContext } from "../../AppContext";
+import { multi_lang_helper } from "../../common";
+
 export default function ConfirmModal(props) {
 	//props : on_confirm , on_reject , title , text , visibility
+	var ml = new multi_lang_helper(useContext(AppContext));
 	return (
 		<div
 			style={{ display: props.visibility ? "block" : "none" }}
@@ -10,10 +15,20 @@ export default function ConfirmModal(props) {
 			<p>{props.text}</p>
 			<div className="flex flex-row w-full items-center">
 				<div className="w-1/2">
-					<button onClick={props.on_confirm}>confirm</button>
+					<button onClick={props.on_confirm}>
+						{ml.render({
+							en: "confirm",
+							fa: "",
+						})}
+					</button>
 				</div>
 				<div className="w-1/2">
-					<button onClick={props.on_reject}>reject</button>
+					<button onClick={props.on_reject}>
+						{ml.render({
+							en: "reject",
+							fa: "",
+						})}
+					</button>
 				</div>
 			</div>
 		</div>

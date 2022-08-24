@@ -30,3 +30,4 @@ pg.js
 pg.cjs
 ./.env
 .env
+tmp.txt

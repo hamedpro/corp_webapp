@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { HideImageRounded } from "@mui/icons-material";
@@ -7,6 +7,8 @@ import Section from "../section/comp.jsx";
 import { OrdersPageOrder } from "../orders/orders_page_order.jsx";
 import React from "react";
 import { OptionsSection } from "./options_section.jsx";
+import { multi_lang_helper } from "../../common.js";
+import { AppContext } from "../../AppContext.js";
 function Item(props) {
 	return (
 		<div
@@ -23,6 +25,7 @@ function Item(props) {
 	);
 }
 export default function User() {
+	var ml = new multi_lang_helper(useContext(AppContext));
 	var [orders_to_show, set_orders_to_show] = useState([]);
 	var nav = useNavigate();
 	var username = useParams().username;
@@ -35,7 +38,7 @@ export default function User() {
 	function upload_the_photo() {
 		var file_input = document.getElementById("profile_image_input");
 		if (file_input.length == 0) {
-			alert("profile image input was empty");
+			alert(ml.render({ en: "profile image input was empty", fa: "" }));
 			return;
 		}
 		var form = new FormData();
@@ -54,14 +57,19 @@ export default function User() {
 			.then(
 				(data) => data.json(),
 				(error) => {
-					alert("error in uploading photo. details are available in console");
+					alert(
+						ml.render({
+							en: "error in uploading photo. details are available in console",
+							fa: "",
+						})
+					);
 					console.log(error);
 				}
 			)
 			.then(
 				(data) => {
 					if (data.result) {
-						alert("done");
+						alert(ml.render({ en: "done", fa: "" }));
 					}
 				},
 				(error) => {
@@ -128,20 +136,31 @@ export default function User() {
 	if (userStatus == "loading") {
 		return (
 			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
-				<h1 className="text-center">LOADING YOUR DATA ...</h1>
+				<h1 className="text-center">
+					{ml.render({
+						en: "LOADING YOUR DATA ...",
+						fa: "",
+					})}
+				</h1>
 			</div>
 		);
 	}
 	if (userStatus == "not_logged_in") {
 		return (
 			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
-				<h1>you've not logged in</h1>
+				<h1>{ml.render({ en: "you've not logged in", fa: "" })}</h1>
 				<p className="text-center">
-					you should either login as @{username} or be an admin to access informations of
-					this page
+					{ml.render({
+						en: `you should either login as @${username} or be an admin to access informations of
+					this page`,
+						fa: "",
+					})}
 				</p>
 				<Button variant="outlined" onClick={() => nav("/login")}>
-					login
+					{ml.render({
+						en: "login",
+						fa: "",
+					})}
 				</Button>
 			</div>
 			//todo : for this kind of auth stuffs create a common solution
@@ -150,13 +169,24 @@ export default function User() {
 	if (typeof userStatus == "boolean" && userStatus === false) {
 		return (
 			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
-				<h1>you have not permission to access this page</h1>
+				<h1>
+					{ml.render({
+						en: "you have not permission to access this page",
+						fa: "",
+					})}
+				</h1>
 				<p className="text-center">
-					you should either login as @{username} or be an admin to access informations of
-					this page
+					{ml.render({
+						en: `you should either login as @${username} or be an admin to access informations of
+						this page`,
+						fa: "",
+					})}
 				</p>
 				<Button variant="outlined" onClick={() => nav("/login")}>
-					login into another account
+					{ml.render({
+						en: "login into another account",
+						fa: "",
+					})}
 				</Button>
 			</div>
 		);
@@ -185,14 +215,17 @@ export default function User() {
 								{/* todo add animations add skeleton loading or ... to all app  */}
 								<HideImageRounded sx={{ color: "white", mb: 1 }} />
 								<h1 className="text-white text-center text-sm">
-									profile image is not uploaded
+									{ml.render({
+										en: "profile image is not uploaded",
+										fa: "",
+									})}
 								</h1>
 							</>
 						) : (
 							<img
 								className="w-full h-full min-h-10 border border-blue-400"
 								src={
-									/* switch to https */
+									/* todo switch to https */
 									"http://" +
 									window.location.hostname +
 									":4000/profile_images/" +
@@ -204,24 +237,28 @@ export default function User() {
 					<div className="px-6">
 						<h1 className="text-lg">@{user.username}</h1>
 						<h5 className="text-sm text-stone-500">
-							has subscribed from {new Date(Number(user.time)).toDateString()}
+							{ml.render({ en: "has subscribed from", fa: "" })}{" "}
+							{new Date(Number(user.time)).toDateString()}
 						</h5>
 					</div>
 					<div className="flex overflow-auto space-x-1 px-6 mt-3">
 						<Item onClick={() => nav("/users/" + username + "/orders")} primary={true}>
-							orders history
+							{ml.render({ en: "orders history", fa: "" })}
 						</Item>
 						<Item
 							onClick={() => {
 								document.getElementById("profile_image_input").click();
 							}}
 						>
-							set new profile image
+							{ml.render({
+								en: "set new profile image",
+								value: "",
+							})}
 						</Item>
 						<Item>...</Item>
 					</div>
 					<OptionsSection after_options={fetch_data} />
-					<Section title="orders">
+					<Section title={ml.render({ en: "orders", fa: "" })}>
 						{orders_to_show.map((order, index) => {
 							return (
 								<React.Fragment key={index}>

@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
 import Section from "../section/comp";
 import { InfoRounded } from "@mui/icons-material";
 import { ShoppingCardItem } from "./shopping_card_item";
 import { Alert } from "../alert/comp";
+import { multi_lang_helper } from "../../common";
 export default function ShoppingCardPage() {
+	var ml = new multi_lang_helper(useContext(AppContext));
 	var nav = useNavigate();
 	var username = useParams().username;
 	var [shopping_card_items, set_shopping_card_items] = useState(null);
@@ -52,7 +54,7 @@ export default function ShoppingCardPage() {
 		customAjax({
 			params: {
 				task_name: "submit_a_new_order",
-				name: window.prompt("enter a name for your new order"),
+				name: window.prompt(ml.render({ en: "enter a name for your new order", fa: "" })),
 				username,
 			},
 		}).then(
@@ -67,11 +69,14 @@ export default function ShoppingCardPage() {
 
 	return (
 		<div className="flex flex-col">
-			<Section title="my shopping card" className="mb-2">
+			<Section title={ml.render({ en: "my shopping card", fa: "" })} className="mb-2">
 				{shopping_card_items === null ? (
 					<h1 className="mx-2">
 						<Alert icon={<InfoRounded />}>
-							you have'nt added any product to your shopping card yet
+							{ml.render({
+								en: "you have'nt added any product to your shopping card yet",
+								fa: "",
+							})}
 						</Alert>
 					</h1>
 				) : (
@@ -95,7 +100,10 @@ export default function ShoppingCardPage() {
 				className="h-8 mx-1 text-white bg-blue-500 rounded hover:bg-blue-600 duration-300"
 				onClick={submit_new_order}
 			>
-				submit them as an order
+				{ml.render({
+					en: "submit them as an order",
+					fa: "",
+				})}
 			</button>
 		</div>
 	);

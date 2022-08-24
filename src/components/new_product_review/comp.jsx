@@ -1,9 +1,11 @@
 import { ArrowBackIosNewRounded, DeleteRounded } from "@mui/icons-material";
 import { Button, Rating } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { multi_lang_helper } from "../../common";
 import { customAjax } from "../../custom_ajax";
 import ListItem from "../list_item/comp";
+import { AppContext } from "../../AppContext";
 export function NewProductReview({}) {
 	var username = window.localStorage.getItem("username");
 	var [rating_from_five, set_rating_from_five] = useState(1);
@@ -11,6 +13,7 @@ export function NewProductReview({}) {
 	var [product, setProduct] = useState(null);
 	var [pros, set_pros] = useState([]);
 	var [cons, set_cons] = useState([]);
+	var ml = new multi_lang_helper(useContext(AppContext));
 	var nav = useNavigate();
 	function fetch_data() {
 		customAjax({
@@ -40,7 +43,7 @@ export function NewProductReview({}) {
 			},
 		}).then(
 			(data) => {
-				alert("done");
+				alert(ml.render({ en: "done", fa: "" }));
 			},
 			(error) => {
 				console.log(error);

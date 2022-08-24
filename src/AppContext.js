@@ -1,3 +1,2 @@
 import { createContext } from "react";
-
-export var AppContext = createContext({})
+export var AppContext = createContext({});

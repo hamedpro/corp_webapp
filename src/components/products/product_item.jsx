@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
+import { multi_lang_helper as ml } from "../../common.js";
 export default function ProductItem({ id, name, price, className = undefined, discount_percent }) {
 	//id stands for product id
 	var nav = useNavigate();
@@ -26,7 +27,7 @@ export default function ProductItem({ id, name, price, className = undefined, di
 		});
 	}, []);
 	function add_to_shopping_bag(id) {
-		alert("this feature is not implented yet");
+		alert(ml.render({ en: "this feature is not implented yet", fa: "" }));
 	}
 	return (
 		<div

@@ -1,4 +1,13 @@
-import { List, ListItem, Button, Typography, Input, TextField } from "@mui/material";
+import {
+	List,
+	ListItem,
+	Button,
+	Typography,
+	Input,
+	TextField,
+	Select,
+	MenuItem,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { LinkLikeP } from "../";
 import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
@@ -6,8 +15,14 @@ import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsAct
 import { customAjax } from "../../../src/custom_ajax.js";
 import Subscripting from "./subscripting";
 import { Instagram, Telegram, Twitter } from "@mui/icons-material";
+import { AppContext } from "../../AppContext";
+import { useContext } from "react";
+import { multi_lang_helper } from "../../common";
 export default function MainFooter() {
 	var nav = useNavigate();
+	var AppContextState = useContext(AppContext).AppContextState;
+	var setAppContextState = useContext(AppContext).setAppContextState;
+	var ml = new multi_lang_helper(useContext(AppContext));
 	return (
 		<div className="bg-sky-800 text-white">
 			<div className="flex p-2 h-16 border-t border-stone-300 mt-2 mb-2">
@@ -21,13 +36,23 @@ export default function MainFooter() {
 						className="bg-blue-600 px-1 mr-1 h-fit text-sm"
 					>
 						<KeyboardArrowUpRoundedIcon />
-						<span>go to top</span>
+						<span>
+							{ml.render({
+								en: "go to top",
+								fa: "",
+							})}
+						</span>
 					</button>
 				</div>
 			</div>
 			<Subscripting />
 			<div className="flex h-8 w-full items-center space-x-3 my-4 mx-2 px-1">
-				<h1 className="mr-6 text-xl">follow us !</h1>
+				<h1 className="mr-6 text-xl">
+					{ml.render({
+						en: "follow us !",
+						fa: "",
+					})}
+				</h1>
 				<Instagram
 					onClick={() => {
 						window.location.replace(""); // todo add instagram link here
@@ -48,21 +73,49 @@ export default function MainFooter() {
 				<div className="flex flex-row mx-2 text-sm">
 					<div className="w-4/6 flex items-center">
 						<p>
-							developed by <a href="https://github.com/hamedpro">@hamedpro</a>
+							{ml.render({
+								en: "developed by",
+								fa: "",
+							})}{" "}
+							<a href="https://github.com/hamedpro">@hamedpro</a>
 						</p>
 					</div>
 					<div className="w-2/6 flex justify-end">
-						<button className=" h-full text-right hover:bg-blue-600 px-1 rounded">
-							change lang
-						</button>
+						<Select
+							value={AppContextState.language}
+							onChange={(event) =>
+								setAppContextState({
+									...AppContextState,
+									language: event.target.value,
+								})
+							}
+						>
+							<MenuItem value={"fa"}>farsi</MenuItem>
+							<MenuItem value={"en"}>English</MenuItem>
+						</Select>
 					</div>
 				</div>
 				<div className="flex flex-row mx-2 text-sm flex-wrap space-x-1">
-					<LinkLikeP link="/new-support-ticket">report a bug</LinkLikeP>
+					<LinkLikeP link="/new-support-ticket">
+						{ml.render({
+							en: "report a bug",
+							fa: "",
+						})}
+					</LinkLikeP>
 					<span>|</span>
-					<LinkLikeP link="/terms">terms of use</LinkLikeP>
+					<LinkLikeP link="/terms">
+						{ml.render({
+							en: "terms of use",
+							fa: "",
+						})}
+					</LinkLikeP>
 					<span>|</span>
-					<a href="https://github.com/hamedpro/corp-webapp">GitHub repository</a>
+					<a href="https://github.com/hamedpro/corp-webapp">
+						{ml.render({
+							en: "GitHub repository",
+							fa: "",
+						})}
+					</a>
 				</div>
 			</div>
 		</div>

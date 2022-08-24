@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
+import { multi_lang_helper } from "../../common";
+import { AppContext } from "../../AppContext";
 export default function UsersSection() {
+	var ml = new multi_lang_helper(useContext(AppContext));
 	const [users, set_users] = useState([]);
 	function fetch_data() {
 		customAjax({
@@ -25,15 +28,30 @@ export default function UsersSection() {
 					params: {
 						task_name: "change_username",
 						old_username: payload.old_username,
-						new_username: window.prompt("enter new username here"),
+						new_username: window.prompt(
+							ml.render({
+								en: "enter new username here",
+								fa: "",
+							})
+						),
 					},
 				})
 					.then(
 						(data) => {
-							alert("done");
+							alert(
+								ml.render({
+									en: "done",
+									fa: "",
+								})
+							);
 						},
 						(error) => {
-							alert("something went wrong, details are available in dev console");
+							alert(
+								ml.render({
+									en: "something went wrong, details are available in dev console",
+									fa: "",
+								})
+							);
 							console.log(error);
 						}
 					)
@@ -51,7 +69,12 @@ export default function UsersSection() {
 					.then(
 						(data) => {
 							if (data.result) {
-								alert("done");
+								alert(
+									ml.render({
+										en: "done",
+										fa: "",
+									})
+								);
 							}
 						},
 						(error) => {
@@ -66,15 +89,40 @@ export default function UsersSection() {
 	};
 	return (
 		<div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
-			<h1>users:</h1>
+			<h1>
+				{ml.render({
+					en: "users:",
+					fa: "",
+				})}
+			</h1>
 			<hr />
 			<table className="custom_border">
 				<tbody>
 					<tr>
-						<th>user_id</th>
-						<th>username</th>
-						<th>is_admin</th>
-						<th>options</th>
+						<th>
+							{ml.render({
+								en: "user_id",
+								fa: "",
+							})}
+						</th>
+						<th>
+							{ml.render({
+								en: "username",
+								fa: "",
+							})}
+						</th>
+						<th>
+							{ml.render({
+								en: "is_admin",
+								fa: "",
+							})}
+						</th>
+						<th>
+							{ml.render({
+								en: "options",
+								fa: "",
+							})}
+						</th>
 					</tr>
 					{users.map((user) => {
 						return (
@@ -94,7 +142,10 @@ export default function UsersSection() {
 										className="cursor-pointer"
 									>
 										{" "}
-										(modify)
+										{ml.render({
+											en: "modify",
+											fa: "",
+										})}
 									</b>
 								</td>
 								<td>
@@ -109,7 +160,10 @@ export default function UsersSection() {
 										}
 									>
 										{" "}
-										(toggle)
+										{ml.render({
+											en: "toggle",
+											fa: "",
+										})}
 									</b>
 								</td>
 								<td></td>

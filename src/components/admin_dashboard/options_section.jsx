@@ -1,10 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
+import { multi_lang_helper } from "../../common.js";
+import { AppContext } from "../../AppContext.js";
 export default function OptionsSection() {
+	var mlh = new multi_lang_helper(useContext(AppContext));
 	var nav = useNavigate();
 	function change_my_own_password() {
-		alert("you will be redirected to your user account page becuse you can do it there");
+		alert(
+			mlh.render({
+				en: "you will be redirected to your profile becuse this action should be done there",
+				fa: "",
+			})
+		);
 		nav("/users/" + window.localStorage.getItem("username"));
 	}
 	function undo_all() {
@@ -14,28 +22,58 @@ export default function OptionsSection() {
 			},
 		}).then(
 			(data) => {
-				alert("done successfuly");
+				alert(
+					mlh.render({
+						en: "done",
+						fa: "",
+					})
+				);
 			},
 			(error) => {
-				alert("something went wrong");
+				alert(
+					mlh.render({
+						en: "something went wrong",
+						fa: "",
+					})
+				);
 				console.log(error);
 			}
 		);
 	}
 	return (
 		<div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
-			<h1>options:</h1>
+			<h1>
+				{mlh.render({
+					en: "options:",
+					fa: "",
+				})}
+			</h1>
 			<hr />
 			<table className="custom_border">
 				<tbody>
 					<tr>
-						<th>option name:</th>
+						<th>
+							{mlh.render({
+								en: "option name:",
+								fa: "",
+							})}
+						</th>
 					</tr>
 					<tr>
-						<td onClick={change_my_own_password}>change my own password</td>
+						<td onClick={change_my_own_password}>
+							{mlh.render({
+								en: "change my own password",
+								fa: "",
+							})}
+						</td>
 					</tr>
 					<tr>
-						<td onClick={undo_all}>undo all</td>
+						<td onClick={undo_all}>
+							{mlh.render({
+								en: "undo all",
+								fa: "",
+							})}
+						</td>
 					</tr>
 				</tbody>
 			</table>

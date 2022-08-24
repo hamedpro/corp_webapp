@@ -38,3 +38,15 @@ export function clone_simple_object(object_to_clone) {
 	});
 	return cloned_object;
 }
+export class multi_lang_helper {
+	constructor(context_value) {
+		this.set_state = context_value.setAppContextState;
+		this.state = context_value.AppContextState;
+	}
+	get lang() {
+		return this.state.language;
+	}
+	render(strings_object) {
+		return strings_object[this.lang];
+	}
+}

@@ -1,11 +1,14 @@
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Section from "../section/comp";
 import { customAjax } from "../../custom_ajax";
 import ListItem from "../list_item/comp";
 import { useNavigate } from "react-router-dom";
 import ProductListItem from "../product_list_item/comp";
+import { multi_lang_helper } from "../../common";
+import { AppContext } from "../../AppContext";
 export default function SearchModal(props) {
+	var ml = new multi_lang_helper(useContext(AppContext));
 	var nav = useNavigate();
 	var [search_results, set_search_results] = useState(null);
 	if (props.visibility !== true) {
@@ -45,28 +48,41 @@ export default function SearchModal(props) {
 					sx={{ color: "white" }}
 					className="hover:bg-blue-600 px-1 duration-400 rounded-lg"
 				/>
-				<h1 className="ml-2 text-xl text-white">search center</h1>
+				<h1 className="ml-2 text-xl text-white">
+					{ml.render({
+						en: "search center",
+						fa: "",
+					})}
+				</h1>
 			</div>
 			<div className="flex mx-3 my-2 h-10">
 				<input
 					type="text"
 					id="search_input"
 					className="border border-stone-400 rounded-lg px-2 w-full"
-					placeholder="start typing here"
+					placeholder={ml.render({ en: "start typing here", fa: "" })}
 					onChange={handle_input_change}
 				/>
 			</div>
 			<Section title="results" className="mx-2">
 				{search_results === null ? (
-					<h1 className="text-white mx-2 mt-1">results will be shown here</h1>
+					<h1 className="text-white mx-2 mt-1">
+						{ml.render({
+							en: "results will be shown here",
+							fa: "",
+						})}
+					</h1>
 				) : (
 					<>
 						{search_results.map((result, index) => {
 							var items = [];
 							if (result.images_path_names.length == 0) {
-								items.push("no image");
+								items.push(ml.render({ en: "no image", fa: "" }));
 							}
-							items = items.concat([result.name, result.price + " toman"]);
+							items = items.concat([
+								result.name,
+								result.price + ml.render({ en: " toman", fa: "" }),
+							]);
 							return (
 								<React.Fragment key={index}>
 									<ProductListItem

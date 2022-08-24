@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./s.css";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { MenuItem, Select } from "@mui/material";
 import { SelectCategory } from "./select_category";
 import Section from "../section/comp";
+import { multi_lang_helper as ml } from "../../common";
 function CustomInput({ id }) {
 	return <input id={id} className="border border-green-400 rounded px-2 py-1" />;
 }
@@ -72,7 +73,7 @@ export default function NewProduct() {
 	}
 
 	function remove_spec(id) {
-		if (!window.confirm("are you sure ?")) {
+		if (!window.confirm(ml.render({ en: "are you sure ?", fa: "" }))) {
 			return;
 		}
 		var tmp = cloned_array(specs);
@@ -82,8 +83,8 @@ export default function NewProduct() {
 		var tmp = cloned_array(specs);
 		tmp.push({
 			id: count,
-			key: window.prompt("enter specification key :"),
-			value: window.prompt("enter its value:"),
+			key: window.prompt(ml.render({ en: "enter specification key :", fa: "" })),
+			value: window.prompt(ml.render({ en: "enter its value:", fa: "" })),
 		});
 		set_specs(tmp);
 		set_count((count) => count + 1);

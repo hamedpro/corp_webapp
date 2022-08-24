@@ -1,9 +1,12 @@
 import { Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { AppContext } from "../../AppContext";
+import { multi_lang_helper } from "../../common";
 import { customAjax } from "../../custom_ajax";
 
 export default function AddToShoppingBagBar(props) {
+	var ml = new multi_lang_helper(useContext(AppContext));
 	var username = window.localStorage.getItem("username");
 	var product_id = useParams().product_id;
 	var [this_product_shopping_count, set_this_product_shopping_count] = useState(null);
@@ -53,7 +56,7 @@ export default function AddToShoppingBagBar(props) {
 	}
 	function handle_first_add_to_shopping_card() {
 		if (username === null) {
-			alert("you have to login first.");
+			alert(ml.render({ en: "you have to login first.", fa: "" }));
 		} else {
 			update_shopping_card_item_and_fetch_data(1);
 		}
@@ -67,18 +70,26 @@ export default function AddToShoppingBagBar(props) {
 			<div className="w-2/5 flex flex-col text-sm">
 				<p className="block">price:</p>
 				<b className="block">
-					{props.price + " "} <span className="inline">(Toman)</span>
+					{props.price + " "}{" "}
+					<span className="inline">{ml.render({ en: "toman", fa: "" })}</span>
 				</b>
 			</div>
 			<div className="w-3/5">
-				{this_product_shopping_count === null ? <h1>loading ...</h1> : <></>}
+				{this_product_shopping_count === null ? (
+					<h1>{ml.render({ en: "loading ...", fa: "" })}</h1>
+				) : (
+					<></>
+				)}
 				{this_product_shopping_count === 0 ? (
 					<Button
 						variant="contained"
 						sx={{ width: "100%" }}
 						onClick={() => handle_first_add_to_shopping_card()}
 					>
-						add to shopping bag
+						{ml.render({
+							en: "add to shopping bag",
+							fa: "",
+						})}
 					</Button>
 				) : (
 					<></>

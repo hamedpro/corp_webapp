@@ -2,26 +2,28 @@ import { useNavigate } from "react-router-dom";
 import { Button, Typography, TextField } from "@mui/material";
 import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BurstModeTwoTone } from "@mui/icons-material";
 import { LinkLikeP } from "../";
 import { TopUi } from "./top_ui.jsx";
+import { multi_lang_helper } from "../../common.js";
 export default function SubToEmailTab() {
+	var ml = new multi_lang_helper(useContext(AppContext));
 	var [email_sub_status, set_email_sub_status] = useState(null); // not_logged_in , without_email , subscribed , ready
 	var nav = useNavigate();
 	function subscribe_to_email() {
 		customAjax({
 			params: {
 				task_name: "sub_to_email",
-				username: window.localStorage.getItem("username"),
+				username: window.localStorage.getItem(ml.render({ en: "username", fa: "" })),
 			},
 		})
 			.then(
 				(data) => {
-					alert("subscription of email was done");
+					alert(ml.render({ en: "subscription of email was done", fa: "" }));
 				},
 				(error) => {
-					alert("something went wrong");
+					alert(ml.render({ en: "something went wrong", fa: "" }));
 					console.log(error);
 				}
 			)
@@ -38,12 +40,17 @@ export default function SubToEmailTab() {
 		})
 			.then(
 				(data) => {
-					alert("user email was changed successfuly");
+					alert(ml.render({ en: "user email was changed successfuly", fa: "" }));
 					on_success();
 					//todo suyc data after operations like update user email and ...
 				},
 				(error) => {
-					alert("something went wrong when updating your email address");
+					alert(
+						ml.render({
+							en: "something went wrong when updating your email address",
+							fa: "",
+						})
+					);
 					console.log(error);
 				}
 			)

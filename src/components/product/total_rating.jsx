@@ -1,8 +1,11 @@
 import { LinearProgress, Rating } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { multi_lang_helper } from "../../common";
 import Section from "../section/comp";
+import { AppContext } from "../../AppContext";
 export default function TotalRating(props) {
-	var [avg_rating, set_avg_rating] = useState("loading");
+	var ml = new multi_lang_helper(useContext(AppContext));
+	var [avg_rating, set_avg_rating] = useState(ml.render({ en: "loading", fa: "" }));
 	function calc_rating_percentage(stars_count) {
 		var reviews_count = props.reviews.length;
 		var count_of_reviews_with_this_stars_count = props.reviews.filter(

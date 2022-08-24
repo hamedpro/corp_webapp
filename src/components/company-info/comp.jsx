@@ -1,6 +1,10 @@
 import { customAjax } from "../../../src/custom_ajax.js";
 import Button from "@mui/material/Button";
+import { multi_lang_helper } from "../../common.js";
+import { useContext } from "react";
+import { AppContext } from "../../AppContext.js";
 export default function CompanyInfo() {
+	var ml = new multi_lang_helper(useContext(AppContext));
 	function get_data() {
 		customAjax({
 			params: {
@@ -18,10 +22,13 @@ export default function CompanyInfo() {
 	}
 	return (
 		<>
-			<h1>company info page</h1>
+			<h1>
+				{ml.render({
+					en: "company info page",
+					fa: "",
+				})}
+			</h1>
 			<hr />
-			<Button variant="contained">hello world!</Button>
-			<button>set company data</button>
 		</>
 	);
 }

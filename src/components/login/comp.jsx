@@ -2,10 +2,11 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import Section from "../section/comp";
-//import global_context from "../../global_context";
+import { AppContext } from "../../AppContext";
+import { multi_lang_helper } from "../../common";
 export default function Login() {
 	var navigate = useNavigate();
-	//var context = useContext(global_context);
+	var mlh = new multi_lang_helper(useContext(AppContext));
 	function login(username, password) {
 		customAjax({
 			params: {
@@ -17,16 +18,26 @@ export default function Login() {
 		}).then(
 			(data) => {
 				if (data.result) {
-					alert("auth was performed");
+					alert(
+						mlh.render({
+							en: "auth was performed",
+							fa: "",
+						})
+					);
 					// context.set_context_data({ username }); // todo take care to not override existing data in context data state in app.jsx
 					localStorage.setItem("username", username);
 					navigate("/");
 				} else {
-					alert("username or password was incorrect please try again");
+					alert(
+						mlh.render({
+							en: "username or password was incorrect please try again",
+							fa: "",
+						})
+					);
 				}
 			},
 			(error) => {
-				alert("something went wrong while requesting data => more details in dev console");
+				//alert("something went wrong while requesting data => more details in dev console");
 				console.log(error);
 			}
 		);
@@ -34,9 +45,19 @@ export default function Login() {
 	return (
 		<Section title="login">
 			<div className="px-2">
-				<p>username:</p>
+				<p>
+					{mlh.render({
+						en: "username:",
+						fa: "نام کاربری:",
+					})}{" "}
+				</p>
 				<input className="px-1 border border-blue-200 rounded" id="username_input" />
-				<p>password:</p>
+				<p>
+					{mlh.render({
+						en: "password:",
+						fa: "رمز عبور:",
+					})}
+				</p>
 				<input
 					className="px-1 border border-blue-200 rounded"
 					id="password_input"
@@ -53,7 +74,10 @@ export default function Login() {
 					id="login_button"
 					className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-600 duration-300"
 				>
-					login
+					{mlh.render({
+						en: "login",
+						fa: "ورود به حساب کاربری",
+					})}
 				</button>
 			</div>
 		</Section>

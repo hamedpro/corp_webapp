@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import ShowDataModal from "../show_data_modal/comp";
+import { multi_lang_helper } from "../../common.js";
+import { AppContext } from "../../AppContext";
 export default function ProductsSection() {
+	var ml = new multi_lang_helper(useContext(AppContext));
 	const Specs = (props) => {
 		const [specs, set_specs] = useState([]);
 		const [staged_specs, set_staged_specs] = useState([]);
@@ -41,14 +44,29 @@ export default function ProductsSection() {
 					fetch_data();
 				},
 				(error) => {
-					alert("something went wrong while deleting the spec");
+					alert(
+						ml.render({
+							en: "something went wrong while deleting the spec",
+							fa: "",
+						})
+					);
 					console.log(error);
 				}
 			);
 		}
 		function handle_add_new_spec() {
-			var spec_key = window.prompt("enter spec key :");
-			var spec_value = window.prompt("enter spec value :");
+			var spec_key = window.prompt(
+				ml.render({
+					en: "enter spec key :",
+					fa: "",
+				})
+			);
+			var spec_value = window.prompt(
+				ml.render({
+					en: "enter spec value :",
+					fa: "",
+				})
+			);
 
 			customAjax({
 				params: {
@@ -59,11 +77,21 @@ export default function ProductsSection() {
 				},
 			}).then(
 				(data) => {
-					alert("done");
+					alert(
+						ml.render({
+							en: "done",
+							fa: "",
+						})
+					);
 					fetch_data();
 				},
 				(error) => {
-					alert("something went wrong when asking server to add new spec");
+					alert(
+						ml.render({
+							en: "something went wrong when asking server to add new spec",
+							fa: "",
+						})
+					);
 					console.log(error);
 				}
 			);
@@ -74,15 +102,30 @@ export default function ProductsSection() {
 					task_name: "change_spec_value",
 					product_id: props.product_id,
 					spec_id,
-					new_spec_value: window.prompt("enter new spec value here"),
+					new_spec_value: window.prompt(
+						ml.render({
+							en: "enter new spec value here",
+							fa: "",
+						})
+					),
 				},
 			})
 				.then(
 					() => {
-						alert("done");
+						alert(
+							ml.render({
+								en: "done",
+								fa: "",
+							})
+						);
 					},
 					(error) => {
-						alert("something went wrong");
+						alert(
+							ml.render({
+								en: "something went wrong",
+								fa: "",
+							})
+						);
 						console.log(error);
 					}
 				)
@@ -96,15 +139,30 @@ export default function ProductsSection() {
 					task_name: "change_spec_key",
 					product_id: props.product_id,
 					spec_id,
-					new_spec_key: window.prompt("enter new spec key here"),
+					new_spec_key: window.prompt(
+						ml.render({
+							en: "enter new spec key here",
+							fa: "",
+						})
+					),
 				},
 			})
 				.then(
 					() => {
-						alert("done");
+						alert(
+							ml.render({
+								en: "done",
+								fa: "",
+							})
+						);
 					},
 					(error) => {
-						alert("something went wrong");
+						alert(
+							ml.render({
+								en: "something went wrong",
+								fa: "",
+							})
+						);
 						console.log(error);
 					}
 				)
@@ -117,27 +175,62 @@ export default function ProductsSection() {
 				<table>
 					<tbody>
 						<tr>
-							<th>key</th>
-							<th>value</th>
-							<th>options</th>
+							<th>
+								{ml.render({
+									en: "key",
+									fa: "",
+								})}
+							</th>
+							<th>
+								{ml.render({
+									en: "value",
+									fa: "",
+								})}
+							</th>
+							<th>
+								{ml.render({
+									en: "options",
+									fa: "",
+								})}
+							</th>
 						</tr>
 						{staged_specs.map((spec) => {
 							return (
 								<tr key={spec.id}>
 									<td>
 										{spec.key}{" "}
-										<b onClick={() => change_spec_key(spec.id)}>edit</b>
+										<b onClick={() => change_spec_key(spec.id)}>
+											{ml.render({
+												en: "edit",
+												fa: "",
+											})}
+										</b>
 									</td>
 									<td>
 										{spec.value}{" "}
-										<b onClick={() => change_spec_value(spec.id)}>edit</b>
+										<b onClick={() => change_spec_value(spec.id)}>
+											{ml.render({
+												en: "edit",
+												fa: "",
+											})}
+										</b>
 									</td>
-									<td onClick={() => handle_delete(spec.id)}>delete this</td>
+									<td onClick={() => handle_delete(spec.id)}>
+										{ml.render({
+											en: "delete this",
+											fa: "",
+										})}
+									</td>
 								</tr>
 							);
 						})}
 						<tr>
-							<td onClick={handle_add_new_spec}>add new spec here</td>
+							<td onClick={handle_add_new_spec}>
+								{ml.render({
+									en: "add new spec here",
+									fa: "",
+								})}
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -166,7 +259,12 @@ export default function ProductsSection() {
 	var modify_product = ({ task, payload }) => {
 		switch (task) {
 			case "name":
-				var new_name = window.prompt("enter the new name of this product:");
+				var new_name = window.prompt(
+					ml.render({
+						en: "enter the new name of this product:",
+						fa: "",
+					})
+				);
 
 				customAjax({
 					params: {
@@ -177,7 +275,12 @@ export default function ProductsSection() {
 				})
 					.then(
 						(data) => {
-							alert("done");
+							alert(
+								ml.render({
+									en: "done",
+									fa: "",
+								})
+							);
 						},
 						(error) => {
 							console.log(error);
@@ -188,7 +291,12 @@ export default function ProductsSection() {
 					});
 				break;
 			case "description":
-				var new_description = window.prompt("enter the new description of this product:");
+				var new_description = window.prompt(
+					ml.render({
+						en: "enter the new description of this product:",
+						fa: "",
+					})
+				);
 
 				customAjax({
 					params: {
@@ -199,7 +307,12 @@ export default function ProductsSection() {
 				})
 					.then(
 						(data) => {
-							alert("done");
+							alert(
+								ml.render({
+									en: "done",
+									fa: "",
+								})
+							);
 						},
 						(error) => {
 							console.log(error);
@@ -213,14 +326,28 @@ export default function ProductsSection() {
 				var product_id = Number(payload.product_id);
 				window.localStorage.setItem("product_id", product_id);
 				set_pop_up_data({
-					title: "changing specs of product #" + payload.product_id,
+					title:
+						ml.render({
+							en: "changing specs of product #",
+							fa: "",
+						}) + payload.product_id,
 					visibility: true,
 				});
 				break;
 			case "price":
-				var new_price = window.prompt("enter the new price of this product:");
+				var new_price = window.prompt(
+					ml.render({
+						en: "enter the new price of this product:",
+						fa: "",
+					})
+				);
 				if (isNaN(Number(new_price))) {
-					window.alert("given price was not a number");
+					window.alert(
+						ml.render({
+							en: "given price was not a number",
+							fa: "",
+						})
+					);
 					return;
 				}
 				customAjax({
@@ -232,7 +359,12 @@ export default function ProductsSection() {
 				})
 					.then(
 						(data) => {
-							alert("done");
+							alert(
+								ml.render({
+									en: "done",
+									fa: "",
+								})
+							);
 						},
 						(error) => {
 							console.log(error);
@@ -247,16 +379,46 @@ export default function ProductsSection() {
 	return (
 		<>
 			<div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
-				<h1>products:</h1>
+				<h1>
+					{ml.render({
+						en: "products:",
+						fa: "",
+					})}
+				</h1>
 				<hr />
 				<table className="custom_border">
 					<tbody>
 						<tr>
-							<th>id</th>
-							<th>name</th>
-							<th>description</th>
-							<th>specs as json</th>
-							<th>price</th>
+							<th>
+								{ml.render({
+									en: "id",
+									fa: "",
+								})}
+							</th>
+							<th>
+								{ml.render({
+									en: "name",
+									fa: "",
+								})}
+							</th>
+							<th>
+								{ml.render({
+									en: "description",
+									fa: "",
+								})}
+							</th>
+							<th>
+								{ml.render({
+									en: "specs as json",
+									fa: "",
+								})}
+							</th>
+							<th>
+								{ml.render({
+									en: "price",
+									fa: "",
+								})}
+							</th>
 						</tr>
 						{products.map((product) => {
 							return (
@@ -273,7 +435,10 @@ export default function ProductsSection() {
 											}
 										>
 											{" "}
-											(modify)
+											{ml.render({
+												en: "modify",
+												fa: "",
+											})}
 										</b>
 									</td>
 									<td>
@@ -287,7 +452,10 @@ export default function ProductsSection() {
 											}
 										>
 											{" "}
-											(modify)
+											{ml.render({
+												en: "modify",
+												fa: "",
+											})}
 										</b>
 									</td>
 									<td>
@@ -304,7 +472,10 @@ export default function ProductsSection() {
 											}
 										>
 											{" "}
-											(modify)
+											{ml.render({
+												en: "modify",
+												fa: "",
+											})}
 										</b>
 									</td>
 								</tr>

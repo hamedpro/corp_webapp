@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-
 var LinkLikeP = (props) => {
 	var nav = useNavigate();
 	return (

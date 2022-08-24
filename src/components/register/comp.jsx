@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
+import { AppContext } from "../../AppContext.js";
+import { multi_lang_helper } from "../../common.js";
 import Section from "../section/comp";
 export default function Register() {
+	var ml = new multi_lang_helper(useContext(AppContext));
 	var navigator = useNavigate();
 	function register() {
 		var entered_username = document.getElementById("username_input").value;
@@ -15,11 +19,11 @@ export default function Register() {
 		}).then(
 			(data) => {
 				if (data.result) {
-					alert("done");
+					alert(ml.render({ en: "done", fa: "" }));
 				}
 			},
 			(error) => {
-				alert("something went wrong => details in dev console");
+				alert(ml.render({ en: "something went wrong => details in dev console", fa: "" }));
 				console.log(error);
 			}
 		);

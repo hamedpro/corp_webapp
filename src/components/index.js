@@ -1,6 +1,5 @@
 export { default as ApiTestPage } from "./api_tests/comp";
 export { default as AdminDashboard } from "./admin_dashboard/comp";
-export { default as ChangeDataModal } from "./change_data_modal/comp";
 export { default as CompanyInfo } from "./company-info/comp";
 export { default as Login } from "./login/comp.jsx";
 export { default as MainHeader } from "./main_header/comp.jsx";
