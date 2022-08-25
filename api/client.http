@@ -12,4 +12,9 @@ http://localhost:4000/?task_name=get_products
 http://localhost:4000/?task_name=get_shopping_card_items&username=hamedpro
 
 ###
-http://localhost:4000?task_name=add_a_new_order&name=kk&username=hamedpro
+http://localhost:4000?task_name=change_password&username=root&password=root&new_password=hamed
+
+###
+http://localhost:4000?task_name=verify_user_password&username=hamedpro&password=hamedproo
+###
+http://localhost:4000?task_name=new_user&username=hamedpro&password=hamedpro

@@ -36,7 +36,6 @@ export default function MainHeader() {
 			set_username(window.localStorage.getItem("username"));
 		}, 1000);
 	}, []);
-	//todo hash password before saving to db
 	//todo auth use using jwt
 	var [is_search_modal_visible, set_is_search_modal_visible] = useState(false);
 	return (

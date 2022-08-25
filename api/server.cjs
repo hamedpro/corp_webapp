@@ -1,4 +1,5 @@
 require("dotenv").config();
+var hash_sha_256_hex = require("./common.cjs").hash_sha_256_hex;
 var express = require("express");
 var cors = require("cors");
 var response_manager = require("./express_response_manager.cjs");
@@ -45,7 +46,7 @@ app.all("/", async (req, res) => {
 		create table if not exists users(
 			id int primary key auto_increment,
 			username varchar(50) ,
-			password varchar(50) , 
+			hashed_password text , 
 			is_admin varchar(20) default "false",
 			is_subscribed_to_email varchar(20) default "false",
 			is_subscribed_to_sms varchar(20) default "false",
@@ -140,9 +141,10 @@ app.all("/", async (req, res) => {
 		return;
 	}
 	if (output.result.length == 0) {
+		var hashed_password = hash_sha_256_hex("root" + process.env.PASSWORD_HASHING_SECRET);
 		output = await cq(
 			con,
-			"insert into users (username,password,is_admin) values ('root','root','true')"
+			`insert into users (username,hashed_password,is_admin) values ('root','${hashed_password}','true')`
 		);
 		if (output.error) {
 			rm.send_error(output.error);
@@ -162,42 +164,41 @@ app.all("/", async (req, res) => {
 	switch (req.query.task_name) {
 		//todo : use custom_query in all app
 		case "new_user":
-			con.query(
-				`select * from users where username = '${params.username}'`,
-				(error, results) => {
-					if (error) {
-						rm.send_error(error);
-					} else {
-						if (results.length == 0) {
-							con.query(
-								`insert into users (username,password) values ('${params.username}','${params.password}');`,
-								(error) => {
-									if (error) {
-										rm.send_error(error);
-									} else {
-										rm.send_result(true);
-									}
-								}
-							);
-						} else {
-							rm.send_error("username is taken by another user");
-						}
-					}
+			var output = await cq(con, `select * from users where username = '${params.username}'`);
+			if (output.error) {
+				rm.send_error(output.error);
+				break;
+			}
+			if (output.result.length == 0) {
+				var hashed_password = hash_sha_256_hex(
+					params.password + process.env.PASSWORD_HASHING_SECRET
+				);
+				var output2 = await cq(
+					con,
+					`insert into users (username,hashed_password) values ('${params.username}','${hashed_password}');`
+				);
+				if (output2.error) {
+					rm.send_error(output2.error);
+					break;
 				}
-			);
+				rm.send_result(true);
+			} else {
+				rm.send_error("username is taken by another user");
+			}
+
 			break;
 		case "get_users":
 			//todo add his shopping card as a prop
 			//todo add his orders here
 
 			con.query(`select * from users`, (error, results) => {
-				// todo : omit passwords !
 				if (error) {
 					rm.send_error(error);
 					return;
 				}
 				var modified_results = results.map((user) => {
 					var modified_user = user;
+					delete modified_user.hashed_password;
 					var profile_images = fs.readdirSync("./uploaded/profile_images/");
 					//todo make sure paths and logics works also on windows and mac os
 					modified_user.has_profile_image = false;
@@ -264,7 +265,7 @@ app.all("/", async (req, res) => {
 			break;
 		case "verify_user_password":
 			con.query(
-				`select password from users where username = "${params.username}"`,
+				`select hashed_password from users where username = "${params.username}"`,
 				(error, results) => {
 					if (error) {
 						rm.send_error(error);
@@ -272,7 +273,12 @@ app.all("/", async (req, res) => {
 						if (results.length === 0) {
 							rm.send_error("there is not any user with that username");
 						} else {
-							rm.send_result(results[0].password == params.password);
+							rm.send_result(
+								results[0].hashed_password ==
+									hash_sha_256_hex(
+										params.password + process.env.PASSWORD_HASHING_SECRET
+									)
+							);
 						}
 					}
 				}
@@ -285,9 +291,15 @@ app.all("/", async (req, res) => {
 					if (error) {
 						rm.send_error(error);
 					} else {
-						if (result[0].password == params.old_password) {
+						if (
+							result[0].hashed_password ==
+							hash_sha_256_hex(params.password + process.env.PASSWORD_HASHING_SECRET)
+						) {
+							var hashed_new_password = hash_sha_256_hex(
+								params.new_password + process.env.PASSWORD_HASHING_SECRET
+							);
 							con.query(
-								`update users set password = "${params.new_password}" where username= "${params.username}"`,
+								`update users set hashed_password = "${hashed_new_password}" where username= "${params.username}"`,
 								(err) => {
 									if (err) {
 										rm.send_error(err);
