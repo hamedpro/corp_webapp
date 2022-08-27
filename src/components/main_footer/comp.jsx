@@ -17,12 +17,12 @@ import Subscripting from "./subscripting";
 import { Instagram, Telegram, Twitter } from "@mui/icons-material";
 import { AppContext } from "../../AppContext";
 import { useContext } from "react";
-import { multi_lang_helper } from "../../common";
+import { multi_lang_helper as ml } from "../../common";
 export default function MainFooter() {
 	var nav = useNavigate();
 	var AppContextState = useContext(AppContext).AppContextState;
 	var setAppContextState = useContext(AppContext).setAppContextState;
-	var ml = new multi_lang_helper(useContext(AppContext));
+
 	return (
 		<div className="bg-sky-800 text-white">
 			<div className="flex p-2 h-16 border-t border-stone-300 mt-2 mb-2">
@@ -37,9 +37,9 @@ export default function MainFooter() {
 					>
 						<KeyboardArrowUpRoundedIcon />
 						<span>
-							{ml.render({
+							{ml({
 								en: "go to top",
-								fa: "",
+								fa: "بالای صفحه",
 							})}
 						</span>
 					</button>
@@ -48,9 +48,9 @@ export default function MainFooter() {
 			<Subscripting />
 			<div className="flex h-8 w-full items-center space-x-3 my-4 mx-2 px-1">
 				<h1 className="mr-6 text-xl">
-					{ml.render({
+					{ml({
 						en: "follow us !",
-						fa: "",
+						fa: "ما را دنبال کنید !",
 					})}
 				</h1>
 				<Instagram
@@ -73,9 +73,9 @@ export default function MainFooter() {
 				<div className="flex flex-row mx-2 text-sm">
 					<div className="w-4/6 flex items-center">
 						<p>
-							{ml.render({
+							{ml({
 								en: "developed by",
-								fa: "",
+								fa: "توسعه داده شده توسط",
 							})}{" "}
 							<a href="https://github.com/hamedpro">@hamedpro</a>
 						</p>
@@ -97,23 +97,23 @@ export default function MainFooter() {
 				</div>
 				<div className="flex flex-row mx-2 text-sm flex-wrap space-x-1">
 					<LinkLikeP link="/new-support-ticket">
-						{ml.render({
+						{ml({
 							en: "report a bug",
-							fa: "",
+							fa: "گزارش یک اشکال نرم افزاری",
 						})}
 					</LinkLikeP>
 					<span>|</span>
 					<LinkLikeP link="/terms">
-						{ml.render({
+						{ml({
 							en: "terms of use",
-							fa: "",
+							fa: "قوانین و شرایط استفاده",
 						})}
 					</LinkLikeP>
 					<span>|</span>
 					<a href="https://github.com/hamedpro/corp-webapp">
-						{ml.render({
+						{ml({
 							en: "GitHub repository",
-							fa: "",
+							fa: "مخزن گیت هاب پروژه",
 						})}
 					</a>
 				</div>

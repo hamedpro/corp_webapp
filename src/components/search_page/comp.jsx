@@ -5,10 +5,9 @@ import { customAjax } from "../../custom_ajax";
 import ListItem from "../list_item/comp";
 import { useNavigate } from "react-router-dom";
 import ProductListItem from "../product_list_item/comp";
-import { multi_lang_helper } from "../../common";
+import { multi_lang_helper as ml } from "../../common";
 import { AppContext } from "../../AppContext";
 export default function SearchModal(props) {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	var nav = useNavigate();
 	var [search_results, set_search_results] = useState(null);
 	if (props.visibility !== true) {
@@ -49,9 +48,9 @@ export default function SearchModal(props) {
 					className="hover:bg-blue-600 px-1 duration-400 rounded-lg"
 				/>
 				<h1 className="ml-2 text-xl text-white">
-					{ml.render({
+					{ml({
 						en: "search center",
-						fa: "",
+						fa: "بخش جستجو",
 					})}
 				</h1>
 			</div>
@@ -60,16 +59,16 @@ export default function SearchModal(props) {
 					type="text"
 					id="search_input"
 					className="border border-stone-400 rounded-lg px-2 w-full"
-					placeholder={ml.render({ en: "start typing here", fa: "" })}
+					placeholder={ml({ en: "start typing here", fa: "شروع به تایپ کنید" })}
 					onChange={handle_input_change}
 				/>
 			</div>
 			<Section title="results" className="mx-2">
 				{search_results === null ? (
 					<h1 className="text-white mx-2 mt-1">
-						{ml.render({
+						{ml({
 							en: "results will be shown here",
-							fa: "",
+							fa: "نتایج اینجا نمایش داده خواهند شد",
 						})}
 					</h1>
 				) : (
@@ -77,11 +76,11 @@ export default function SearchModal(props) {
 						{search_results.map((result, index) => {
 							var items = [];
 							if (result.images_path_names.length == 0) {
-								items.push(ml.render({ en: "no image", fa: "" }));
+								items.push(ml({ en: "no image", fa: "بدون عکس" }));
 							}
 							items = items.concat([
 								result.name,
-								result.price + ml.render({ en: " toman", fa: "" }),
+								result.price + ml({ en: " toman", fa: "تومن" }),
 							]);
 							return (
 								<React.Fragment key={index}>

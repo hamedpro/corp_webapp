@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { customAjax } from "../../../../src/custom_ajax.js";
-import { multi_lang_helper } from "../../../common.js";
+import { multi_lang_helper as ml } from "../../../common.js";
 import { AppContext } from "../../../AppContext";
 export default function UpdateCompanyData() {
-	var mlh = new multi_lang_helper(useContext(AppContext));
 	function set_data() {
 		customAjax({
 			params: {
@@ -17,9 +16,9 @@ export default function UpdateCompanyData() {
 			(data) => {
 				if (data.result) {
 					alert(
-						mlh.render({
+						ml({
 							en: "done",
-							fa: "",
+							fa: "انجام شد",
 						})
 					);
 					//todo translate auto generated content of view
@@ -33,9 +32,9 @@ export default function UpdateCompanyData() {
 	}
 	return (
 		<p>
-			{mlh.render({
+			{ml({
 				en: "update company data page",
-				fa: "",
+				fa: "بخش به روز رسانی اطلاعات شرکت",
 			})}
 		</p>
 	);

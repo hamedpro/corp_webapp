@@ -7,7 +7,7 @@ import Section from "../section/comp.jsx";
 import { OrdersPageOrder } from "../orders/orders_page_order.jsx";
 import React from "react";
 import { OptionsSection } from "./options_section.jsx";
-import { multi_lang_helper } from "../../common.js";
+import { multi_lang_helper as ml } from "../../common.js";
 import { AppContext } from "../../AppContext.js";
 function Item(props) {
 	return (
@@ -25,7 +25,6 @@ function Item(props) {
 	);
 }
 export default function User() {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	var [orders_to_show, set_orders_to_show] = useState([]);
 	var nav = useNavigate();
 	var username = useParams().username;
@@ -38,7 +37,7 @@ export default function User() {
 	function upload_the_photo() {
 		var file_input = document.getElementById("profile_image_input");
 		if (file_input.length == 0) {
-			alert(ml.render({ en: "profile image input was empty", fa: "" }));
+			alert(ml({ en: "profile image input was empty", fa: "بدون عکس پروفایل" }));
 			return;
 		}
 		var form = new FormData();
@@ -58,9 +57,9 @@ export default function User() {
 				(data) => data.json(),
 				(error) => {
 					alert(
-						ml.render({
-							en: "error in uploading photo. details are available in console",
-							fa: "",
+						ml({
+							en: "error in uploading photo",
+							fa: "مشکلی در هنگام بارگذای عکس ها رخ داد",
 						})
 					);
 					console.log(error);
@@ -69,7 +68,7 @@ export default function User() {
 			.then(
 				(data) => {
 					if (data.result) {
-						alert(ml.render({ en: "done", fa: "" }));
+						alert(ml({ en: "done", fa: "انجام شد" }));
 					}
 				},
 				(error) => {
@@ -137,9 +136,9 @@ export default function User() {
 		return (
 			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
 				<h1 className="text-center">
-					{ml.render({
+					{ml({
 						en: "LOADING YOUR DATA ...",
-						fa: "",
+						fa: "در حال بارگذاری...",
 					})}
 				</h1>
 			</div>
@@ -148,18 +147,21 @@ export default function User() {
 	if (userStatus == "not_logged_in") {
 		return (
 			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
-				<h1>{ml.render({ en: "you've not logged in", fa: "" })}</h1>
+				<h1>
+					{ml({ en: "you've not logged in", fa: "شما وارد حساب کاربری خود نشده اید" })}
+				</h1>
 				<p className="text-center">
-					{ml.render({
-						en: `you should either login as @${username} or be an admin to access informations of
-					this page`,
-						fa: "",
-					})}
+					{ml({
+						en: `to access this page ,you must either be an admin or login as `,
+						fa: "برای دسترسی به اطلاعات این صفحه باید یا دسترسی مدیر داشته باشید یا با حساب کاربری روبرو وارد شده باشید :",
+					}) +
+						" @" +
+						username}
 				</p>
 				<Button variant="outlined" onClick={() => nav("/login")}>
-					{ml.render({
+					{ml({
 						en: "login",
-						fa: "",
+						fa: "ورود به حساب کاربری",
 					})}
 				</Button>
 			</div>
@@ -170,22 +172,23 @@ export default function User() {
 		return (
 			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
 				<h1>
-					{ml.render({
+					{ml({
 						en: "you have not permission to access this page",
-						fa: "",
+						fa: "شما مجوز دسترسی به این صفحه را ندارید",
 					})}
 				</h1>
 				<p className="text-center">
-					{ml.render({
-						en: `you should either login as @${username} or be an admin to access informations of
-						this page`,
-						fa: "",
-					})}
+					{ml({
+						en: `to access information of this page you must either have admin previleges or login as : `,
+						fa: "برای دسترسی به محتوای این صفحه یا باید دسترسی مدیر داشته باشید یا به در حساب کاربری مقابل وارد شوید :",
+					}) +
+						" @" +
+						username}
 				</p>
 				<Button variant="outlined" onClick={() => nav("/login")}>
-					{ml.render({
+					{ml({
 						en: "login into another account",
-						fa: "",
+						fa: "ورود به حساب کاربری دیگر",
 					})}
 				</Button>
 			</div>
@@ -215,9 +218,9 @@ export default function User() {
 								{/* todo add animations add skeleton loading or ... to all app  */}
 								<HideImageRounded sx={{ color: "white", mb: 1 }} />
 								<h1 className="text-white text-center text-sm">
-									{ml.render({
+									{ml({
 										en: "profile image is not uploaded",
-										fa: "",
+										fa: "عکس پروفایل آپلود نشده است ",
 									})}
 								</h1>
 							</>
@@ -237,20 +240,20 @@ export default function User() {
 					<div className="px-6">
 						<h1 className="text-lg">@{user.username}</h1>
 						<h5 className="text-sm text-stone-500">
-							{ml.render({ en: "has subscribed from", fa: "" })}{" "}
+							{ml({ en: "has subscribed from", fa: "عضو شده است از " })}{" "}
 							{new Date(Number(user.time)).toDateString()}
 						</h5>
 					</div>
 					<div className="flex overflow-auto space-x-1 px-6 mt-3">
 						<Item onClick={() => nav("/users/" + username + "/orders")} primary={true}>
-							{ml.render({ en: "orders history", fa: "" })}
+							{ml({ en: "orders history", fa: "تاریخچه سفارش ها" })}
 						</Item>
 						<Item
 							onClick={() => {
 								document.getElementById("profile_image_input").click();
 							}}
 						>
-							{ml.render({
+							{ml({
 								en: "set new profile image",
 								value: "",
 							})}
@@ -258,7 +261,7 @@ export default function User() {
 						<Item>...</Item>
 					</div>
 					<OptionsSection after_options={fetch_data} />
-					<Section title={ml.render({ en: "orders", fa: "" })}>
+					<Section title={ml({ en: "orders", fa: "سفارش ها" })}>
 						{orders_to_show.map((order, index) => {
 							return (
 								<React.Fragment key={index}>

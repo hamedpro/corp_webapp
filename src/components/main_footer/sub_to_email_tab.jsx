@@ -6,24 +6,28 @@ import { useContext, useEffect, useState } from "react";
 import { BurstModeTwoTone } from "@mui/icons-material";
 import { LinkLikeP } from "../";
 import { TopUi } from "./top_ui.jsx";
-import { multi_lang_helper } from "../../common.js";
+import { multi_lang_helper as ml } from "../../common.js";
 export default function SubToEmailTab() {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	var [email_sub_status, set_email_sub_status] = useState(null); // not_logged_in , without_email , subscribed , ready
 	var nav = useNavigate();
 	function subscribe_to_email() {
 		customAjax({
 			params: {
 				task_name: "sub_to_email",
-				username: window.localStorage.getItem(ml.render({ en: "username", fa: "" })),
+				username: window.localStorage.getItem("username"),
 			},
 		})
 			.then(
 				(data) => {
-					alert(ml.render({ en: "subscription of email was done", fa: "" }));
+					alert(
+						ml({
+							en: "subscription of email was done",
+							fa: "عضویت در سرویس ایمیل انجام شد",
+						})
+					);
 				},
 				(error) => {
-					alert(ml.render({ en: "something went wrong", fa: "" }));
+					alert(ml({ en: "something went wrong", fa: "مشکلی رخ داد" }));
 					console.log(error);
 				}
 			)
@@ -40,15 +44,20 @@ export default function SubToEmailTab() {
 		})
 			.then(
 				(data) => {
-					alert(ml.render({ en: "user email was changed successfuly", fa: "" }));
+					alert(
+						ml({
+							en: "user email was changed successfuly",
+							fa: "آدرس ایمیل کاربر با موفقیت تعویض شد",
+						})
+					);
 					on_success();
 					//todo suyc data after operations like update user email and ...
 				},
 				(error) => {
 					alert(
-						ml.render({
-							en: "something went wrong when updating your email address",
-							fa: "",
+						ml({
+							en: "something went wrong",
+							fa: "مشکلی رخ داد",
 						})
 					);
 					console.log(error);

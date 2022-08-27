@@ -27,7 +27,10 @@ export default function ProductItem({ id, name, price, className = undefined, di
 		});
 	}, []);
 	function add_to_shopping_bag(id) {
-		alert(ml.render({ en: "this feature is not implented yet", fa: "" }));
+		alert(
+			ml({ en: "this feature is not implented yet", fa: "این قابلیت هنوز اضافه نشده است" })
+		);
+		//todo this feature is not implented yet and messages like this
 	}
 	return (
 		<div

@@ -1,21 +1,20 @@
 import { customAjax } from "../../../src/custom_ajax.js";
-import { multi_lang_helper } from "../../common";
+import { multi_lang_helper as ml } from "../../common";
 import { AppContext } from "../../AppContext";
 import { useContext } from "react";
 export default function ApiTestPage() {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	return (
 		<>
 			<h1>
-				{ml.render({
+				{ml({
 					en: "api tests page",
-					fa: "",
+					fa: "صفحه تست api",
 				})}
 			</h1>
 			<p>
-				{ml.render({
+				{ml({
 					en: "coming soon",
-					fa: "",
+					fa: "به زودی",
 				})}
 			</p>
 		</>

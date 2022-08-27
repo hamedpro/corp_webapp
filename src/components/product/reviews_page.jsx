@@ -3,10 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReviewItem from "./review_item";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { Button } from "@mui/material";
-import { multi_lang_helper } from "../../common";
+import { multi_lang_helper as ml } from "../../common";
 import { AppContext } from "../../AppContext";
 export default function ReviewsPage() {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	var params = useParams();
 	var [reviews, set_reviews] = useState([]);
 	var nav = useNavigate();
@@ -21,7 +20,7 @@ export default function ReviewsPage() {
 				set_reviews(data.result);
 			},
 			(error) => {
-				alert(ml.render({ en: "something went wrong \n task : get_user_reviews", fa: "" }));
+				alert(ml({ en: "something went wrong", fa: "مشکلی رخ داد" }));
 				console.log(error);
 			}
 		);
@@ -38,9 +37,9 @@ export default function ReviewsPage() {
 				pros: JSON.stringify(
 					window
 						.prompt(
-							ml.render({
+							ml({
 								en: "enter pros seperated with comma",
-								fa: "",
+								fa: "مزایا را به صورت جدا شده توسط ویرگول انگلیسی وارد کنید",
 							})
 						)
 						.split(",")
@@ -48,9 +47,9 @@ export default function ReviewsPage() {
 				cons: JSON.stringify(
 					window
 						.prompt(
-							ml.render({
+							ml({
 								en: "enter cons seperated with comma",
-								fa: "",
+								fa: "معایب را به صورت جدا شده توسط ویرگول انگلیسی وارد کنید",
 							})
 						)
 						.split(",")
@@ -59,9 +58,9 @@ export default function ReviewsPage() {
 				time: d.getTime(),
 				rating_from_five: Number(
 					window.prompt(
-						ml.render({
+						ml({
 							en: "enter a number between 1 to 5 as your rating for this product",
-							fa: "",
+							fa: "به این کالا از ۱ تا ۵ امتیاز دهید", //todo check if numners should be english or it doesnt matter
 						})
 					)
 				),
@@ -83,9 +82,9 @@ export default function ReviewsPage() {
 		<div className="border border-blue-400 mx-1 mt-2 px-2 py-1 flex flex-col">
 			<div className="flex items-center my-2">
 				<h1>
-					{ml.render({
+					{ml({
 						en: "user reviews:",
-						fa: "",
+						fa: "نظرات کابران:",
 					})}
 				</h1>
 				<Button
@@ -94,9 +93,9 @@ export default function ReviewsPage() {
 					size="small"
 					sx={{ ml: "auto" }}
 				>
-					{ml.render({
+					{ml({
 						en: "new review",
-						fa: "",
+						fa: "ثبت نظر جدید",
 					})}
 				</Button>
 			</div>

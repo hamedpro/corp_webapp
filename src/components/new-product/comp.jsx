@@ -73,7 +73,7 @@ export default function NewProduct() {
 	}
 
 	function remove_spec(id) {
-		if (!window.confirm(ml.render({ en: "are you sure ?", fa: "" }))) {
+		if (!window.confirm(ml({ en: "are you sure ?", fa: "آیا اطمینان دارید ؟" }))) {
 			return;
 		}
 		var tmp = cloned_array(specs);
@@ -83,8 +83,10 @@ export default function NewProduct() {
 		var tmp = cloned_array(specs);
 		tmp.push({
 			id: count,
-			key: window.prompt(ml.render({ en: "enter specification key :", fa: "" })),
-			value: window.prompt(ml.render({ en: "enter its value:", fa: "" })),
+			key: window.prompt(
+				ml({ en: "enter specification key :", fa: "نام مشخصه را وارد کنید: " })
+			),
+			value: window.prompt(ml({ en: "enter its value:", fa: "مقدار مشخصه را وارد کنید: " })),
 		});
 		set_specs(tmp);
 		set_count((count) => count + 1);

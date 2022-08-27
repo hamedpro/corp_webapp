@@ -1,16 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { multi_lang_helper } from "../../common.js";
+import { multi_lang_helper as ml } from "../../common.js";
 import { AppContext } from "../../AppContext.js";
 export default function OptionsSection() {
-	var mlh = new multi_lang_helper(useContext(AppContext));
 	var nav = useNavigate();
 	function change_my_own_password() {
 		alert(
-			mlh.render({
+			ml({
 				en: "you will be redirected to your profile becuse this action should be done there",
-				fa: "",
+				fa: "هم اکنون برای تغییر رمز عبور به صفحه حساب کاربری خود تغییر مسیر داده خواهید شد ",
 			})
 		);
 		nav("/users/" + window.localStorage.getItem("username"));
@@ -23,17 +22,17 @@ export default function OptionsSection() {
 		}).then(
 			(data) => {
 				alert(
-					mlh.render({
+					ml({
 						en: "done",
-						fa: "",
+						fa: "انجام شد",
 					})
 				);
 			},
 			(error) => {
 				alert(
-					mlh.render({
+					ml({
 						en: "something went wrong",
-						fa: "",
+						fa: "مشکلی رخ داد",
 					})
 				);
 				console.log(error);
@@ -43,9 +42,9 @@ export default function OptionsSection() {
 	return (
 		<div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
 			<h1>
-				{mlh.render({
+				{ml({
 					en: "options:",
-					fa: "",
+					fa: "گزینه ها",
 				})}
 			</h1>
 			<hr />
@@ -53,25 +52,25 @@ export default function OptionsSection() {
 				<tbody>
 					<tr>
 						<th>
-							{mlh.render({
+							{ml({
 								en: "option name:",
-								fa: "",
+								fa: "نام قابلیت:",
 							})}
 						</th>
 					</tr>
 					<tr>
 						<td onClick={change_my_own_password}>
-							{mlh.render({
+							{ml({
 								en: "change my own password",
-								fa: "",
+								fa: "تغییر رمز عبور من",
 							})}
 						</td>
 					</tr>
 					<tr>
 						<td onClick={undo_all}>
-							{mlh.render({
+							{ml({
 								en: "undo all",
-								fa: "",
+								fa: "بازگشت به تنظیمات پیشفرض",
 							})}
 						</td>
 					</tr>

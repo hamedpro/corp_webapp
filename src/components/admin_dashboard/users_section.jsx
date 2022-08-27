@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { multi_lang_helper } from "../../common";
+import { multi_lang_helper as ml } from "../../common";
 import { AppContext } from "../../AppContext";
 export default function UsersSection() {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	const [users, set_users] = useState([]);
 	function fetch_data() {
 		customAjax({
@@ -29,9 +28,9 @@ export default function UsersSection() {
 						task_name: "change_username",
 						old_username: payload.old_username,
 						new_username: window.prompt(
-							ml.render({
+							ml({
 								en: "enter new username here",
-								fa: "",
+								fa: "نام کاربری جدید را وارد کنید",
 							})
 						),
 					},
@@ -39,17 +38,17 @@ export default function UsersSection() {
 					.then(
 						(data) => {
 							alert(
-								ml.render({
+								ml({
 									en: "done",
-									fa: "",
+									fa: "انجام شد",
 								})
 							);
 						},
 						(error) => {
 							alert(
-								ml.render({
-									en: "something went wrong, details are available in dev console",
-									fa: "",
+								ml({
+									en: "something went wrong",
+									fa: "مشکلی رخ داد",
 								})
 							);
 							console.log(error);
@@ -70,9 +69,9 @@ export default function UsersSection() {
 						(data) => {
 							if (data.result) {
 								alert(
-									ml.render({
+									ml({
 										en: "done",
-										fa: "",
+										fa: "انجام شد",
 									})
 								);
 							}
@@ -90,9 +89,9 @@ export default function UsersSection() {
 	return (
 		<div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
 			<h1>
-				{ml.render({
+				{ml({
 					en: "users:",
-					fa: "",
+					fa: "کاربران:",
 				})}
 			</h1>
 			<hr />
@@ -100,27 +99,27 @@ export default function UsersSection() {
 				<tbody>
 					<tr>
 						<th>
-							{ml.render({
+							{ml({
 								en: "user_id",
-								fa: "",
+								fa: "شناسه کاربر",
 							})}
 						</th>
 						<th>
-							{ml.render({
+							{ml({
 								en: "username",
-								fa: "",
+								fa: "نام کاربری",
 							})}
 						</th>
 						<th>
-							{ml.render({
+							{ml({
 								en: "is_admin",
-								fa: "",
+								fa: "دسترسی مدیر",
 							})}
 						</th>
 						<th>
-							{ml.render({
+							{ml({
 								en: "options",
-								fa: "",
+								fa: "گزینه ها ",
 							})}
 						</th>
 					</tr>
@@ -142,9 +141,9 @@ export default function UsersSection() {
 										className="cursor-pointer"
 									>
 										{" "}
-										{ml.render({
+										{ml({
 											en: "modify",
-											fa: "",
+											fa: "تغییر",
 										})}
 									</b>
 								</td>
@@ -160,9 +159,9 @@ export default function UsersSection() {
 										}
 									>
 										{" "}
-										{ml.render({
+										{ml({
 											en: "toggle",
-											fa: "",
+											fa: "تغییر وضعیت",
 										})}
 									</b>
 								</td>

@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import ShowDataModal from "../show_data_modal/comp";
-import { multi_lang_helper } from "../../common.js";
+import { multi_lang_helper as ml } from "../../common.js";
 import { AppContext } from "../../AppContext";
 export default function ProductsSection() {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	const Specs = (props) => {
 		const [specs, set_specs] = useState([]);
 		const [staged_specs, set_staged_specs] = useState([]);
@@ -45,9 +44,9 @@ export default function ProductsSection() {
 				},
 				(error) => {
 					alert(
-						ml.render({
+						ml({
 							en: "something went wrong while deleting the spec",
-							fa: "",
+							fa: "در هنگام پاک کردن این مشخصه مشکلی پیش آمد",
 						})
 					);
 					console.log(error);
@@ -56,15 +55,15 @@ export default function ProductsSection() {
 		}
 		function handle_add_new_spec() {
 			var spec_key = window.prompt(
-				ml.render({
+				ml({
 					en: "enter spec key :",
-					fa: "",
+					fa: "نام مشخصه را وارد کنید :",
 				})
 			);
 			var spec_value = window.prompt(
-				ml.render({
+				ml({
 					en: "enter spec value :",
-					fa: "",
+					fa: "مقدار مشخصه را وارد کنید: ",
 				})
 			);
 
@@ -78,18 +77,18 @@ export default function ProductsSection() {
 			}).then(
 				(data) => {
 					alert(
-						ml.render({
+						ml({
 							en: "done",
-							fa: "",
+							fa: "انجام شد",
 						})
 					);
 					fetch_data();
 				},
 				(error) => {
 					alert(
-						ml.render({
-							en: "something went wrong when asking server to add new spec",
-							fa: "",
+						ml({
+							en: "something went wrong",
+							fa: "مشکلی پیش آمد",
 						})
 					);
 					console.log(error);
@@ -103,9 +102,9 @@ export default function ProductsSection() {
 					product_id: props.product_id,
 					spec_id,
 					new_spec_value: window.prompt(
-						ml.render({
+						ml({
 							en: "enter new spec value here",
-							fa: "",
+							fa: "مقدار جدید مشخصه را وارد کنید",
 						})
 					),
 				},
@@ -113,17 +112,17 @@ export default function ProductsSection() {
 				.then(
 					() => {
 						alert(
-							ml.render({
+							ml({
 								en: "done",
-								fa: "",
+								fa: "انجام شد",
 							})
 						);
 					},
 					(error) => {
 						alert(
-							ml.render({
+							ml({
 								en: "something went wrong",
-								fa: "",
+								fa: "مشکلی رخ داد",
 							})
 						);
 						console.log(error);
@@ -140,9 +139,9 @@ export default function ProductsSection() {
 					product_id: props.product_id,
 					spec_id,
 					new_spec_key: window.prompt(
-						ml.render({
+						ml({
 							en: "enter new spec key here",
-							fa: "",
+							fa: "مقدار جدید مشخصه را وارد کنید",
 						})
 					),
 				},
@@ -150,17 +149,17 @@ export default function ProductsSection() {
 				.then(
 					() => {
 						alert(
-							ml.render({
+							ml({
 								en: "done",
-								fa: "",
+								fa: "انجام شد",
 							})
 						);
 					},
 					(error) => {
 						alert(
-							ml.render({
+							ml({
 								en: "something went wrong",
-								fa: "",
+								fa: "مشکلی رخ داد",
 							})
 						);
 						console.log(error);
@@ -176,21 +175,21 @@ export default function ProductsSection() {
 					<tbody>
 						<tr>
 							<th>
-								{ml.render({
+								{ml({
 									en: "key",
-									fa: "",
+									fa: "نام آیتم",
 								})}
 							</th>
 							<th>
-								{ml.render({
+								{ml({
 									en: "value",
-									fa: "",
+									fa: "مقدار آیتم",
 								})}
 							</th>
 							<th>
-								{ml.render({
+								{ml({
 									en: "options",
-									fa: "",
+									fa: "گزینه ها",
 								})}
 							</th>
 						</tr>
@@ -200,25 +199,25 @@ export default function ProductsSection() {
 									<td>
 										{spec.key}{" "}
 										<b onClick={() => change_spec_key(spec.id)}>
-											{ml.render({
+											{ml({
 												en: "edit",
-												fa: "",
+												fa: "ویرایش",
 											})}
 										</b>
 									</td>
 									<td>
 										{spec.value}{" "}
 										<b onClick={() => change_spec_value(spec.id)}>
-											{ml.render({
+											{ml({
 												en: "edit",
-												fa: "",
+												fa: "ویرایش",
 											})}
 										</b>
 									</td>
 									<td onClick={() => handle_delete(spec.id)}>
-										{ml.render({
+										{ml({
 											en: "delete this",
-											fa: "",
+											fa: "حذف این آیتم",
 										})}
 									</td>
 								</tr>
@@ -226,9 +225,9 @@ export default function ProductsSection() {
 						})}
 						<tr>
 							<td onClick={handle_add_new_spec}>
-								{ml.render({
+								{ml({
 									en: "add new spec here",
-									fa: "",
+									fa: "اضافه کردن مشخصه جدید",
 								})}
 							</td>
 						</tr>
@@ -260,9 +259,9 @@ export default function ProductsSection() {
 		switch (task) {
 			case "name":
 				var new_name = window.prompt(
-					ml.render({
+					ml({
 						en: "enter the new name of this product:",
-						fa: "",
+						fa: "نام این محصول را وارد کنید: ",
 					})
 				);
 
@@ -276,9 +275,9 @@ export default function ProductsSection() {
 					.then(
 						(data) => {
 							alert(
-								ml.render({
+								ml({
 									en: "done",
-									fa: "",
+									fa: "انجام شد",
 								})
 							);
 						},
@@ -292,9 +291,9 @@ export default function ProductsSection() {
 				break;
 			case "description":
 				var new_description = window.prompt(
-					ml.render({
+					ml({
 						en: "enter the new description of this product:",
-						fa: "",
+						fa: "توضیحات این محصول را وارد کنید: ",
 					})
 				);
 
@@ -308,9 +307,9 @@ export default function ProductsSection() {
 					.then(
 						(data) => {
 							alert(
-								ml.render({
+								ml({
 									en: "done",
-									fa: "",
+									fa: "انجام شد",
 								})
 							);
 						},
@@ -327,25 +326,27 @@ export default function ProductsSection() {
 				window.localStorage.setItem("product_id", product_id);
 				set_pop_up_data({
 					title:
-						ml.render({
-							en: "changing specs of product #",
-							fa: "",
-						}) + payload.product_id,
+						ml({
+							en: "changing specs of product",
+							fa: "تغییر مشخصات محصول",
+						}) +
+						" #" +
+						payload.product_id,
 					visibility: true,
 				});
 				break;
 			case "price":
 				var new_price = window.prompt(
-					ml.render({
+					ml({
 						en: "enter the new price of this product:",
-						fa: "",
+						fa: "قیمت جدید این محصول را وارد کنید: ",
 					})
 				);
 				if (isNaN(Number(new_price))) {
 					window.alert(
-						ml.render({
+						ml({
 							en: "given price was not a number",
-							fa: "",
+							fa: "مقدار وارد شده به عنوان قیمت یک عدد نبود",
 						})
 					);
 					return;
@@ -360,9 +361,9 @@ export default function ProductsSection() {
 					.then(
 						(data) => {
 							alert(
-								ml.render({
+								ml({
 									en: "done",
-									fa: "",
+									fa: "انجام شد",
 								})
 							);
 						},
@@ -380,9 +381,9 @@ export default function ProductsSection() {
 		<>
 			<div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
 				<h1>
-					{ml.render({
+					{ml({
 						en: "products:",
-						fa: "",
+						fa: "محصولات",
 					})}
 				</h1>
 				<hr />
@@ -390,33 +391,33 @@ export default function ProductsSection() {
 					<tbody>
 						<tr>
 							<th>
-								{ml.render({
+								{ml({
 									en: "id",
-									fa: "",
+									fa: "شناسه",
 								})}
 							</th>
 							<th>
-								{ml.render({
+								{ml({
 									en: "name",
-									fa: "",
+									fa: "نام",
 								})}
 							</th>
 							<th>
-								{ml.render({
+								{ml({
 									en: "description",
-									fa: "",
+									fa: "توضیحات",
 								})}
 							</th>
 							<th>
-								{ml.render({
+								{ml({
 									en: "specs as json",
-									fa: "",
+									fa: "مشخصات در فرمت json",
 								})}
 							</th>
 							<th>
-								{ml.render({
+								{ml({
 									en: "price",
-									fa: "",
+									fa: "قیمت",
 								})}
 							</th>
 						</tr>
@@ -435,9 +436,9 @@ export default function ProductsSection() {
 											}
 										>
 											{" "}
-											{ml.render({
+											{ml({
 												en: "modify",
-												fa: "",
+												fa: "ویرایش",
 											})}
 										</b>
 									</td>
@@ -452,9 +453,9 @@ export default function ProductsSection() {
 											}
 										>
 											{" "}
-											{ml.render({
+											{ml({
 												en: "modify",
-												fa: "",
+												fa: "تغییر",
 											})}
 										</b>
 									</td>
@@ -472,9 +473,9 @@ export default function ProductsSection() {
 											}
 										>
 											{" "}
-											{ml.render({
+											{ml({
 												en: "modify",
-												fa: "",
+												fa: "تغییر",
 											})}
 										</b>
 									</td>

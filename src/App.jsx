@@ -76,7 +76,7 @@ function App() {
 						<Route path="/login" element={<Login />} />
 						<Route path="/new-support-ticket" element={<NewSupportTicket />} />
 						<Route
-							path="/admin-dashboard/update_company_data"
+							path="/admin-dashboard/update-company-data"
 							element={<UpdateCompanyData />}
 						/>
 						<Route exact path="/products/:product_id" element={<Product />} />

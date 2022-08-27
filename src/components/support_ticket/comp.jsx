@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { multi_lang_helper } from "../../common.js";
+import { multi_lang_helper as ml } from "../../common.js";
 import "./s.css";
 import { AppContext } from "../../AppContext";
 export default function SupportTicket() {
 	var support_ticket_id = useParams().support_ticket_id;
-	var ml = new multi_lang_helper(useContext(AppContext));
+
 	//todo check if multi lang helper updates when its used inside a function before return
-	var string = ml.render({ en: "loading ...", fa: "" });
+	var string = ml({ en: "loading ...", fa: "در حال بارگذاری..." });
 	const [support_ticket, set_support_ticket] = useState({
 		id: string,
 		username: string,
@@ -20,7 +20,7 @@ export default function SupportTicket() {
 	});
 	const [comments, set_comments] = useState([]);
 	function toggle_proceeding_state() {
-		if (window.confirm(ml.render({ en: "are you sure ?", fa: "" }))) {
+		if (window.confirm(ml({ en: "are you sure ?", fa: "آیا اطمینان دارید ؟" }))) {
 			customAjax({
 				params: {
 					task_name: "toggle_support_ticket",
@@ -30,11 +30,7 @@ export default function SupportTicket() {
 			})
 				.then(
 					(data) => {
-						if (data.result) {
-							alert(ml.render({ en: "done", fa: "" }));
-						} else {
-							alert(ml.render({ en: "result field was not true", fa: "" }));
-						}
+						alert(ml({ en: "done", fa: "انجام شد" }));
 					},
 					(error) => {
 						console.log(error);
@@ -46,9 +42,9 @@ export default function SupportTicket() {
 	function delete_comment(comment_id) {
 		if (
 			window.confirm(
-				ml.render({
-					en: `are you sure you want to do following task ? \n -deleting support ticket comment with comment id "${comment_id}"`,
-					fa: "",
+				ml({
+					en: `are you sure ? `,
+					fa: "آیا اطمینان دارید ؟",
 				})
 			)
 		) {
@@ -61,7 +57,7 @@ export default function SupportTicket() {
 				.then(
 					(data) => {
 						if (data.result) {
-							alert(ml.render({ en: "done", fa: "" }));
+							alert(ml({ en: "done", fa: "انجام شد" }));
 						}
 					},
 					(error) => {
@@ -86,7 +82,7 @@ export default function SupportTicket() {
 			.then(
 				(data) => {
 					if (data.result) {
-						alert(ml.render({ en: "done", fa: "" }));
+						alert(ml({ en: "done", fa: "انجام شد" }));
 					}
 				},
 				(error) => {
@@ -131,66 +127,68 @@ export default function SupportTicket() {
 		<div id="support_ticket">
 			<div className="mt-2 p-2 mx-auto w-full border border-blue-400 rounded">
 				<h1 className="text-lg">
-					{ml.render({
+					{ml({
 						en: "support ticket details",
-						fa: "",
+						fa: "جزییات تیکت پشتیبانی",
 					})}
 				</h1>
 				<hr className="" />
 				<table>
 					<tbody>
 						<tr>
-							<th>{ml.render({ en: "key", fa: "" })}</th>
-							<th>{ml.render({ en: "value", fa: "" })}</th>
-							<th>{ml.render({ en: "option", fa: "" })}</th>
+							<th>{ml({ en: "key", fa: "نام آیتم " })}</th>
+							<th>{ml({ en: "value", fa: "مقدار آیتم" })}</th>
+							<th>{ml({ en: "options", fa: "گزینه ها " })}</th>
 						</tr>
 						<tr>
-							<td>{ml.render({ en: "id", fa: "" })}</td>
+							<td>{ml({ en: "id", fa: "شناسه" })}</td>
 							<td>{support_ticket.id}</td>
 							<td></td>
 						</tr>
 						<tr>
-							<td>{ml.render({ en: "username", fa: "" })}</td>
+							<td>{ml({ en: "username", fa: "نام کاربری" })}</td>
 							<td>{support_ticket.username}</td>
 							<td></td>
 						</tr>
 						<tr>
-							<td>{ml.render({ en: "title", fa: "" })}</td>
+							<td>{ml({ en: "title", fa: "موضوع" })}</td>
 							<td>{support_ticket.title}</td>
 							<td></td>
 						</tr>
 						<tr>
-							<td>{ml.render({ en: "type", fa: "" })}</td>
+							<td>{ml({ en: "type", fa: "نوع" })}</td>
 							<td>{support_ticket.type}</td>
 							<td></td>
 						</tr>
 						<tr>
-							<td>{ml.render({ en: "text", fa: "" })}</td>
+							<td>{ml({ en: "text", fa: "متن" })}</td>
 							<td>{support_ticket.text}</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>
-								{ml.render({
+								{ml({
 									en: "proceeding state",
-									fa: "",
+									fa: "وضعیت رسیدگی",
 								})}
 							</td>
 							<td>
 								{support_ticket.is_proceed == "true"
-									? ml.render({
-											en: `this support ticket is proceeded by an admin with username : ${support_ticket.proceeded_by}`,
-											fa: "",
-									  })
-									: ml.render({
+									? ml({
+											en: `this support ticket is proceeded by an admin with username :`,
+											fa: "به این تیکت پشتیبانی رسدگی شده است به وسیله",
+									  }) +
+									  " " +
+									  support_ticket.proceeded_by
+									: ml({
 											en: "this support message is not proceeded yet ",
-											fa: "",
+											fa: "هنوز به این تیکت پشتیبانی رسیدگی نشده است",
 									  })}
 							</td>
 							<td onClick={toggle_proceeding_state}>
-								{ml.render({
+								{ml({
 									en: "toggle",
-									fa: "",
+									fa: "تغییر وضعیت ",
 								})}
 							</td>
 						</tr>
@@ -200,36 +198,36 @@ export default function SupportTicket() {
 
 			<div className="mx-auto w-full mt-2 border border-blue-400 p-2 rounded">
 				<h1 className="text-lg">
-					{ml.render({
+					{ml({
 						en: "support ticket messages",
-						fa: "",
+						fa: "بخش چت تیکت پشتیانی",
 					})}
 				</h1>
 				<table>
 					<tbody>
 						<tr>
 							<th>
-								{ml.render({
+								{ml({
 									en: "comment id",
-									fa: "",
+									fa: "شناسه نظر",
 								})}
 							</th>
 							<th>
-								{ml.render({
+								{ml({
 									en: "username",
-									fa: "",
+									fa: "نام کاربری",
 								})}
 							</th>
 							<th>
-								{ml.render({
+								{ml({
 									en: "text",
-									fa: "",
+									fa: "متن",
 								})}
 							</th>
 							<th>
-								{ml.render({
+								{ml({
 									en: "delete option",
-									fa: "",
+									fa: "حذف کردن ویژگی",
 								})}
 							</th>
 						</tr>
@@ -244,9 +242,9 @@ export default function SupportTicket() {
 											delete_comment(comment.id);
 										}}
 									>
-										{ml.render({
+										{ml({
 											en: "delete it",
-											fa: "",
+											fa: "پاک کردن این مورد",
 										})}
 									</td>
 								</tr>
@@ -255,16 +253,16 @@ export default function SupportTicket() {
 					</tbody>
 				</table>
 				<h1 className="text-lg mt-5">
-					{ml.render({
+					{ml({
 						en: "new comment",
-						fa: "",
+						fa: "نظر جدید",
 					})}
 				</h1>
 				<hr />
 				<p>
-					{ml.render({
+					{ml({
 						en: "text of the comment :",
-						fa: "",
+						fa: "متن نظر جدید",
 					})}
 				</p>
 				<input id="comment_input" className="border border-blue-400 rounded px-2" />
@@ -272,7 +270,7 @@ export default function SupportTicket() {
 					className="border border-blue-400 hover:text-white hover:bg-blue-600 rounded p-2 block text-sm mt-2"
 					onClick={submit_new_comment}
 				>
-					{ml.render({ en: "submit comment as ", fa: "" })}
+					{ml({ en: "submit comment as ", fa: "ثبت این نظر به عنوان " })}
 					{`@${window.localStorage.getItem("username")}`}
 				</button>
 			</div>

@@ -5,9 +5,8 @@ import Section from "../section/comp";
 import { InfoRounded } from "@mui/icons-material";
 import { ShoppingCardItem } from "./shopping_card_item";
 import { Alert } from "../alert/comp";
-import { multi_lang_helper } from "../../common";
+import { multi_lang_helper as ml } from "../../common";
 export default function ShoppingCardPage() {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	var nav = useNavigate();
 	var username = useParams().username;
 	var [shopping_card_items, set_shopping_card_items] = useState(null);
@@ -54,7 +53,12 @@ export default function ShoppingCardPage() {
 		customAjax({
 			params: {
 				task_name: "submit_a_new_order",
-				name: window.prompt(ml.render({ en: "enter a name for your new order", fa: "" })),
+				name: window.prompt(
+					ml({
+						en: "enter a name for your new order",
+						fa: "برای سفارس جدید خود یک نام وارد کنید",
+					})
+				),
 				username,
 			},
 		}).then(
@@ -69,13 +73,13 @@ export default function ShoppingCardPage() {
 
 	return (
 		<div className="flex flex-col">
-			<Section title={ml.render({ en: "my shopping card", fa: "" })} className="mb-2">
+			<Section title={ml({ en: "my shopping card", fa: "سبد خرید من" })} className="mb-2">
 				{shopping_card_items === null ? (
 					<h1 className="mx-2">
 						<Alert icon={<InfoRounded />}>
-							{ml.render({
+							{ml({
 								en: "you have'nt added any product to your shopping card yet",
-								fa: "",
+								fa: "شما هنوز هیچ کالایی به سبد خرید خود اضافه نکرده اید",
 							})}
 						</Alert>
 					</h1>
@@ -100,9 +104,9 @@ export default function ShoppingCardPage() {
 				className="h-8 mx-1 text-white bg-blue-500 rounded hover:bg-blue-600 duration-300"
 				onClick={submit_new_order}
 			>
-				{ml.render({
+				{ml({
 					en: "submit them as an order",
-					fa: "",
+					fa: "ثبت به عنوان یک سفارش جدید",
 				})}
 			</button>
 		</div>

@@ -5,10 +5,9 @@ import { customAjax } from "../../../src/custom_ajax.js";
 import { useState, useEffect, useContext } from "react";
 import { LinkLikeP } from "../";
 import { TopUi } from "./top_ui.jsx";
-import { multi_lang_helper } from "../../common.js";
+import { multi_lang_helper as ml } from "../../common.js";
 import { AppContext } from "../../AppContext.js";
 export default function SubToSmsTab() {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	var [sms_sub_status, set_sms_sub_status] = useState(null); // not_logged_in , without_phone_number , subscribed , ready
 	var nav = useNavigate();
 	//add fetch data interval for 1 sec / note 2 : note 1 is not good , think about a way to recalc data when something related does change
@@ -20,10 +19,10 @@ export default function SubToSmsTab() {
 			},
 		}).then(
 			(data) => {
-				alert(ml.render({ en: "done", fa: "" }));
+				alert(ml({ en: "done", fa: "انجام شد" }));
 			},
 			(error) => {
-				alert(ml.render({ en: "something went wrong", fa: "" }));
+				alert(ml({ en: "something went wrong", fa: "مشکلی رخ داد" }));
 				console.log(error);
 			}
 		);
@@ -42,15 +41,20 @@ export default function SubToSmsTab() {
 			},
 		}).then(
 			(data) => {
-				alert(ml.render({ en: "updating phone number was successful", fa: "" }));
+				alert(
+					ml({
+						en: "updating phone number was successful",
+						fa: "شماره تلفن کاربر با موفقیت تعویض شد",
+					})
+				);
 				on_success();
 				//todo suyc data after operations like update user email and ...
 			},
 			(error) => {
 				alert(
-					ml.render({
-						en: "something went wrong when updating your email address",
-						fa: "",
+					ml({
+						en: "something went wrong",
+						fa: "مشکلی رخ داد",
 					})
 				);
 				console.log(error);
@@ -86,9 +90,7 @@ export default function SubToSmsTab() {
 				set_sms_sub_status("ready");
 			},
 			(error) => {
-				console.log(
-					ml.render({ en: "something went wrong when getting users information", fa: "" })
-				);
+				console.log(ml({ en: "something went wrong", fa: "مشکلی رخ داد" }));
 				console.log(error);
 			}
 		);

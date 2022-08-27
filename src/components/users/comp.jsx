@@ -6,10 +6,9 @@ import LinkLikeP from "../LinkLikeP/comp";
 import "./styles.css";
 import { Button } from "@mui/material";
 import { ArrowCircleRightRounded } from "@mui/icons-material";
-import { multi_lang_helper } from "../../common";
+import { multi_lang_helper as ml } from "../../common";
 import { AppContext } from "../../AppContext";
 export default () => {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	var [userStatus, setUserStatus] = useState(null);
 	var nav = useNavigate();
 	var [users, set_users] = useState([]);
@@ -24,9 +23,9 @@ export default () => {
 			},
 			(error) => {
 				alert(
-					ml.render({
-						en: "something went wrong \n -- task : fetching users \n * details are in console",
-						fa: "",
+					ml({
+						en: "something went wrong",
+						fa: "مشکلی رخ داد",
 					})
 				);
 				console.log(error);
@@ -49,9 +48,9 @@ export default () => {
 				},
 				(error) => {
 					alert(
-						ml.render({
-							en: "something went wrong \n task: fetching users from server",
-							fa: "",
+						ml({
+							en: "something went wrong",
+							fa: "مشکلی رخ داد",
 						})
 					);
 					console.log(error);
@@ -64,15 +63,15 @@ export default () => {
 		return (
 			<div className="border-stone-300 border mx-1 mt-2 p-2 flex justify-center items-center flex-col">
 				<span className="text-lg">
-					{ml.render({
+					{ml({
 						en: "you're not logged in",
-						fa: "",
+						fa: "شما وارد حساب خود نشده اید",
 					})}
 				</span>
 				<span className="text-stone-500 text-center text-sm mb-2">
-					{ml.render({
+					{ml({
 						en: "we can't determine if you have admin privileges or not",
-						fa: "",
+						fa: "ما نمی توانیم تشخیص دهیم که شما دسترسی مدیر دارید یا نه",
 					})}
 				</span>
 				<Button
@@ -90,9 +89,9 @@ export default () => {
 		return (
 			<div className="border-stone-300 border mx-1 mt-2 p-2 flex justify-center items-center flex-col">
 				<span className="text-lg">
-					{ml.render({
+					{ml({
 						en: "you have not admin privileges",
-						fa: 00,
+						fa: "شما دسترسی مدیر سایت ندارید ",
 					})}
 				</span>
 				<span className="text-stone-500 text-center text-sm mb-2">
@@ -104,9 +103,9 @@ export default () => {
 					variant="contained"
 					size="small"
 				>
-					{ml.render({
+					{ml({
 						en: "login with another account",
-						fa: "",
+						fa: "ورود به حساب کاربری دیگر",
 					})}
 				</Button>
 			</div>
@@ -116,9 +115,9 @@ export default () => {
 		return (
 			<div className="border border-stone-300 mx-1 mt-2 p-2">
 				<h1>
-					{ml.render({
+					{ml({
 						en: "users :",
-						fa: "",
+						fa: "کاربران: ",
 					})}
 				</h1>
 				{users.map((user) => {
@@ -129,42 +128,42 @@ export default () => {
 							className="relative  p-2 cursor-pointer border border-blue-400 rounded mx-1 mt-2 text-sx hover:bg-blue-600 hover:text-blue-200 duration-300 users_page_user_item"
 						>
 							<h6>
-								{ml.render({
+								{ml({
 									en: "user id:",
-									fa: "",
+									fa: "شناسه کاربر:",
 								})}{" "}
 								<span>{user.id}</span>
 							</h6>
 							<h6>
-								{ml.render({
+								{ml({
 									en: "username:",
-									fa: "",
+									fa: "نام کاربری:",
 								})}{" "}
 								<span>{user.username}</span>
 							</h6>
 							<h6>
-								{ml.render({
+								{ml({
 									en: "email:",
-									fa: "",
+									fa: "آدرس ایمیل: ",
 								})}
 								:{" "}
 								<span>
 									{user.email === null
-										? ml.render({
+										? ml({
 												en: "not available",
-												fa: "",
+												fa: "ناموجود",
 										  })
 										: user.email}
 								</span>
 							</h6>
 							<h6>
-								{ml.render({
+								{ml({
 									en: "user phone number:",
-									fa: "",
+									fa: "شماره موبایل کاربر:",
 								})}{" "}
 								<span>
 									{user.phone_number === null
-										? ml.render({ en: "not entered", fa: "" })
+										? ml({ en: "not entered", fa: "وارد نشده است" })
 										: user.phone_number}
 								</span>
 							</h6>

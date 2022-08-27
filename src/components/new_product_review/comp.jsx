@@ -2,7 +2,7 @@ import { ArrowBackIosNewRounded, DeleteRounded } from "@mui/icons-material";
 import { Button, Rating } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { multi_lang_helper } from "../../common";
+import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
 import ListItem from "../list_item/comp";
 import { AppContext } from "../../AppContext";
@@ -13,7 +13,7 @@ export function NewProductReview({}) {
 	var [product, setProduct] = useState(null);
 	var [pros, set_pros] = useState([]);
 	var [cons, set_cons] = useState([]);
-	var ml = new multi_lang_helper(useContext(AppContext));
+
 	var nav = useNavigate();
 	function fetch_data() {
 		customAjax({
@@ -43,7 +43,7 @@ export function NewProductReview({}) {
 			},
 		}).then(
 			(data) => {
-				alert(ml.render({ en: "done", fa: "" }));
+				alert(ml({ en: "done", fa: "انجام شد" }));
 			},
 			(error) => {
 				console.log(error);

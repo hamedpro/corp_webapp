@@ -38,15 +38,11 @@ export function clone_simple_object(object_to_clone) {
 	});
 	return cloned_object;
 }
-export class multi_lang_helper {
-	constructor(context_value) {
-		this.set_state = context_value.setAppContextState;
-		this.state = context_value.AppContextState;
+export function multi_lang_helper({ en, fa }) {
+	var lang = window.localStorage.getItem("language");
+	if (lang === null) {
+		return fa; //defalt lang is set here
+		//todo get default lang from user in the first setup page
 	}
-	get lang() {
-		return this.state.language;
-	}
-	render(strings_object) {
-		return strings_object[this.lang];
-	}
+	return lang === "fa" ? fa : en;
 }

@@ -1,10 +1,9 @@
 import { customAjax } from "../../../src/custom_ajax.js";
 import Button from "@mui/material/Button";
-import { multi_lang_helper } from "../../common.js";
+import { multi_lang_helper as ml } from "../../common.js";
 import { useContext } from "react";
 import { AppContext } from "../../AppContext.js";
 export default function CompanyInfo() {
-	var ml = new multi_lang_helper(useContext(AppContext));
 	function get_data() {
 		customAjax({
 			params: {
@@ -23,9 +22,9 @@ export default function CompanyInfo() {
 	return (
 		<>
 			<h1>
-				{ml.render({
+				{ml({
 					en: "company info page",
-					fa: "",
+					fa: "صفحه اطلاعات شرکت",
 				})}
 			</h1>
 			<hr />
