@@ -60,7 +60,10 @@ export default function MainHeader() {
 						>
 							<MenuRounded fontSize="large" style={{ color: "lightgray" }} />
 						</CustomButton>
-						<h1 className="px-2 text-lg m-0 p-0 bg-sky-600 rounded-lg pb-1 text-white ml-2 rounded h-10 flex items-center">
+						<h1
+							onClick={() => nav("/")}
+							className="cursor-pointer px-2 text-lg m-0 p-0 bg-sky-600 rounded-lg pb-1 text-white ml-2 rounded h-10 flex items-center"
+						>
 							corp_webapp
 						</h1>
 						<div className="ml-auto flex space-x-2">

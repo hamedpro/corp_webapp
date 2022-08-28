@@ -1,10 +1,25 @@
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { customAjax } from "../../custom_ajax";
-
+import Paper from "@mui/material/Paper";
 export function PG() {
-	function Test({ name }) {
-		return <h1>{name}</h1>;
-	}
-	//this component is a playGround
-	//it's used for testing features or ...
-	return <h1></h1>;
+	return (
+		<TableContainer component={Paper}>
+			<Table sx={{ width: "50%" }}>
+				<TableHead>
+					<TableRow>
+						<TableCell>id</TableCell>
+						<TableCell>username</TableCell>
+						<TableCell>full name</TableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					<TableRow>
+						<TableCell>1</TableCell>
+						<TableCell>hamedpro</TableCell>
+						<TableCell>hamed yaghoutpour</TableCell>
+					</TableRow>
+				</TableBody>
+			</Table>
+		</TableContainer>
+	);
 }
