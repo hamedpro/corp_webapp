@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { Button } from "@mui/material";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
-export default function ProductItem({ id, name, price }) {
+export default function ProductItem({ id, name, price, className = undefined, discount_percent }) {
+	//id stands for product id
 	var nav = useNavigate();
 	var [the_image_src, set_the_image_src] = useState(null);
 	useEffect(() => {
@@ -30,24 +30,44 @@ export default function ProductItem({ id, name, price }) {
 	}
 	return (
 		<div
-			className="cursor-pointer w-6/12 block border relative border-stone-200 hover:scale-105 hover:z-10 hover:bg-white"
+			className={
+				"p-1 flex flex-col shrink-0 cursor-pointer w-6/12 block border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
+				(className ? " " + className : "")
+			}
 			onClick={() => nav("/products/" + id)}
 		>
-			<div className="relative border w-full min-h-16 mx-auto bg-blue-500 flex items-center justify-center">
+			<div className="relative w-full h-1/2 mx-auto flex items-center justify-center">
 				{the_image_src === null ? (
-					<div className="h-24 flex justify-center items-center">
+					<div className="h-full rounded-lg bg-blue-400 w-full flex justify-center items-center">
 						<NoPhotographyRoundedIcon className="text-white" />
 					</div>
 				) : (
-					<img
-						className="w-full rounded-t"
-						src={the_image_src}
-						alt="this product's first image"
-					/>
+					<div className="h-full rounded-lg bg-blue-400 w-full flex justify-center items-center">
+						<img
+							className="h-full"
+							style={{ objectFit: "contain" }}
+							src={the_image_src}
+							alt="this product's first image"
+						/>
+					</div>
 				)}
 			</div>
 			<p className="mx-auto mx-1 mt-1">{name}</p>
-			<div className="flex min-h-0 h-8 p-1">{price} toman</div>
+			<div className="flex flex-col">
+				{discount_percent === 0 ? (
+					<>{price} toman</>
+				) : (
+					<>
+						{/* tell the admin this discounted price is rounded */}
+						{/* convert all prices to toman in all app  */}
+						<span className="line-through text-sm">{price} toman</span>
+						<b className="">
+							-{discount_percent}% :{" "}
+							{Math.round((price * ((100 - discount_percent) / 100)) / 1000) * 1000}
+						</b>
+					</>
+				)}
+			</div>
 		</div>
 	);
 }
