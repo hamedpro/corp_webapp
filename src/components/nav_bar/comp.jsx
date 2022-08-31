@@ -1,4 +1,4 @@
-import { NearMe, Place } from "@mui/icons-material";
+import { Place } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,7 +9,7 @@ export default function NavBar() {
 	var loc = useLocation();
 	useEffect(() => {
 		var tmp = [];
-		tmp.push({ name: "home", link: "/" });
+		tmp.push({ name: "main page", link: "/" });
 
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {

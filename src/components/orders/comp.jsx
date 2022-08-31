@@ -6,6 +6,7 @@ import Section from "../section/comp";
 import ListItem from "../list_item/comp";
 import React from "react";
 import { OrdersPageOrder } from "./orders_page_order";
+import { multi_lang_helper as ml } from "../../common";
 export default function Orders() {
 	var nav = useNavigate();
 	var username = useParams().username;
@@ -33,7 +34,7 @@ export default function Orders() {
 	//add system to alert user when product comes available
 	return (
 		<>
-			<Section title="my orders list">
+			<Section title={ml({ en: "my orders list", fa: "لیست سفارش های من" })}>
 				{orders.map((order, index) => {
 					return (
 						<React.Fragment key={index}>

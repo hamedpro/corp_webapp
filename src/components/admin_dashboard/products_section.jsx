@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
-import ShowDataModal from "../show_data_modal/comp";
 import { multi_lang_helper as ml } from "../../common.js";
-import { AppContext } from "../../AppContext";
 export default function ProductsSection() {
 	const Specs = (props) => {
 		const [specs, set_specs] = useState([]);

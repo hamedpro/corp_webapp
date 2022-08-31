@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { LinkLikeP } from "../";
 import { TopUi } from "./top_ui.jsx";
 import { multi_lang_helper as ml } from "../../common.js";
-import { AppContext } from "../../AppContext.js";
 export default function SubToSmsTab() {
 	var [sms_sub_status, set_sms_sub_status] = useState(null); // not_logged_in , without_phone_number , subscribed , ready
 	var nav = useNavigate();
@@ -30,7 +28,12 @@ export default function SubToSmsTab() {
 	function update_user_phone_number(on_success = () => {}) {
 		var input_value = document.getElementById("phone_number_input").value;
 		if (isNaN(Number(input_value))) {
-			alert("given value as phone number is not a number");
+			alert(
+				ml({
+					en: "given value as phone number is not a number",
+					fa: "مقدار وارد شده به عنوان شماره تلفن یک عدد نیست",
+				})
+			);
 			return;
 		}
 		customAjax({
@@ -100,8 +103,11 @@ export default function SubToSmsTab() {
 		<div className="w-3/4 mx-auto ">
 			<TopUi
 				title="subscribe to sms"
-				content="enter your phone number if you want to get notified everytime we send offer
-			suggesstions and news to the users"
+				content={ml({
+					en: `enter your phone number if you want to get notified everytime we send offer
+					suggesstions and news to the users`,
+					fa: "در صورتی که تمایل دارید از پیشنهادات و اخبار سایت با خبر باشید شماره موبایل خود را وارد کنید",
+				})}
 			/>
 			<div className="flex items-center my-3">
 				{sms_sub_status == "without_phone_number" ? (
@@ -117,17 +123,27 @@ export default function SubToSmsTab() {
 							onClick={update_phone_number_and_sub}
 							className="w-full mt-2 bg-blue-400 rounded"
 						>
-							subscribe
+							{ml({
+								en: "subscribe",
+								fa: "عضویت",
+							})}
 						</button>
 					</div>
 				) : null}
 				{sms_sub_status == "not_logged_in" ? (
 					<div className="flex flex-col justify-center items-center w-full">
 						<Button variant="outlined" sx={{ mb: 1 }} disabled color="primary">
-							subscribe as @{localStorage.getItem("username")}
+							{ml({
+								en: "subscribe as",
+								fa: "عضویت به عنوان",
+							})}{" "}
+							@{localStorage.getItem("username")}
 						</Button>
 						<LinkLikeP className="text-red-600 text-sm" link="/login">
-							{"you should login first ->"}
+							{ml({
+								en: "you should login first ->",
+								fa: "ابتدا باید وارد حساب کاربری خود شوید",
+							})}
 						</LinkLikeP>
 					</div>
 				) : null}
@@ -139,16 +155,29 @@ export default function SubToSmsTab() {
 							color="primary"
 							onClick={subscribe_to_sms}
 						>
-							subscribe as @{localStorage.getItem("username")}
+							{ml({
+								en: "subscribe as",
+								fa: "عضویت به عنوان",
+							})}{" "}
+							@{localStorage.getItem("username")}
 						</Button>
 					</div>
 				) : null}
 				{sms_sub_status == "subscribed" ? (
 					<div className="flex flex-col justify-center items-center w-full">
 						<Button variant="outlined" sx={{ mb: 1 }} disabled color="primary">
-							subscribe as @{localStorage.getItem("username")}
+							{ml({
+								en: "subscribe as",
+								fa: "عضویت به عنوان",
+							})}{" "}
+							@{localStorage.getItem("username")}
 						</Button>
-						<p className="text-green-600 text-sm">you're already subscribed</p>
+						<p className="text-green-600 text-sm">
+							{ml({
+								en: "you're already subscribed",
+								fa: "شما همین الان عضو هستید",
+							})}
+						</p>
 					</div>
 				) : null}
 			</div>

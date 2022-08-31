@@ -5,12 +5,12 @@ import {
 	PersonRounded,
 	SearchRounded,
 } from "@mui/icons-material";
-import { Button } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HeaderMenu from "./header_menu";
 import { useEffect } from "react";
 import SearchModal from "../search_page/comp";
+import { multi_lang_helper as ml } from "../../common";
 export default function MainHeader() {
 	var nav = useNavigate();
 	var [header_menu_visibility, set_header_menu_visibility] = useState(false);
@@ -95,7 +95,12 @@ export default function MainHeader() {
 							onClick={() => set_is_search_modal_visible(true)}
 						>
 							<SearchRounded sx={{ color: "blue" }} />
-							<h1 className="text-gray-100">type something here</h1>
+							<h1 className="text-gray-100">
+								{ml({
+									en: "type something here",
+									fa: "چیزی اینجا بنویسید",
+								})}
+							</h1>
 						</div>
 					</div>
 				</div>

@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Typography, TextField } from "@mui/material";
-import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
+import { Button } from "@mui/material";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { useContext, useEffect, useState } from "react";
-import { BurstModeTwoTone } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 import { LinkLikeP } from "../";
 import { TopUi } from "./top_ui.jsx";
 import { multi_lang_helper as ml } from "../../common.js";
@@ -101,9 +99,12 @@ export default function SubToEmailTab() {
 	return (
 		<div className="w-3/4 mx-auto pb-2">
 			<TopUi
-				title="subscribe to email"
-				content="enter your email address if you want to get notified everytime we send offer
-				suggesstions and news to the users"
+				title={ml({ en: "subscribe to email", fa: "عضویت در سرویس ایمیل" })}
+				content={ml({
+					en: `enter your email address if you want to get notified everytime we send offer
+					suggesstions and news to the users`,
+					fa: "در صورتی که تمایل دارید از پیشنهادات و اخبار سایت با خبر باشید آدرس ایمیل خود را وارد کنید",
+				})}
 			/>
 
 			{email_sub_status == "without_email" ? (
@@ -121,17 +122,27 @@ export default function SubToEmailTab() {
 						sx={{ minHeight: 0, minWidth: 0, width: "100%" }}
 						size="small"
 					>
-						subscribe
+						{ml({
+							en: "subscribe",
+							fa: "عضویت",
+						})}
 					</Button>
 				</>
 			) : null}
 			{email_sub_status == "not_logged_in" ? (
 				<div className="flex flex-col justify-center items-center w-full mt-2">
 					<Button variant="outlined" sx={{ mb: 1 }} disabled color="primary">
-						subscribe as @{localStorage.getItem("username")}
+						{ml({
+							en: "subscribe as",
+							fa: "عضویت به عنوان",
+						})}{" "}
+						@{localStorage.getItem("username")}
 					</Button>
 					<LinkLikeP className="text-red-600 text-sm" link="/login">
-						{"you should login first ->"}
+						{ml({
+							en: "you should login first ->",
+							fa: "ابتدا باید وارد حساب کاربری خود شوید",
+						})}
 					</LinkLikeP>
 				</div>
 			) : null}
@@ -143,16 +154,29 @@ export default function SubToEmailTab() {
 						color="primary"
 						onClick={subscribe_to_email}
 					>
-						subscribe as @{localStorage.getItem("username")}
+						{ml({
+							en: "subscribe as",
+							fa: "عضویت به عنوان",
+						})}{" "}
+						@{localStorage.getItem("username")}
 					</Button>
 				</div>
 			) : null}
 			{email_sub_status == "subscribed" ? (
 				<div className="flex flex-col justify-center items-center w-full mt-2">
 					<Button variant="outlined" sx={{ mb: 1 }} disabled color="primary">
-						subscribe as @{localStorage.getItem("username")}
+						{ml({
+							en: "subscribe as",
+							fa: "عضویت به عنوان",
+						})}{" "}
+						@{localStorage.getItem("username")}
 					</Button>
-					<p className="text-green-600 text-sm">you're already subscribed</p>
+					<p className="text-green-600 text-sm">
+						{ml({
+							en: "you're already subscribed",
+							fa: "شما همین الان عضو هستید",
+						})}
+					</p>
 				</div>
 			) : null}
 		</div>

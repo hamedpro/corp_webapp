@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { AppContext } from "../../AppContext";
 import { multi_lang_helper as ml } from "../../common";
 
 export default function ConfirmModal(props) {

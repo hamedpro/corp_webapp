@@ -2,17 +2,22 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import "./styles.css";
+import { multi_lang_helper as ml } from "../../common.js";
 import UsersReviews from "./user_reviews";
 import AddToShoppingBagBar from "./AddToShoppingBagBar";
 import Section from "../section/comp.jsx";
 import { ImageSlider } from "../image_slider/comp.jsx";
 export default function Product() {
 	var product_id = useParams().product_id;
+	var translated_loading = ml({
+		en: "loading ...",
+		fa: "در حال بارگذاری",
+	});
 	const [product, set_product] = useState({
-		id: "loading ...",
-		name: "loading ...",
-		description: "loading ...",
-		price: "loading ...",
+		id: translated_loading,
+		name: translated_loading,
+		description: translated_loading,
+		price: translated_loading,
 		product_specs: "[]",
 	});
 

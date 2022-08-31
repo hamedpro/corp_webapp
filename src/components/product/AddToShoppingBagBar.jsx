@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AppContext } from "../../AppContext";
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
 
@@ -72,7 +71,12 @@ export default function AddToShoppingBagBar(props) {
 	return (
 		<div className="mt-3 realative bottom-0 w-full py-2 bg-blue-400 flex items-center px-2 z-30">
 			<div className="w-2/5 flex flex-col text-sm">
-				<p className="block">price:</p>
+				<p className="block">
+					{ml({
+						en: "price:",
+						fa: "قیمت :‌",
+					})}
+				</p>
 				<b className="block">
 					{props.price + " "}{" "}
 					<span className="inline">{ml({ en: "toman", fa: "تومن" })}</span>

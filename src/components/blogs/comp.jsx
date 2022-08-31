@@ -2,8 +2,6 @@ import { InfoRounded } from "@mui/icons-material";
 import Section from "../section/comp";
 import { Alert } from "../alert/comp";
 import { multi_lang_helper as ml } from "../../common";
-import { useContext } from "react";
-import { AppContext } from "../../AppContext";
 export default function Blogs() {
 	return (
 		<>

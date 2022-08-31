@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import { customAjax } from "../../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../../common.js";
-import { AppContext } from "../../../AppContext";
 export default function UpdateCompanyData() {
 	function set_data() {
 		customAjax({

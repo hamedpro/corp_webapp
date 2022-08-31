@@ -1,8 +1,6 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import Section from "../section/comp";
-import { AppContext } from "../../AppContext";
 import { multi_lang_helper as ml } from "../../common";
 export default function Login() {
 	var navigate = useNavigate();
@@ -43,7 +41,7 @@ export default function Login() {
 		);
 	}
 	return (
-		<Section title="login">
+		<Section title={ml({ en: "login", fa: "ورود به حساب کاربری" })}>
 			<div className="px-2">
 				<p>
 					{ml({

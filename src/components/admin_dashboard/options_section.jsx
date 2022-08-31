@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common.js";
-import { AppContext } from "../../AppContext.js";
 export default function OptionsSection() {
 	var nav = useNavigate();
 	function change_my_own_password() {

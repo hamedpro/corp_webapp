@@ -1,18 +1,7 @@
-import {
-	List,
-	ListItem,
-	Button,
-	Typography,
-	Input,
-	TextField,
-	Select,
-	MenuItem,
-} from "@mui/material";
+import { Select, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { LinkLikeP } from "../";
 import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
-import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
-import { customAjax } from "../../../src/custom_ajax.js";
 import Subscripting from "./subscripting";
 import { Instagram, Telegram, Twitter } from "@mui/icons-material";
 import { AppContext } from "../../AppContext";

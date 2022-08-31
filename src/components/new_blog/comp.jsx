@@ -1,7 +1,13 @@
+import { multi_lang_helper as ml } from "../../common";
 export default function NewBlog() {
 	return (
 		<>
-			<p>here is new blog component</p>
+			<p>
+				{ml({
+					en: "this page is under development",
+					fa: "این صفحه در حال توسعه است",
+				})}
+			</p>
 		</>
 	);
 }

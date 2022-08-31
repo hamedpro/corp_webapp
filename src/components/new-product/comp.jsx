@@ -93,30 +93,72 @@ export default function NewProduct() {
 	}
 
 	return (
-		<Section title="adding new product">
+		<Section
+			title={ml({
+				en: "new product page",
+				fa: "بخش تعریف کالای جدید",
+			})}
+		>
 			<div id="new_product" className="px-2">
-				<p className="text-xl">name:</p>
+				<p className="text-xl">
+					{ml({
+						en: "name:",
+						fa: "نام کالا :",
+					})}
+				</p>
 				<CustomInput id="name_input" />
 
-				<p className="mt-2 text-xl">description:</p>
+				<p className="mt-2 text-xl">
+					{ml({
+						en: "description:",
+						fa: "متن معرفی کالا:",
+					})}
+				</p>
 				<CustomInput id="description_input" />
 
 				<p className="mt-2 text-lg">
-					product specifictions:{" "}
+					{ml({
+						en: "product specifictions:",
+						fa: "مشخصات محصول :",
+					})}{" "}
 					<button
 						className="text-sm border border-blue-400 rounded inline"
 						onClick={add_spec}
 					>
-						add new
+						{ml({
+							en: "add new",
+							fa: "مورد جدید",
+						})}
 					</button>
 				</p>
 				<table>
 					<tbody>
 						<tr>
-							<th>id</th>
-							<th>key</th>
-							<th>value</th>
-							<th>options</th>
+							<th>
+								{ml({
+									en: "id",
+									fa: "شناسه",
+								})}
+							</th>
+
+							<th>
+								{ml({
+									en: "key",
+									fa: "نام مشخصه",
+								})}
+							</th>
+							<th>
+								{ml({
+									en: "value",
+									fa: "مقدار مشخصه",
+								})}
+							</th>
+							<th>
+								{ml({
+									en: "options",
+									fa: "گزینه ها",
+								})}
+							</th>
 						</tr>
 						{specs.map((spec) => {
 							return (
@@ -124,15 +166,30 @@ export default function NewProduct() {
 									<td>{spec.id}</td>
 									<td>{spec.key}</td>
 									<td>{spec.value}</td>
-									<td onClick={() => remove_spec(spec.id)}>remove</td>
+									<td onClick={() => remove_spec(spec.id)}>
+										{ml({
+											en: "remove",
+											fa: "حذف این مورد",
+										})}
+									</td>
 								</tr>
 							);
 						})}
 					</tbody>
 				</table>
-				<p className="mt-2 text-xl">price:</p>
+				<p className="mt-2 text-xl">
+					{ml({
+						en: "price:",
+						fa: "قیمت (تومان):",
+					})}
+				</p>
 				<CustomInput id="price_input" />
-				<p className="mt-2 text-xl">discount percent:</p>
+				<p className="mt-2 text-xl">
+					{ml({
+						en: "discount percent:",
+						fa: "درصد تخفیف",
+					})}
+				</p>
 				<CustomInput id="discount_percent" />
 				<SelectCategory
 					select_category_tab={select_category_tab}
@@ -141,13 +198,22 @@ export default function NewProduct() {
 					category={category}
 				/>
 
-				<p className="mt-2 text-xl">images : </p>
+				<p className="mt-2 text-xl">
+					{ml({
+						en: "images : ",
+						fa: "عکس ها:",
+					})}
+				</p>
 				<input id="images_input" type="file" multiple />
 				<button
 					onClick={submit_new_product}
 					className="block border text-xl border-blue-400 rounded mt-4 hover:text-white hover:bg-blue-600 px-2 py-1"
 				>
-					add new product as @{window.localStorage.getItem("username")}
+					{ml({
+						en: "add new product as ",
+						fa: "اضافه کردن کالای جدید به عنوان ",
+					})}{" "}
+					@{window.localStorage.getItem("username")}
 				</button>
 			</div>
 		</Section>

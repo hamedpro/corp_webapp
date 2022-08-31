@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
 import ListItem from "../list_item/comp";
 import Section from "../section/comp";
+import { multi_lang_helper as ml } from "../../common";
 export default function Order() {
 	var username = useParams().username;
 	var order_id = Number(useParams().order_id);
@@ -27,9 +28,14 @@ export default function Order() {
 	return (
 		<>
 			{order === null ? (
-				<h1>loading</h1>
+				<h1>
+					{ml({
+						en: "loading",
+						fa: "در حال بارگذاری",
+					})}
+				</h1>
 			) : (
-				<Section title="order details">
+				<Section title={ml({ en: "order details", fa: "جزییات سفارش ها" })}>
 					<ListItem
 						vertical={true}
 						remove_arrow={true}

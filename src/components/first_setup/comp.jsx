@@ -1,6 +1,4 @@
 import { TextareaAutosize, TextField, Typography } from "@mui/material";
-import { useContext } from "react";
-import { AppContext } from "../../AppContext";
 import { multi_lang_helper as ml } from "../../common";
 var OptionBox = (props) => {
 	return (

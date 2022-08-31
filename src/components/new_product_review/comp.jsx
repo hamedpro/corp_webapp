@@ -1,11 +1,10 @@
 import { ArrowBackIosNewRounded, DeleteRounded } from "@mui/icons-material";
 import { Button, Rating } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
 import ListItem from "../list_item/comp";
-import { AppContext } from "../../AppContext";
 export function NewProductReview({}) {
 	var username = window.localStorage.getItem("username");
 	var [rating_from_five, set_rating_from_five] = useState(1);
@@ -71,7 +70,6 @@ export function NewProductReview({}) {
 		var el = document.getElementById("new_pro_input");
 		tmp.push(el.value);
 		el.value = "";
-		console.log(tmp);
 		set_pros(tmp);
 	}
 	return (
@@ -91,17 +89,31 @@ export function NewProductReview({}) {
 						sx={{ color: "white" }}
 						className="hover:bg-blue-800 rounded ml-1 p-1 h-14 w-14"
 					/>
-					<span className="text-xl py-0 my-0 text-white">your review</span>
+					<span className="text-xl py-0 my-0 text-white">
+						{ml({
+							en: "your review",
+							fa: "نظر شما",
+						})}
+					</span>
 				</div>
 				<div className="flex">
 					<p className="left-8 relative text-stone-400">
-						about "{product === null ? "loading data..." : product.name}"
+						{ml({
+							en: "about",
+							fa: "درباره",
+						})}{" "}
+						"{product === null ? "loading data..." : product.name}"
 					</p>
 				</div>
 			</div>
 			<div className="w-full h-16 relative"></div>
 			{/* todo add column : i suggest it to buy or not and submit anynomus */}
-			<h1 className="text-lg p-2 text-white">rate this product from 1 to 5 :</h1>
+			<h1 className="text-lg p-2 text-white">
+				{ml({
+					en: "rate this product from 1 to 5 :",
+					fa: "به این محصول از ۱ تا ۵ امتیاز دهید",
+				})}
+			</h1>
 			<div className="flex">
 				<Rating
 					value={rating_from_five}
@@ -113,14 +125,22 @@ export function NewProductReview({}) {
 					precision={1}
 				/>
 			</div>
-			<h1 className="m-2 mt-5 text-white">pros:</h1>
+			<h1 className="m-2 mt-5 text-white">
+				{ml({
+					en: "pros:",
+					fa: "نقاط مثبت :",
+				})}
+			</h1>
 			<div className="flex">
 				<input id="new_pro_input" type="text" className="w-3/4 ml-2 h-8 rounded px-2" />
 				<button
 					className="h-8 w-8 p-2 text-white bg-blue-600 rounded ml-2 flex justify-center items-center"
 					onClick={add_a_new_pro}
 				>
-					add
+					{ml({
+						en: "add",
+						fa: "اضافه کردن",
+					})}
 				</button>
 			</div>
 			{pros.map((pro, index) => {
@@ -134,7 +154,12 @@ export function NewProductReview({}) {
 				);
 			})}
 
-			<h1 className="m-2 mt-5 text-white">cons:</h1>
+			<h1 className="m-2 mt-5 text-white">
+				{ml({
+					en: "cons:",
+					fa: "نقاط منفی :",
+				})}
+			</h1>
 			<div className="flex">
 				<input id="new_con_input" type="text" className="w-3/4 ml-2 h-8 rounded px-2" />
 
@@ -142,7 +167,10 @@ export function NewProductReview({}) {
 					onClick={add_a_new_con}
 					className="h-8 w-8 p-2 text-white bg-blue-600 rounded ml-2 flex justify-center items-center"
 				>
-					add
+					{ml({
+						en: "add",
+						fa: "اضافه کردن",
+					})}
 				</button>
 			</div>
 			{cons.map((con, index) => {
@@ -156,7 +184,12 @@ export function NewProductReview({}) {
 				);
 			})}
 			<div className="p-2 mt-2">
-				<h1 className="text-lg mb-1 text-white">your review text :</h1>
+				<h1 className="text-lg mb-1 text-white">
+					{ml({
+						en: "your review text :",
+						fa: "متن بررسی شما ",
+					})}
+				</h1>
 				<textarea id="review_text_textarea" className="p-1 rounded" />
 			</div>
 
@@ -169,10 +202,17 @@ export function NewProductReview({}) {
 					sx={{ mt: 2 }}
 					onClick={submit}
 				>
-					submit as @{username}
+					{ml({
+						en: "submit as",
+						fa: " ثبت نهایی به عنوان",
+					})}{" "}
+					@{username}
 				</Button>
 				<p className="text-xs text-center mt-3">
-					your review will be shown after it's verified by any of the admins
+					{ml({
+						en: "your review will be shown after it's verified by any of the admins",
+						fa: "بررسی شما بعد از تایید توسط یکی از مدیران نمایش داده خواهد شد",
+					})}
 				</p>
 			</div>
 		</div>
