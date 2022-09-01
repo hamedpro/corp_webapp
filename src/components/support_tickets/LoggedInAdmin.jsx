@@ -30,7 +30,7 @@ const LoggedInAdmin = () => {
 			<h1 className="mt-1 text-lg">
 				{ml({
 					en: "this product has'nt any image",
-					fa: "",
+					fa: "این کالا در حال حاضر هیچ عکسی ندارد",
 				})}
 			</h1>
 			<hr className="mb-2 mt-1" />
@@ -40,26 +40,26 @@ const LoggedInAdmin = () => {
 						<th>
 							{ml({
 								en: "id",
-								fa: "",
+								fa: "شناسه",
 							})}
 						</th>
 
 						<th>
 							{ml({
 								en: "username",
-								fa: "",
+								fa: "نام کاربری",
 							})}
 						</th>
 						<th>
 							{ml({
 								en: "title",
-								fa: "",
+								fa: "عنوان",
 							})}
 						</th>
 						<th>
 							{ml({
 								en: "link",
-								fa: "",
+								fa: "لینک",
 							})}
 						</th>
 					</tr>
@@ -77,7 +77,7 @@ const LoggedInAdmin = () => {
 									>
 										{ml({
 											en: "open it",
-											fa: "",
+											fa: "باز کردن",
 										})}
 									</span>
 								</td>

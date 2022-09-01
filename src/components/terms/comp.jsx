@@ -4,7 +4,7 @@ var Terms = () => {
 		<h1>
 			{ml({
 				en: "here is terms of use page",
-				fa: "",
+				fa: "اینجا صفحه قوانین و شرایط سایت است",
 			})}
 		</h1>
 	);

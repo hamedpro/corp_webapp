@@ -80,7 +80,7 @@ export default () => {
 				>
 					{ml({
 						en: "login",
-						fa: "",
+						fa: "ورود به حساب کاربری",
 					})}
 				</Button>
 			</div>
@@ -98,7 +98,7 @@ export default () => {
 				<span className="text-stone-500 text-center text-sm mb-2">
 					{ml({
 						en: "this account has not admin privileges to access this part",
-						fa: "",
+						fa: "این حساب کاربری مجوز دسترسی به این بخش را ندارد ",
 					})}
 				</span>
 				<Button
@@ -174,14 +174,14 @@ export default () => {
 							<h6>
 								{ml({
 									en: "is_subscribed_to_email",
-									fa: "",
+									fa: "این کاربر عضو سرویس اطلاع رسانی ایمیلی است",
 								})}
 								:<span>{user.is_subscribed_to_email}</span>
 							</h6>
 							<h6>
 								{ml({
 									en: "is_subscribed_to_sms",
-									fa: "",
+									fa: "این کاربر عضو سرویس اطلاع رسانی اس ام اسی است",
 								})}
 								: :<span>{user.is_subscribed_to_sms}</span>
 							</h6>

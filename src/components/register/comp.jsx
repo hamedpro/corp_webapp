@@ -31,14 +31,14 @@ export default function Register() {
 				<p>
 					{ml({
 						en: "username:",
-						fa: "",
+						fa: "نام کاربری:",
 					})}
 				</p>
 				<input id="username_input" className="border border-blue-400 rounded px-1" />
 				<p>
 					{ml({
 						en: "password:",
-						fa: "",
+						fa: "رمز عبور :",
 					})}
 				</p>
 				<input
@@ -52,7 +52,7 @@ export default function Register() {
 				>
 					{ml({
 						en: "register new user",
-						fa: "",
+						fa: "ثبت نام کاربر جدید",
 					})}
 				</button>
 			</div>

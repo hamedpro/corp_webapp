@@ -8,12 +8,12 @@ const LoggedInButNotAdmin = () => {
 			<h1 className="text-center">
 				{ml({
 					en: "you are logged in as",
-					fa: "",
+					fa: "شما به عنوان این کاربر وارد حساب کاربری خود شده اید",
 				})}{" "}
 				@{window.localStorage.getItem("username")}{" "}
 				{ml({
 					en: "but this user has not admin privileges",
-					fa: "",
+					fa: "ولی این کاربر سطح دسترسی مدیریت ندارد",
 				})}
 			</h1>
 			<p className="text-center">{}</p>
@@ -25,7 +25,7 @@ const LoggedInButNotAdmin = () => {
 			>
 				{ml({
 					en: "login",
-					fa: "",
+					fa: "ورود به حساب کاربری",
 				})}
 			</button>
 		</div>

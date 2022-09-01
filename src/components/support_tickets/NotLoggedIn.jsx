@@ -6,7 +6,7 @@ const NotLoggedIn = () => {
 			<h1 className="text-center">
 				{ml({
 					en: "you are not logged in , please login first",
-					fa: "",
+					fa: "شما وارد جساب کاربری خود نشده اید. لطفا ابتدا وارد شوید.",
 				})}
 			</h1>
 			<button
@@ -17,7 +17,7 @@ const NotLoggedIn = () => {
 			>
 				{ml({
 					en: "login",
-					fa: "",
+					fa: "ورود به حساب کاربری",
 				})}
 			</button>
 		</div>

@@ -29,7 +29,7 @@ export default function User() {
 	var username = useParams().username;
 	var translated_loading = ml({
 		en: "loading ...",
-		fa: "",
+		fa: "در حال بارگذاری...",
 	});
 	const [user, set_user] = useState({
 		id: translated_loading,
@@ -258,7 +258,7 @@ export default function User() {
 						>
 							{ml({
 								en: "set new profile image",
-								fa: "",
+								fa: "تنظیم عکس پروفایل جدید",
 							})}
 						</Item>
 						<Item>...</Item>

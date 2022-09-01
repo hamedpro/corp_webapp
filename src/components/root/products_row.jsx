@@ -20,7 +20,7 @@ export function ProductsRow({ products, icon, title }) {
 							<h1>
 								{ml({
 									en: "there is not any product with this specification",
-									fa: "",
+									fa: "هیچ کالایی با این مشخصات پیدا نشد",
 								})}
 							</h1>
 						</div>

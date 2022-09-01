@@ -61,7 +61,7 @@ export default function SearchModal(props) {
 					onChange={handle_input_change}
 				/>
 			</div>
-			<Section title={ml({ en: "results", fa: "" })} className="mx-2">
+			<Section title={ml({ en: "results", fa: "نتایج" })} className="mx-2">
 				{search_results === null ? (
 					<h1 className="text-white mx-2 mt-1">
 						{ml({

@@ -41,7 +41,7 @@ export function ShoppingCardItem({ shopping_card_item, update_shopping_card_item
 							<div className="w-full h-full bg-blue-400 text-whtie">
 								{ml({
 									en: "this product has'nt any image",
-									fa: "",
+									fa: "این کالا در حال حاضر هیچ عکسی ندارد",
 								})}
 							</div>
 						</>
