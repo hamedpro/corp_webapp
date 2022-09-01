@@ -1,7 +1,7 @@
 import React from "react";
 import { Loading } from "../loading/comp";
 import ProductItem from "../products/product_item";
-
+import { multi_lang_helper as ml } from "../../common";
 export function ProductsRow({ products, icon, title }) {
 	return (
 		<>
@@ -17,7 +17,12 @@ export function ProductsRow({ products, icon, title }) {
 					</div>
 					{products.length == 0 ? (
 						<div className="h-full w-fit">
-							<h1>there is not any product with this specification</h1>
+							<h1>
+								{ml({
+									en: "there is not any product with this specification",
+									fa: "",
+								})}
+							</h1>
 						</div>
 					) : (
 						<>

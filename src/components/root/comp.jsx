@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { ImageSlider } from "../image_slider/comp";
 import { ProductsRow } from "./products_row";
-import { Circle, Discount } from "@mui/icons-material";
+import { Discount } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { customAjax } from "../../custom_ajax";
-import { Loading } from "../loading/comp";
 export default function Root() {
 	var [products, set_products] = useState(null);
 	function fetch_data() {

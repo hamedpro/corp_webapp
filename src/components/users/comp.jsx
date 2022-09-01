@@ -1,13 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
-import LinkLikeP from "../LinkLikeP/comp";
 import "./styles.css";
 import { Button } from "@mui/material";
 import { ArrowCircleRightRounded } from "@mui/icons-material";
 import { multi_lang_helper as ml } from "../../common";
-import { AppContext } from "../../AppContext";
 export default () => {
 	var [userStatus, setUserStatus] = useState(null);
 	var nav = useNavigate();
@@ -80,7 +78,10 @@ export default () => {
 					variant="contained"
 					size="small"
 				>
-					login
+					{ml({
+						en: "login",
+						fa: "",
+					})}
 				</Button>
 			</div>
 		);
@@ -95,7 +96,10 @@ export default () => {
 					})}
 				</span>
 				<span className="text-stone-500 text-center text-sm mb-2">
-					this account has not admin privileges to access this part
+					{ml({
+						en: "this account has not admin privileges to access this part",
+						fa: "",
+					})}
 				</span>
 				<Button
 					color="primary"
@@ -168,11 +172,18 @@ export default () => {
 								</span>
 							</h6>
 							<h6>
-								is_subscribed_to_email:
-								<span>{user.is_subscribed_to_email}</span>
+								{ml({
+									en: "is_subscribed_to_email",
+									fa: "",
+								})}
+								:<span>{user.is_subscribed_to_email}</span>
 							</h6>
 							<h6>
-								is_subscribed_to_sms :<span>{user.is_subscribed_to_sms}</span>
+								{ml({
+									en: "is_subscribed_to_sms",
+									fa: "",
+								})}
+								: :<span>{user.is_subscribed_to_sms}</span>
 							</h6>
 							<div className="icon">
 								<ArrowCircleRightRounded sx={{ color: "white" }} />

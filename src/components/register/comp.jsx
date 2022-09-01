@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { AppContext } from "../../AppContext.js";
 import { multi_lang_helper as ml } from "../../common.js";
 import Section from "../section/comp";
 export default function Register() {
@@ -28,11 +26,21 @@ export default function Register() {
 		);
 	}
 	return (
-		<Section title="register">
+		<Section title={ml({ en: "register", fa: "ثبت نام" })}>
 			<div className="px-2">
-				<p>username:</p>
+				<p>
+					{ml({
+						en: "username:",
+						fa: "",
+					})}
+				</p>
 				<input id="username_input" className="border border-blue-400 rounded px-1" />
-				<p>password:</p>
+				<p>
+					{ml({
+						en: "password:",
+						fa: "",
+					})}
+				</p>
 				<input
 					id="password_input"
 					className="border border-blue-400 rounded px-1"
@@ -42,7 +50,10 @@ export default function Register() {
 					className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-600 duration-300"
 					onClick={register}
 				>
-					register new user
+					{ml({
+						en: "register new user",
+						fa: "",
+					})}
 				</button>
 			</div>
 		</Section>

@@ -1,10 +1,9 @@
 import { customAjax } from "../../../src/custom_ajax.js";
 import Section from "../section/comp.jsx";
 import ListItem from "../list_item/comp.jsx";
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { multi_lang_helper as ml } from "../../common.js";
-import { AppContext } from "../../AppContext.js";
 export function OptionsSection() {
 	var nav = useNavigate();
 	var username = useParams().username;
@@ -85,7 +84,7 @@ export function OptionsSection() {
 		},
 	};
 	return (
-		<Section title="options">
+		<Section title={ml({ en: "options", fa: "گزینه ها" })}>
 			<ListItem
 				onClick={option_funcs.change_password}
 				items={[ml({ en: "change password", fa: "تغییر رمز عبور" })]}

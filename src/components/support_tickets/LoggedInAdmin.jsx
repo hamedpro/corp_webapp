@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
+import { multi_lang_helper as ml } from "../../common.js";
 const LoggedInAdmin = () => {
 	const [support_tickets, set_support_tickets] = useState([]);
 	useEffect(() => {
@@ -26,15 +27,41 @@ const LoggedInAdmin = () => {
 			id="support-tickets"
 			className="mx-auto w-full border border-blue-400 rounded p-2 mt-2 "
 		>
-			<h1 className="mt-1 text-lg">support tickets :</h1>
+			<h1 className="mt-1 text-lg">
+				{ml({
+					en: "this product has'nt any image",
+					fa: "",
+				})}
+			</h1>
 			<hr className="mb-2 mt-1" />
 			<table>
 				<tbody>
 					<tr>
-						<th>id</th>
-						<th>username</th>
-						<th>title</th>
-						<th>link</th>
+						<th>
+							{ml({
+								en: "id",
+								fa: "",
+							})}
+						</th>
+
+						<th>
+							{ml({
+								en: "username",
+								fa: "",
+							})}
+						</th>
+						<th>
+							{ml({
+								en: "title",
+								fa: "",
+							})}
+						</th>
+						<th>
+							{ml({
+								en: "link",
+								fa: "",
+							})}
+						</th>
 					</tr>
 					{support_tickets.map((st) => {
 						return (
@@ -48,7 +75,10 @@ const LoggedInAdmin = () => {
 											nav("/support-tickets/" + st.id);
 										}}
 									>
-										open it
+										{ml({
+											en: "open it",
+											fa: "",
+										})}
 									</span>
 								</td>
 							</tr>

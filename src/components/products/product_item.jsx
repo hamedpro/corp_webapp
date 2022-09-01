@@ -59,12 +59,16 @@ export default function ProductItem({ id, name, price, className = undefined, di
 			<p className="mx-auto mx-1 mt-1">{name}</p>
 			<div className="flex flex-col">
 				{discount_percent === 0 ? (
-					<>{price} toman</>
+					<>
+						{price} {ml({ en: "toman", fa: "تومن" })}
+					</>
 				) : (
 					<>
 						{/* tell the admin this discounted price is rounded */}
 						{/* convert all prices to toman in all app  */}
-						<span className="line-through text-sm">{price} toman</span>
+						<span className="line-through text-sm">
+							{price} {ml({ en: "toman", fa: "تومن" })}
+						</span>
 						<b className="">
 							-{discount_percent}% :{" "}
 							{Math.round((price * ((100 - discount_percent) / 100)) / 1000) * 1000}

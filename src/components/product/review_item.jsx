@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { multi_lang_helper as ml } from "../../common";
-import { AppContext } from "../../AppContext";
 export default function ReviewItem(props) {
 	var [passed_time_as_text, set_passed_time_as_text] = useState(
 		ml({ en: "loading...", fa: "در حال بارگذاری..." })

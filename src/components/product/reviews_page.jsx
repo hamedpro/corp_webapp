@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewItem from "./review_item";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { Button } from "@mui/material";
 import { multi_lang_helper as ml } from "../../common";
-import { AppContext } from "../../AppContext";
 export default function ReviewsPage() {
 	var params = useParams();
 	var [reviews, set_reviews] = useState([]);
@@ -54,7 +53,12 @@ export default function ReviewsPage() {
 						)
 						.split(",")
 				),
-				text: window.prompt("enter the text of your review"),
+				text: window.prompt(
+					ml({
+						en: "enter the text of your review",
+						fa: "متن بررسی خود را وارد کنید",
+					})
+				),
 				time: d.getTime(),
 				rating_from_five: Number(
 					window.prompt(

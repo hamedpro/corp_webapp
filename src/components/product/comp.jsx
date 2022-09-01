@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import "./styles.css";
-import { multi_lang_helper as ml } from "../../common.js";
 import UsersReviews from "./user_reviews";
 import AddToShoppingBagBar from "./AddToShoppingBagBar";
 import Section from "../section/comp.jsx";
 import { ImageSlider } from "../image_slider/comp.jsx";
+import { multi_lang_helper as ml } from "../../common.js";
 export default function Product() {
 	var product_id = useParams().product_id;
 	var translated_loading = ml({
@@ -71,7 +71,10 @@ export default function Product() {
 			<div className="mx-auto border border-blue-400 mt-2 p-2 mx-1">
 				{image_sources.length == 0 ? (
 					<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
-						there is not any product image uploaded for this product
+						{ml({
+							en: "there is not any product image uploaded for this product",
+							fa: "برای این محصول هیچ تصویری بارگذاری نشده است",
+						})}
 					</div>
 				) : (
 					<ImageSlider image_sources={image_sources} />
@@ -85,12 +88,22 @@ export default function Product() {
 				<AddToShoppingBagBar price={product.price} product_id={product.id} />
 			</div>
 			{/* todo add a div h full w full into Section comp and inject styles into that */}
-			<Section title="description">
+			<Section
+				title={ml({
+					en: "description",
+					fa: "معرفی محصول :",
+				})}
+			>
 				<div className="mx-2">
 					<p className="mt-1">{product.description}</p>
 				</div>
 			</Section>
-			<Section title="product specifications:">
+			<Section
+				title={ml({
+					en: "product specifications:",
+					fa: "مشخصات محصول :",
+				})}
+			>
 				<div className="mx-2">
 					{/*todo add option for report data incorrect which opens pop up to open a new support ticket */}
 					{JSON.parse(product.product_specs).map((spec) => {

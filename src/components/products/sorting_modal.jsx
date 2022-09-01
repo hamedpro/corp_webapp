@@ -12,11 +12,21 @@ export function SortingModal({ open, hideFn, setSortType, sortType }) {
 					sx={{ color: "white" }}
 					onClick={hideFn}
 				/>
-				<h1 className="text-lg text-white">sorting results</h1>
+				<h1 className="text-lg text-white">
+					{ml({
+						en: "sorting results",
+						fa: "مرتب کردن نتایج",
+					})}
+				</h1>
 			</div>
 			<div className="flex m-2 items-center">
 				<Checkbox checked={sortType == "default"} onChange={() => setSortType("default")} />
-				<h1>default mode</h1>
+				<h1>
+					{ml({
+						en: "default mode",
+						fa: "حالت پیشفرض",
+					})}
+				</h1>
 				{/* todo add a loading here becuse sort changing is slow at least now  */}
 			</div>
 			<div className="flex m-2 items-center">
@@ -24,7 +34,12 @@ export function SortingModal({ open, hideFn, setSortType, sortType }) {
 					checked={sortType == "expensive_to_cheap"}
 					onChange={() => setSortType("expensive_to_cheap")}
 				/>
-				<h1>expensive to cheap</h1>
+				<h1>
+					{ml({
+						en: "expensive to cheap",
+						fa: "گران به ارزان",
+					})}
+				</h1>
 			</div>
 
 			<div className="flex m-2 items-center">
@@ -32,7 +47,12 @@ export function SortingModal({ open, hideFn, setSortType, sortType }) {
 					checked={sortType == "cheap_to_expensive"}
 					onChange={() => setSortType("cheap_to_expensive")}
 				/>
-				<h1>cheap to expensive</h1>
+				<h1>
+					{ml({
+						en: "cheap to expensive",
+						fa: "ارزان به گران",
+					})}
+				</h1>
 			</div>
 		</Modal>
 	);

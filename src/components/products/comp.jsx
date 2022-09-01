@@ -6,7 +6,7 @@ import Section from "../section/comp";
 import { FilterAltRounded, SortRounded } from "@mui/icons-material";
 import { SortingModal } from "./sorting_modal.jsx";
 import { FilteringModal } from "./filtering_modal.jsx";
-import { Checkbox } from "@mui/material";
+import { multi_lang_helper as ml } from "../../common.js";
 export default function Products() {
 	var nav = useNavigate();
 	const [products_to_show, set_products_to_show] = useState([]);
@@ -80,14 +80,17 @@ export default function Products() {
 				setFilterOptions={set_filter_options}
 				default_filter_options={default_filter_options}
 			/>
-			<Section title="products">
+			<Section title={ml({ en: "products", fa: "محصولات" })}>
 				<div className="flex mx-2 space-x-2">
 					<button
 						className="flex hover:bg-blue-400 rounded px-1"
 						onClick={() => set_is_sorting_modal_visible(true)}
 					>
 						<SortRounded />
-						sort products
+						{ml({
+							en: "sort products",
+							fa: "ترتیب نمایش",
+						})}
 					</button>
 
 					<button
@@ -95,12 +98,26 @@ export default function Products() {
 						onClick={() => set_is_filtering_modal_visible(true)}
 					>
 						<FilterAltRounded />
-						filter product
+						{ml({
+							en: "filter product",
+							fa: "فیلتر کردن نتایج",
+						})}
 					</button>
 				</div>
 				<div className="flex justify-between mx-2 mt-4 mb-2 text-sm border-b border-stone-400 ">
-					<p className="text-stone-500">filtered products</p>
-					<p className="text-stone-500">{products_to_show.length} product</p>
+					<p className="text-stone-500">
+						{ml({
+							en: "filtered products",
+							fa: "محصولات فیلتر شده",
+						})}
+					</p>
+					<p className="text-stone-500">
+						{products_to_show.length}{" "}
+						{ml({
+							en: "product",
+							fa: "محصول",
+						})}
+					</p>
 				</div>
 				<div className="flex flex-wrap justify-start mx-2">
 					{products_to_show.map((product) => {

@@ -4,6 +4,7 @@ import Modal from "../Modal/Modal.jsx";
 import Section from "../section/comp";
 import { Alert } from "../alert/comp";
 import { clone_simple_object } from "../../common";
+import { multi_lang_helper as ml } from "../../common";
 export function FilteringModal({
 	open,
 	hideFn,
@@ -35,9 +36,20 @@ export function FilteringModal({
 					sx={{ color: "white" }}
 					onClick={hideFn}
 				/>
-				<h1 className="text-lg text-white">filtering results</h1>
+				<h1 className="text-lg text-white">
+					{ml({
+						en: "filtering results",
+						fa: "فیلتر کردن نتایج",
+					})}
+				</h1>
 			</div>
-			<Section title="current filters" className="mt-4">
+			<Section
+				title={ml({
+					en: "current filters",
+					fa: "فیلتر های فعال",
+				})}
+				className="mt-4"
+			>
 				<div className="flex m-3 mb-0 flex-col">
 					{Object.keys(filterOptions).filter(
 						(filterOptionKey) =>
@@ -45,7 +57,10 @@ export function FilteringModal({
 							default_filter_options[filterOptionKey]
 					).length == 0 ? (
 						<Alert icon={<InfoRounded sx={{ color: "white" }} />}>
-							there is not currently any filter set
+							{ml({
+								en: "there is not currently any filter set",
+								fa: "هیچ فیلتری فعال نشده است",
+							})}
 						</Alert>
 					) : null}
 					{Object.keys(filterOptions)
@@ -74,8 +89,8 @@ export function FilteringModal({
 									<span className="text-white text-sm">
 										{filterOptionKey} :{" "}
 										{typeof filterOptions[filterOptionKey] == "boolean"
-											? filterOptions[filterOptionKey]
-												? "true"
+											? "true"
+												? filterOptions[filterOptionKey]
 												: "false"
 											: filterOptions[filterOptionKey]}
 									</span>
@@ -84,27 +99,43 @@ export function FilteringModal({
 						})}
 				</div>
 			</Section>
-			<Section title="change filters">
+			<Section title={ml({ en: "change filters", fa: "تغییر فیلتر ها" })}>
 				<div className="flex px-2 flex-col">
-					<h1 className="text-white">minimum price:</h1>
+					<h1 className="text-white">
+						{ml({
+							en: "minimum price:",
+							fa: "حداقل قیمت:",
+						})}
+					</h1>
 					<div className="flex space-x-2 my-1 mb-2">
 						<input className="w-1/2 rounded px-1" id="minimum_price_input" />
 						<button
 							className="text-white border border-stone-400 px-1"
 							onClick={apply_minimum_price_filter}
 						>
-							apply
+							{ml({
+								en: "apply",
+								fa: "تایید",
+							})}
 						</button>
 					</div>
 
-					<h1 className="text-white">maximum price:</h1>
+					<h1 className="text-white">
+						{ml({
+							en: "maximum price:",
+							fa: "حداکثر قیمت :",
+						})}
+					</h1>
 					<div className="flex space-x-2 my-1 mb-2">
 						<input className="w-1/2 rounded px-1" id="maximum_price_input" />
 						<button
 							className="text-white border border-stone-400 px-1"
 							onClick={apply_maximum_price_filter}
 						>
-							apply
+							{ml({
+								en: "apply",
+								fa: "تایید",
+							})}
 						</button>
 					</div>
 
@@ -118,7 +149,12 @@ export function FilteringModal({
 								})
 							}
 						/>
-						<h1 className="text-white">just show products with image</h1>
+						<h1 className="text-white">
+							{ml({
+								en: "just show products with image",
+								fa: "فقط محصولات عکس دار",
+							})}
+						</h1>
 					</div>
 				</div>
 			</Section>

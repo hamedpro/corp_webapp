@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { HideImageRounded } from "@mui/icons-material";
@@ -8,7 +8,6 @@ import { OrdersPageOrder } from "../orders/orders_page_order.jsx";
 import React from "react";
 import { OptionsSection } from "./options_section.jsx";
 import { multi_lang_helper as ml } from "../../common.js";
-import { AppContext } from "../../AppContext.js";
 function Item(props) {
 	return (
 		<div
@@ -28,10 +27,14 @@ export default function User() {
 	var [orders_to_show, set_orders_to_show] = useState([]);
 	var nav = useNavigate();
 	var username = useParams().username;
+	var translated_loading = ml({
+		en: "loading ...",
+		fa: "",
+	});
 	const [user, set_user] = useState({
-		id: "loading...",
-		username: "loading...",
-		is_admin: "loading...",
+		id: translated_loading,
+		username: translated_loading,
+		is_admin: translated_loading,
 	});
 	var [userStatus, setUserStatus] = useState("loading");
 	function upload_the_photo() {
@@ -255,7 +258,7 @@ export default function User() {
 						>
 							{ml({
 								en: "set new profile image",
-								value: "",
+								fa: "",
 							})}
 						</Item>
 						<Item>...</Item>

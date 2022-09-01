@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import Button from "@mui/material/Button";
 import TotalRating from "./total_rating";
-import LinkLikeP from "../LinkLikeP/comp";
 import ReviewItem from "./review_item.jsx";
 import { useNavigate } from "react-router-dom";
 import Section from "../section/comp.jsx";
+import { multi_lang_helper as ml } from "../../common.js";
 const user_reviews = (props) => {
 	var [product, set_product] = useState({});
 	var [reviews, set_reviews] = useState([]);
@@ -41,10 +41,20 @@ const user_reviews = (props) => {
 			<TotalRating reviews={reviews} />
 			{reviews.length === 0 ? (
 				<>
-					<h1>user reviews:</h1>
+					<h1>
+						{ml({
+							en: "user reviews:",
+							fa: "بررسی های کاربران :",
+						})}
+					</h1>
 					<hr />
 					<div className="w-full flex justify-center flex-col py-3">
-						<h1 className="text-center">there is not any review submitted</h1>
+						<h1 className="text-center">
+							{ml({
+								en: "there is not any review submitted",
+								fa: "هنوز هیچ بررسی برای این محصول ثبت نشده است",
+							})}
+						</h1>
 						<Button
 							variant="contained"
 							size="small"
@@ -52,13 +62,21 @@ const user_reviews = (props) => {
 							className="w-2/3"
 							onClick={() => nav("/products/" + props.product_id + "/reviews")}
 						>
-							submit the first review
+							{ml({
+								en: "submit the first review",
+								fa: "ثبت اولین بررسی برای محصول",
+							})}
 						</Button>
 					</div>
 				</>
 			) : (
 				<>
-					<Section title="user reviews :">
+					<Section
+						title={ml({
+							en: "user reviews :",
+							fa: "بررسی های کاربران:",
+						})}
+					>
 						<div
 							className=" mx-2 mb-1 flex  h-40 space-x-2"
 							style={{ overflowX: "scroll" }}
@@ -76,22 +94,36 @@ const user_reviews = (props) => {
 								}
 							})}
 							<div className="h-full bg-blue-500 text-white flex flex-col shrink-0 items-center justify-center px-4">
-								<h1 className="mb-3">want to see all reviews? </h1>
+								<h1 className="mb-3">
+									{ml({
+										en: "want to see all reviews? ",
+										fa: "آیا میخواهید همه بررسی ها را ببینید؟",
+									})}
+								</h1>
 								<Button
 									sx={{ color: "white", borderColor: "gray" }}
 									variant="outlined"
 									size="small"
 									onClick={() => nav(`/products/${props.product_id}/reviews`)}
 								>
-									see all reviews
+									{" "}
+									{/* todo improve quality of translations  */}
+									{ml({
+										en: "see all reviews",
+										fa: "مشاهده همه بررسی ها",
+									})}
 								</Button>
 							</div>
 						</div>
 					</Section>
-					<Section title="add a new review">
+					<Section title={ml({ en: "add a new review", fa: "اضافه کردن یک بررسی جدید" })}>
 						<div className=" mx-2 bg-blue-500 p-3 h-full flex flex-col justify-center items-center">
 							<h1 className="text-white w-1/2 text-center mb-2">
-								do you want to share your exprience about this product ?{" "}
+								{ml({
+									en: "do you want to share your exprience about this product",
+									fa: "آیا تمایل دارید تجربه کاربری خود را با ما در میان بگذارید ؟",
+								})}{" "}
+								?{" "}
 							</h1>
 							<Button
 								sx={{ color: "white", borderColor: "gray" }}
@@ -99,7 +131,10 @@ const user_reviews = (props) => {
 								size="small"
 								onClick={() => nav(`/products/${props.product_id}/new-user-review`)}
 							>
-								add a new review
+								{ml({
+									en: "add a new review",
+									fa: "اصافه کردم یک بررسی جدید",
+								})}
 							</Button>
 						</div>
 					</Section>

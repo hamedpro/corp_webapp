@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common.js";
 import "./s.css";
-import { AppContext } from "../../AppContext";
 export default function SupportTicket() {
 	var support_ticket_id = useParams().support_ticket_id;
 
@@ -132,7 +131,7 @@ export default function SupportTicket() {
 						fa: "جزییات تیکت پشتیبانی",
 					})}
 				</h1>
-				<hr className="" />
+				<hr />
 				<table>
 					<tbody>
 						<tr>

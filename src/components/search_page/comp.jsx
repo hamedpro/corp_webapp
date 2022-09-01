@@ -1,12 +1,10 @@
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Section from "../section/comp";
 import { customAjax } from "../../custom_ajax";
-import ListItem from "../list_item/comp";
 import { useNavigate } from "react-router-dom";
 import ProductListItem from "../product_list_item/comp";
 import { multi_lang_helper as ml } from "../../common";
-import { AppContext } from "../../AppContext";
 export default function SearchModal(props) {
 	var nav = useNavigate();
 	var [search_results, set_search_results] = useState(null);
@@ -63,7 +61,7 @@ export default function SearchModal(props) {
 					onChange={handle_input_change}
 				/>
 			</div>
-			<Section title="results" className="mx-2">
+			<Section title={ml({ en: "results", fa: "" })} className="mx-2">
 				{search_results === null ? (
 					<h1 className="text-white mx-2 mt-1">
 						{ml({
