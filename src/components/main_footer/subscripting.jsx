@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SubToSmsTab from "./sub_to_sms_tab";
 import SubToEmailTab from "./sub_to_email_tab";
+import { multi_lang_helper as ml } from "../../common";
 function Tab(props) {
 	//optional props : className(string)
 	//required props : active (boolean) content(string)
@@ -26,14 +27,20 @@ export default function Subscripting() {
 			<div className="flex w-full">
 				<div className="w-1/2 border-b">
 					<Tab
-						content="email"
+						content={ml({
+							en: "email",
+							fa: "ایمیل",
+						})}
 						active={current_tab == "sub_to_email"}
 						onClick={() => set_current_tab("sub_to_email")}
 					/>
 				</div>
 				<div className="w-1/2 border-l border-b border-stone-200">
 					<Tab
-						content="sms"
+						content={ml({
+							en: "sms",
+							fa: "پیامک",
+						})}
 						active={current_tab == "sub_to_sms"}
 						onClick={() => set_current_tab("sub_to_sms")}
 					/>

@@ -4,6 +4,7 @@ import { ProductsRow } from "./products_row";
 import { Discount } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { customAjax } from "../../custom_ajax";
+import { multi_lang_helper as ml } from "../../common";
 export default function Root() {
 	var [products, set_products] = useState(null);
 	function fetch_data() {
@@ -29,7 +30,10 @@ export default function Root() {
 			<ImageSlider className="mt-1 bg-sky-500" image_sources={[]} />
 			<ProductsRow
 				icon={<Discount />}
-				title={"discounted products"}
+				title={ml({
+					en: "discounted products",
+					fa: "محصولات دارای تخفیف",
+				})}
 				products={discounted_products()}
 			/>
 		</>
