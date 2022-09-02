@@ -36,6 +36,8 @@ import { ShoppingCardPage } from "./components";
 import { AppContext } from "./AppContext.js";
 import { PG } from "./components/pg/pg";
 import { CheckUserPrivilege } from "./components/CheckUserPrivilege/comp";
+import { ProductCategories } from "./components/product_categories/comp";
+import { UserSupportTickets } from "./components/user_support_tickets/comp";
 function App() {
 	var [AppContextState, setAppContextState] = useState({});
 	var react_router_params = useParams();
@@ -73,6 +75,12 @@ function App() {
 						/>
 						<Route exact path="/users/:username/orders" element={<Orders />} />
 						<Route exact path="/users/:username/orders/:order_id" element={<Order />} />
+						<Route exact path="/products/categories" element={<ProductCategories />} />
+						<Route
+							exact
+							path="/users/:username/support-tickets"
+							element={<UserSupportTickets />}
+						/>
 						<Route
 							exact
 							path="/users/:username/shopping-card"

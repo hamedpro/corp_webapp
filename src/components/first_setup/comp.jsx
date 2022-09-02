@@ -1,5 +1,6 @@
 import { TextareaAutosize, TextField, Typography } from "@mui/material";
 import { multi_lang_helper as ml } from "../../common";
+import { customAjax } from "../../custom_ajax";
 var OptionBox = (props) => {
 	return (
 		<div className={"border border-stone-400 mx-auto p-2" + " " + props.className}>
@@ -8,6 +9,24 @@ var OptionBox = (props) => {
 	);
 };
 export default function FirstSetup() {
+	function submit_to_server() {
+		customAjax({
+			params: {
+				task_name: "set_company_info",
+				company_data: JSON.stringify({
+					name: "pishro control",
+					founded_in: "a yead ago",
+				}),
+			},
+		}).then(
+			(data) => {
+				console.log(data);
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
 	return (
 		<div className="w-full border border-stone-200 p-2">
 			<OptionBox>
@@ -247,6 +266,7 @@ export default function FirstSetup() {
 				</p>
 				<TextareaAutosize />
 			</OptionBox>
+			<button onClick={submit_to_server}>submit all changes</button>
 		</div>
 	);
 }

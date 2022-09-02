@@ -68,7 +68,7 @@ export function getUserPrivilege() {
 						username: localStorageUsername,
 						is_admin:
 							users.find((user) => user.username == localStorageUsername).is_admin ===
-							true,
+							"true",
 					});
 				},
 				(error) => {
@@ -79,3 +79,20 @@ export function getUserPrivilege() {
 	});
 }
 //todo do detecting if access is denied or not server side
+export function shuffle(array) {
+	//todo i've copy pasted this func so test it
+	let currentIndex = array.length,
+		randomIndex;
+
+	// While there remain elements to shuffle.
+	while (currentIndex != 0) {
+		// Pick a remaining element.
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex--;
+
+		// And swap it with the current element.
+		[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+	}
+
+	return array;
+}

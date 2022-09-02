@@ -94,7 +94,7 @@ export default function MainHeader() {
 							className="border border-gray-400 rounded-lg flex items-center h-10 w-full mt-2 px-2 space-x-1"
 							onClick={() => set_is_search_modal_visible(true)}
 						>
-							<SearchRounded sx={{ color: "blue" }} />
+							<SearchRounded sx={{ color: "lightblue" }} />
 							<h1 className="text-gray-100">
 								{ml({
 									en: "type something here",

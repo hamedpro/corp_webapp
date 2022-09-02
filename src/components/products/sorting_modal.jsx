@@ -3,6 +3,7 @@ import { Checkbox } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import Modal from "../Modal/Modal.jsx";
+import { multi_lang_helper as ml } from "../../common.js";
 export function SortingModal({ open, hideFn, setSortType, sortType }) {
 	return (
 		<Modal type="type1" className={"h-1/2 bg-sky-400"} is_visible={open} hideFn={hideFn}>
