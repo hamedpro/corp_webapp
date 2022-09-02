@@ -15,12 +15,18 @@ var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_que
 
 app.all("/", async (req, res) => {
 	var rm = new response_manager(res);
-	["./uploaded", "./uploaded/profile_images", "./uploaded/product_images"].forEach((path) => {
+	[
+		"./uploaded",
+		"./uploaded/profile_images",
+		"./uploaded/product_images",
+		"./uploaded/company_info",
+	].forEach((path) => {
 		if (!fs.existsSync(path)) {
 			fs.mkdirSync(path);
 		}
 	});
 	var dotenv_keys = ["mysql_host", "mysql_user", "mysql_password", "mysql_port"];
+	//todo complete these dotenv keys
 	for (var i = 0; i < dotenv_keys.length; i++) {
 		if (!Object.keys(process.env).includes(dotenv_keys[i])) {
 			rm.send_error(
@@ -714,9 +720,10 @@ app.all("/", async (req, res) => {
 				}
 			});
 			break;
-		case "set_company_data":
+		case "set_company_info":
+			// params.company_info should be a stringified json
 			con.query(
-				`insert into paired_data (pair_key,pair_value) values ("company_data",'${params.company_data}')`,
+				`insert into paired_data (pair_key,pair_value) values ("company_info",'${params.company_info}')`,
 				(error) => {
 					if (error) {
 						rm.send_error(error);
@@ -726,9 +733,9 @@ app.all("/", async (req, res) => {
 				}
 			);
 			break;
-		case "get_company_data":
+		case "get_company_info":
 			con.query(
-				`select * from paired_data where pair_key = "company_data"`,
+				`select * from paired_data where pair_key = "company_info"`,
 				(error, result) => {
 					if (error) {
 						rm.send_error(error);
