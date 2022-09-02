@@ -5,7 +5,7 @@ import { multi_lang_helper as ml } from "../../common.js";
 import "./s.css";
 export default function SupportTicket() {
 	var support_ticket_id = useParams().support_ticket_id;
-
+	//todo add user privilege system here to only allow admin or who has submitted this sp
 	//todo check if multi lang helper updates when its used inside a function before return
 	var string = ml({ en: "loading ...", fa: "در حال بارگذاری..." });
 	const [support_ticket, set_support_ticket] = useState({

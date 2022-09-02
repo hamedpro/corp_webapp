@@ -4,6 +4,7 @@ import { customAjax } from "../../custom_ajax";
 import ListItem from "../list_item/comp";
 import Section from "../section/comp";
 import { multi_lang_helper as ml } from "../../common";
+import { CheckUserPrivilege } from "../CheckUserPrivilege/comp";
 export default function Order() {
 	var username = useParams().username;
 	var order_id = Number(useParams().order_id);
@@ -26,7 +27,7 @@ export default function Order() {
 	useEffect(fetch_data, []);
 	//todo : use user_id instead of username in whole app becuse username can be changed
 	return (
-		<>
+		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
 			{order === null ? (
 				<h1>
 					{ml({
@@ -43,6 +44,6 @@ export default function Order() {
 					/>
 				</Section>
 			)}
-		</>
+		</CheckUserPrivilege>
 	);
 }

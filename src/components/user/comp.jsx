@@ -8,6 +8,7 @@ import { OrdersPageOrder } from "../orders/orders_page_order.jsx";
 import React from "react";
 import { OptionsSection } from "./options_section.jsx";
 import { multi_lang_helper as ml } from "../../common.js";
+import { CheckUserPrivilege } from "../CheckUserPrivilege/comp.jsx";
 function Item(props) {
 	return (
 		<div
@@ -36,7 +37,6 @@ export default function User() {
 		username: translated_loading,
 		is_admin: translated_loading,
 	});
-	var [userStatus, setUserStatus] = useState("loading");
 	function upload_the_photo() {
 		var file_input = document.getElementById("profile_image_input");
 		if (file_input.length == 0) {
@@ -91,19 +91,6 @@ export default function User() {
 		}).then(
 			(data) => {
 				set_user(data.result.filter((i) => i.username == username)[0]);
-
-				//setting userStatus
-				if (window.localStorage.getItem("username") === null) {
-					setUserStatus("not_logged_in");
-				} else {
-					var logged_user = data.result.find(
-						(user) => user.username === window.localStorage.getItem("username")
-					);
-
-					setUserStatus(
-						logged_user.is_admin === "true" || logged_user.username === username
-					);
-				}
 			},
 			(error) => {
 				console.log(error);
@@ -135,70 +122,9 @@ export default function User() {
 		);
 	}
 	useEffect(fetch_data, []);
-	if (userStatus == "loading") {
-		return (
-			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
-				<h1 className="text-center">
-					{ml({
-						en: "LOADING YOUR DATA ...",
-						fa: "در حال بارگذاری...",
-					})}
-				</h1>
-			</div>
-		);
-	}
-	if (userStatus == "not_logged_in") {
-		return (
-			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
-				<h1>
-					{ml({ en: "you've not logged in", fa: "شما وارد حساب کاربری خود نشده اید" })}
-				</h1>
-				<p className="text-center">
-					{ml({
-						en: `to access this page ,you must either be an admin or login as `,
-						fa: "برای دسترسی به اطلاعات این صفحه باید یا دسترسی مدیر داشته باشید یا با حساب کاربری روبرو وارد شده باشید :",
-					}) +
-						" @" +
-						username}
-				</p>
-				<Button variant="outlined" onClick={() => nav("/login")}>
-					{ml({
-						en: "login",
-						fa: "ورود به حساب کاربری",
-					})}
-				</Button>
-			</div>
-			//todo : for this kind of auth stuffs create a common solution
-		);
-	}
-	if (typeof userStatus == "boolean" && userStatus === false) {
-		return (
-			<div className="flex flex-col justify-center items-center border border-blue-400 mx-1 mt-2 pb-2 pt-2">
-				<h1>
-					{ml({
-						en: "you have not permission to access this page",
-						fa: "شما مجوز دسترسی به این صفحه را ندارید",
-					})}
-				</h1>
-				<p className="text-center">
-					{ml({
-						en: `to access information of this page you must either have admin previleges or login as : `,
-						fa: "برای دسترسی به محتوای این صفحه یا باید دسترسی مدیر داشته باشید یا به در حساب کاربری مقابل وارد شوید :",
-					}) +
-						" @" +
-						username}
-				</p>
-				<Button variant="outlined" onClick={() => nav("/login")}>
-					{ml({
-						en: "login into another account",
-						fa: "ورود به حساب کاربری دیگر",
-					})}
-				</Button>
-			</div>
-		);
-	}
-	if (typeof userStatus == "boolean" && userStatus === true) {
-		return (
+
+	return (
+		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
 			<>
 				<input
 					onChange={upload_the_photo}
@@ -275,6 +201,6 @@ export default function User() {
 					</Section>
 				</div>
 			</>
-		);
-	}
+		</CheckUserPrivilege>
+	);
 }

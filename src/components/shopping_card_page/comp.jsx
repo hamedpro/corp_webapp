@@ -6,6 +6,7 @@ import { InfoRounded } from "@mui/icons-material";
 import { ShoppingCardItem } from "./shopping_card_item";
 import { Alert } from "../alert/comp";
 import { multi_lang_helper as ml } from "../../common";
+import { CheckUserPrivilege } from "../CheckUserPrivilege/comp";
 export default function ShoppingCardPage() {
 	var nav = useNavigate();
 	var username = useParams().username;
@@ -72,43 +73,45 @@ export default function ShoppingCardPage() {
 	}
 
 	return (
-		<div className="flex flex-col">
-			<Section title={ml({ en: "my shopping card", fa: "سبد خرید من" })} className="mb-2">
-				{shopping_card_items === null ? (
-					<h1 className="mx-2">
-						<Alert icon={<InfoRounded />}>
-							{ml({
-								en: "you have'nt added any product to your shopping card yet",
-								fa: "شما هنوز هیچ کالایی به سبد خرید خود اضافه نکرده اید",
+		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
+			<div className="flex flex-col">
+				<Section title={ml({ en: "my shopping card", fa: "سبد خرید من" })} className="mb-2">
+					{shopping_card_items === null ? (
+						<h1 className="mx-2">
+							<Alert icon={<InfoRounded />}>
+								{ml({
+									en: "you have'nt added any product to your shopping card yet",
+									fa: "شما هنوز هیچ کالایی به سبد خرید خود اضافه نکرده اید",
+								})}
+							</Alert>
+						</h1>
+					) : (
+						<>
+							{shopping_card_items.map((shopping_card_item, index) => {
+								return (
+									<React.Fragment key={index}>
+										<ShoppingCardItem
+											shopping_card_item={shopping_card_item}
+											update_shopping_card_items_func={() => {
+												fetch_data();
+											}}
+										/>
+									</React.Fragment>
+								);
 							})}
-						</Alert>
-					</h1>
-				) : (
-					<>
-						{shopping_card_items.map((shopping_card_item, index) => {
-							return (
-								<React.Fragment key={index}>
-									<ShoppingCardItem
-										shopping_card_item={shopping_card_item}
-										update_shopping_card_items_func={() => {
-											fetch_data();
-										}}
-									/>
-								</React.Fragment>
-							);
-						})}
-					</>
-				)}
-			</Section>
-			<button
-				className="h-8 mx-1 text-white bg-blue-500 rounded hover:bg-blue-600 duration-300"
-				onClick={submit_new_order}
-			>
-				{ml({
-					en: "submit them as an order",
-					fa: "ثبت به عنوان یک سفارش جدید",
-				})}
-			</button>
-		</div>
+						</>
+					)}
+				</Section>
+				<button
+					className="h-8 mx-1 text-white bg-blue-500 rounded hover:bg-blue-600 duration-300"
+					onClick={submit_new_order}
+				>
+					{ml({
+						en: "submit them as an order",
+						fa: "ثبت به عنوان یک سفارش جدید",
+					})}
+				</button>
+			</div>
+		</CheckUserPrivilege>
 	);
 }

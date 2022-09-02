@@ -1,3 +1,4 @@
+import { customAjax } from "./custom_ajax";
 export function toHHMMSS(seconds) {
 	var sec_num = parseInt(seconds, 10);
 	var hours = Math.floor(sec_num / 3600);
@@ -46,3 +47,35 @@ export function multi_lang_helper({ en, fa }) {
 	}
 	return lang === "fa" ? fa : en;
 }
+
+export function getUserPrivilege() {
+	return new Promise((resolve, reject) => {
+		var localStorageUsername = window.localStorage.getItem("username");
+		if (localStorageUsername === null) {
+			resolve({
+				username: null,
+				is_admin: null,
+			});
+		} else {
+			customAjax({
+				params: {
+					task_name: "get_users",
+				},
+			}).then(
+				(data) => {
+					var users = data.result;
+					resolve({
+						username: localStorageUsername,
+						is_admin:
+							users.find((user) => user.username == localStorageUsername).is_admin ===
+							true,
+					});
+				},
+				(error) => {
+					reject(error);
+				}
+			);
+		}
+	});
+}
+//todo do detecting if access is denied or not server side

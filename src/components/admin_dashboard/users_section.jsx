@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common";
-import { AppContext } from "../../AppContext";
 export default function UsersSection() {
 	const [users, set_users] = useState([]);
 	function fetch_data() {

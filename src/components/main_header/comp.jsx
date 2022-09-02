@@ -32,7 +32,7 @@ export default function MainHeader() {
 	}
 	useEffect(() => {
 		setInterval(() => {
-			//find a better way to handle this
+			//todo find a better way to handle this
 			set_username(window.localStorage.getItem("username"));
 		}, 1000);
 	}, []);

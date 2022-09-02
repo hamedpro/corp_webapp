@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
 import Section from "../section/comp";
-import ListItem from "../list_item/comp";
 import React from "react";
 import { OrdersPageOrder } from "./orders_page_order";
 import { multi_lang_helper as ml } from "../../common";
+import { CheckUserPrivilege } from "../CheckUserPrivilege/comp";
 export default function Orders() {
 	var nav = useNavigate();
 	var username = useParams().username;
@@ -33,7 +33,7 @@ export default function Orders() {
 	//todo add discout system
 	//add system to alert user when product comes available
 	return (
-		<>
+		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
 			<Section title={ml({ en: "my orders list", fa: "لیست سفارش های من" })}>
 				{orders.map((order, index) => {
 					return (
@@ -43,6 +43,6 @@ export default function Orders() {
 					);
 				})}
 			</Section>
-		</>
+		</CheckUserPrivilege>
 	);
 }
