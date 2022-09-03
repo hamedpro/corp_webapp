@@ -12,9 +12,10 @@ export function object_to_url({ path, params = {} }) {
 export async function customAjax({
 	path = "http://" + window.location.hostname + ":4000",
 	params = {},
-	method = "GET",
+	method = "POST",
 	parse_json = true,
 	verbose = false, // if enabled it will console.log more data
+	files = [], //setting a default value for it
 }) {
 	var path_with_query = object_to_url({
 		path,
@@ -23,8 +24,15 @@ export async function customAjax({
 	if (verbose) {
 		console.log("path which is gonna be fetched: " + path_with_query);
 	}
+	//add files if presents
+	var form = new FormData();
+	for (var i = 0; i < files.length; i++) {
+		form.append(i, files[i]);
+	}
+
 	var fetch_response = await fetch(path_with_query, {
 		method,
+		body: form,
 	});
 	if (fetch_response.ok) {
 		var res_plain_text = await fetch_response.text();

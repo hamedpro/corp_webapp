@@ -740,6 +740,10 @@ app.all("/", async (req, res) => {
 				},
 			});
 			break;
+		case "get_company_media":
+			var company_media_icons = fs.readdirSync("./uploaded/company_info");
+			rm.send_result(company_media_icons);
+			break;
 		case "get_company_info":
 			con.query(
 				`select * from paired_data where pair_key = "company_info"`,

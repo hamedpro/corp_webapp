@@ -1,23 +1,31 @@
 import { TextareaAutosize, TextField, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
 import { OptionBox } from "./option_box";
-export function UploadMedia() {
+export function UploadMedia({ set_tab }) {
+	var nav = useNavigate();
 	function upload() {
-		var form = new FormData();
 		//todo check if all required images are selected
-		var files = document.getElementById("favicon_input").files;
-		form.append(0, files[0]);
-		files = document.getElementById("rectangle_icon_input").files;
-		form.append(1, files[0]);
-		files = document.getElementById("square_icon_input").files;
-		form.append(2, files[0]);
-		fetch("http://" + window.location.hostname + ":4000?task_name=upload_company_media", {
-			method: "POST",
-			body: form,
-		})
-			.then((data) => data.text())
-			.then((data) => console.log(data));
+		customAjax({
+			params: {
+				task_name: "upload_company_media",
+			},
+			files: [
+				document.getElementById("favicon_input").files[0],
+				document.getElementById("rectangle_icon_input").files[0],
+				document.getElementById("square_icon_input").files[0],
+			],
+		}).then(
+			(data) => {
+				alert("done");
+				nav("/admin-dashboard");
+			},
+			(error) => {
+				console.log("there was an error");
+				console.log(error);
+			}
+		);
 	}
 	return (
 		<OptionBox className="mt-2">
