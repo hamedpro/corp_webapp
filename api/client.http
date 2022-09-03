@@ -18,3 +18,6 @@ http://localhost:4000?task_name=change_password&username=root&password=root&new_
 http://localhost:4000?task_name=verify_user_password&username=hamedpro&password=hamedproo
 ###
 http://localhost:4000?task_name=new_user&username=hamedpro&password=hamedpro
+
+### 
+http://localhost:4000?task_name=toggle_user_admin_state&username=hamedpro

@@ -25,7 +25,7 @@ function custom_upload({
 			try {
 				fs.renameSync(from, to);
 			} catch (e) {
-				onReject();
+				onReject(e);
 			}
 		});
 	});

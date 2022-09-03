@@ -226,21 +226,15 @@ app.all("/", async (req, res) => {
 			});
 			break;
 		case "toggle_user_admin_state":
-			if (isNaN(Number(params.id))) {
-				rm.send_error('given "id" is not a number');
-				break;
-			}
 			con.query(
-				`select is_admin from users where id = ${Number(params.id)}`,
+				`select is_admin from users where username = '${params.username}'`,
 				(error, results) => {
 					if (error) {
 						rm.send_error(error);
 					} else {
 						var new_is_admin_string = results[0].is_admin == "true" ? "false" : "true";
 						con.query(
-							`update users set is_admin = "${new_is_admin_string}" where id = ${Number(
-								params.id
-							)}`,
+							`update users set is_admin = "${new_is_admin_string}" where username = '${params.username}'`,
 							(error) => {
 								if (error) {
 									rm.send_error(error);
@@ -728,10 +722,23 @@ app.all("/", async (req, res) => {
 					if (error) {
 						rm.send_error(error);
 					} else {
-						rm.send_result(false);
+						rm.send_result(true);
 					}
 				}
 			);
+			break;
+		case "upload_company_media":
+			custom_upload({
+				req,
+				files_names: ["favicon", "rectangle", "square"],
+				uploadDir: "./uploaded/company_info",
+				onSuccess: () => {
+					rm.send();
+				},
+				onReject: (e) => {
+					rm.send_error(e);
+				},
+			});
 			break;
 		case "get_company_info":
 			con.query(
@@ -1071,6 +1078,12 @@ app.all("/", async (req, res) => {
 			//add getTime of when you're submitting it
 			break;
 		case "delete_user":
+			var r = await cq(con, `delete from users where username = '${params.username}'`);
+			if (r.error) {
+				rm.send_error(r.error);
+			} else {
+				rm.send();
+			}
 			break;
 		case "submit_a_new_order":
 			/*
