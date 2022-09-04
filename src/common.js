@@ -96,3 +96,14 @@ export function shuffle(array) {
 
 	return array;
 }
+export function gen_link_to_file(relative_file_path) {
+	/* we serve ./uploaded directory on same port as api 
+		but when frontend wants to access an image the link 
+		it should use depends on where its running in 
+		for example if the frontend is in the same machine with api 
+		it should connect to localhost but if its on a network it should
+		connect to machine which api is running on using its local or public ip
+	*/
+	// relative_file_path is relative with ./uploaded directory
+	return "http://" + window.location.hostname + ":4000/" + relative_file_path;
+}

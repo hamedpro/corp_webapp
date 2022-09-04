@@ -7,7 +7,7 @@ import Section from "../section/comp.jsx";
 import { OrdersPageOrder } from "../orders/orders_page_order.jsx";
 import React from "react";
 import { OptionsSection } from "./options_section.jsx";
-import { multi_lang_helper as ml } from "../../common.js";
+import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
 import { CheckUserPrivilege } from "../CheckUserPrivilege/comp.jsx";
 function Item(props) {
 	return (
@@ -158,10 +158,9 @@ export default function User() {
 								className="w-full h-full min-h-10 border border-blue-400"
 								src={
 									/* todo switch to https */
-									"http://" +
-									window.location.hostname +
-									":4000/profile_images/" +
-									user.profile_image_file_name
+									gen_link_to_file(
+										"./profile_images/" + user.profile_image_file_name
+									)
 								}
 							/>
 						)}

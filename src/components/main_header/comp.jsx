@@ -11,7 +11,9 @@ import HeaderMenu from "./header_menu";
 import { useEffect } from "react";
 import SearchModal from "../search_page/comp";
 import { multi_lang_helper as ml } from "../../common";
+import { customAjax } from "../../custom_ajax";
 export default function MainHeader() {
+	var [company_name, set_company_name] = useState("loading...");
 	var nav = useNavigate();
 	var [header_menu_visibility, set_header_menu_visibility] = useState(false);
 	var [username, set_username] = useState(window.localStorage.getItem("username"));
@@ -35,6 +37,19 @@ export default function MainHeader() {
 			//todo find a better way to handle this
 			set_username(window.localStorage.getItem("username"));
 		}, 1000);
+		customAjax({
+			params: {
+				task_name: "get_company_info",
+			},
+		}).then(
+			(data) => {
+				set_company_name(JSON.parse(data.result).name);
+				//todo dont let the app to work until there is company data and env vard and ... are there
+			},
+			(error) => {
+				console.log("there was an error in fetching company name");
+			}
+		);
 	}, []);
 	//todo auth use using jwt
 	var [is_search_modal_visible, set_is_search_modal_visible] = useState(false);
@@ -64,7 +79,7 @@ export default function MainHeader() {
 							onClick={() => nav("/")}
 							className="cursor-pointer px-2 text-lg m-0 p-0 bg-sky-600 rounded-lg pb-1 text-white ml-2 rounded h-10 flex items-center"
 						>
-							corp_webapp
+							{company_name}
 						</h1>
 						<div className="ml-auto flex space-x-2">
 							{username === null ? (

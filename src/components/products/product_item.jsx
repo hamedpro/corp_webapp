@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
-import { multi_lang_helper as ml } from "../../common.js";
+import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
 export default function ProductItem({ id, name, price, className = undefined, discount_percent }) {
 	//id stands for product id
 	var nav = useNavigate();
@@ -15,12 +15,7 @@ export default function ProductItem({ id, name, price, className = undefined, di
 			},
 		}).then((data) => {
 			if (data.result.length != 0) {
-				set_the_image_src(
-					"http://" +
-						window.location.hostname +
-						":4000/product_images/" +
-						data["result"][0]
-				);
+				set_the_image_src(gen_link_to_file("./product_images/" + data["result"][0]));
 			} else {
 				set_the_image_src(null);
 			}

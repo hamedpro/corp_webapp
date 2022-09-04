@@ -6,7 +6,7 @@ import UsersReviews from "./user_reviews";
 import AddToShoppingBagBar from "./AddToShoppingBagBar";
 import Section from "../section/comp.jsx";
 import { ImageSlider } from "../image_slider/comp.jsx";
-import { multi_lang_helper as ml } from "../../common.js";
+import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
 export default function Product() {
 	var product_id = useParams().product_id;
 	var translated_loading = ml({
@@ -58,10 +58,7 @@ export default function Product() {
 			},
 		}).then((data) => {
 			set_image_sources(
-				data.result.map(
-					(file_name) =>
-						"http://" + window.location.hostname + ":4000/product_images/" + file_name
-				)
+				data.result.map((file_name) => gen_link_to_file("./product_images/" + file_name))
 			);
 		});
 	}, []);

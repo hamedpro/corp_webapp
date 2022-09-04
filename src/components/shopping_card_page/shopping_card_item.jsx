@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
-import { trim_text_if_its_long } from "../../common";
+import { gen_link_to_file, trim_text_if_its_long } from "../../common";
 import { DeleteRounded } from "@mui/icons-material";
 import { multi_lang_helper as ml } from "../../common";
 export function ShoppingCardItem({ shopping_card_item, update_shopping_card_items_func }) {
@@ -33,7 +33,9 @@ export function ShoppingCardItem({ shopping_card_item, update_shopping_card_item
 				<div className="w-1/2">
 					{shopping_card_item.product.images_path_names.length !== 0 ? (
 						<img
-							src={`http://${window.location.hostname}:4000/product_images/${shopping_card_item.product.images_path_names[0]}`}
+							src={gen_link_to_file(
+								`./product_images/${shopping_card_item.product.images_path_names[0]}`
+							)}
 							className="w-full"
 						/>
 					) : (

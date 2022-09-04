@@ -751,7 +751,11 @@ app.all("/", async (req, res) => {
 					if (error) {
 						rm.send_error(error);
 					} else {
-						rm.send_result(result);
+						if (result.length === 0) {
+							rm.send_error("there was not a row with pair_key = company_info");
+						} else {
+							rm.send_result(result[0].pair_value);
+						}
 					}
 				}
 			);

@@ -3,6 +3,7 @@ import "./App.css";
 import "./output.css";
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { customAjax } from "../src/custom_ajax.js";
+import { gen_link_to_file } from "./common";
 import {
 	ApiTestPage,
 	AdminDashboard,
@@ -39,6 +40,37 @@ import { CheckUserPrivilege } from "./components/CheckUserPrivilege/comp";
 import { ProductCategories } from "./components/product_categories/comp";
 import { UserSupportTickets } from "./components/user_support_tickets/comp";
 function App() {
+	customAjax({
+		params: {
+			task_name: "get_company_info",
+		},
+	}).then(
+		(data) => {
+			document.title = JSON.parse(data.result).name;
+			//todo dont let the app to work until there is company data and env vard and ... are there
+		},
+		(error) => {
+			console.log("there was an error in fetching company name");
+		}
+	);
+	customAjax({
+		params: {
+			task_name: "get_company_media",
+		},
+	}).then((data) => {
+		if (data.result.filter((item) => item.split(".")[0] === "favicon").length !== 0) {
+			document
+				.getElementById("favicon")
+				.setAttribute(
+					"href",
+					gen_link_to_file(
+						"./company_info/" +
+							data.result.filter((item) => item.split(".")[0] === "favicon")[0]
+					)
+				);
+		}
+	});
+
 	var [AppContextState, setAppContextState] = useState({});
 	var react_router_params = useParams();
 	var username = react_router_params.username;

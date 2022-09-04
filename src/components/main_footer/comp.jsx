@@ -8,11 +8,29 @@ import { AppContext } from "../../AppContext";
 import { useContext, useState } from "react";
 import { multi_lang_helper as ml } from "../../common";
 import { ChangeLangModal } from "./ChangeLangModal";
+import { customAjax } from "../../custom_ajax";
+import { useEffect } from "react";
 export default function MainFooter() {
 	var nav = useNavigate();
 	var AppContextState = useContext(AppContext).AppContextState;
 	var setAppContextState = useContext(AppContext).setAppContextState;
 	var [is_modal_open, set_is_modal_open] = useState(false);
+	var [company_name, set_company_name] = useState("loading...");
+	useEffect(() => {
+		customAjax({
+			params: {
+				task_name: "get_company_info",
+			},
+		}).then(
+			(data) => {
+				set_company_name(JSON.parse(data.result).name);
+				//todo dont let the app to work until there is company data and env vard and ... are there
+			},
+			(error) => {
+				console.log("there was an error in fetching company name");
+			}
+		);
+	}, []);
 	return (
 		<>
 			<ChangeLangModal hideFn={() => set_is_modal_open(false)} is_visible={is_modal_open} />
@@ -20,7 +38,7 @@ export default function MainFooter() {
 				<div className="flex p-2 h-16 border-t border-stone-300 mt-2 mb-2">
 					<div className="w-2/3">
 						<div className="h-1/2 w-1/3 bg-blue-500"></div>
-						<div className="h-1/2 w-full">corp_webapp</div>
+						<div className="h-1/2 w-full">{company_name}</div>
 					</div>
 					<div className="w-1/3 flex justify-end">
 						<button
