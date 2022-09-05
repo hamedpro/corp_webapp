@@ -15,6 +15,10 @@ export function UploadTextTab({ set_tab }) {
 					mobile_phone_number: val("mobile_phone_number_input"),
 					address: val("address_input"),
 					description: val("company_description_textarea"),
+					history: val("history_input"),
+					instagram: val("instagram_input"),
+					telegram: val("telegram_input"),
+					twitter: val("twitter_input"),
 				}),
 			},
 		}).then(
@@ -152,14 +156,75 @@ export function UploadTextTab({ set_tab }) {
 				</Typography>
 				<p className="text-stone-500">
 					{ml({
-						en: "write a description of what your company can do and introduce it here",
-						fa: "درباره سابقه شرکت خود و خدماتی که ارایه می دهد توضیحاتی دهید",
+						en: "write a description of what your company can do and introduce it shortly here",
+						fa: "به صورت کوتاه و مفید شرکت خود را تعریف کنید و خدماتی که ارایه می دهید را توضیح دهید",
 					})}
 				</p>
 				<textarea id="company_description_textarea" rows="10"></textarea>
 			</OptionBox>
+
+			<OptionBox className="mt-2">
+				<Typography variant="h5">
+					{ml({
+						en: "the story of your company",
+						fa: "داستان شرکت شما",
+					})}
+				</Typography>
+				<p className="text-stone-500">
+					{ml({
+						en: "write a story like history about your company",
+						fa: "سابقه و تاریخچه شرکت خود را به صورت یک داستان بنویسید",
+					})}
+				</p>
+				<textarea id="history_input" rows="10"></textarea>
+			</OptionBox>
+
+			<OptionBox className="mt-2">
+				<Typography variant="h5">
+					{ml({
+						en: "your company in social media",
+						fa: "شرکت شما در فضای مجازی",
+					})}
+				</Typography>
+				<p className="text-stone-500">
+					{ml({
+						en: "if you have account in any of the following websites please enter their ids otherwise leave them empty",
+						fa: "اگر شرکت شما در هر یک از این سایت های زیر حساب کاربری دارد لطفا شناسه کاربری آنها را وارد کنید یا خالی بگذارید",
+					})}
+				</p>
+				<p>
+					{ml({
+						en: "instagram page :",
+						fa: "صفحه اینستاگرام",
+					})}
+				</p>
+				<input id="instagram_input" />
+				<br />
+
+				<p>
+					{ml({
+						en: "telegram channel or personal account :",
+						fa: "کانال تلگرام یا حساب کاربری شخصی :",
+					})}
+				</p>
+				<input id="telegram_input" />
+				<br />
+
+				<p>
+					{ml({
+						en: "twitter :",
+						fa: "توییتر:",
+					})}
+				</p>
+				<input id="twitter_input" />
+				<br />
+			</OptionBox>
+
 			<button onClick={submit_to_server} className="border border-blue-400">
-				submit all changes
+				{ml({
+					en: "submit all changes",
+					fa: "ثبت تمام تغییرات",
+				})}
 			</button>
 		</div>
 	);

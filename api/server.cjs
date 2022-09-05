@@ -12,8 +12,7 @@ app.use(cors());
 app.use(express.static("./uploaded/"));
 var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_query
-
-app.all("/", async (req, res) => {
+app.all("/init", async (req, res) => {
 	var rm = new response_manager(res);
 	[
 		"./uploaded",
@@ -42,8 +41,9 @@ app.all("/", async (req, res) => {
 		host: process.env.mysql_host,
 		multipleStatements: true,
 	});
-	//add error handling for createConnection
+	//add error handling for mysql createConnection
 	rm.add_mysql_con(con);
+
 	var output = await cq(
 		con,
 		`
@@ -163,6 +163,21 @@ app.all("/", async (req, res) => {
 	//product_specs inside products table should contain ->
 	// -> a json stringified array of key values -- also for ex pros and cons fields
 	//todo take care about length of texts and max length of cells
+	rm.send();
+});
+app.all("/", async (req, res) => {
+	var rm = new response_manager(res);
+
+	var con = mysql.createConnection({
+		user: process.env.mysql_user,
+		password: process.env.mysql_password,
+		port: Number(process.env.mysql_port),
+		host: process.env.mysql_host,
+		multipleStatements: true,
+		database: "corp_webapp",
+	});
+	//add error handling for mysql createConnection
+	rm.add_mysql_con(con);
 
 	var params = req.query;
 	if (!("task_name" in req.query)) {
@@ -1204,6 +1219,41 @@ app.all("/", async (req, res) => {
 			break;
 		//todo check for duplicate cases
 		//todo add con to cq itself and take just one arg
+		case "is_first_setup_done":
+			var o = await cq(con, 'select * from paired_data where pair_key = "company_info"');
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
+			if (o.result.length === 0) {
+				rm.send_result(false);
+				break;
+			}
+			o = await cq(con, "select * from users");
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
+			if (
+				o.result.length === 0 ||
+				o.result.filter((user) => user.username === "root") !== 0
+			) {
+				rm.send_result(false);
+
+				break;
+			} //todo make sure this func considers all stuations
+			var company_media_file_names = fs.readFileSync("./uploaded/company_info");
+			if (
+				company_media_file_names.filter((fn) => {
+					var fnwe = fn.split(".")[0];
+					return fnwe === "rectangle" || fnwe === "square" || fnwe === "favicon";
+				}).length !== 3
+			) {
+				rm.send_result(false);
+				break;
+			}
+			rm.send_result(true);
+			break;
 	}
 });
 var server = app.listen(4000, () => {

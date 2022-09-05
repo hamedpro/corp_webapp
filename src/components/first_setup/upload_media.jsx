@@ -18,8 +18,7 @@ export function UploadMedia({ set_tab }) {
 			],
 		}).then(
 			(data) => {
-				alert("done");
-				nav("/admin-dashboard");
+				set_tab("done");
 			},
 			(error) => {
 				console.log("there was an error");

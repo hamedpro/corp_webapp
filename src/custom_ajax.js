@@ -10,13 +10,12 @@ export function object_to_url({ path, params = {} }) {
 	return path_with_query;
 }
 export async function customAjax({
-	path = "http://" + window.location.hostname + ":4000",
 	params = {},
-	method = "POST",
-	parse_json = true,
 	verbose = false, // if enabled it will console.log more data
 	files = [], //setting a default value for it
 }) {
+	var method = "POST";
+	var path = "http://" + window.location.hostname + ":4000";
 	var path_with_query = object_to_url({
 		path,
 		params,
@@ -30,26 +29,23 @@ export async function customAjax({
 		form.append(i, files[i]);
 	}
 
-	var fetch_response = await fetch(path_with_query, {
+	var response = await fetch(path_with_query, {
 		method,
 		body: form,
 	});
-	if (fetch_response.ok) {
-		var res_plain_text = await fetch_response.text();
-		if (parse_json) {
-			try {
-				return JSON.parse(res_plain_text);
-			} catch (error) {
-				throw {
-					error_type: "invalid_json",
-					response_plain_text: res_plain_text,
-				};
-			}
-		} else {
-			return res_plain_text;
-		}
+	if (!response.ok) {
+		throw new Error("response.ok was not true");
+	}
+	var parsed_json;
+	try {
+		parsed_json = await response.json();
+	} catch (e) {
+		throw new Error("response.ok was true but response was invalid json");
+	}
+	if (parsed_json.errors.length !== 0) {
+		throw new Error("errors field was not empty");
 	} else {
-		throw "fetch request status code was not in 2xx range";
+		return parsed_json;
 	}
 }
 /* how to use : 

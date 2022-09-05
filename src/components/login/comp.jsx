@@ -12,7 +12,6 @@ export default function Login() {
 				username,
 				password,
 			},
-			parse_json: true,
 		}).then(
 			(data) => {
 				if (data.result) {
