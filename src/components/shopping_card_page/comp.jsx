@@ -54,17 +54,12 @@ export default function ShoppingCardPage() {
 		customAjax({
 			params: {
 				task_name: "submit_a_new_order",
-				name: window.prompt(
-					ml({
-						en: "enter a name for your new order",
-						fa: "برای سفارس جدید خود یک نام وارد کنید",
-					})
-				),
+				name: document.getElementById("order_name_input").value,
 				username,
 			},
 		}).then(
 			(data) => {
-				nav("/orders/" + data.result);
+				nav(`/users/${username}/orders/` + data.result);
 			},
 			(error) => {
 				console.log(error);
@@ -102,15 +97,39 @@ export default function ShoppingCardPage() {
 						</>
 					)}
 				</Section>
-				<button
-					className="h-8 mx-1 text-white bg-blue-500 rounded hover:bg-blue-600 duration-300"
-					onClick={submit_new_order}
-				>
-					{ml({
-						en: "submit them as an order",
-						fa: "ثبت به عنوان یک سفارش جدید",
+				<Section
+					title={ml({
+						en: "submit a new order",
+						fa: "ثبت سفارش جدید",
 					})}
-				</button>
+				>
+					<div className="flex m-2">
+						<p>
+							{ml({
+								en: "if you want to submit a order including these products above please enter a simple name for this order and click submit",
+								fa: "اگر میخواهید سفارش جدیدی شامل کالا های اضافه شده به سبد خرید خود ثبت  کنید لطفا برای سفارش جدید خود به دلخواه اسمی وارد کنید و بر روی ثبت سفارش کلیک کنید",
+							})}
+						</p>
+						<input
+							className="border border-blue-400"
+							placeholder={ml({
+								en: "name of your new order",
+								fa: "نام سفارش جدید شما",
+							})}
+							id="order_name_input"
+						/>
+
+						<button
+							className="h-8 mx-1 text-white bg-blue-500 rounded hover:bg-blue-600 duration-300"
+							onClick={submit_new_order}
+						>
+							{ml({
+								en: "submit them as an order",
+								fa: "ثبت به عنوان یک سفارش جدید",
+							})}
+						</button>
+					</div>
+				</Section>
 			</div>
 		</CheckUserPrivilege>
 	);

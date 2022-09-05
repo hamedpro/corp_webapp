@@ -44,7 +44,6 @@ export default function NewProduct() {
 						: document.getElementById("new_category_input").value,
 				discount_percent: Number(document.getElementById("discount_percent").value),
 			},
-			verbose: true,
 		}).then(
 			(data) => {
 				var form = new FormData();
