@@ -9,6 +9,7 @@ var nodemailer = require("nodemailer");
 var fs = require("fs");
 var app = express();
 app.use(cors());
+app.use(express.json());
 app.use(express.static("./uploaded/"));
 var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_query
@@ -179,12 +180,12 @@ app.all("/", async (req, res) => {
 	//add error handling for mysql createConnection
 	rm.add_mysql_con(con);
 
-	var params = req.query;
-	if (!("task_name" in req.query)) {
+	var params = { ...req.body, ...req.query };
+	if (!("task_name" in params)) {
 		rm.send_error("there is no task_name field present in your request");
 		return;
 	}
-	switch (req.query.task_name) {
+	switch (params.task_name) {
 		//todo : use custom_query in all app
 		case "new_user":
 			var output = await cq(con, `select * from users where username = '${params.username}'`);
@@ -1049,7 +1050,7 @@ app.all("/", async (req, res) => {
 			break;
 		case "undo_all":
 			//it returns the app to its first state
-			//todo : may in addition to droping database it be required to do another stufs
+			//todo : may in addition to droping database it be required to do another stuff
 			con.query(`drop database corp_webapp;`, (error) => {
 				if (error) {
 					rm.send_error(error);
@@ -1226,6 +1227,9 @@ app.all("/", async (req, res) => {
 				break;
 			}
 			if (o.result.length === 0) {
+				rm.log(
+					'there was not any row in table "paired_data" with pair_key = "company_info'
+				);
 				rm.send_result(false);
 				break;
 			}
@@ -1236,19 +1240,23 @@ app.all("/", async (req, res) => {
 			}
 			if (
 				o.result.length === 0 ||
-				o.result.filter((user) => user.username === "root") !== 0
+				o.result.filter((user) => user.username === "root").length !== 0
 			) {
+				rm.log('a username with username = "root" was there or users count was 0');
+				/* todo let the users use "root" as their usersname
+				 it can happen by : dont create root user and delete it at first setup page 
+				 you can let the app to add the first user without auth */
 				rm.send_result(false);
-
 				break;
 			} //todo make sure this func considers all stuations
-			var company_media_file_names = fs.readFileSync("./uploaded/company_info");
+			var company_media_file_names = fs.readdirSync("./uploaded/company_info");
 			if (
 				company_media_file_names.filter((fn) => {
 					var fnwe = fn.split(".")[0];
 					return fnwe === "rectangle" || fnwe === "square" || fnwe === "favicon";
 				}).length !== 3
 			) {
+				rm.log("missing icon");
 				rm.send_result(false);
 				break;
 			}

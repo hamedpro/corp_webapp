@@ -11,20 +11,19 @@ export function Welcome({ set_tab }) {
 		}).then(
 			(data) => {
 				customAjax({
-					params: {
-						task_name: "init",
-					},
+					route: "/init",
 				}).then(
 					(data) => {
+						window.localStorage.setItem("username", "root");
 						set_tab("first_admin_setup");
 					},
 					(error) => {
-						alert("something went wrong");
+						alert("something went wrong while initializing the app");
 					}
 				);
 			},
 			(error) => {
-				alert("something went wrong while delete previous data");
+				alert("something went wrong while deleting previous data");
 			}
 		);
 	}

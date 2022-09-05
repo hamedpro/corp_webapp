@@ -3,6 +3,7 @@ module.exports = class response_manager {
 	// todo : i have to also handle response in front-end in same way
 	response;
 	errors = [];
+	logs = [];
 	result;
 	mysql_connection = null;
 	constructor(response) {
@@ -14,6 +15,9 @@ module.exports = class response_manager {
 	add_error = (error) => {
 		this.errors.push(error);
 	};
+	log = (log_message) => {
+		this.logs.push(log_message);
+	};
 	set_result = (result) => (this.result = result);
 	send = () => {
 		// write all data to response and with send it ends the connection
@@ -21,6 +25,7 @@ module.exports = class response_manager {
 			JSON.stringify({
 				errors: this.errors,
 				result: this.result,
+				logs: this.logs,
 			})
 		);
 		if (this.mysql_connection !== null) {

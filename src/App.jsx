@@ -215,9 +215,8 @@ function App() {
 					<Route
 						path="/first-setup"
 						element={
-							<CheckUserPrivilege level="admin">
-								<FirstSetup />
-							</CheckUserPrivilege>
+							<FirstSetup />
+							/* todo prevent other to access first setup page  */
 						}
 					/>
 				</Routes>
