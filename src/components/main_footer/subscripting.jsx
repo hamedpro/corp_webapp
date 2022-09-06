@@ -20,10 +20,14 @@ function Tab(props) {
 		</div>
 	);
 }
-export default function Subscripting() {
+export default function Subscripting({ className = null }) {
 	var [current_tab, set_current_tab] = useState("sub_to_email");
 	return (
-		<div className="flex flex-col border border-blue-400 mx-2 rounded">
+		<div
+			className={
+				"flex flex-col border border-blue-400 rounded" + (className ? ` ${className}` : ``)
+			}
+		>
 			<div className="flex w-full">
 				<div className="w-1/2 border-b">
 					<Tab

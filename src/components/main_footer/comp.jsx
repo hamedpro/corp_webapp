@@ -6,7 +6,7 @@ import Subscripting from "./subscripting";
 import { Instagram, Telegram, Twitter } from "@mui/icons-material";
 import { AppContext } from "../../AppContext";
 import { useContext, useState } from "react";
-import { multi_lang_helper as ml } from "../../common";
+import { gen_link_to_file, multi_lang_helper as ml } from "../../common";
 import { ChangeLangModal } from "./ChangeLangModal";
 import { customAjax } from "../../custom_ajax";
 import { useEffect } from "react";
@@ -15,7 +15,9 @@ export default function MainFooter() {
 	var AppContextState = useContext(AppContext).AppContextState;
 	var setAppContextState = useContext(AppContext).setAppContextState;
 	var [is_modal_open, set_is_modal_open] = useState(false);
-	var [company_name, set_company_name] = useState("loading...");
+	var [company_info, set_company_info] = useState(null);
+	var [square_icon_src, set_square_icon_src] = useState(null);
+	var [lang, set_lang] = useState(localStorage.getItem("language"));
 	useEffect(() => {
 		customAjax({
 			params: {
@@ -23,11 +25,30 @@ export default function MainFooter() {
 			},
 		}).then(
 			(data) => {
-				set_company_name(JSON.parse(data.result).name);
+				set_company_info(JSON.parse(data.result));
 				//todo dont let the app to work until there is company data and env vard and ... are there
 			},
 			(error) => {
 				console.log("there was an error in fetching company name");
+			}
+		);
+		customAjax({
+			params: {
+				task_name: "get_company_media",
+			},
+		}).then(
+			(data) => {
+				if (data.result.filter((i) => i.split(".")[0] === "square").length !== 0) {
+					set_square_icon_src(
+						gen_link_to_file(
+							"./company_info/" +
+								data.result.filter((i) => i.split(".")[0] === "square")[0]
+						)
+					);
+				}
+			},
+			(err) => {
+				console.log(err);
 			}
 		);
 	}, []);
@@ -35,10 +56,26 @@ export default function MainFooter() {
 		<>
 			<ChangeLangModal hideFn={() => set_is_modal_open(false)} is_visible={is_modal_open} />
 			<div className="bg-sky-800 text-white">
-				<div className="flex p-2 h-16 border-t border-stone-300 mt-2 mb-2">
-					<div className="w-2/3">
-						<div className="h-1/2 w-1/3 bg-blue-500"></div>
-						<div className="h-1/2 w-full">{company_name}</div>
+				<div className="flex p-2 h-16 border-t border-stone-300 mt-2 mb-7">
+					<div className="w-2/3 h-full flex mb-2 space-x-2">
+						<div className="h-16 w-fit bg-blue-500">
+							{square_icon_src ? (
+								<img
+									src={square_icon_src}
+									className="h-full w-fit"
+									style={{ objectFit: "contain" }}
+								/>
+							) : (
+								<div className="h-16 w-16 bg-blue-400 mb-3 rounded"></div>
+							)}
+						</div>
+						<div className="text-lg">
+							{company_info && company_info.name}
+							<br />
+							<LinkLikeP link="/company-info" className="">
+								(about us)
+							</LinkLikeP>
+						</div>
 					</div>
 					<div className="w-1/3 flex justify-end">
 						<button
@@ -55,7 +92,13 @@ export default function MainFooter() {
 						</button>
 					</div>
 				</div>
-				<Subscripting />
+				<div className="flex flex-wrap md:flex-nowrap mx-2 p-2 md:space-x-2">
+					<Subscripting className={"w-full shrink-0 md:shrink md:w-1/2"} />
+					<div className="text-white w-1/2 shrink-0 md:shrink border border-blue-500 mt-2 md:mt-0 rounded p-2">
+						<h1>about our company</h1>
+					</div>
+				</div>
+
 				<div className="flex h-8 w-full items-center space-x-3 my-4 mx-2 px-1">
 					<h1 className="mr-6 text-xl">
 						{ml({
@@ -65,17 +108,50 @@ export default function MainFooter() {
 					</h1>
 					<Instagram
 						onClick={() => {
-							window.location.replace(""); // todo add instagram link here
+							if (company_info) {
+								var id = company_info.instagram;
+								if (id === "" || !id) {
+									alert("instagram id is not set");
+								} else {
+									window.location.replace(
+										`https://instagram.com/${company_info.instagram}`
+									);
+								}
+							} else {
+								alert("company info is not loaded yet");
+							}
 						}}
 					/>
 					<Twitter
 						onClick={() => {
-							window.location.replace(""); // todo add twitter link here
+							if (company_info) {
+								var id = company_info.twitter;
+								if (id === "" || !id) {
+									alert("twitter id is not set");
+								} else {
+									window.location.replace(
+										`https://twitter.com/${company_info.twitter}`
+									);
+								}
+							} else {
+								alert("company info is not loaded yet");
+							}
 						}}
 					/>
 					<Telegram
 						onClick={() => {
-							window.location.replace(""); //todo add telegram link here
+							if (company_info) {
+								var id = company_info.telegram;
+								if (id === "" || !id) {
+									alert("telegram id is not set");
+								} else {
+									window.location.replace(
+										`https://t.me/${company_info.telegram}`
+									);
+								}
+							} else {
+								alert("company info is not loaded yet");
+							}
 						}}
 					/>
 				</div>
@@ -89,18 +165,6 @@ export default function MainFooter() {
 								})}{" "}
 								<a href="https://github.com/hamedpro">@hamedpro</a>
 							</p>
-						</div>
-						<div className="w-2/6 flex justify-end">
-							<Select
-								value={window.localStorage.getItem("language")}
-								onChange={(event) => {
-									window.localStorage.setItem("language", event.target.value);
-									set_is_modal_open(true);
-								}}
-							>
-								<MenuItem value={"fa"}>farsi</MenuItem>
-								<MenuItem value={"en"}>English</MenuItem>
-							</Select>
 						</div>
 					</div>
 					<div className="flex flex-row mx-2 text-sm flex-wrap space-x-1">
@@ -124,6 +188,18 @@ export default function MainFooter() {
 								fa: "مخزن گیت هاب پروژه",
 							})}
 						</a>
+
+						<span>|</span>
+						<p
+							onClick={() => {
+								var new_lang = lang === "fa" ? "en" : "fa";
+								localStorage.setItem("language", new_lang);
+								set_lang(new_lang);
+								location.reload();
+							}}
+						>
+							change language to {lang === "fa" ? "English" : "farsi"}
+						</p>
 					</div>
 				</div>
 			</div>
