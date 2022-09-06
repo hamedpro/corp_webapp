@@ -132,95 +132,100 @@ export default function ProductsSection() {
 				en: "products:",
 				fa: "محصولات",
 			})}
-			{products.map((product) => {
+			{products.map((product, index) => {
 				return (
-					<CustomTable
-						className={"mt-2"}
-						headerItems={[
-							ml({
-								en: "id",
-								fa: "شناسه",
-							}),
-							,
-							ml({
-								en: "name",
-								fa: "نام",
-							}),
-							ml({
-								en: "description",
-								fa: "توضیحات",
-							}),
-							ml({
-								en: "price",
-								fa: "قیمت",
-							}),
-						]}
-						rows={[
-							[
-								{
-									value: product.id,
-									onClick: () => {
-										alert("product id can't be changed");
+					<React.Fragment key={index}>
+						<CustomTable
+							className={"mt-2"}
+							headerItems={[
+								ml({
+									en: "id",
+									fa: "شناسه",
+								}),
+								,
+								ml({
+									en: "name",
+									fa: "نام",
+								}),
+								ml({
+									en: "description",
+									fa: "توضیحات",
+								}),
+								ml({
+									en: "price",
+									fa: "قیمت",
+								}),
+							]}
+							rows={[
+								[
+									{
+										value: product.id,
+										onClick: () => {
+											alert("product id can't be changed");
+										},
 									},
-								},
-								{
-									value: product.name,
-									onClick: () => {
-										modify_product({
-											task: "name",
-											payload: {
-												product_id: product.id,
-											},
-										});
+									{
+										value: product.name,
+										onClick: () => {
+											modify_product({
+												task: "name",
+												payload: {
+													product_id: product.id,
+												},
+											});
+										},
 									},
-								},
-								{
-									value: product.description,
-									onClick: () => {
-										modify_product({
-											task: "description",
-											payload: {
-												product_id: product.id,
-											},
-										});
+									{
+										value: product.description,
+										onClick: () => {
+											modify_product({
+												task: "description",
+												payload: {
+													product_id: product.id,
+												},
+											});
+										},
 									},
-								},
-								{
-									value: product.price,
-									onClick: () => {
-										modify_product({
-											task: "price",
-											payload: {
-												product_id: product.id,
-											},
-										});
+									{
+										value: product.price,
+										onClick: () => {
+											modify_product({
+												task: "price",
+												payload: {
+													product_id: product.id,
+												},
+											});
+										},
 									},
-								},
-							],
-						]}
-					>
-						<h1>product specifications :</h1>
+								],
+							]}
+						>
+							<h1>product specifications :</h1>
 
-						<h1>photos :</h1>
-						<div className="flex space-x-2">
-							{product.images_path_names.map((image_path_name, index) => {
-								return (
-									<div className="h-16 w-16 shrink-0 flex justify-center items-center">
-										<img
-											style={{ objectFit: "contain" }}
-											className="w-full"
-											src={gen_link_to_file(
-												"./product_images/" + image_path_name
-											)}
-										/>
-									</div>
-								);
-							})}
-							<div className="h-16 w-16 shrink-0 flex justify-center items-center bg-blue-400 rounded-lg ">
-								<AddAPhoto />
+							<h1>photos :</h1>
+							<div className="flex space-x-2">
+								{product.images_path_names.map((image_path_name, index) => {
+									return (
+										<div
+											key={index}
+											className="h-16 w-16 shrink-0 flex justify-center items-center"
+										>
+											<img
+												style={{ objectFit: "contain" }}
+												className="w-full"
+												src={gen_link_to_file(
+													"./product_images/" + image_path_name
+												)}
+											/>
+										</div>
+									);
+								})}
+								<div className="h-16 w-16 shrink-0 flex justify-center items-center bg-blue-400 rounded-lg ">
+									<AddAPhoto />
+								</div>
 							</div>
-						</div>
-					</CustomTable>
+						</CustomTable>
+					</React.Fragment>
 				);
 			})}
 		</div>

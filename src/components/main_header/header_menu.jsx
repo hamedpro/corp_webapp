@@ -38,7 +38,6 @@ const HeaderMenu = (props) => {
 				set_show_admin_routes(
 					data.result.filter((i) => i.username === username)[0].is_admin === "true"
 				);
-				console.log("header menu was opened");
 			},
 			(error) => {}
 		);

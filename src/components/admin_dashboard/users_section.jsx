@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common";
+import { CustomTable } from "../custom_table/comp.jsx";
 export default function UsersSection() {
 	const [users, set_users] = useState([]);
 	function fetch_data() {
@@ -17,7 +18,7 @@ export default function UsersSection() {
 			}
 		);
 	}
-	useEffect(() => fetch_data(), []);
+	useEffect(fetch_data, []);
 
 	var modify_user = ({ task, payload }) => {
 		switch (task) {
@@ -61,7 +62,7 @@ export default function UsersSection() {
 				customAjax({
 					params: {
 						task_name: "toggle_user_admin_state",
-						id: payload.user_id,
+						username: payload.username,
 					},
 				})
 					.then(
@@ -86,90 +87,67 @@ export default function UsersSection() {
 		}
 	};
 	return (
-		<div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
-			<h1>
-				{ml({
-					en: "users:",
-					fa: "کاربران:",
+		<div className="flex flex-col">
+			{ml({
+				en: "users:",
+				fa: "کاربران:",
+			})}
+			<CustomTable
+				headerItems={[
+					ml({
+						en: "user_id",
+						fa: "شناسه کاربر",
+					}),
+					ml({
+						en: "username",
+						fa: "نام کاربری",
+					}),
+					ml({
+						en: "is_admin",
+						fa: "دسترسی مدیر",
+					}),
+					ml({
+						en: "options",
+						fa: "گزینه ها ",
+					}),
+				]}
+				rows={users.map((user, index) => {
+					return [
+						{
+							value: user.id,
+							onClick: () => {
+								alert("user id can't be changed");
+							},
+						},
+						{
+							value: user.username,
+							onClick: () => {
+								modify_user({
+									task: "username",
+									payload: {
+										old_username: user.username,
+									},
+								});
+							},
+						},
+						{
+							value: user.is_admin,
+							onClick: () => {
+								modify_user({
+									task: "is_admin",
+									payload: { username: user.username },
+								});
+							},
+						},
+						{
+							value: "delete his/her profile picture",
+							onClick: () => {
+								alert("this feature is under development");
+							},
+						} /* todo implent it */,
+					];
 				})}
-			</h1>
-			<hr />
-			<table className="custom_border">
-				<tbody>
-					<tr>
-						<th>
-							{ml({
-								en: "user_id",
-								fa: "شناسه کاربر",
-							})}
-						</th>
-						<th>
-							{ml({
-								en: "username",
-								fa: "نام کاربری",
-							})}
-						</th>
-						<th>
-							{ml({
-								en: "is_admin",
-								fa: "دسترسی مدیر",
-							})}
-						</th>
-						<th>
-							{ml({
-								en: "options",
-								fa: "گزینه ها ",
-							})}
-						</th>
-					</tr>
-					{users.map((user) => {
-						return (
-							<tr key={user.id}>
-								<td>{user.id}</td>
-								<td>
-									{user.username}
-									<b
-										onClick={() =>
-											modify_user({
-												task: "username",
-												payload: {
-													old_username: user.username,
-												},
-											})
-										}
-										className="cursor-pointer"
-									>
-										{" "}
-										{ml({
-											en: "modify",
-											fa: "تغییر",
-										})}
-									</b>
-								</td>
-								<td>
-									{user.is_admin}{" "}
-									<b
-										className="cursor-pointer"
-										onClick={() =>
-											modify_user({
-												task: "is_admin",
-												payload: { user_id: user.id },
-											})
-										}
-									>
-										{" "}
-										{ml({
-											en: "toggle",
-											fa: "تغییر وضعیت",
-										})}
-									</b>
-								</td>
-								<td></td>
-							</tr>
-						);
-					})}
-				</tbody>
-			</table>
+			/>
 		</div>
 	);
 }
