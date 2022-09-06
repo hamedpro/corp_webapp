@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common.js";
+import { CustomTable } from "../custom_table/comp.jsx";
 export default function OptionsSection() {
 	var nav = useNavigate();
 	function change_my_own_password() {
@@ -38,7 +39,7 @@ export default function OptionsSection() {
 		);
 	}
 	return (
-		<div className="mt-2 p-2 mx-auto border border-blue-400 rounded">
+		<div className="flex flex-col ">
 			<h1>
 				{ml({
 					en: "options:",

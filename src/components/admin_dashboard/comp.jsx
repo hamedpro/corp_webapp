@@ -64,7 +64,7 @@ export default function AdminDashboard() {
 						);
 					})}
 				</div>
-				<div className="flex w-9/12 bg-yellow-600">
+				<div className="flex w-9/12 overflow-y-auto px-3">
 					{tab === "manage_products" && (
 						<>
 							<ProductsSection />

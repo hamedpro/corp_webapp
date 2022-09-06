@@ -67,3 +67,8 @@ when trying to change password with task_name = change_password i got error : ca
 tailwind watch i think either not work or work very slowly even with pretier disabled sometimes i see changes when i save the file for 2nd time 
 every price in this app should be in toman
 add support for discount
+
+
+how we seperate frontend routes : 
+if paths should be used by both admins and normal users -> keep it outside of admin dashboard and link to that
+if just admins should access that information -> put it inside admin dashboard
