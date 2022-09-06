@@ -14,6 +14,9 @@ export default function OptionsSection() {
 		nav("/users/" + window.localStorage.getItem("username"));
 	}
 	function undo_all() {
+		if (!window.confirm("are you sure?")) {
+			return;
+		}
 		customAjax({
 			params: {
 				task_name: "undo_all",
@@ -39,42 +42,39 @@ export default function OptionsSection() {
 		);
 	}
 	return (
-		<div className="flex flex-col ">
-			<h1>
-				{ml({
-					en: "options:",
-					fa: "گزینه ها",
-				})}
-			</h1>
-			<hr />
-			<table className="custom_border">
-				<tbody>
-					<tr>
-						<th>
-							{ml({
-								en: "option name:",
-								fa: "نام قابلیت:",
-							})}
-						</th>
-					</tr>
-					<tr>
-						<td onClick={change_my_own_password}>
-							{ml({
+		<div className="flex flex-col">
+			{ml({
+				en: "options:",
+				fa: "گزینه ها",
+			})}
+			<CustomTable
+				headerItems={[
+					ml({
+						en: "option name:",
+						fa: "نام قابلیت:",
+					}),
+				]}
+				rows={[
+					[
+						{
+							value: ml({
 								en: "change my own password",
 								fa: "تغییر رمز عبور من",
-							})}
-						</td>
-					</tr>
-					<tr>
-						<td onClick={undo_all}>
-							{ml({
+							}),
+							onClick: change_my_own_password,
+						},
+					],
+					[
+						{
+							value: ml({
 								en: "undo all",
 								fa: "بازگشت به تنظیمات پیشفرض",
-							})}
-						</td>
-					</tr>
-				</tbody>
-			</table>
+							}),
+							onClick: undo_all,
+						},
+					],
+				]}
+			/>
 		</div>
 	);
 }

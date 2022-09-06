@@ -4,6 +4,10 @@ import ProductsSection from "./products_section";
 import "./styles.css";
 import { useState } from "react";
 import { Info } from "@mui/icons-material";
+import { OrdersSection } from "./orders_section";
+import { SupportTicketsSection } from "./support_tickets_section";
+import { ProductReviews } from "./product_reviews";
+import { SettingsSection } from "./settings_section";
 export default function AdminDashboard() {
 	var [tab, set_tab] = useState("manage_products");
 	var tabs = [
@@ -34,8 +38,8 @@ export default function AdminDashboard() {
 			icon: <Info />,
 		},
 		{
-			id: "manage_data",
-			title: "manage data",
+			id: "settings",
+			title: "settings",
 			icon: <Info />,
 		},
 		{
@@ -80,10 +84,26 @@ export default function AdminDashboard() {
 							<OptionsSection />
 						</>
 					)}
-					{tab === "manage_orders" && <></>}
-					{tab === "manage_support_tickets" && <></>}
-					{tab === "manage_data" && <></>}
-					{tab === "manage_product_reviews" && <></>}
+					{tab === "manage_orders" && (
+						<>
+							<OrdersSection />
+						</>
+					)}
+					{tab === "manage_support_tickets" && (
+						<>
+							<SupportTicketsSection />
+						</>
+					)}
+					{tab === "settings" && (
+						<>
+							<SettingsSection />
+						</>
+					)}
+					{tab === "manage_product_reviews" && (
+						<>
+							<ProductReviews />
+						</>
+					)}
 				</div>
 			</div>
 		</>

@@ -529,6 +529,14 @@ app.all("/", async (req, res) => {
 				}
 			);
 			break;
+		case "get_all_product_reviews":
+			var o = await cq(con, "select * from reviews");
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
+			rm.send_result(o.result);
+			break;
 		case "change_product_user_review":
 			break;
 		case "get_products":
@@ -1180,6 +1188,15 @@ app.all("/", async (req, res) => {
 				rm.send_error(o.error);
 				break;
 			}
+			rm.send_result(o.result);
+			break;
+		case "get_orders":
+			var o = await cq(con, "select * from orders");
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
+			rm.log(typeof o.result);
 			rm.send_result(o.result);
 			break;
 		case "update_shopping_card_item":
