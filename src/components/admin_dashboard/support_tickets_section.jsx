@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
 import { CustomTable } from "../custom_table/comp";
 
 export function SupportTicketsSection() {
 	var [support_tickets, set_support_tickets] = useState([]);
+	var nav = useNavigate();
 	function fetch_data() {
 		customAjax({
 			params: {
@@ -19,6 +21,11 @@ export function SupportTicketsSection() {
 		);
 	}
 	useEffect(fetch_data, []);
+	function custom_warning() {
+		alert(
+			"none of these fields are changeable from here \n open this support ticket page and modify it there"
+		);
+	}
 	return (
 		<div className="flex flex-col">
 			support tickets {/* todo add filter option */}
@@ -31,16 +38,23 @@ export function SupportTicketsSection() {
 					"text",
 					"is_proceed",
 					"proceeded_by",
+					"open it",
 				]}
 				rows={support_tickets.map((st, index) => {
 					return [
-						{ value: st.id, onClick: () => {} },
-						{ value: st.username, onClick: () => {} },
-						{ value: st.title, onClick: () => {} },
-						{ value: st.type, onClick: () => {} },
-						{ value: st.text, onClick: () => {} },
-						{ value: st.is_proceed, onClick: () => {} },
-						{ value: st.proceeded_by, onClick: () => {} },
+						{ value: st.id, onClick: custom_warning },
+						{ value: st.username, onClick: custom_warning },
+						{ value: st.title, onClick: custom_warning },
+						{ value: st.type, onClick: custom_warning },
+						{ value: st.text, onClick: custom_warning },
+						{ value: st.is_proceed, onClick: custom_warning },
+						{ value: st.proceeded_by, onClick: custom_warning },
+						{
+							value: "open it",
+							onClick: () => {
+								nav(`/support-tickets/${st.id}`);
+							},
+						},
 					];
 				})}
 			/>
