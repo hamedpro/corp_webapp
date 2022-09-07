@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common.js";
 import { CustomTable } from "../custom_table/comp.jsx";
+import Section from "../section/comp.jsx";
+import { CompanyInfoSection } from "./options_section_sub_components/company_info.jsx";
 export default function OptionsSection() {
 	var nav = useNavigate();
 	function change_my_own_password() {
@@ -43,38 +45,25 @@ export default function OptionsSection() {
 	}
 	return (
 		<div className="flex flex-col">
+			<input type="file" id="common_file_input" className="hidden" />
 			{ml({
 				en: "options:",
 				fa: "گزینه ها",
 			})}
-			<CustomTable
-				headerItems={[
-					ml({
-						en: "option name:",
-						fa: "نام قابلیت:",
-					}),
-				]}
-				rows={[
-					[
-						{
-							value: ml({
-								en: "change my own password",
-								fa: "تغییر رمز عبور من",
-							}),
-							onClick: change_my_own_password,
-						},
-					],
-					[
-						{
-							value: ml({
-								en: "undo all",
-								fa: "بازگشت به تنظیمات پیشفرض",
-							}),
-							onClick: undo_all,
-						},
-					],
-				]}
-			/>
+			<button onClick={change_my_own_password}>
+				{ml({
+					en: "change my own password",
+					fa: "تغییر رمز عبور من",
+				})}
+			</button>
+			<button onClick={undo_all}>
+				{ml({
+					en: "undo all",
+					fa: "بازگشت به تنظیمات پیشفرض",
+				})}
+			</button>
+			/* manage icons section comp should be here */
+			<CompanyInfoSection />
 		</div>
 	);
 }

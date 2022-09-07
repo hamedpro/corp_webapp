@@ -19,6 +19,14 @@ export function ProductReviews() {
 		);
 	}
 	useEffect(fetch_data, []);
+	function toggle_review_verification_status(review_id) {
+		customAjax({
+			params: {
+				task_name: "toggle_review_verification_status",
+				id: review_id,
+			},
+		}).then(fetch_data, (e) => console.log(e));
+	}
 	return (
 		<div className="flex flex-col">
 			product reviews {/* todo add filter option */}
@@ -32,17 +40,80 @@ export function ProductReviews() {
 					"cons",
 					"text",
 					"time",
+					"verification_status",
 				]}
 				rows={reviews.map((review, index) => {
 					return [
-						{ value: review.id, onClick: () => {} },
-						{ value: review.product_id, onClick: () => {} },
-						{ value: review.username, onClick: () => {} },
-						{ value: review.rating_from_five, onClick: () => {} },
-						{ value: review.pros, onClick: () => {} },
-						{ value: review.cons, onClick: () => {} },
-						{ value: review.text, onClick: () => {} },
-						{ value: review.time, onClick: () => {} },
+						{
+							value: review.id,
+							onClick: () => {
+								alert(
+									'this field cant be changed \n changable fields for user reviews : "verification_status"'
+								);
+							},
+						},
+						{
+							value: review.product_id,
+							onClick: () => {
+								alert(
+									'this field cant be changed \n changable fields for user reviews : "verification_status"'
+								);
+							},
+						},
+						{
+							value: review.username,
+							onClick: () => {
+								alert(
+									'this field cant be changed \n changable fields for user reviews : "verification_status"'
+								);
+							},
+						},
+						{
+							value: review.rating_from_five,
+							onClick: () => {
+								alert(
+									'this field cant be changed \n changable fields for user reviews : "verification_status"'
+								);
+							},
+						},
+						{
+							value: review.pros,
+							onClick: () => {
+								alert(
+									'this field cant be changed \n changable fields for user reviews : "verification_status"'
+								);
+							},
+						},
+						{
+							value: review.cons,
+							onClick: () => {
+								alert(
+									'this field cant be changed \n changable fields for user reviews : "verification_status"'
+								);
+							},
+						},
+						{
+							value: review.text,
+							onClick: () => {
+								alert(
+									'this field cant be changed \n changable fields for user reviews : "verification_status"'
+								);
+							},
+						},
+						{
+							value: review.time,
+							onClick: () => {
+								alert(
+									'this field cant be changed \n changable fields for user reviews : "verification_status"'
+								);
+							},
+						},
+						{
+							value: review.verification_status,
+							onClick: () => {
+								toggle_review_verification_status(Number(review.id));
+							},
+						},
 					];
 				})}
 			/>

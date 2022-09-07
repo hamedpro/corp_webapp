@@ -517,6 +517,28 @@ app.all("/", async (req, res) => {
 				}
 			);
 			break;
+		case "toggle_review_verification_status":
+			var o = await cq(con, "select * from reviews");
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
+			var new_verification_status =
+				o.result.find((review) => review.id === Number(params.id))[
+					"verification_status"
+				] === "true"
+					? "false"
+					: "true";
+			o = await cq(
+				con,
+				`update reviews set verification_status = "${new_verification_status}" where id= ${params.id}`
+			);
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
+			rm.send();
+			break;
 		case "get_user_reviews":
 			con.query(
 				`select * from reviews where product_id = ${params.product_id}`,
@@ -740,6 +762,11 @@ app.all("/", async (req, res) => {
 			break;
 		case "set_company_info":
 			// params.company_info should be a stringified json
+			var o = await cq(con, 'delete from paired_data where pair_key = "company_info"');
+			if (o.error) {
+				rm.send_error(o.error);
+				break;
+			}
 			con.query(
 				`insert into paired_data (pair_key,pair_value) values ("company_info",'${params.company_info}')`,
 				(error) => {
@@ -1200,7 +1227,7 @@ app.all("/", async (req, res) => {
 			rm.send_result(o.result);
 			break;
 		case "update_shopping_card_item":
-			var o = cq(
+			var o = await cq(
 				con,
 				`delete from shopping_card_items where product_id = ${Number(params.product_id)}`
 			);
