@@ -99,36 +99,26 @@ const HeaderMenu = (props) => {
 						onClick={() => nav_and_hide_header_menu("/blog-posts")}
 						beforeItems={<NewspaperRounded sx={{ color: "white" }} />}
 					/>
+					{show_admin_routes && (
+						<>
+							<ListItem
+								items={[ml({ en: "new blog post", fa: "بلاگ پست جدید" })]}
+								onClick={() => nav_and_hide_header_menu("/new-blog-post")}
+								beforeItems={<AddCircleRounded sx={{ color: "white" }} />}
+							/>
+							<ListItem
+								items={[ml({ en: "add new product", fa: "اضافه کردن محصول جدید" })]}
+								onClick={() => nav_and_hide_header_menu("/new-product")}
+								beforeItems={<AddBusinessRounded sx={{ color: "white" }} />}
+							/>
+							<ListItem
+								items={[ml({ en: "admin dashboard", fa: "داشبورد مدیر" })]}
+								onClick={() => nav_and_hide_header_menu("/admin-dashboard")}
+								beforeItems={<AdminPanelSettingsRounded sx={{ color: "white" }} />}
+							/>
+						</>
+					)}
 				</Section>
-				{show_admin_routes && (
-					<Section
-						title={ml({
-							en: "admin routes",
-							fa: "مسیر های ویژه",
-						})}
-					>
-						<ListItem
-							items={[ml({ en: "new blog post", fa: "بلاگ پست جدید" })]}
-							onClick={() => nav_and_hide_header_menu("/new-blog-post")}
-							beforeItems={<AddCircleRounded sx={{ color: "white" }} />}
-						/>
-						<ListItem
-							items={[ml({ en: "add new product", fa: "اضافه کردن محصول جدید" })]}
-							onClick={() => nav_and_hide_header_menu("/new-product")}
-							beforeItems={<AddBusinessRounded sx={{ color: "white" }} />}
-						/>
-						<ListItem
-							items={[ml({ en: "users", fa: "کاربران" })]}
-							onClick={() => nav_and_hide_header_menu("/users")}
-							beforeItems={<GroupRounded sx={{ color: "white" }} />}
-						/>
-						<ListItem
-							items={[ml({ en: "admin dashboard", fa: "داشبورد مدیر" })]}
-							onClick={() => nav_and_hide_header_menu("/admin-dashboard")}
-							beforeItems={<AdminPanelSettingsRounded sx={{ color: "white" }} />}
-						/>
-					</Section>
-				)}
 			</div>
 		</>
 	);

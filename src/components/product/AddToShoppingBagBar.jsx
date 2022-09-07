@@ -89,16 +89,15 @@ export default function AddToShoppingBagBar(props) {
 					<></>
 				)}
 				{this_product_shopping_count === 0 ? (
-					<Button
-						variant="contained"
-						sx={{ width: "100%" }}
+					<button
+						className="w-full bg-white text-sky-900 py-1 rounded-lg"
 						onClick={() => handle_first_add_to_shopping_card()}
 					>
 						{ml({
 							en: "add to shopping bag",
 							fa: "اضافه کردن به سبد خرید",
 						})}
-					</Button>
+					</button>
 				) : (
 					<></>
 				)}

@@ -65,24 +65,30 @@ export default function Product() {
 
 	return (
 		<>
-			<div className="mx-auto border border-blue-400 mt-2 p-2 mx-1">
-				{image_sources.length == 0 ? (
-					<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
-						{ml({
-							en: "there is not any product image uploaded for this product",
-							fa: "برای این محصول هیچ تصویری بارگذاری نشده است",
-						})}
-					</div>
-				) : (
-					<ImageSlider image_sources={image_sources} />
-				)}
-
-				<div className="mx-2 w-full mt-2">
-					<h1>
-						#{product.id} : {product.name}
-					</h1>
+			<div className="flex flex-col md:flex-row mx-auto border border-blue-400 mt-2 p-2 mx-1">
+				<div className="md:w-1/2">
+					{image_sources.length == 0 ? (
+						<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
+							{ml({
+								en: "there is not any product image uploaded for this product",
+								fa: "برای این محصول هیچ تصویری بارگذاری نشده است",
+							})}
+						</div>
+					) : (
+						<ImageSlider image_sources={image_sources} />
+					)}
 				</div>
-				<AddToShoppingBagBar price={product.price} product_id={product.id} />
+
+				<div className="flex flex-col md:w-1/2 p-2 space-between">
+					<div className="mx-2 w-full mt-2">
+						<h1>
+							#{product.id} : {product.name}
+						</h1>
+					</div>
+					<h1 className="m-2 my-1">description : {product.description}</h1>
+					<h1 className="m-2 my-1">category : {product.category}</h1>
+					<AddToShoppingBagBar price={product.price} product_id={product.id} />
+				</div>
 			</div>
 			{/* todo add a div h full w full into Section comp and inject styles into that */}
 			<Section

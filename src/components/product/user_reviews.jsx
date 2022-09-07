@@ -41,14 +41,12 @@ const user_reviews = (props) => {
 		<>
 			<TotalRating reviews={verified_reviews()} />
 			{verified_reviews().length === 0 ? (
-				<>
-					<h1>
-						{ml({
-							en: "user reviews:",
-							fa: "بررسی های کاربران :",
-						})}
-					</h1>
-					<hr />
+				<Section
+					title={ml({
+						en: "user reviews:",
+						fa: "بررسی های کاربران :",
+					})}
+				>
 					<div className="w-full flex justify-center flex-col py-3">
 						<h1 className="text-center">
 							{ml({
@@ -69,7 +67,7 @@ const user_reviews = (props) => {
 							})}
 						</Button>
 					</div>
-				</>
+				</Section>
 			) : (
 				<>
 					<Section
