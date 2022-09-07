@@ -10,6 +10,8 @@ import { gen_link_to_file, multi_lang_helper as ml } from "../../common";
 import { ChangeLangModal } from "./ChangeLangModal";
 import { customAjax } from "../../custom_ajax";
 import { useEffect } from "react";
+import Section from "../section/comp";
+import { Loading } from "../loading/comp";
 export default function MainFooter() {
 	var nav = useNavigate();
 	var AppContextState = useContext(AppContext).AppContextState;
@@ -94,8 +96,23 @@ export default function MainFooter() {
 				</div>
 				<div className="flex flex-wrap md:flex-nowrap mx-2 p-2 md:space-x-2">
 					<Subscripting className={"w-full shrink-0 md:shrink md:w-1/2"} />
-					<div className="text-white w-1/2 shrink-0 md:shrink border border-blue-500 mt-2 md:mt-0 rounded p-2">
-						<h1>about our company</h1>
+					<div className=" w-1/2 shrink-0 md:shrink  md:mt-0 rounded text-black">
+						{company_info === null ? (
+							<div className="w-full h-full border  border-blue-400 rounded-lg">
+								<Loading />
+							</div>
+						) : (
+							<Section title={"about the company"}>
+								<div className="text-white px-2">
+									<div>company name : {company_info.name}</div>
+									<div>company description: {company_info.description}</div>
+									<div>company history : {company_info.history} </div>
+									<LinkLikeP link="/company-info">
+										see more (about company)
+									</LinkLikeP>
+								</div>
+							</Section>
+						)}
 					</div>
 				</div>
 

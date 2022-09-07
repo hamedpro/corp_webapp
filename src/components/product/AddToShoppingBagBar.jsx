@@ -69,7 +69,7 @@ export default function AddToShoppingBagBar(props) {
 	}, []);
 
 	return (
-		<div className="mt-3 realative bottom-0 w-full py-2 bg-blue-400 flex items-center px-2 z-30">
+		<div className="mt-3 realative bottom-0 w-full py-2 bg-blue-400 flex items-center px-2">
 			<div className="w-2/5 flex flex-col text-sm">
 				<p className="block">
 					{ml({
