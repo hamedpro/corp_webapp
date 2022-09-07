@@ -1,9 +1,12 @@
+import { InfoRounded } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { customAjax } from "../../custom_ajax";
+import { Alert } from "../alert/comp";
 import { CustomTable } from "../custom_table/comp";
+import { Loading } from "../loading/comp";
 
 export function ProductReviews() {
-	var [reviews, set_reviews] = useState([]);
+	var [reviews, set_reviews] = useState(null);
 	function fetch_data() {
 		customAjax({
 			params: {
@@ -30,93 +33,103 @@ export function ProductReviews() {
 	return (
 		<div className="flex flex-col">
 			product reviews {/* todo add filter option */}
-			<CustomTable
-				headerItems={[
-					"id",
-					"product id",
-					"username",
-					"rating from five",
-					"pros",
-					"cons",
-					"text",
-					"time",
-					"verification_status",
-				]}
-				rows={reviews.map((review, index) => {
-					return [
-						{
-							value: review.id,
-							onClick: () => {
-								alert(
-									'this field cant be changed \n changable fields for user reviews : "verification_status"'
-								);
-							},
-						},
-						{
-							value: review.product_id,
-							onClick: () => {
-								alert(
-									'this field cant be changed \n changable fields for user reviews : "verification_status"'
-								);
-							},
-						},
-						{
-							value: review.username,
-							onClick: () => {
-								alert(
-									'this field cant be changed \n changable fields for user reviews : "verification_status"'
-								);
-							},
-						},
-						{
-							value: review.rating_from_five,
-							onClick: () => {
-								alert(
-									'this field cant be changed \n changable fields for user reviews : "verification_status"'
-								);
-							},
-						},
-						{
-							value: review.pros,
-							onClick: () => {
-								alert(
-									'this field cant be changed \n changable fields for user reviews : "verification_status"'
-								);
-							},
-						},
-						{
-							value: review.cons,
-							onClick: () => {
-								alert(
-									'this field cant be changed \n changable fields for user reviews : "verification_status"'
-								);
-							},
-						},
-						{
-							value: review.text,
-							onClick: () => {
-								alert(
-									'this field cant be changed \n changable fields for user reviews : "verification_status"'
-								);
-							},
-						},
-						{
-							value: review.time,
-							onClick: () => {
-								alert(
-									'this field cant be changed \n changable fields for user reviews : "verification_status"'
-								);
-							},
-						},
-						{
-							value: review.verification_status,
-							onClick: () => {
-								toggle_review_verification_status(Number(review.id));
-							},
-						},
-					];
-				})}
-			/>
+			{reviews === null ? (
+				<Loading />
+			) : (
+				<>
+					{reviews !== null && reviews.length === 0 ? (
+						<Alert icon={<InfoRounded />}>there is not any reviews submited</Alert>
+					) : (
+						<CustomTable
+							headerItems={[
+								"id",
+								"product id",
+								"username",
+								"rating from five",
+								"pros",
+								"cons",
+								"text",
+								"time",
+								"verification_status",
+							]}
+							rows={reviews.map((review, index) => {
+								return [
+									{
+										value: review.id,
+										onClick: () => {
+											alert(
+												'this field cant be changed \n changable fields for user reviews : "verification_status"'
+											);
+										},
+									},
+									{
+										value: review.product_id,
+										onClick: () => {
+											alert(
+												'this field cant be changed \n changable fields for user reviews : "verification_status"'
+											);
+										},
+									},
+									{
+										value: review.username,
+										onClick: () => {
+											alert(
+												'this field cant be changed \n changable fields for user reviews : "verification_status"'
+											);
+										},
+									},
+									{
+										value: review.rating_from_five,
+										onClick: () => {
+											alert(
+												'this field cant be changed \n changable fields for user reviews : "verification_status"'
+											);
+										},
+									},
+									{
+										value: review.pros,
+										onClick: () => {
+											alert(
+												'this field cant be changed \n changable fields for user reviews : "verification_status"'
+											);
+										},
+									},
+									{
+										value: review.cons,
+										onClick: () => {
+											alert(
+												'this field cant be changed \n changable fields for user reviews : "verification_status"'
+											);
+										},
+									},
+									{
+										value: review.text,
+										onClick: () => {
+											alert(
+												'this field cant be changed \n changable fields for user reviews : "verification_status"'
+											);
+										},
+									},
+									{
+										value: review.time,
+										onClick: () => {
+											alert(
+												'this field cant be changed \n changable fields for user reviews : "verification_status"'
+											);
+										},
+									},
+									{
+										value: review.verification_status,
+										onClick: () => {
+											toggle_review_verification_status(Number(review.id));
+										},
+									},
+								];
+							})}
+						/>
+					)}
+				</>
+			)}
 		</div>
 	);
 }

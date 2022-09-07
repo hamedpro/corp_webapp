@@ -7,7 +7,6 @@ import { Info } from "@mui/icons-material";
 import { OrdersSection } from "./orders_section";
 import { SupportTicketsSection } from "./support_tickets_section";
 import { ProductReviews } from "./product_reviews";
-import { SettingsSection } from "./settings_section";
 export default function AdminDashboard() {
 	var [tab, set_tab] = useState("manage_products");
 	var tabs = [
@@ -37,11 +36,7 @@ export default function AdminDashboard() {
 			title: "manage support tickets",
 			icon: <Info />,
 		},
-		{
-			id: "settings",
-			title: "settings",
-			icon: <Info />,
-		},
+
 		{
 			id: "manage_product_reviews",
 			title: "manage product reviews",
@@ -94,11 +89,7 @@ export default function AdminDashboard() {
 							<SupportTicketsSection />
 						</>
 					)}
-					{tab === "settings" && (
-						<>
-							<SettingsSection />
-						</>
-					)}
+
 					{tab === "manage_product_reviews" && (
 						<>
 							<ProductReviews />

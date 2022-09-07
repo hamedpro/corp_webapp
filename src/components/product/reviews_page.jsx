@@ -7,11 +7,12 @@ import { multi_lang_helper as ml } from "../../common";
 export default function ReviewsPage() {
 	var params = useParams();
 	var [reviews, set_reviews] = useState([]);
+	var verified_reviews = () => reviews.filter((review) => review.verification_status === "true");
 	var nav = useNavigate();
 	function fetch_data() {
 		customAjax({
 			params: {
-				task_name: "get_user_reviews",
+				task_name: "get_all_product_reviews",
 				product_id: params.product_id,
 			},
 		}).then(
@@ -49,7 +50,7 @@ export default function ReviewsPage() {
 			</div>
 
 			<hr />
-			{reviews.map((review, index) => {
+			{verified_reviews().map((review, index) => {
 				//put limit on count of shown reviews if count is too high
 				return (
 					<React.Fragment key={index}>

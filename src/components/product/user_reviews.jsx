@@ -9,6 +9,7 @@ import { multi_lang_helper as ml } from "../../common.js";
 const user_reviews = (props) => {
 	var [product, set_product] = useState({});
 	var [reviews, set_reviews] = useState([]);
+	var verified_reviews = () => reviews.filter((review) => review.verification_status === "true");
 	var nav = useNavigate();
 	function fetch_data() {
 		customAjax({
@@ -20,7 +21,7 @@ const user_reviews = (props) => {
 		});
 		customAjax({
 			params: {
-				task_name: "get_user_reviews",
+				task_name: "get_all_product_reviews",
 				product_id: Number(props.product_id),
 			},
 		}).then((data) => {
@@ -38,8 +39,8 @@ const user_reviews = (props) => {
 	//todo show related products of every product
 	return (
 		<>
-			<TotalRating reviews={reviews} />
-			{reviews.length === 0 ? (
+			<TotalRating reviews={verified_reviews()} />
+			{verified_reviews().length === 0 ? (
 				<>
 					<h1>
 						{ml({
@@ -81,8 +82,8 @@ const user_reviews = (props) => {
 							className=" mx-2 mb-1 flex  h-40 space-x-2"
 							style={{ overflowX: "scroll" }}
 						>
-							{reviews.map((review, index) => {
-								if (index <= 2 && index + 1 <= reviews.length) {
+							{verified_reviews().map((review, index) => {
+								if (index <= 2 && index + 1 <= verified_reviews().length) {
 									return (
 										<React.Fragment key={index}>
 											<ReviewItem

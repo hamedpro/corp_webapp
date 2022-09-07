@@ -16,7 +16,6 @@ import {
 	Register,
 	Root,
 	SupportTicket,
-	SupprotTickets,
 	MainFooter,
 	UpdateCompanyData,
 	NewProduct,
@@ -39,6 +38,7 @@ import { CheckUserPrivilege } from "./components/CheckUserPrivilege/comp";
 import { ProductCategories } from "./components/product_categories/comp";
 import { UserSupportTickets } from "./components/user_support_tickets/comp";
 import { Loading } from "./components/loading/comp";
+import { PageNotFound } from "./components/PageNotFound/comp";
 function App() {
 	var nav = useNavigate();
 
@@ -101,6 +101,7 @@ function App() {
 				<MainHeader />
 				<NavBar />
 				<Routes>
+					<Route path="*" element={<PageNotFound />} />
 					<Route
 						path="/api_test_page"
 						element={

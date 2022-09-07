@@ -1,8 +1,9 @@
-import { AddAPhoto, Delete } from "@mui/icons-material";
+import { AddAPhoto, Delete, InfoRounded } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
 import { CustomTable } from "../../components/custom_table/comp";
+import { Alert } from "../alert/comp.jsx";
 export default function ProductsSection() {
 	const [products, set_products] = useState([]);
 	function fetch_data() {
@@ -132,6 +133,9 @@ export default function ProductsSection() {
 				en: "products:",
 				fa: "محصولات",
 			})}
+			{products.length === 0 && (
+				<Alert icon={<InfoRounded />}>there is not any product</Alert>
+			)}
 			{products.map((product, index) => {
 				return (
 					<React.Fragment key={index}>
