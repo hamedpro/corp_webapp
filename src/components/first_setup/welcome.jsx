@@ -14,7 +14,6 @@ export function Welcome({ set_tab }) {
 					route: "/init",
 				}).then(
 					(data) => {
-						window.localStorage.setItem("username", "root");
 						set_tab("first_admin_setup");
 					},
 					(error) => {

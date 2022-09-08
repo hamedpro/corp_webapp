@@ -33,6 +33,20 @@ async function is_first_setup_done({ con }) {
 	}
 	return true;
 }
+function connect_to_db(pass_database = true) {
+	var conf = {
+		user: process.env.mysql_user,
+		password: process.env.mysql_password,
+		port: Number(process.env.mysql_port),
+		host: process.env.mysql_host,
+		multipleStatements: true,
+	};
+	if (pass_database) {
+		conf["database"] = "corp_webapp";
+	}
+	return mysql.createConnection(conf);
+	//add error handling for mysql createConnection
+}
 async function init() {
 	[
 		"./uploaded",
@@ -51,14 +65,7 @@ async function init() {
 			throw "tried to access one of mysql configurations from .env but it didn't exist";
 		}
 	}
-	var con = mysql.createConnection({
-		user: process.env.mysql_user,
-		password: process.env.mysql_password,
-		port: Number(process.env.mysql_port),
-		host: process.env.mysql_host,
-		multipleStatements: true,
-	});
-	//add error handling for mysql createConnection
+	var con = connect_to_db(false);
 
 	var output = await cq(
 		con,
@@ -157,18 +164,19 @@ async function init() {
 	//todo also check inside the code for todos and make a  --
 	//app for it
 	if (output.error) {
+		con.end();
 		throw output.error;
 	}
+
 	//support_tickets->type can have these values : bug,suggestion,other
 	//product_specs inside products table should contain ->
 	// -> a json stringified array of key values -- also for ex pros and cons fields
 	//todo take care about length of texts and max length of cells
 }
 async function main() {
-	await init();
 	app.all("/init", async (req, res) => {
 		var rm = new response_manager(res);
-		rm.add_mysql_con(con);
+		rm.add_mysql_con(connect_to_db());
 		try {
 			await init();
 			rm.send();
@@ -178,19 +186,10 @@ async function main() {
 	});
 	app.all("/", async (req, res) => {
 		var rm = new response_manager(res);
-
-		var con = mysql.createConnection({
-			user: process.env.mysql_user,
-			password: process.env.mysql_password,
-			port: Number(process.env.mysql_port),
-			host: process.env.mysql_host,
-			multipleStatements: true,
-			database: "corp_webapp",
-		});
-		//add error handling for mysql createConnection
+		var con = connect_to_db();
 		rm.add_mysql_con(con);
-
 		var params = { ...req.body, ...req.query };
+
 		if (!("task_name" in params)) {
 			rm.send_error("there is no task_name field present in your request");
 			return;

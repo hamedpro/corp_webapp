@@ -58,7 +58,7 @@ export default function MainFooter() {
 		<>
 			<ChangeLangModal hideFn={() => set_is_modal_open(false)} is_visible={is_modal_open} />
 			<div className="bg-sky-800 text-white">
-				<div className="flex p-2 h-16 border-t border-stone-300 mt-2 mb-7">
+				<div className="flex p-2 h-16 mt-2 mb-7 mx-2">
 					<div className="w-2/3 h-full flex mb-2 space-x-2">
 						<div className="h-16 w-fit bg-blue-500">
 							{square_icon_src ? (
@@ -96,13 +96,13 @@ export default function MainFooter() {
 				</div>
 				<div className="flex flex-wrap md:flex-nowrap mx-2 p-2 md:space-x-2">
 					<Subscripting className={"w-full shrink-0 md:shrink md:w-1/2"} />
-					<div className=" w-1/2 shrink-0 md:shrink  md:mt-0 rounded text-black">
+					<div className="w-full md:w-1/2 shrink-0 md:shrink  md:mt-0 rounded text-black">
 						{company_info === null ? (
 							<div className="w-full h-full border  border-blue-400 rounded-lg">
 								<Loading />
 							</div>
 						) : (
-							<Section title={"about the company"}>
+							<Section title={"about the company"} className="h-full mt-2 md:mt-0">
 								<div className="text-white px-2">
 									<div>company name : {company_info.name}</div>
 									<div>company description: {company_info.description}</div>

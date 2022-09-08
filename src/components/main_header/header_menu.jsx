@@ -35,9 +35,8 @@ const HeaderMenu = (props) => {
 			},
 		}).then(
 			(data) => {
-				set_show_admin_routes(
-					data.result.filter((i) => i.username === username)[0].is_admin === "true"
-				);
+				var user = data.result.find((i) => i.username === username);
+				set_show_admin_routes(username !== null && user !== undefined && user.is_admin);
 			},
 			(error) => {}
 		);

@@ -17,9 +17,23 @@ export function FirstAdminSetup({ set_tab }) {
 			super_admin_access_token,
 		}).then(
 			(data) => {
-				localStorage.setItem("username", entered_username);
-				alert("done successfuly");
-				set_tab("upload_text_tab");
+				customAjax({
+					params: {
+						task_name: "toggle_user_admin_state",
+						username: entered_username,
+					},
+					super_admin_access_token,
+				}).then(
+					(data) => {
+						localStorage.setItem("username", entered_username);
+						alert("done successfuly");
+						set_tab("upload_text_tab");
+					},
+					(e) => {
+						alert("something went wrong");
+						console.log(error);
+					}
+				);
 			},
 			(error) => {
 				alert("there was an error");

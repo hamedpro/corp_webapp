@@ -40,6 +40,7 @@ import { UserSupportTickets } from "./components/user_support_tickets/comp";
 import { Loading } from "./components/loading/comp";
 import { PageNotFound } from "./components/PageNotFound/comp";
 function App() {
+	window.customAjax = customAjax;
 	var nav = useNavigate();
 
 	function load_company_info() {
