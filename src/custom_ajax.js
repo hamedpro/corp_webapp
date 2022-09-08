@@ -2,6 +2,9 @@ export async function customAjax({
 	params = {},
 	files = [], //setting a default value for it
 	route = "/", // route should start with "/" -> example : "/products/2"
+	headers = {},
+	super_admin_access_token = null,
+	jwt = null,
 }) {
 	var method = "POST";
 	var base_path = "http://" + window.location.hostname + ":4000";
@@ -17,13 +20,23 @@ export async function customAjax({
 			body: form,
 		});
 	} else {
+		headers = {
+			"Content-Type": "application/json",
+			...headers,
+		};
+		if (jwt !== null) {
+			headers["jwt"] = jwt;
+		}
+
+		if (super_admin_access_token !== null) {
+			headers["super_admin_access_token"] = super_admin_access_token;
+		}
+
 		var path = base_path + route;
 		response = await fetch(path, {
 			method,
 			body: JSON.stringify(params),
-			headers: {
-				"Content-Type": "application/json",
-			},
+			headers,
 		});
 	}
 

@@ -5,43 +5,21 @@ import { OptionBox } from "./option_box";
 export function FirstAdminSetup({ set_tab }) {
 	function submit() {
 		var entered_username = document.getElementById("username_input").value;
+		var super_admin_access_token = document.getElementById(
+			"super_admin_access_token_input"
+		).value;
 		customAjax({
 			params: {
 				task_name: "new_user",
 				username: entered_username,
 				password: document.getElementById("password_input").value,
 			},
+			super_admin_access_token,
 		}).then(
 			(data) => {
-				customAjax({
-					params: {
-						task_name: "toggle_user_admin_state",
-						username: entered_username,
-					},
-				}).then(
-					(data) => {
-						window.localStorage.setItem("username", entered_username);
-						//todo make sure about it works properly
-						customAjax({
-							params: {
-								task_name: "delete_user",
-								username: "root",
-							},
-						}).then(
-							() => {
-								set_tab("upload_text_tab");
-							},
-							(error) => {
-								alert("there was an error");
-								console.log(error);
-							}
-						);
-					},
-					(error) => {
-						alert("there was an error");
-						console.log(error);
-					}
-				);
+				localStorage.setItem("username", entered_username);
+				alert("done successfuly");
+				set_tab("upload_text_tab");
 			},
 			(error) => {
 				alert("there was an error");
@@ -51,12 +29,12 @@ export function FirstAdminSetup({ set_tab }) {
 	}
 	return (
 		<OptionBox>
-			<Typography variant="h5">
+			<h1>
 				{ml({
 					en: "registering the first admin",
 					fa: "ثبت نام اولین کاربر مدیر",
 				})}
-			</Typography>
+			</h1>
 			<p className="text-stone-500">
 				{ml({
 					en: `first of all register a user with admin previleges. following tasks below will
@@ -91,6 +69,18 @@ export function FirstAdminSetup({ set_tab }) {
 						en: "enter the password here",
 						fa: "رمز عبور را اینجا وارد کنید",
 					})}
+					type="password"
+				/>
+			</OptionBox>
+			<OptionBox className="mt-2">
+				<p className="text-black">enter your "super admin access token"</p>
+				<p>
+					this token is generated when you have set up the app in the server and its loged
+					in the server console everytime you start your app
+				</p>
+				<input
+					id="super_admin_access_token_input"
+					placeholder={"super admin access token"}
 					type="password"
 				/>
 			</OptionBox>

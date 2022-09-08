@@ -21,16 +21,7 @@ async function is_first_setup_done({ con }) {
 	if (o.result.length === 0) {
 		return false;
 	}
-	o = await cq(con, "select * from users");
-	if (o.error) {
-		throw o.error;
-	}
-	if (o.result.length === 0 || o.result.filter((user) => user.username === "root").length !== 0) {
-		/* todo let the users use "root" as their usersname
-			it can happen by : dont create root user and delete it at first setup page 
-			you can let the app to add the first user without auth */
-		return false;
-	} //todo make sure this func considers all stuations
+	//todo make sure this func considers all stuations
 	var company_media_file_names = fs.readdirSync("./uploaded/company_info");
 	if (
 		company_media_file_names.filter((fn) => {
@@ -167,20 +158,6 @@ async function init() {
 	//app for it
 	if (output.error) {
 		throw output.error;
-	}
-	output = await cq(con, "select * from users where username = 'root'");
-	if (output.error) {
-		throw output.error;
-	}
-	if (output.result.length == 0) {
-		var hashed_password = hash_sha_256_hex("root" + process.env.PASSWORD_HASHING_SECRET);
-		output = await cq(
-			con,
-			`insert into users (username,hashed_password,is_admin) values ('root','${hashed_password}','true')`
-		);
-		if (output.error) {
-			throw output.error;
-		}
 	}
 	//support_tickets->type can have these values : bug,suggestion,other
 	//product_specs inside products table should contain ->

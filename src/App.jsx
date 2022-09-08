@@ -52,7 +52,7 @@ function App() {
 				document.title = JSON.parse(data.result).name;
 				//todo dont let the app to work until there is company data and env vard and ... are there
 			},
-			(error) => {}
+			(e) => {}
 		);
 		customAjax({
 			params: {
@@ -82,7 +82,6 @@ function App() {
 			if (data.result === true) {
 				load_company_info();
 			} else {
-				window.localStorage.setItem("username", "root");
 				nav("/first-setup");
 			}
 		});

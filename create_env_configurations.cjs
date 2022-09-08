@@ -13,6 +13,7 @@ var parsed_env = {
 var ACCESS_TOKEN_SECRET = crypto.randomBytes(20).toString("hex");
 var PASSWORD_HASHING_SECRET = crypto.randomBytes(20).toString("hex");
 var REFRESH_TOKEN_SECRET = crypto.randomBytes(20).toString("hex");
+var SUPER_ADMIN_ACCESS_TOKEN = crypto.randomBytes(20).toString("hex");
 
 var string_to_write_in_dot_env = `
 mysql_host="${parsed_env.host}"
@@ -21,6 +22,7 @@ mysql_password="${parsed_env.password}"
 mysql_port=${parsed_env.port}
 ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
 PASSWORD_HASHING_SECRET=${PASSWORD_HASHING_SECRET}
-REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}`;
+REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+SUPER_ADMIN_ACCESS_TOKEN=${SUPER_ADMIN_ACCESS_TOKEN}`;
 
 fs.writeFileSync("./.env", string_to_write_in_dot_env);

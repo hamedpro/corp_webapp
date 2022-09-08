@@ -5,7 +5,7 @@ import { FirstAdminSetup } from "./first_admin_setup";
 import { Done } from "./Done";
 import { Welcome } from "./welcome";
 export default function FirstSetup() {
-	var [tab, set_tab] = useState("first_admin_setup");
+	var [tab, set_tab] = useState("welcome");
 	// options : upload_text_tab , upload_media , first_admin_setup , done , welcome
 	return (
 		<>
