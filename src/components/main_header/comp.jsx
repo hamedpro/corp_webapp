@@ -70,7 +70,7 @@ export default function MainHeader() {
 				<div className="flex flex-col w-full h-full">
 					<div className="w-full flex flex-row items-center">
 						<CustomButton
-							className="h-10 w-10 border border-stone-300 rounded-xl p-1 flex justify-center items-center"
+							className="h-10 w-10 border border-stone-500 rounded-xl p-1 flex justify-center items-center"
 							onClick={() => set_header_menu_visibility(!header_menu_visibility)}
 						>
 							<MenuRounded fontSize="large" style={{ color: "lightgray" }} />

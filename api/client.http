@@ -28,5 +28,5 @@ POST http://localhost:4000
 Content-Type: application/json
 
 {
-    "task_name" : "get_users"
+    "task_name" : "get_company_info"
 }

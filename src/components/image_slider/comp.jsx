@@ -3,7 +3,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import { CircleOutlined, CircleRounded } from "@mui/icons-material";
 import { useState } from "react";
 import "./styles.css";
-export function ImageSlider({ image_sources, className }) {
+export function ImageSlider({ image_sources, className = "" }) {
 	var [current_image_index, set_current_image_index] = useState(0);
 	function image_next() {
 		if (current_image_index + 1 <= image_sources.length - 1) {
