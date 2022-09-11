@@ -24,9 +24,12 @@ http://localhost:4000?task_name=toggle_user_admin_state&username=hamedpro
 
 
 ### 
-POST http://localhost:4000
+POST http://localhost:4000/init
 Content-Type: application/json
 
 {
-    "task_name" : "get_company_info"
+    "task_name" : "add_new_blog",
+    "title" : "the first  blog title",
+    "text" : "hamed is here and iphone 14 is now out ",
+    "username" : "hamedpro"
 }

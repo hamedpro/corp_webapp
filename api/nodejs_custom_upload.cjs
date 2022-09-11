@@ -3,7 +3,7 @@ var formidable = require("formidable");
 var fs = require("fs");
 function custom_upload({
 	req,
-	files_names, // array with struc like this : ["file1.txt","file2.js"]
+	files_names, // array with struc like this : ["file1","file2"]
 	uploadDir = "./",
 	onSuccess = () => {},
 	onReject = () => {},

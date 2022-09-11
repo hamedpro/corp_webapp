@@ -124,9 +124,10 @@ async function init() {
 			pair_key varchar(50),
 			pair_value text
 		);
-		create table if not exists blog_posts(
+		create table if not exists blogs(
 			id int primary key auto_increment,
-			name varchar(200),
+			username varchar(30),
+			title varchar(50),
 			text text,
 			last_modification_time varchar(100)
 		);
@@ -831,18 +832,39 @@ async function main() {
 					}
 				);
 				break;
-			case "new_blog_post":
-				con.query(
-					`insert into blogs (name,text,last_modification_time) 
-				values ("${params.name}","${params.text}","${params.last_modification_time}")`,
-					(error) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							rm.send_result(true);
-						}
-					}
+			case "add_new_blog":
+				var cq_out = await cq(
+					con,
+					`insert into blogs (username,title,text,last_modification_time) 
+				values ("${params.username}","${params.title}","${params.text}","${new Date().getTime()}")`
 				);
+				if (cq_out.error) {
+					rm.send_error(cq_out.error);
+					break;
+				}
+
+				cq_out = await cq(con, `select * from blogs where username = '${params.username}'`);
+				if (cq_out.error) {
+					rm.send_error(cq_out.error);
+				}
+				var filtered_rows = cq_out.result.filter((row) => row.username == params.username);
+				rm.send_result(filtered_rows[filtered_rows.length - 1].id);
+				break;
+			case "set_blog_image":
+				var upload_dir = "./uploaded/blog_images";
+				if (!fs.existsSync(upload_dir)) {
+					fs.mkdirSync(upload_dir);
+				}
+				custom_upload({
+					req,
+					files_names: ["" + params.blog_id],
+					uploadDir: upload_dir,
+					onSuccess: rm.send,
+					onReject: () => {
+						console.log("an error happened in custom upload");
+						rm.send_error("something went wrong in custom upload");
+					},
+				});
 				break;
 			case "modify_blog_post":
 				con.query(

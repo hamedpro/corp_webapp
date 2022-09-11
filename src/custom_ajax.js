@@ -15,7 +15,11 @@ export async function customAjax({
 		for (var i = 0; i < files.length; i++) {
 			form.append(i, files[i]);
 		}
-		response = await fetch(base_path + "?task_name=" + params.task_name, {
+		var path = base_path + "?";
+		Object.keys(params).forEach((key, index) => {
+			path += key + "=" + params[key] + "&";
+		});
+		response = await fetch(path, {
 			method,
 			body: form,
 		});
