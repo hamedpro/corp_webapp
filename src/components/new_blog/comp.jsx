@@ -11,14 +11,17 @@ export default function NewBlog() {
 					text: document.querySelector("#blog_text_input").value,
 					username: localStorage.getItem("username"),
 				},
+				verbose: true,
 			});
 			var blog_id = response.result;
 			await customAjax({
 				params: {
-					task_name: "set_blog_image",
-					blog_id,
+					task_name: "upload",
+					files_names: JSON.stringify([blog_id]),
+					relative_path: "./blog_images",
 				},
 				files: [document.getElementById("blog_image_input").files[0]],
+				verbose: true,
 			});
 			alert("done successfuly");
 		} catch (e) {

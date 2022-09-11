@@ -5,6 +5,7 @@ export async function customAjax({
 	headers = {},
 	super_admin_access_token = null,
 	jwt = null,
+	verbose = false,
 }) {
 	var method = "POST";
 	var base_path = "http://" + window.location.hostname + ":4000";
@@ -19,6 +20,9 @@ export async function customAjax({
 		Object.keys(params).forEach((key, index) => {
 			path += key + "=" + params[key] + "&";
 		});
+		if (verbose) {
+			console.log("this path is going to be fetched " + path);
+		}
 		response = await fetch(path, {
 			method,
 			body: form,
@@ -37,6 +41,9 @@ export async function customAjax({
 		}
 
 		var path = base_path + route;
+		if (verbose) {
+			console.log("this path is going to be fetched " + path);
+		}
 		response = await fetch(path, {
 			method,
 			body: JSON.stringify(params),

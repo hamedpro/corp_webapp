@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(express.static("./uploaded/"));
 var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_query
+var path = require("path");
 async function is_first_setup_done({ con }) {
 	var o = await cq(con, 'select * from paired_data where pair_key = "company_info"');
 	if (o.error) {
@@ -185,6 +186,23 @@ async function main() {
 			rm.send_error(e);
 		}
 	});
+	app.all("/upload", async (req, res) => {
+		//
+		var rm = new response_manager(res);
+		var con = connect_to_db();
+		rm.add_mysql_con(con);
+		custom_upload({
+			req,
+			files_names: JSON.parse(params.files_names),
+			upload_dir: path.join("./uploaded", params.relative_path),
+			onSuccess: () => {
+				rm.send();
+			},
+			onReject: (e) => {
+				rm.send_error(e);
+			},
+		});
+	});
 	app.all("/", async (req, res) => {
 		var rm = new response_manager(res);
 		var con = connect_to_db();
@@ -223,6 +241,26 @@ async function main() {
 					rm.send_error("username is taken by another user");
 				}
 
+				break;
+			case "upload":
+				/* body should contain a form with files appended to it 
+					the path should contain the other required parameters like relative_path as its query parameters
+				*/
+				var uploadDir = "./uploaded/blog_images";
+				if (!fs.existsSync(uploadDir)) {
+					fs.mkdirSync(uploadDir);
+				}
+				custom_upload({
+					req,
+					files_names: JSON.parse(params.files_names),
+					uploadDir,
+					onSuccess: () => {
+						rm.send();
+					},
+					onReject: (e) => {
+						rm.send_error(e);
+					},
+				});
 				break;
 			case "get_users":
 				//todo add his shopping card as a prop
@@ -849,22 +887,6 @@ async function main() {
 				}
 				var filtered_rows = cq_out.result.filter((row) => row.username == params.username);
 				rm.send_result(filtered_rows[filtered_rows.length - 1].id);
-				break;
-			case "set_blog_image":
-				var upload_dir = "./uploaded/blog_images";
-				if (!fs.existsSync(upload_dir)) {
-					fs.mkdirSync(upload_dir);
-				}
-				custom_upload({
-					req,
-					files_names: ["" + params.blog_id],
-					uploadDir: upload_dir,
-					onSuccess: rm.send,
-					onReject: () => {
-						console.log("an error happened in custom upload");
-						rm.send_error("something went wrong in custom upload");
-					},
-				});
 				break;
 			case "modify_blog_post":
 				con.query(
