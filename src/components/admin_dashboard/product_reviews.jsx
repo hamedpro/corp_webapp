@@ -32,90 +32,87 @@ export function ProductReviews() {
 	}
 	return (
 		<div className="flex flex-col">
-			product reviews {/* todo add filter option */}
+			{ml({
+				en: "product reviews",
+				fa: "",
+			})}{" "}
+			{/* todo add filter option */}
 			{reviews === null ? (
 				<Loading />
 			) : (
 				<>
 					{reviews !== null && reviews.length === 0 ? (
-						<Alert icon={<InfoRounded />}>there is not any reviews submited</Alert>
+						<Alert icon={<InfoRounded />}>
+							{ml({
+								en: "there is not any reviews submited",
+								fa: "",
+							})}
+						</Alert>
 					) : (
 						<CustomTable
 							headerItems={[
-								"id",
-								"product id",
-								"username",
-								"rating from five",
-								"pros",
-								"cons",
-								"text",
-								"time",
-								"verification_status",
+								ml({ en: "id", fa: "" }),
+								ml({ en: "product id", fa: "" }),
+								ml({ en: "username", fa: "" }),
+								ml({ en: "rating from five", fa: "" }),
+								ml({ en: "pros", fa: "" }),
+								ml({ en: "cons", fa: "" }),
+								ml({ en: "text", fa: "" }),
+								ml({ en: "time", fa: "" }),
+								ml({ en: "verification_status", fa: "" }),
 							]}
 							rows={reviews.map((review, index) => {
+								var message = ml({
+									en: 'this field cant be changed \n changable fields for user reviews : "verification_status"',
+									fa: "",
+								});
 								return [
 									{
 										value: review.id,
 										onClick: () => {
-											alert(
-												'this field cant be changed \n changable fields for user reviews : "verification_status"'
-											);
+											alert(message);
 										},
 									},
 									{
 										value: review.product_id,
 										onClick: () => {
-											alert(
-												'this field cant be changed \n changable fields for user reviews : "verification_status"'
-											);
+											alert(message);
 										},
 									},
 									{
 										value: review.username,
 										onClick: () => {
-											alert(
-												'this field cant be changed \n changable fields for user reviews : "verification_status"'
-											);
+											alert(message);
 										},
 									},
 									{
 										value: review.rating_from_five,
 										onClick: () => {
-											alert(
-												'this field cant be changed \n changable fields for user reviews : "verification_status"'
-											);
+											alert(message);
 										},
 									},
 									{
 										value: review.pros,
 										onClick: () => {
-											alert(
-												'this field cant be changed \n changable fields for user reviews : "verification_status"'
-											);
+											alert(message);
 										},
 									},
 									{
 										value: review.cons,
 										onClick: () => {
-											alert(
-												'this field cant be changed \n changable fields for user reviews : "verification_status"'
-											);
+											alert(message);
 										},
 									},
 									{
 										value: review.text,
 										onClick: () => {
-											alert(
-												'this field cant be changed \n changable fields for user reviews : "verification_status"'
-											);
+											alert(message);
 										},
 									},
 									{
 										value: review.time,
 										onClick: () => {
-											alert(
-												'this field cant be changed \n changable fields for user reviews : "verification_status"'
-											);
+											alert(message);
 										},
 									},
 									{

@@ -4,7 +4,11 @@ import Section from "../section/comp";
 
 export function AssignShippingMethod() {
 	var [selected_method, set_selected_method] = useState(null);
-	return <h1>this page is under development</h1>;
+	return <h1>{
+	ml({
+		en : "this page is under development",
+		fa :""
+	})}</h1>;
 	return (
 		<Section
 			title={ml({

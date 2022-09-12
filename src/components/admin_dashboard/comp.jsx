@@ -12,40 +12,45 @@ export default function AdminDashboard() {
 	var tabs = [
 		{
 			id: "manage_products",
-			title: "manage products",
+			title: ml({ en: "manage products", fa: "" }),
 			icon: <Info />,
 		},
 		{
 			id: "manage_users",
-			title: "manage users",
+			title: ml({ en: "manage users", fa: "" }),
 			icon: <Info />,
 		},
 
 		{
 			id: "manage_options",
-			title: "manage options",
+			title: ml({ en: "manage options", fa: "" }),
 			icon: <Info />,
 		},
 		{
 			id: "manage_orders",
-			title: "manage orders",
+			title: ml({ en: "manage orders", fa: "" }),
 			icon: <Info />,
 		},
 		{
 			id: "manage_support_tickets",
-			title: "manage support tickets",
+			title: ml({ en: "manage support tickets", fa: "" }),
 			icon: <Info />,
 		},
 
 		{
 			id: "manage_product_reviews",
-			title: "manage product reviews",
+			title: ml({ en: "manage product reviews", fa: "" }),
 			icon: <Info />,
 		},
 	];
 	return (
 		<>
-			<div className="md:hidden">to view this page you should use a bigger monitor</div>
+			<div className="md:hidden">
+				{ml({
+					en: "to view this page you should use a bigger monitor",
+					fa: "",
+				})}
+			</div>
 			<div id="admin-dashboard" className="hidden h-full w-full md:flex">
 				<div className="w-3/12 bg-blue-500">
 					{tabs.map((this_tab, index) => {

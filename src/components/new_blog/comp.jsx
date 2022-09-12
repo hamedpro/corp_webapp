@@ -23,23 +23,29 @@ export default function NewBlog() {
 				files: [document.getElementById("blog_image_input").files[0]],
 				verbose: true,
 			});
-			alert("done successfuly");
+			alert(ml({ en: "done successfuly", fa: "" }));
 		} catch (e) {
-			alert("something went wrong");
+			alert(ml({ en: "something went wrong", fa: "" }));
 			console.log(e);
 		}
 	}
 	var inputClassName = "border border-gray-500";
 	return (
-		<Section title="new blog" className="px-2">
+		<Section
+			title={ml({
+				en: "new blog",
+				fa: "",
+			})}
+			className="px-2"
+		>
 			<div className="px-2">
-				<p>blog title :</p>
+				<p>{ml({ en: "blog title :", fa: "" })}</p>
 				<input id="blog_title_input" className={inputClassName} />
 
-				<p>blog image :</p>
+				<p>{ml({ en: "blog image :", fa: "" })}</p>
 				<input type="file" id="blog_image_input" />
 
-				<p>blog text :</p>
+				<p>{ml({ en: "blog text :", fa: "" })}</p>
 				<textarea
 					id="blog_text_input"
 					className={[inputClassName, "block"].join(" ")}
@@ -49,7 +55,11 @@ export default function NewBlog() {
 					onClick={upload_new_blog}
 					className="bg-gray-800 text-white px-2 py-1 rounded-lg mt-2"
 				>
-					submit as @{window.localStorage.getItem("username")}
+					{ml({
+						en: "submit as",
+						fa: "",
+					})}{" "}
+					@{window.localStorage.getItem("username")}
 				</button>
 			</div>
 		</Section>

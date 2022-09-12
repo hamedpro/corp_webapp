@@ -17,7 +17,6 @@ import {
 	Root,
 	SupportTicket,
 	MainFooter,
-	UpdateCompanyData,
 	NewProduct,
 	User,
 	NavBar,
@@ -39,7 +38,9 @@ import { ProductCategories } from "./components/product_categories/comp";
 import { UserSupportTickets } from "./components/user_support_tickets/comp";
 import { Loading } from "./components/loading/comp";
 import { PageNotFound } from "./components/PageNotFound/comp";
+import { multi_lang_helper as ml } from "./common";
 function App() {
+	window.ml = ml;
 	window.customAjax = customAjax;
 	var nav = useNavigate();
 
@@ -94,10 +95,15 @@ function App() {
 		window.localStorage.setItem("language", "fa");
 		//todo get a default lang from users when initialization of app and use it here
 	}
-
+	var current_lang = window.localStorage.getItem("language");
 	return (
-		<>
-			<div className="absolute w-full h-full overflow-x-hidden">
+		<div className="h-full w-full 2xl:bg-green-300 overflow-x-hidden overflow-y-hidden">
+			<div
+				className={[
+					"relative mx-auto w-full 2xl:w-2/3 w-full h-full overflow-x-hidden",
+					current_lang,
+				].join(" ")}
+			>
 				<MainHeader />
 				<NavBar />
 				<Routes>
@@ -157,14 +163,7 @@ function App() {
 							</CheckUserPrivilege>
 						}
 					/>
-					<Route
-						path="/admin-dashboard/update-company-data"
-						element={
-							<CheckUserPrivilege level="admin">
-								<UpdateCompanyData />
-							</CheckUserPrivilege>
-						}
-					/>
+					
 					<Route exact path="/products/:product_id" element={<Product />} />
 					<Route exact path="/products/:product_id/reviews" element={<ReviewsPage />} />
 					<Route exact path="/users/:username" element={<User />} />
@@ -206,7 +205,7 @@ function App() {
 				</Routes>
 				<MainFooter />
 			</div>
-		</>
+		</div>
 	);
 }
 

@@ -134,7 +134,12 @@ export default function ProductsSection() {
 				fa: "محصولات",
 			})}
 			{products.length === 0 && (
-				<Alert icon={<InfoRounded />}>there is not any product</Alert>
+				<Alert icon={<InfoRounded />}>
+					{ml({
+						en: "there is not any product",
+						fa: "",
+					})}
+				</Alert>
 			)}
 			{products.map((product, index) => {
 				return (
@@ -165,7 +170,12 @@ export default function ProductsSection() {
 									{
 										value: product.id,
 										onClick: () => {
-											alert("product id can't be changed");
+											alert(
+												ml({
+													en: `"product id can't be changed"`,
+													fa: "",
+												})
+											);
 										},
 									},
 									{
@@ -204,9 +214,19 @@ export default function ProductsSection() {
 								],
 							]}
 						>
-							<h1>product specifications :</h1>
+							<h1>
+								{ml({
+									en: "product specifications :",
+									fa: "",
+								})}
+							</h1>
 
-							<h1>photos :</h1>
+							<h1>
+								{ml({
+									en: "photos :",
+									fa: "",
+								})}
+							</h1>
 							<div className="flex space-x-2">
 								{product.images_path_names.map((image_path_name, index) => {
 									return (

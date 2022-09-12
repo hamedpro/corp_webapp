@@ -113,7 +113,7 @@ export default function SubToEmailTab() {
 						type="text"
 						id="email_subscription_input"
 						className="my-2 px-1 w-full text-black rounded"
-						placeholder="your email address"
+						placeholder={ml({ en: "your email address", fa: "" })}
 					/>
 
 					<Button

@@ -22,23 +22,29 @@ export function SupportTicketsSection() {
 	}
 	useEffect(fetch_data, []);
 	function custom_warning() {
-		alert(
-			"none of these fields are changeable from here \n open this support ticket page and modify it there"
+		alert(ml({
+			en : 
+				"none of these fields are changeable from here \n open this support ticket page and modify it there",
+			fa : ""
+		})
 		);
 	}
 	return (
 		<div className="flex flex-col">
-			support tickets {/* todo add filter option */}
+			{ml({
+				en: "support tickets ",
+				fa : ""
+			}) }{/* todo add filter option */}
 			<CustomTable
 				headerItems={[
-					"id",
-					"username",
-					"title",
-					"type",
-					"text",
-					"is_proceed",
-					"proceeded_by",
-					"open it",
+					ml({en : "id",fa : ""}),
+					ml({en : "username",fa : ""}),
+					ml({en : "title",fa : ""}),
+					ml({en : "type",fa : ""}),
+					ml({en : "text",fa : ""}),
+					ml({en : "is_proceed",fa : ""}),
+					ml({en : "proceeded_by",fa : ""}),
+					ml({en : "open it",fa : ""}),
 				]}
 				rows={support_tickets.map((st, index) => {
 					return [

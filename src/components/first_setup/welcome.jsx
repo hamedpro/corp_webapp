@@ -17,33 +17,56 @@ export function Welcome({ set_tab }) {
 						set_tab("first_admin_setup");
 					},
 					(error) => {
-						alert("something went wrong while initializing the app");
+						alert(
+							ml({
+								en: "something went wrong while initializing the app",
+								fa: "",
+							})
+						);
 					}
 				);
 			},
 			(error) => {
-				alert("something went wrong while deleting previous data");
+				alert(
+					ml({
+						en: "something went wrong while deleting previous data",
+						fa: "",
+					})
+				);
 			}
 		);
 	}
 	return (
-		<Section title="welcome">
+		<Section title={ml({ en: "welcome", fa: "" })}>
 			<div className="flex flex-col">
-				<h1>welcome to your new instance of corp_webapp project</h1>
+				<h1>
+					{ml({
+						en: "welcome to your new instance of corp_webapp project",
+						fa: "",
+					})}
+				</h1>
 				<p>
-					in order to start your online shop you have to initialize the app first it's 3
-					steps will take more than 5 min of your time !
+					{ml({
+						en: `in order to start your online shop you have to initialize the app first it's 3
+						steps will take more than 5 min of your time !`,
+					})}
 				</p>
 				<p>
-					notice: this process will first reset everything about this app, so if you have
-					done this initialization before consider you have to backup your products and
-					... first{" "}
+					{ml({
+						en: `notice: this process will first reset everything about this app, so if you have
+						done this initialization before consider you have to backup your products and
+						... first`,
+						fa: "",
+					})}
 				</p>
 				<button
 					className="border border-blue-400 px-2 rounded"
 					onClick={start_initialization}
 				>
-					start initialization
+					{ml({
+						en: "start initialization",
+						fa: "",
+					})}
 				</button>
 			</div>
 		</Section>

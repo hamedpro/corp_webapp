@@ -3,12 +3,17 @@ import Section from "../section/comp";
 export function Done() {
 	var nav = useNavigate();
 	return (
-		<Section title="result">
+		<Section title={ml({ en: "result", fa: "" })}>
 			<div className="flex items-center justify-center">
 				<h1>
-					the first setup is done successfuly and now the app is ready to be used by your
-					users
+					{ml({
+						en: `the first setup is done successfuly and now the app is ready to be used by your
+						users`,
+						fa: "",
+					})}
 				</h1>
+				<br />
+				<br />
 				<button
 					className="border borer-blue-400 px-2"
 					onClick={() => {
@@ -16,7 +21,7 @@ export function Done() {
 						window.location.reload();
 					}}
 				>
-					start using the application
+					{ml({ en: "start using the application", fa: "" })}
 				</button>
 			</div>
 		</Section>

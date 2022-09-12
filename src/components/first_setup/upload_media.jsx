@@ -21,7 +21,10 @@ export function UploadMedia({ set_tab }) {
 				set_tab("done");
 			},
 			(error) => {
-				console.log("there was an error");
+				console.log(ml({
+					en : "there was an error",
+					fa : ""
+				}));
 				console.log(error);
 			}
 		);
@@ -89,7 +92,12 @@ export function UploadMedia({ set_tab }) {
 				</p>
 				<input type="file" className="block" id="square_icon_input" />
 			</OptionBox>
-			<button onClick={upload}>upload these</button>
+			<button onClick={upload}>
+				{ml({
+					en : "upload these",
+					fa :""
+				})}
+			</button>
 		</OptionBox>
 	);
 }

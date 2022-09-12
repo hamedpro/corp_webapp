@@ -9,7 +9,13 @@ export default function NavBar() {
 	var loc = useLocation();
 	useEffect(() => {
 		var tmp = [];
-		tmp.push({ name: "main page", link: "/" });
+		tmp.push({
+			name: ml({
+				en: "main page",
+				fa: "",
+			}),
+			link: "/",
+		});
 
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {

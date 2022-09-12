@@ -34,7 +34,7 @@ export default function Login() {
 				}
 			},
 			(error) => {
-				//alert("something went wrong while requesting data => more details in dev console");
+				//alert(ml({en : "something went wrong while requesting data => more details in dev console",fa: ""}));
 				console.log(error);
 			}
 		);

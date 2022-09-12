@@ -10,7 +10,6 @@ export { default as Register } from "./register/comp.jsx";
 export { default as Root } from "./root/comp.jsx";
 export { default as SupportTicket } from "./support_ticket/comp.jsx";
 export { default as MainFooter } from "./main_footer/comp.jsx";
-export { default as UpdateCompanyData } from "./admin_dashboard/update_company_data/comp.jsx";
 export { default as NewProduct } from "./new-product/comp";
 export { default as User } from "./user/comp.jsx";
 export { default as NavBar } from "./nav_bar/comp";

@@ -116,7 +116,12 @@ export default function UsersSection() {
 						{
 							value: user.id,
 							onClick: () => {
-								alert("user id can't be changed");
+								alert(
+									ml({
+										en: "user id can't be changed",
+										fa: "",
+									})
+								);
 							},
 						},
 						{
@@ -140,9 +145,17 @@ export default function UsersSection() {
 							},
 						},
 						{
-							value: "delete his/her profile picture",
+							value: ml({
+								en: "delete his/her profile picture",
+								fa: "",
+							}),
 							onClick: () => {
-								alert("this feature is under development");
+								alert(
+									ml({
+										en: "this feature is under development",
+										fa: "",
+									})
+								);
 							},
 						} /* todo implent it */,
 					];

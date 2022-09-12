@@ -102,7 +102,10 @@ export default function SubToSmsTab() {
 	return (
 		<div className="w-3/4 mx-auto ">
 			<TopUi
-				title="subscribe to sms"
+				title={ml({
+					en: "subscribe to sms",
+					fa: "",
+				})}
 				content={ml({
 					en: `enter your phone number if you want to get notified everytime we send offer
 					suggesstions and news to the users`,
@@ -115,7 +118,10 @@ export default function SubToSmsTab() {
 						<input
 							type="text"
 							id="phone_number_input"
-							placeholder="your phone number"
+							placeholder={ml({
+								en: "your phone number",
+								fa: "",
+							})}
 							className="px-1 w-full text-black rounded"
 						/>
 

@@ -24,7 +24,14 @@ export function OrdersSection() {
 			<div className="flex flex-col">
 				orders
 				<CustomTable
-					headerItems={["id", "username", "product_ids", "status", "time", "name"]}
+					headerItems={[
+						ml({en:"id",fa:""}),
+						ml({en:"username",fa:""}),
+						ml({en:"product_ids",fa:""}),
+						ml({en:"status",fa:""}),
+						ml({en:"time",fa:""}),
+						ml({en:"name",fa:""}),
+					]}
 					rows={orders.map((order, index) => {
 						return [
 							{ value: order.id, onClick: () => {} },

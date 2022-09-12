@@ -36,7 +36,7 @@ export default function MainHeader() {
 		setInterval(() => {
 			//todo find a better way to handle this
 			set_username(window.localStorage.getItem("username"));
-		}, 1000);
+		}, 2000);
 		customAjax({
 			params: {
 				task_name: "get_company_info",
@@ -47,7 +47,7 @@ export default function MainHeader() {
 				//todo dont let the app to work until there is company data and env vard and ... are there
 			},
 			(error) => {
-				console.log("there was an error in fetching company name");
+				console.log(ml({ en: "there was an error in fetching company name", fa: "" }));
 			}
 		);
 	}, []);
@@ -63,25 +63,26 @@ export default function MainHeader() {
 				hide_header_menu={() => set_header_menu_visibility(false)}
 				visibility={header_menu_visibility}
 			/>
-			<div className="h-28 w-full"></div>
 			<div
-				className={`bg-sky-700 z-30 top-0 fixed h-28 w-full flex items-start pt-2 flex-row p-2 border-b border-gray-300`}
+				className={`bg-sky-700 z-30 top-0 h-28 w-full flex items-start pt-2 flex-row p-2 border-b border-gray-300`}
 			>
 				<div className="flex flex-col w-full h-full">
-					<div className="w-full flex flex-row items-center">
-						<CustomButton
-							className="h-10 w-10 border border-stone-500 rounded-xl p-1 flex justify-center items-center"
-							onClick={() => set_header_menu_visibility(!header_menu_visibility)}
-						>
-							<MenuRounded fontSize="large" style={{ color: "lightgray" }} />
-						</CustomButton>
-						<h1
-							onClick={() => nav("/")}
-							className="cursor-pointer px-2 text-lg m-0 p-0 bg-sky-600 rounded-lg pb-1 text-white ml-2 rounded h-10 flex items-center"
-						>
-							{company_name}
-						</h1>
-						<div className="ml-auto flex space-x-2">
+					<div className="w-full flex flex-row items-center justify-between">
+						<div className="flex">
+							<CustomButton
+								className="h-10 w-10 border border-stone-500 rounded-xl p-1 flex justify-center items-center"
+								onClick={() => set_header_menu_visibility(!header_menu_visibility)}
+							>
+								<MenuRounded fontSize="large" style={{ color: "lightgray" }} />
+							</CustomButton>
+							<h1
+								onClick={() => nav("/")}
+								className="cursor-pointer px-2 text-lg m-0 p-0 bg-sky-600 rounded-lg pb-1 text-white ml-2 rounded h-10 flex items-center"
+							>
+								{company_name}
+							</h1>
+						</div>
+						<div className="flex space-x-2">
 							{username === null ? (
 								<CustomButton onClick={() => nav("/login")}>
 									<LoginRounded sx={{ color: "white" }} fontSize="large" />

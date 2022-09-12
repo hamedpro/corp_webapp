@@ -26,17 +26,32 @@ export function FirstAdminSetup({ set_tab }) {
 				}).then(
 					(data) => {
 						localStorage.setItem("username", entered_username);
-						alert("done successfuly");
+						alert(
+							ml({
+								en: "done successfuly",
+								fa: "",
+							})
+						);
 						set_tab("upload_text_tab");
 					},
 					(e) => {
-						alert("something went wrong");
+						alert(
+							ml({
+								en: "something went wrong",
+								fa: "",
+							})
+						);
 						console.log(error);
 					}
 				);
 			},
 			(error) => {
-				alert("there was an error");
+				alert(
+					ml({
+						en: "there was an error",
+						fa: "",
+					})
+				);
 				console.log(error);
 			}
 		);
@@ -87,18 +102,29 @@ export function FirstAdminSetup({ set_tab }) {
 				/>
 			</OptionBox>
 			<OptionBox className="mt-2">
-				<p className="text-black">enter your "super admin access token"</p>
+				<p className="text-black">
+					{ml({
+						en: `enter your "super admin access token"`,
+						fa: "",
+					})}
+				</p>
 				<p>
-					this token is generated when you have set up the app in the server and its loged
-					in the server console everytime you start your app
+					{ml({
+						en: `this token is generated when you have set up the app in the server and its loged
+						in the server console everytime you start your app`,
+						fa: "",
+					})}
 				</p>
 				<input
 					id="super_admin_access_token_input"
-					placeholder={"super admin access token"}
+					placeholder={ml({
+						en: "super admin access token",
+						fa: "",
+					})}
 					type="password"
 				/>
 			</OptionBox>
-			<button onClick={submit}>submit</button>
+			<button onClick={submit}>{ml({ en: "submit", fa: "" })}</button>
 		</OptionBox>
 	);
 }

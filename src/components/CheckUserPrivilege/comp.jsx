@@ -42,15 +42,20 @@ export function CheckUserPrivilege({ children, level, specific_username = null }
 		<>
 			{status === "error" && (
 				<Alert icon={<ReportGmailerrorredRounded />} className="mt-2">
-					there was an error in the process of checking user privilege, checkout
-					development console for more
+					{ml({
+						en : `there was an error in the process of checking user privilege, checkout
+						development console for more`,fa: ""
+					})}
 				</Alert>
 			)}
 			{status === "loading" && <Loading />}
 			{status === "allowed" && <>{children}</>}
 			{status === "not_allowed" && (
 				<Alert icon={<ReportGmailerrorredRounded />} className="mt-2">
-					you are not allowed to access this part, try using another account
+					{ml({
+						en: "you are not allowed to access this part, try using another account",
+						fa : ""
+					})}
 					{/* todo tell the user if its enough to login with specific username  */}
 				</Alert>
 			)}

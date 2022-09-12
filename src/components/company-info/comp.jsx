@@ -23,6 +23,9 @@ export default function CompanyInfo() {
 	}
 	var [rectangle_icon_src, set_rectangle_icon_src] = useState(null);
 	useEffect(() => {
+		console.log(company_info);
+	}, [company_info]);
+	useEffect(() => {
 		get_data();
 		customAjax({
 			params: {
@@ -53,43 +56,44 @@ export default function CompanyInfo() {
 						</Loading>
 					</div>
 					<div className="md:w-1/2 w-full">
-						<Loading is_loading={company_info === null}>
+						<Loading is_loading={company_info === null} />
+						{company_info !== null && (
 							<div className="m-2 p-1 flex-col">
 								{[
 									{
-										label: "company name",
+										label: ml({ en: "company name", fa: "" }),
 										key: "name",
 									},
 									{
-										label: "company description",
+										label: ml({ en: "company description", fa: "" }),
 										key: "description",
 									},
 									{
-										label: "email address",
+										label: ml({ en: "email address", fa: "" }),
 										key: "email_address",
 									},
 									{
-										label: "landline phone number",
+										label: ml({ en: "landline phone number", fa: "" }),
 										key: "landline_phone_number",
 									},
 									{
-										label: "mobile phone number",
+										label: ml({ en: "mobile phone number", fa: "" }),
 										key: "mobile_phone_number",
 									},
 									{
-										label: "address",
+										label: ml({ en: "address", fa: "" }),
 										key: "address",
 									},
 									{
-										label: "telegram id",
+										label: ml({ en: "telegram id", fa: "" }),
 										key: "telegram",
 									},
 									{
-										label: "instagram id",
+										label: ml({ en: "instagram id", fa: "" }),
 										key: "instagram",
 									},
 									{
-										label: "twitter",
+										label: ml({ en: "twitter", fa: "" }),
 										key: "twitter",
 									},
 								].map((item, index) => {
@@ -104,23 +108,43 @@ export default function CompanyInfo() {
 									);
 								})}
 							</div>
-						</Loading>
+						)}
 					</div>
 				</div>
-				<Loading is_loading={company_info === null}>
-					<Section title={"story of the company"} className="mx-2">
+				<Loading is_loading={company_info === null} />
+				{company_info && (
+					<Section
+						title={ml({
+							en: "story of the company",
+							fa: "",
+						})}
+						className="mx-2"
+					>
 						<div className="px-2">{company_info.history}</div>
 					</Section>
-				</Loading>
-				<Section title="contact the supprt" className="px-2 mt-2">
+				)}
+
+				<Section
+					title={ml({
+						en: "contact the supprt",
+						fa: "",
+					})}
+					className="px-2 mt-2"
+				>
 					<div className="p-2">
 						<h1>
-							if you have any issue about using our website or there is any question
-							about our company you can either call one of the given phone numbers or
-							simply open a new support ticket :
+							{ml({
+								en: `if you have any issue about using our website or there is any question
+								about our company you can either call one of the given phone numbers or
+								simply open a new support ticket :`,
+								fa: "",
+							})}
 						</h1>
 						<LinkLikeP link="/new-support-ticket">
-							opening a new support ticket
+							{ml({
+								en: "opening a new support ticket",
+								fa: "",
+							})}
 						</LinkLikeP>
 					</div>
 				</Section>

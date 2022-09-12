@@ -31,7 +31,12 @@ export default function MainFooter() {
 				//todo dont let the app to work until there is company data and env vard and ... are there
 			},
 			(error) => {
-				console.log("there was an error in fetching company name");
+				console.log(
+					ml({
+						en: "there was an error in fetching company name",
+						fa: "",
+					})
+				);
 			}
 		);
 		customAjax({
@@ -75,7 +80,10 @@ export default function MainFooter() {
 							{company_info && company_info.name}
 							<br />
 							<LinkLikeP link="/company-info" className="">
-								(about us)
+								{ml({
+									en: "(about us)",
+									fa: "",
+								})}
 							</LinkLikeP>
 						</div>
 					</div>
@@ -102,13 +110,28 @@ export default function MainFooter() {
 								<Loading />
 							</div>
 						) : (
-							<Section title={"about the company"} className="h-full mt-2 md:mt-0">
+							<Section
+								title={ml({
+									en: "about the company",
+									fa: "",
+								})}
+								className="h-full mt-2 md:mt-0"
+							>
 								<div className="text-white px-2">
-									<div>company name : {company_info.name}</div>
-									<div>company description: {company_info.description}</div>
-									<div>company history : {company_info.history} </div>
+									<div>
+										{ml({ en: "company name : ", fa: "" })}
+										{company_info.name}
+									</div>
+									<div>
+										{ml({ en: "company description: ", fa: "" })}
+										{company_info.description}
+									</div>
+									<div>
+										{ml({ en: "company history : ", fa: "" })}
+										{company_info.history}{" "}
+									</div>
 									<LinkLikeP link="/company-info">
-										see more (about company)
+										{ml({ en: "see more (about company)", fa: "" })}
 									</LinkLikeP>
 								</div>
 							</Section>
@@ -128,14 +151,24 @@ export default function MainFooter() {
 							if (company_info) {
 								var id = company_info.instagram;
 								if (id === "" || !id) {
-									alert("instagram id is not set");
+									alert(
+										ml({
+											en: "instagram id is not set",
+											fa: "",
+										})
+									);
 								} else {
 									window.location.replace(
 										`https://instagram.com/${company_info.instagram}`
 									);
 								}
 							} else {
-								alert("company info is not loaded yet");
+								alert(
+									ml({
+										en: "company info is not loaded yet",
+										fa: "",
+									})
+								);
 							}
 						}}
 					/>
@@ -144,14 +177,14 @@ export default function MainFooter() {
 							if (company_info) {
 								var id = company_info.twitter;
 								if (id === "" || !id) {
-									alert("twitter id is not set");
+									alert(ml({ en: "twitter id is not set", fa: "" }));
 								} else {
 									window.location.replace(
 										`https://twitter.com/${company_info.twitter}`
 									);
 								}
 							} else {
-								alert("company info is not loaded yet");
+								alert(ml({ en: "company info is not loaded yet", fa: "" }));
 							}
 						}}
 					/>
@@ -160,14 +193,14 @@ export default function MainFooter() {
 							if (company_info) {
 								var id = company_info.telegram;
 								if (id === "" || !id) {
-									alert("telegram id is not set");
+									alert(ml({ en: "telegram id is not set", fa: "" }));
 								} else {
 									window.location.replace(
 										`https://t.me/${company_info.telegram}`
 									);
 								}
 							} else {
-								alert("company info is not loaded yet");
+								alert(ml({ en: "company info is not loaded yet", fa: "" }));
 							}
 						}}
 					/>

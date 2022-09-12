@@ -43,19 +43,19 @@ how to use it :
             {
                 value: "2",
                 onclick: () => {
-                    alert("id is clicked");
+                    alert(ml({en : "id is clicked",fa: ""}));
                 },
             },
             {
                 value: "hamed",
                 onClick: () => {
-                    alert("name is clicked");
+                    alert(ml({en : "name is clicked",fa: ""}));
                 },
             },
             {
                 value: "yaghootpour",
                 onClick: () => {
-                    alert("lastname is clicked");
+                    alert(ml({en : "lastname is clicked",fa: ""}));
                 },
             },
         ],

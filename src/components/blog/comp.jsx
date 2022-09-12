@@ -3,8 +3,6 @@ import Section from "../section/comp";
 import { Alert } from "../alert/comp";
 import { useParams } from "react-router-dom";
 import { multi_lang_helper as ml } from "../../common";
-import { useContext } from "react";
-import { AppContext } from "../../AppContext";
 export default function Blog() {
 	var blog_id = useParams().blog_id;
 	return (

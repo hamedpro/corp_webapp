@@ -4,6 +4,7 @@ import { multi_lang_helper as ml } from "../../common.js";
 import { CustomTable } from "../custom_table/comp.jsx";
 import Section from "../section/comp.jsx";
 import { CompanyInfoSection } from "./options_section_sub_components/company_info.jsx";
+import { ManageIconsSection } from "./options_section_sub_components/manage_icons_section.jsx";
 export default function OptionsSection() {
 	var nav = useNavigate();
 	function change_my_own_password() {
@@ -16,7 +17,7 @@ export default function OptionsSection() {
 		nav("/users/" + window.localStorage.getItem("username"));
 	}
 	function undo_all() {
-		if (!window.confirm("are you sure?")) {
+		if (!window.confirm(ml({en : "are you sure?",fa : ""}))) {
 			return;
 		}
 		customAjax({
@@ -43,26 +44,36 @@ export default function OptionsSection() {
 			}
 		);
 	}
+	var custom_button_class_name = "border border-stone-400 rounded px-1";
 	return (
 		<div className="flex flex-col">
 			<input type="file" id="common_file_input" className="hidden" />
-			{ml({
-				en: "options:",
-				fa: "گزینه ها",
-			})}
-			<button onClick={change_my_own_password}>
-				{ml({
-					en: "change my own password",
-					fa: "تغییر رمز عبور من",
+			<Section
+				title={ml({
+					en: "options:",
+					fa: "گزینه ها",
 				})}
-			</button>
-			<button onClick={undo_all}>
-				{ml({
-					en: "undo all",
-					fa: "بازگشت به تنظیمات پیشفرض",
-				})}
-			</button>
-			/* manage icons section comp should be here */
+			>
+				<div className=" px-2">
+					<button
+						onClick={change_my_own_password}
+						className={[custom_button_class_name, "mb-2"].join(" ")}
+					>
+						{ml({
+							en: "change my own password",
+							fa: "تغییر رمز عبور من",
+						})}
+					</button>
+					<br />
+					<button onClick={undo_all} className={custom_button_class_name}>
+						{ml({
+							en: "undo all",
+							fa: "بازگشت به تنظیمات پیشفرض",
+						})}
+					</button>
+				</div>
+			</Section>
+			<ManageIconsSection />
 			<CompanyInfoSection />
 		</div>
 	);
