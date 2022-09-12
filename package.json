@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node ./before_scripts.cjs && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css --watch & vite --host & nodemon ./api/server.cjs",
-		"start_production": "node ./before_scripts.cjs && (rm -rf ./dist && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css && vite build --base ./ ) && (node ./api/server.cjs & http-server --cors -s -o -c 1 ./dist)",
+		"build": "node ./before_scripts.cjs && (rm -rf ./dist && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css && vite build --base ./ )",
+		"start": "node ./before_scripts.cjs && (node ./api/server.cjs & http-server --cors -s -o -c 1 ./dist)",
 		"curltime": "curl -w '@curl-format.txt' -o /dev/null -s "
 	},
 	"_how_to_use_scripts": {
