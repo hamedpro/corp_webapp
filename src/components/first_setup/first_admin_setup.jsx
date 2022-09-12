@@ -29,7 +29,7 @@ export function FirstAdminSetup({ set_tab }) {
 						alert(
 							ml({
 								en: "done successfuly",
-								fa: "",
+								fa: "با موفقیت انجام شد",
 							})
 						);
 						set_tab("upload_text_tab");
@@ -38,7 +38,7 @@ export function FirstAdminSetup({ set_tab }) {
 						alert(
 							ml({
 								en: "something went wrong",
-								fa: "",
+								fa: "خطایی رخ داد",
 							})
 						);
 						console.log(error);
@@ -49,7 +49,7 @@ export function FirstAdminSetup({ set_tab }) {
 				alert(
 					ml({
 						en: "there was an error",
-						fa: "",
+						fa: "خطایی رخ داد",
 					})
 				);
 				console.log(error);
@@ -105,26 +105,26 @@ export function FirstAdminSetup({ set_tab }) {
 				<p className="text-black">
 					{ml({
 						en: `enter your "super admin access token"`,
-						fa: "",
+						fa: "سوپر ادمین توکن خود را وارد کنید",
 					})}
 				</p>
 				<p>
 					{ml({
 						en: `this token is generated when you have set up the app in the server and its loged
 						in the server console everytime you start your app`,
-						fa: "",
+						fa: "این توکن هنگامی که برنامه را بر روی سرور نصب کردید تولید شده است و هر بار که سایت را اجرا میکنید در کنسول سرور نوشته می شود",
 					})}
 				</p>
 				<input
 					id="super_admin_access_token_input"
 					placeholder={ml({
 						en: "super admin access token",
-						fa: "",
+						fa: "سوپر ادمین توکن",
 					})}
 					type="password"
 				/>
 			</OptionBox>
-			<button onClick={submit}>{ml({ en: "submit", fa: "" })}</button>
+			<button onClick={submit}>{ml({ en: "submit", fa: "ثبت نهایی" })}</button>
 		</OptionBox>
 	);
 }

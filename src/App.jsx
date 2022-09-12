@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import "./output.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -25,7 +25,6 @@ import {
 	NewBlog,
 	Terms,
 	FirstSetup,
-	Users,
 	NewProductReview,
 } from "./components";
 import ReviewsPage from "./components/product/reviews_page";
@@ -36,7 +35,6 @@ import { PG } from "./components/pg/pg";
 import { CheckUserPrivilege } from "./components/CheckUserPrivilege/comp";
 import { ProductCategories } from "./components/product_categories/comp";
 import { UserSupportTickets } from "./components/user_support_tickets/comp";
-import { Loading } from "./components/loading/comp";
 import { PageNotFound } from "./components/PageNotFound/comp";
 import { multi_lang_helper as ml } from "./common";
 function App() {

@@ -12,34 +12,34 @@ export default function AdminDashboard() {
 	var tabs = [
 		{
 			id: "manage_products",
-			title: ml({ en: "manage products", fa: "" }),
+			title: ml({ en: "manage products", fa: "مدیریت محصولات" }),
 			icon: <Info />,
 		},
 		{
 			id: "manage_users",
-			title: ml({ en: "manage users", fa: "" }),
+			title: ml({ en: "manage users", fa: "مدیریت کاربران" }),
 			icon: <Info />,
 		},
 
 		{
 			id: "manage_options",
-			title: ml({ en: "manage options", fa: "" }),
+			title: ml({ en: "manage options", fa: "مدیریت گزینه ها" }),
 			icon: <Info />,
 		},
 		{
 			id: "manage_orders",
-			title: ml({ en: "manage orders", fa: "" }),
+			title: ml({ en: "manage orders", fa: "مدیریت سفارش ها" }),
 			icon: <Info />,
 		},
 		{
 			id: "manage_support_tickets",
-			title: ml({ en: "manage support tickets", fa: "" }),
+			title: ml({ en: "manage support tickets", fa: "مدیریت تیکت های پشتیبانی" }),
 			icon: <Info />,
 		},
 
 		{
 			id: "manage_product_reviews",
-			title: ml({ en: "manage product reviews", fa: "" }),
+			title: ml({ en: "manage product reviews", fa: "مدیریت بررسی های کاربران برای کالا ها" }),
 			icon: <Info />,
 		},
 	];
@@ -48,7 +48,7 @@ export default function AdminDashboard() {
 			<div className="md:hidden">
 				{ml({
 					en: "to view this page you should use a bigger monitor",
-					fa: "",
+					fa: "برای استفاده از امکانات این صفحه باید از کامپیوتر (مانیتوری بزرگتر) استفاده کنید",
 				})}
 			</div>
 			<div id="admin-dashboard" className="hidden h-full w-full md:flex">

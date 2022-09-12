@@ -47,7 +47,7 @@ export default function MainHeader() {
 				//todo dont let the app to work until there is company data and env vard and ... are there
 			},
 			(error) => {
-				console.log(ml({ en: "there was an error in fetching company name", fa: "" }));
+				console.log(ml({ en: "there was an error in fetching company name", fa: "در فرآیند دریافت نام شرکت خطایی رخ داد" }));
 			}
 		);
 	}, []);

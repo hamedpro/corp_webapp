@@ -39,7 +39,7 @@ export function CompanyInfoSection() {
 			.then(
 				(data) => {
 					console.log(data);
-					alert(ml({ en: "done", fa: "" }));
+					alert(ml({ en: "done", fa: "انجام شد" }));
 				},
 				(e) => {
 					console.log(e);
@@ -60,7 +60,7 @@ export function CompanyInfoSection() {
 		{ value: "twitter", en: "twitter", fa: "توییتر" },
 	];
 	return (
-		<Section title={ml({ en: "company information", fa: "" })}>
+		<Section title={ml({ en: "company information", fa: "اطلاعات شرکت" })}>
 			<div className="px-2">
 				{company_info && (
 					<CustomTable

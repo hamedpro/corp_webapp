@@ -148,7 +148,7 @@ export function UploadTextTab({ set_tab }) {
 						id="address_input"
 						placeholder={ml({
 							en: "enter your address here",
-							fa: "",
+							fa: "آدرس خود را اینجا وارد کنید",
 						})}
 					/>
 				</OptionBox>

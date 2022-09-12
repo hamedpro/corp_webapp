@@ -6,7 +6,7 @@ export function Loading({ is_loading = true, children }) {
 			{is_loading ? (
 				<>
 					<div className="flex justify-center items-center">
-						<span>{ml({ en: "loading data ...", fa: "" })}</span>
+						<span>{ml({ en: "loading data ...", fa: "بارگزاری اطلاعات..." })}</span>
 						<LinearProgress />
 					</div>
 				</>

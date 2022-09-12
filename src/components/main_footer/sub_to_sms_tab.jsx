@@ -104,7 +104,7 @@ export default function SubToSmsTab() {
 			<TopUi
 				title={ml({
 					en: "subscribe to sms",
-					fa: "",
+					fa: "عضویت در سرویس پیام کوتاه",
 				})}
 				content={ml({
 					en: `enter your phone number if you want to get notified everytime we send offer
@@ -120,7 +120,7 @@ export default function SubToSmsTab() {
 							id="phone_number_input"
 							placeholder={ml({
 								en: "your phone number",
-								fa: "",
+								fa: "شماره موبایل شما",
 							})}
 							className="px-1 w-full text-black rounded"
 						/>

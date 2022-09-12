@@ -61,39 +61,48 @@ export default function CompanyInfo() {
 							<div className="m-2 p-1 flex-col">
 								{[
 									{
-										label: ml({ en: "company name", fa: "" }),
+										label: ml({ en: "company name", fa: "نام شرکت" }),
 										key: "name",
 									},
 									{
-										label: ml({ en: "company description", fa: "" }),
+										label: ml({
+											en: "company description",
+											fa: "توضیحات شرکت",
+										}),
 										key: "description",
 									},
 									{
-										label: ml({ en: "email address", fa: "" }),
+										label: ml({ en: "email address", fa: "آدرس ایمیل شرکت" }),
 										key: "email_address",
 									},
 									{
-										label: ml({ en: "landline phone number", fa: "" }),
+										label: ml({
+											en: "landline phone number",
+											fa: "شماره تلفن ثابت شرکت",
+										}),
 										key: "landline_phone_number",
 									},
 									{
-										label: ml({ en: "mobile phone number", fa: "" }),
+										label: ml({
+											en: "mobile phone number",
+											fa: "شماره موبایل شرکت ",
+										}),
 										key: "mobile_phone_number",
 									},
 									{
-										label: ml({ en: "address", fa: "" }),
+										label: ml({ en: "address", fa: "آدرس" }),
 										key: "address",
 									},
 									{
-										label: ml({ en: "telegram id", fa: "" }),
+										label: ml({ en: "telegram id", fa: "آیدی تلگرام" }),
 										key: "telegram",
 									},
 									{
-										label: ml({ en: "instagram id", fa: "" }),
+										label: ml({ en: "instagram id", fa: "آیدی اینستاگرام" }),
 										key: "instagram",
 									},
 									{
-										label: ml({ en: "twitter", fa: "" }),
+										label: ml({ en: "twitter", fa: "آیدی توییتر" }),
 										key: "twitter",
 									},
 								].map((item, index) => {
@@ -116,7 +125,7 @@ export default function CompanyInfo() {
 					<Section
 						title={ml({
 							en: "story of the company",
-							fa: "",
+							fa: "داستان شرکت",
 						})}
 						className="mx-2"
 					>
@@ -126,8 +135,8 @@ export default function CompanyInfo() {
 
 				<Section
 					title={ml({
-						en: "contact the supprt",
-						fa: "",
+						en: "contact the support",
+						fa: "ارتباط با پشتیبانی",
 					})}
 					className="px-2 mt-2"
 				>
@@ -137,13 +146,13 @@ export default function CompanyInfo() {
 								en: `if you have any issue about using our website or there is any question
 								about our company you can either call one of the given phone numbers or
 								simply open a new support ticket :`,
-								fa: "",
+								fa: "اگر هر مساله یا سوالی در مورد سایت ما دارید یا با یکی از شماره تلفن های داده شده تماس بگیرید یا به راحتی یک درخواست پشتیبانی جدید باز کنید :",
 							})}
 						</h1>
 						<LinkLikeP link="/new-support-ticket">
 							{ml({
 								en: "opening a new support ticket",
-								fa: "",
+								fa: "باز کردن یک درخواست پشتیبانی جدید",
 							})}
 						</LinkLikeP>
 					</div>

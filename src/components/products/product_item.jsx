@@ -43,10 +43,13 @@ export default function ProductItem({ id, name, price, className = undefined, di
 				) : (
 					<div className="h-full rounded-lg bg-blue-400 w-full flex justify-center items-center">
 						<img
-							className="h-full"
-							style={{ objectFit: "contain" }}
-							src={the_image_src}
-							alt="this product's first image"
+								className="h-full"
+								style={{ objectFit: "contain" }}
+								src={the_image_src}
+								alt={ml({
+									en: "this product's first image",
+									fa : ""
+								})}
 						/>
 					</div>
 				)}

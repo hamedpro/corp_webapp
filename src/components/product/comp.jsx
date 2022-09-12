@@ -85,8 +85,14 @@ export default function Product() {
 							#{product.id} : {product.name}
 						</h1>
 					</div>
-					<h1 className="m-2 my-1">description : {product.description}</h1>
-					<h1 className="m-2 my-1">category : {product.category}</h1>
+					<h1 className="m-2 my-1">{ml({
+						en: 'description :',
+						fa : ""
+					})} {product.description}</h1>
+					<h1 className="m-2 my-1">{ml({
+						en : "category :",
+						fa : ""
+					})} {product.category}</h1>
 					<AddToShoppingBagBar price={product.price} product_id={product.id} />
 				</div>
 			</div>

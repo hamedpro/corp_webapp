@@ -20,7 +20,7 @@ export function Welcome({ set_tab }) {
 						alert(
 							ml({
 								en: "something went wrong while initializing the app",
-								fa: "",
+								fa: "در هنگام راه اندازی برنامه خطایی پیش آمد",
 							})
 						);
 					}
@@ -30,19 +30,19 @@ export function Welcome({ set_tab }) {
 				alert(
 					ml({
 						en: "something went wrong while deleting previous data",
-						fa: "",
+						fa: "در هنگام حذف داده های قدیمی خطایی پیش آمد",
 					})
 				);
 			}
 		);
 	}
 	return (
-		<Section title={ml({ en: "welcome", fa: "" })}>
+		<Section title={ml({ en: "welcome", fa: "خوش آمدید" })}>
 			<div className="flex flex-col">
 				<h1>
 					{ml({
 						en: "welcome to your new instance of corp_webapp project",
-						fa: "",
+						fa: "به نسخه جدید پروژه کرپ وب اب خوش آمدید",
 					})}
 				</h1>
 				<p>
@@ -56,7 +56,7 @@ export function Welcome({ set_tab }) {
 						en: `notice: this process will first reset everything about this app, so if you have
 						done this initialization before consider you have to backup your products and
 						... first`,
-						fa: "",
+						fa: "توجه! :‌این فرآیند ابتدا اطلاعات قدیمی تولید شده توسط خودش را حذف میکند تا از وقوع مشکلات جلوگیری کند پس اگر در گذشته از این برنامه استفاده کرده اید ابتدا از داده های خود نسخه پشتیبان تهیه  کنید",
 					})}
 				</p>
 				<button
@@ -65,7 +65,7 @@ export function Welcome({ set_tab }) {
 				>
 					{ml({
 						en: "start initialization",
-						fa: "",
+						fa: "شروع راه اندازی برنامه",
 					})}
 				</button>
 			</div>

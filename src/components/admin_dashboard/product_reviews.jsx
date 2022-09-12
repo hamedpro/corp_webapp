@@ -34,7 +34,7 @@ export function ProductReviews() {
 		<div className="flex flex-col">
 			{ml({
 				en: "product reviews",
-				fa: "",
+				fa: "بررسی های کالا",
 			})}{" "}
 			{/* todo add filter option */}
 			{reviews === null ? (
@@ -45,26 +45,26 @@ export function ProductReviews() {
 						<Alert icon={<InfoRounded />}>
 							{ml({
 								en: "there is not any reviews submited",
-								fa: "",
+								fa: "اینجا هتوز هیچ بررسی ای ثبت نشده است",
 							})}
 						</Alert>
 					) : (
 						<CustomTable
 							headerItems={[
-								ml({ en: "id", fa: "" }),
-								ml({ en: "product id", fa: "" }),
-								ml({ en: "username", fa: "" }),
-								ml({ en: "rating from five", fa: "" }),
-								ml({ en: "pros", fa: "" }),
-								ml({ en: "cons", fa: "" }),
-								ml({ en: "text", fa: "" }),
-								ml({ en: "time", fa: "" }),
-								ml({ en: "verification_status", fa: "" }),
+								ml({ en: "id", fa: "شناسه" }),
+								ml({ en: "product id", fa: "شناسه کالا" }),
+								ml({ en: "username", fa: "نام کاربری" }),
+								ml({ en: "rating from five", fa: "رتبه از پنج" }),
+								ml({ en: "pros", fa: "نقاط مثبت" }),
+								ml({ en: "cons", fa: "نقاط منفی" }),
+								ml({ en: "text", fa: "متن بررسی" }),
+								ml({ en: "time", fa: "زمان ثبت" }),
+								ml({ en: "verification_status", fa: "وضعیت تایید" }),
 							]}
 							rows={reviews.map((review, index) => {
 								var message = ml({
 									en: 'this field cant be changed \n changable fields for user reviews : "verification_status"',
-									fa: "",
+									fa: "این مقدار نمیتواند تغییر کند. مقادیر تغییر پذیر برای بررسی های کاربران به این صورت هستند: وضعیت تایید بررسی",
 								});
 								return [
 									{

@@ -31,12 +31,7 @@ export default function MainFooter() {
 				//todo dont let the app to work until there is company data and env vard and ... are there
 			},
 			(error) => {
-				console.log(
-					ml({
-						en: "there was an error in fetching company name",
-						fa: "",
-					})
-				);
+				console.log("there was an error in fetching company name");
 			}
 		);
 		customAjax({
@@ -82,7 +77,7 @@ export default function MainFooter() {
 							<LinkLikeP link="/company-info" className="">
 								{ml({
 									en: "(about us)",
-									fa: "",
+									fa: "(درباره ما)",
 								})}
 							</LinkLikeP>
 						</div>
@@ -113,25 +108,28 @@ export default function MainFooter() {
 							<Section
 								title={ml({
 									en: "about the company",
-									fa: "",
+									fa: "درباره شرکت",
 								})}
 								className="h-full mt-2 md:mt-0"
 							>
 								<div className="text-white px-2">
 									<div>
-										{ml({ en: "company name : ", fa: "" })}
+										{ml({ en: "company name : ", fa: "نام شرکت" })}
 										{company_info.name}
 									</div>
 									<div>
-										{ml({ en: "company description: ", fa: "" })}
+										{ml({ en: "company description: ", fa: "توصیف شرکت:" })}
 										{company_info.description}
 									</div>
 									<div>
-										{ml({ en: "company history : ", fa: "" })}
+										{ml({ en: "company history : ", fa: "تاریخچه شرکت:" })}
 										{company_info.history}{" "}
 									</div>
 									<LinkLikeP link="/company-info">
-										{ml({ en: "see more (about company)", fa: "" })}
+										{ml({
+											en: "see more (about company)",
+											fa: "مشاهده بیشتر (درباره شرکت)",
+										})}
 									</LinkLikeP>
 								</div>
 							</Section>
@@ -154,7 +152,7 @@ export default function MainFooter() {
 									alert(
 										ml({
 											en: "instagram id is not set",
-											fa: "",
+											fa: "آیدی اینستاگرام هنوز ثبت نشده است",
 										})
 									);
 								} else {
@@ -166,7 +164,7 @@ export default function MainFooter() {
 								alert(
 									ml({
 										en: "company info is not loaded yet",
-										fa: "",
+										fa: "اطلاعات شرکت هنوز بارگزاری نشده است",
 									})
 								);
 							}
@@ -177,14 +175,14 @@ export default function MainFooter() {
 							if (company_info) {
 								var id = company_info.twitter;
 								if (id === "" || !id) {
-									alert(ml({ en: "twitter id is not set", fa: "" }));
+									alert(ml({ en: "twitter id is not set", fa: "آیدی توییتر هنوز ثبت نشده است" }));
 								} else {
 									window.location.replace(
 										`https://twitter.com/${company_info.twitter}`
 									);
 								}
 							} else {
-								alert(ml({ en: "company info is not loaded yet", fa: "" }));
+								alert(ml({ en: "company info is not loaded yet", fa: "اطلاعات شرکت هنوز بارگزاری نشده است" }));
 							}
 						}}
 					/>
@@ -193,14 +191,14 @@ export default function MainFooter() {
 							if (company_info) {
 								var id = company_info.telegram;
 								if (id === "" || !id) {
-									alert(ml({ en: "telegram id is not set", fa: "" }));
+									alert(ml({ en: "telegram id is not set", fa: "آیدی تلگرام هنوز ثبت نشده است" }));
 								} else {
 									window.location.replace(
 										`https://t.me/${company_info.telegram}`
 									);
 								}
 							} else {
-								alert(ml({ en: "company info is not loaded yet", fa: "" }));
+								alert(ml({ en: "company info is not loaded yet", fa: "اطلاعات شرکت هنوز بارگزاری نشده است" }));
 							}
 						}}
 					/>

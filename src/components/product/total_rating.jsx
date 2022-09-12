@@ -22,7 +22,7 @@ export default function TotalRating(props) {
 		var tmp = Math.round(
 			average(props.reviews.map((review) => Number(review.rating_from_five)))
 		);
-		set_avg_rating(isNaN(tmp) ? ml({ en: "?", fa: "?" }) : tmp);
+		set_avg_rating(isNaN(tmp) ? '?' : tmp);
 	}, [props.reviews]);
 	return (
 		<Section
@@ -36,8 +36,11 @@ export default function TotalRating(props) {
 					<div className="md:w-1/2 flex justify-center items-center">
 						{props.reviews.length === 0 && (
 							<Alert icon={<InfoRounded />}>
-								there is not any review for this product, total rating section below
-								will be activated when the first review is submited
+								{ml({
+									en : `there is not any review for this product, total rating section below
+									will be activated when the first review is submited`,
+									fa : ""
+								})}
 							</Alert>
 						)}
 					</div>
@@ -55,7 +58,7 @@ export default function TotalRating(props) {
 								})}
 							</p>
 						</div>
-						<div className="w-4/5   flex flex-col">
+						<div className="w-4/5 flex flex-col">
 							{[1, 2, 3, 4, 5].reverse().map((item, index) => {
 								return (
 									<div

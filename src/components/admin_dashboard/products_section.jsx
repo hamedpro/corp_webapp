@@ -137,7 +137,7 @@ export default function ProductsSection() {
 				<Alert icon={<InfoRounded />}>
 					{ml({
 						en: "there is not any product",
-						fa: "",
+						fa: "اینجا هیچ محصولی وجود ندارد",
 					})}
 				</Alert>
 			)}
@@ -172,8 +172,8 @@ export default function ProductsSection() {
 										onClick: () => {
 											alert(
 												ml({
-													en: `"product id can't be changed"`,
-													fa: "",
+													en: `product id can't be changed`,
+													fa: "شناسه کالا قابل تغییر نیست",
 												})
 											);
 										},
@@ -217,14 +217,14 @@ export default function ProductsSection() {
 							<h1>
 								{ml({
 									en: "product specifications :",
-									fa: "",
+									fa: "مشخصات فنی محصول",
 								})}
 							</h1>
 
 							<h1>
 								{ml({
 									en: "photos :",
-									fa: "",
+									fa: "عکس های محصول :",
 								})}
 							</h1>
 							<div className="flex space-x-2">

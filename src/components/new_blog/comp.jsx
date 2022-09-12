@@ -23,9 +23,9 @@ export default function NewBlog() {
 				files: [document.getElementById("blog_image_input").files[0]],
 				verbose: true,
 			});
-			alert(ml({ en: "done successfuly", fa: "" }));
+			alert(ml({ en: "done successfuly", fa: "باموفقیت انجام شد" }));
 		} catch (e) {
-			alert(ml({ en: "something went wrong", fa: "" }));
+			alert(ml({ en: "something went wrong", fa: "خطایی رخ داد" }));
 			console.log(e);
 		}
 	}
@@ -34,18 +34,18 @@ export default function NewBlog() {
 		<Section
 			title={ml({
 				en: "new blog",
-				fa: "",
+				fa: "بلاگ جدید",
 			})}
 			className="px-2"
 		>
 			<div className="px-2">
-				<p>{ml({ en: "blog title :", fa: "" })}</p>
+				<p>{ml({ en: "blog title :", fa: "موضوع بلاگ" })}</p>
 				<input id="blog_title_input" className={inputClassName} />
 
-				<p>{ml({ en: "blog image :", fa: "" })}</p>
+				<p>{ml({ en: "blog image :", fa: "عکس بلاگ" })}</p>
 				<input type="file" id="blog_image_input" />
 
-				<p>{ml({ en: "blog text :", fa: "" })}</p>
+				<p>{ml({ en: "blog text :", fa: "متن بلاگ" })}</p>
 				<textarea
 					id="blog_text_input"
 					className={[inputClassName, "block"].join(" ")}
@@ -57,7 +57,7 @@ export default function NewBlog() {
 				>
 					{ml({
 						en: "submit as",
-						fa: "",
+						fa: "ثبت به عنوان",
 					})}{" "}
 					@{window.localStorage.getItem("username")}
 				</button>

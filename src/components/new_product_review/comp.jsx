@@ -102,7 +102,14 @@ export function NewProductReview({}) {
 							en: "about",
 							fa: "درباره",
 						})}{" "}
-						"{product === null ? "loading data..." : product.name}"
+						"
+						{product === null
+							? ml({
+									en: "loading data...",
+									fa: "در حال بارگزاری اطلاعات ...",
+							  })
+							: product.name}
+						"
 					</p>
 				</div>
 			</div>

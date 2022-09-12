@@ -44,7 +44,12 @@ export function SelectCategory({
 	return (
 		<div className="mt-2">
 			<>
-				<p className="text-xl">select category:</p>
+				<p className="text-xl">
+					{ml({
+						en: "select category:",
+						fa: "انتخاب دسته بندی کالا:",
+					})}
+				</p>
 				<div className="w-fit border border-blue-400 rounded flex text-sm mb-2">
 					<div
 						className={
@@ -56,7 +61,10 @@ export function SelectCategory({
 							fetch_data();
 						}}
 					>
-						select from existing categories
+						{ml({
+							en: "select from existing categories",
+							fa: "انتخاب دسته بندی از دسته بندی های موجود",
+						})}
 					</div>
 					<div
 						className={
@@ -65,7 +73,10 @@ export function SelectCategory({
 						}
 						onClick={() => set_select_category_tab("new")}
 					>
-						create a new category
+						{ml({
+							en: "create a new category",
+							fa: "ساختن دسته بندی جدید",
+						})}
 					</div>
 				</div>
 			</>
@@ -73,7 +84,12 @@ export function SelectCategory({
 			{select_category_tab == "existing" && (
 				<>
 					{current_categories === null ? (
-						<h1>loading ...</h1>
+						<h1>
+							{ml({
+								en: "loading ...",
+								fa: "در حال بارگزاری ...",
+							})}
+						</h1>
 					) : (
 						<>
 							{current_categories.length !== 0 ? (
@@ -97,8 +113,18 @@ export function SelectCategory({
 								</div>
 							) : (
 								<>
-									<h1>there is not any product category set</h1>
-									<p>you should create a new one</p>
+									<h1>
+										{ml({
+											en: "there is not any product category set",
+											fa: "هنوز هیچ دسته بندی کالایی ثبت نشده است",
+										})}
+									</h1>
+									<p>
+										{ml({
+											en: "you should create a new one",
+											fa: "شما باید یک دسته بندی جدید درست کنید",
+										})}
+									</p>
 								</>
 							)}
 						</>
@@ -110,7 +136,10 @@ export function SelectCategory({
 				<>
 					<CustomInput
 						id="new_category_input"
-						placeholder="enter category name here..."
+						placeholder={ml({
+							en: "enter category name here...",
+							fa: "نام دسته بندی جدید خود را وارد کنید...",
+						})}
 					/>
 				</>
 			)}

@@ -12,7 +12,7 @@ export default function NavBar() {
 		tmp.push({
 			name: ml({
 				en: "main page",
-				fa: "",
+				fa: "صفحه اصلی",
 			}),
 			link: "/",
 		});

@@ -119,7 +119,7 @@ export default function UsersSection() {
 								alert(
 									ml({
 										en: "user id can't be changed",
-										fa: "",
+										fa: "شناسه کاربر قابل تغییر نیست",
 									})
 								);
 							},
@@ -147,13 +147,13 @@ export default function UsersSection() {
 						{
 							value: ml({
 								en: "delete his/her profile picture",
-								fa: "",
+								fa: "حذف عکس این کاربر",
 							}),
 							onClick: () => {
 								alert(
 									ml({
 										en: "this feature is under development",
-										fa: "",
+										fa: "این ویژگی در حال توسعه است",
 									})
 								);
 							},

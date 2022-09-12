@@ -7,7 +7,12 @@ export function PG() {
 			<Table sx={{ width: "50%" }}>
 				<TableHead>
 					<TableRow>
-						<TableCell>id</TableCell>
+						<TableCell>
+							{ml({
+								en: "id",
+								fa: "شناسه",
+							})}
+						</TableCell>
 						<TableCell>username</TableCell>
 						<TableCell>full name</TableCell>
 					</TableRow>

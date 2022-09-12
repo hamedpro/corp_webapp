@@ -44,7 +44,7 @@ export function CheckUserPrivilege({ children, level, specific_username = null }
 				<Alert icon={<ReportGmailerrorredRounded />} className="mt-2">
 					{ml({
 						en : `there was an error in the process of checking user privilege, checkout
-						development console for more`,fa: ""
+						development console for more`,fa: "خطایی در فرآیند بررسی سطح دسترسی کاربر پیش آمد. برای اطلاعات بیشتر کنسول را بررسی کنید"
 					})}
 				</Alert>
 			)}
