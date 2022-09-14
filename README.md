@@ -19,7 +19,7 @@ then make sure you have a mysql server installed on your machine and then create
 \*\* your mysql server should allow connecting with the traditional authentication way (with just simple password -> using mysql_native_password)
 
 ```
-node create_env_configurations.cjs host=your_host user=your_user port=the_port_you_are_using password=your_password production_frontend_port=a_number
+node create_env_configurations.cjs host=your_host user=your_user port=the_port_you_are_using password=your_password production_frontend_port=a_number mysql_database=your_mysql_database_name
 ```
 
 now your environment is ready to use and you can use one of the scripts below to either start the app in development mode or start the app in production mode

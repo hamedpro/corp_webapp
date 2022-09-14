@@ -9,6 +9,7 @@ var parsed_env = {
 	port: Number(process.argv[4].split("=")[1]),
 	password: process.argv[5].split("=")[1],
 	production_frontend_port: process.argv[6].split("=")[1],
+	mysql_database: process.argv[7].split("=")[1],
 };
 
 var ACCESS_TOKEN_SECRET = crypto.randomBytes(20).toString("hex");
@@ -26,6 +27,7 @@ PASSWORD_HASHING_SECRET=${PASSWORD_HASHING_SECRET}
 REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
 SUPER_ADMIN_ACCESS_TOKEN=${SUPER_ADMIN_ACCESS_TOKEN}
 production_frontend_port=${parsed_env.production_frontend_port}
+mysql_database=${parsed_env.mysql_database}
 `;
 
 fs.writeFileSync("./.env", string_to_write_in_dot_env);

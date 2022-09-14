@@ -43,7 +43,7 @@ function connect_to_db(pass_database = true) {
 		multipleStatements: true,
 	};
 	if (pass_database) {
-		conf["database"] = "corp_webapp";
+		conf["database"] = process.env.mysql_database;
 	}
 	return mysql.createConnection(conf);
 	//add error handling for mysql createConnection
