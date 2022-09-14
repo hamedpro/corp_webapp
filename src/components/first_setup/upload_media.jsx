@@ -21,10 +21,12 @@ export function UploadMedia({ set_tab }) {
 				set_tab("done");
 			},
 			(error) => {
-				console.log(ml({
-					en : "there was an error",
-					fa : ""
-				}));
+				console.log(
+					ml({
+						en: "there was an error",
+						fa: "",
+					})
+				);
 				console.log(error);
 			}
 		);
@@ -94,8 +96,8 @@ export function UploadMedia({ set_tab }) {
 			</OptionBox>
 			<button onClick={upload}>
 				{ml({
-					en : "upload these",
-					fa :""
+					en: "upload these",
+					fa: "ثبت نهایی",
 				})}
 			</button>
 		</OptionBox>
