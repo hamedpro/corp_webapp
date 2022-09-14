@@ -27,7 +27,7 @@ export default function Product() {
 		for (var i = 0; i < files.length; i++) {
 			form.append(i, files[i]);
 		}
-		fetch("http://localhost:4000?task_name=upload_product_images&product_id=" + product_id, {
+		fetch(`${window.location.protocol +"//"}localhost:4000?task_name=upload_product_images&product_id=` + product_id, {
 			method: "POST",
 			body: form,
 		});

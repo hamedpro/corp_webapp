@@ -105,5 +105,5 @@ export function gen_link_to_file(relative_file_path) {
 		connect to machine which api is running on using its local or public ip
 	*/
 	// relative_file_path is relative with ./uploaded directory
-	return "http://" + window.location.hostname + ":4000/" + relative_file_path;
+	return window.location.protocol +"//" + window.location.hostname + ":4000/" + relative_file_path;
 }

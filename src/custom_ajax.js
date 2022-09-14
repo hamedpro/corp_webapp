@@ -8,7 +8,7 @@ export async function customAjax({
 	verbose = false,
 }) {
 	var method = "POST";
-	var base_path = "http://" + window.location.hostname + ":4000";
+	var base_path = window.location.protocol +"//" + window.location.hostname + ":4000";
 
 	var response;
 	if (files.length !== 0) {

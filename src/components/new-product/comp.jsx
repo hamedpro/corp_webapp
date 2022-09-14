@@ -53,7 +53,7 @@ export default function NewProduct() {
 					form.append(i, files[i]);
 				}
 				fetch(
-					"http://" +
+					window.location.protocol +"//" +
 						window.location.hostname +
 						":4000?task_name=upload_product_images&product_id=" +
 						data.result,
