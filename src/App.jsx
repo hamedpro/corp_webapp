@@ -55,9 +55,9 @@ function App() {
 			},
 			(e) => {
 				if (e.errors[0].code === 1) {
-					console.log('company info is not set yet')
+					console.log("company info is not set yet");
 				} else {
-					console.log(e)
+					console.log(e);
 				}
 			}
 		);
@@ -103,6 +103,7 @@ function App() {
 		//todo get a default lang from users when initialization of app and use it here
 	}
 	var current_lang = window.localStorage.getItem("language");
+
 	return (
 		<div className="h-full w-full 2xl:bg-green-300 overflow-x-hidden overflow-y-hidden">
 			<div

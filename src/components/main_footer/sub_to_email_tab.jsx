@@ -69,7 +69,8 @@ export default function SubToEmailTab() {
 	function sync_data() {
 		if (window.localStorage.getItem("username") === null) {
 			set_email_sub_status("not_logged_in");
-			return;
+			return; //todo may user account is deleted or database is droped since user has loged in
+			//so check whether user is exists or not first
 		}
 		customAjax({
 			params: {
