@@ -4,13 +4,8 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "node ./before_scripts.cjs && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css --watch & vite --host & nodemon ./api/server.cjs",
-		"build": "node ./before_scripts.cjs && (rm -rf ./dist && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css && vite build --base ./ )",
-		"start": "node ./before_scripts.cjs && (node ./api/server.cjs & http-server --cors -p $(grep production_frontend_port .env | cut -d '=' -f2) -s -c 60 ./dist)",
-		"curltime": "curl -w '@curl-format.txt' -o /dev/null -s "
-	},
-	"_how_to_use_scripts": {
-		"curl_time_example": "npm run curltime -- 'http://google.com'"
+		"dev": "export api_port=4000 api_endpoint=http://localhost:4000 ; node ./print_dotenv.cjs && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css --watch & vite --host --strictPort --port 3000 & nodemon ./api/server.cjs",
+		"custom_start": "node ./print_dotenv.cjs && (rm -rf ./dist && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css && vite build --base ./ ) && (node ./api/server.cjs & http-server --cors -p $(printenv | grep frontend_port  | cut -d '=' -f2) -s -c 60 ./dist)"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.9.3",

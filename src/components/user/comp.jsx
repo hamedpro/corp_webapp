@@ -47,11 +47,8 @@ export default function User() {
 		var file = file_input.files[0];
 		form.append("image", file);
 		fetch(
-			window.location.protocol +
-				"//" +
-				window.location.hostname +
-				":4000?task_name=new_user_profile_image&username=" +
-				username,
+			new URL("?task_name=new_user_profile_image&username=" + username, window.api_endpoint)
+				.href,
 			{
 				method: "POST",
 				body: form,

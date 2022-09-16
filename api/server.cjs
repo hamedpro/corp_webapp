@@ -1345,8 +1345,8 @@ async function main() {
 				break;
 		}
 	});
-	var server = app.listen(4000, () => {
-		console.log("server is listening on port 4000");
+	var server = app.listen(process.env.api_port, () => {
+		console.log(`server is listening on port ${process.env.api_port}`);
 	});
 }
 main();

@@ -40,6 +40,7 @@ import { multi_lang_helper as ml } from "./common";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
+	window.api_endpoint = API_ENDPOINT;
 	var nav = useNavigate();
 
 	function load_company_info() {
@@ -161,7 +162,7 @@ function App() {
 							</CheckUserPrivilege>
 						}
 					/>
-					
+
 					<Route exact path="/products/:product_id" element={<Product />} />
 					<Route exact path="/products/:product_id/reviews" element={<ReviewsPage />} />
 					<Route exact path="/users/:username" element={<User />} />
