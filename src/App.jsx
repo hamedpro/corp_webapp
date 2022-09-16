@@ -53,7 +53,13 @@ function App() {
 				document.title = JSON.parse(data.result).name;
 				//todo dont let the app to work until there is company data and env vard and ... are there
 			},
-			(e) => {}
+			(e) => {
+				if (e.errors[0].code === 1) {
+					console.log('company info is not set yet')
+				} else {
+					console.log(e)
+				}
+			}
 		);
 		customAjax({
 			params: {
@@ -70,6 +76,8 @@ function App() {
 								data.result.filter((item) => item.split(".")[0] === "favicon")[0]
 						)
 					);
+			} else {
+				console.log("favicon is not uploaded yet");
 			}
 		});
 	}

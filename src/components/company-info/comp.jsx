@@ -16,8 +16,12 @@ export default function CompanyInfo() {
 			(data) => {
 				set_company_info(JSON.parse(data.result));
 			},
-			(error) => {
-				console.log(error);
+			(e) => {
+				if (e.errors[0].code === 1) {
+					console.log("company info is not set yet");
+				} else {
+					console.log(e);
+				}
 			}
 		);
 	}
@@ -32,12 +36,16 @@ export default function CompanyInfo() {
 				task_name: "get_company_media",
 			},
 		}).then((data) => {
-			set_rectangle_icon_src(
-				gen_link_to_file(
-					"./company_info/" +
-						data.result.filter((item) => item.split(".")[0] === "rectangle")[0]
-				)
+			var rectangle_icon_file_name = data.result.find(
+				(item) => item.split(".")[0] === "rectangle"
 			);
+			if (rectangle_icon_file_name !== undefined) {
+				set_rectangle_icon_src(
+					gen_link_to_file("./company_info/" + rectangle_icon_file_name)
+				);
+			} else {
+				console.log("company rectangle icon is not uploaded yet");
+			}
 		});
 	}, []);
 	return (

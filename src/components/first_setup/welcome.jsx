@@ -9,22 +9,8 @@ export function Welcome({ set_tab }) {
 				//todo make sure about undo all
 			},
 		}).then(
-			(data) => {
-				customAjax({
-					route: "/init",
-				}).then(
-					(data) => {
-						set_tab("first_admin_setup");
-					},
-					(error) => {
-						alert(
-							ml({
-								en: "something went wrong while initializing the app",
-								fa: "در هنگام راه اندازی برنامه خطایی پیش آمد",
-							})
-						);
-					}
-				);
+			() => {
+				set_tab("first_admin_setup");
 			},
 			(error) => {
 				alert(

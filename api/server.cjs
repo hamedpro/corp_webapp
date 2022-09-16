@@ -166,26 +166,15 @@ async function init() {
 	//todo also check inside the code for todos and make a  --
 	//app for it
 	if (output.error) {
-		con.end();
 		throw output.error;
 	}
-
+	con.end();
 	//support_tickets->type can have these values : bug,suggestion,other
 	//product_specs inside products table should contain ->
 	// -> a json stringified array of key values -- also for ex pros and cons fields
 	//todo take care about length of texts and max length of cells
 }
 async function main() {
-	app.all("/init", async (req, res) => {
-		var rm = new response_manager(res);
-		rm.add_mysql_con(connect_to_db());
-		try {
-			await init();
-			rm.send();
-		} catch (e) {
-			rm.send_error(e);
-		}
-	});
 	app.all("/upload", async (req, res) => {
 		//
 		var rm = new response_manager(res);
@@ -205,6 +194,13 @@ async function main() {
 	});
 	app.all("/", async (req, res) => {
 		var rm = new response_manager(res);
+		try {
+			await init();
+		} catch (e) {
+			rm.send_error(e);
+			return;
+		}
+
 		var con = connect_to_db();
 		rm.add_mysql_con(con);
 		var params = { ...req.body, ...req.query };
@@ -862,7 +858,10 @@ async function main() {
 							rm.send_error(error);
 						} else {
 							if (result.length === 0) {
-								rm.send_error("there was not a row with pair_key = company_info");
+								rm.send_error({
+									message: "there was not a row with pair_key = company_info",
+									code: 1,
+								});
 							} else {
 								rm.send_result(result[0].pair_value);
 							}

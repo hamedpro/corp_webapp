@@ -62,7 +62,7 @@ export async function customAjax({
 	}
 	if (parsed_json.errors.length !== 0) {
 		throw {
-			details: "errors field was not empty",
+			details: "errors field of the response was not empty",
 			errors: parsed_json.errors,
 		};
 	} else {

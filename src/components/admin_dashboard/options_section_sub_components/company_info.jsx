@@ -16,7 +16,11 @@ export function CompanyInfoSection() {
 				set_company_info(parsed_company_info);
 			},
 			(e) => {
-				console.log(e);
+				if (e.errors[0].code === 1) {
+					console.log('company info is not set yet')
+				} else {
+					console.log(e)
+				}
 			}
 		);
 	}

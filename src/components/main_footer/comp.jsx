@@ -30,8 +30,12 @@ export default function MainFooter() {
 				set_company_info(JSON.parse(data.result));
 				//todo dont let the app to work until there is company data and env vard and ... are there
 			},
-			(error) => {
-				console.log("there was an error in fetching company name");
+			(e) => {
+				if (e.errors[0].code === 1) {
+					console.log('company info is not set yet')
+				} else {
+					console.log(e)
+				}
 			}
 		);
 		customAjax({
@@ -40,13 +44,15 @@ export default function MainFooter() {
 			},
 		}).then(
 			(data) => {
-				if (data.result.filter((i) => i.split(".")[0] === "square").length !== 0) {
+				var company_square_icon_file_name = data.result.find(
+					(i) => i.split(".")[0] === "square"
+				);
+				if (company_square_icon_file_name !== undefined) {
 					set_square_icon_src(
-						gen_link_to_file(
-							"./company_info/" +
-								data.result.filter((i) => i.split(".")[0] === "square")[0]
-						)
+						gen_link_to_file("./company_info/" + company_square_icon_file_name)
 					);
+				} else {
+					console.log("company square icon is not uploaded yet");
 				}
 			},
 			(err) => {
@@ -175,14 +181,24 @@ export default function MainFooter() {
 							if (company_info) {
 								var id = company_info.twitter;
 								if (id === "" || !id) {
-									alert(ml({ en: "twitter id is not set", fa: "آیدی توییتر هنوز ثبت نشده است" }));
+									alert(
+										ml({
+											en: "twitter id is not set",
+											fa: "آیدی توییتر هنوز ثبت نشده است",
+										})
+									);
 								} else {
 									window.location.replace(
 										`https://twitter.com/${company_info.twitter}`
 									);
 								}
 							} else {
-								alert(ml({ en: "company info is not loaded yet", fa: "اطلاعات شرکت هنوز بارگزاری نشده است" }));
+								alert(
+									ml({
+										en: "company info is not loaded yet",
+										fa: "اطلاعات شرکت هنوز بارگزاری نشده است",
+									})
+								);
 							}
 						}}
 					/>
@@ -191,14 +207,24 @@ export default function MainFooter() {
 							if (company_info) {
 								var id = company_info.telegram;
 								if (id === "" || !id) {
-									alert(ml({ en: "telegram id is not set", fa: "آیدی تلگرام هنوز ثبت نشده است" }));
+									alert(
+										ml({
+											en: "telegram id is not set",
+											fa: "آیدی تلگرام هنوز ثبت نشده است",
+										})
+									);
 								} else {
 									window.location.replace(
 										`https://t.me/${company_info.telegram}`
 									);
 								}
 							} else {
-								alert(ml({ en: "company info is not loaded yet", fa: "اطلاعات شرکت هنوز بارگزاری نشده است" }));
+								alert(
+									ml({
+										en: "company info is not loaded yet",
+										fa: "اطلاعات شرکت هنوز بارگزاری نشده است",
+									})
+								);
 							}
 						}}
 					/>
