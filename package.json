@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "export api_port=4000 api_endpoint=http://localhost:4000 ; node ./print_dotenv.cjs && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css --watch & vite --host --strictPort --port 3000 & nodemon ./api/server.cjs",
-		"custom_start": "node ./print_dotenv.cjs && (rm -rf ./dist && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css && vite build --base ./ ) && (node ./api/server.cjs & http-server --cors -p $(echo $frontend_port) -c 1 ./dist)"
+		"custom_start_frontend": "node ./print_dotenv.cjs && (rm -rf ./dist && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css && vite build --base ./ ) && (http-server --cors -p $(echo $frontend_port) -c 1 ./dist)",
+		"custom_start_api" : "node ./print_dotenv.cjs && node ./api/server.cjs"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.9.3",

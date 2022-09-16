@@ -4,7 +4,7 @@
 >
 > #### explanations written in this README are only expected to work properly on linux-ubuntu and also most probably on other common linux distros and its not guranteed to work on other OSs
 >
-> <br>
+> <br />
 
 ## setup project:
 
@@ -21,7 +21,7 @@ npm install
 ```
 
 then make sure you have a mysql server installed on your machine and then create a configuration file for it using this script below to let the app know how to connect to your mysql server properly. it also generates some secret keys to be used in jwt system and for hashing passwords
-<br>
+<br />
 \*\* your mysql server should allow connecting with the traditional authentication way (with just simple password -> using mysql_native_password)
 
 ```
@@ -42,8 +42,20 @@ npm run dev
 
 ## starting custom production mode:
 
-our current remote web server runs cent-OS as its OS. also we have not admin previleges when executing commands on its terminal and must follow a specific way to setup our app there; so i have written this script below to handle that : you have to fill out these values : frontend_port, api_endpoint, api_port
+> our current remote web server runs cent-OS as its OS. also we have not admin previleges when executing commands on its terminal and must follow a specific way to setup our app there; so i have written these scripts below to handle that : you have to fill out these values : frontend_port, api_endpoint, api_port
+
+<br />
+
+> in this remote server we run api on api.domain.ir but website itself on domain.ir so we have 2 scripts for them
+
+### custom_start_api :
 
 ```
-export api_port=a_number api_endpoint=a_full_url frontend_port=a_number ; npm run custom_start
+export api_port=a_number; npm run custom_start_api
+```
+
+### custom_start_frontend :
+
+```
+export api_endpoint=a_full_url frontend_port=a_number; npm run custom_start_frontend
 ```
