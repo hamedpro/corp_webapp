@@ -71,8 +71,8 @@ async function init() {
 	var output = await cq(
 		con,
 		`
-			create database if not exists corp_webapp;
-		use corp_webapp;
+			create database if not exists ${process.env.mysql_database};
+		use ${process.env.mysql_database};
 		create table if not exists users(
 			id int primary key auto_increment,
 			username varchar(50) ,
@@ -1152,7 +1152,7 @@ async function main() {
 			case "undo_all":
 				//it returns the app to its first state
 				//todo : may in addition to droping database it be required to do another stuff
-				con.query(`drop database corp_webapp;`, (error) => {
+				con.query(`drop database ${process.env.mysql_database};`, (error) => {
 					if (error) {
 						rm.send_error(error);
 					} else {
@@ -1162,7 +1162,7 @@ async function main() {
 				});
 				break;
 			case "drop_database":
-				var o = await cq(con, "drop database corp_webapp");
+				var o = await cq(con, `drop database ${process.env.mysql_database}`);
 				if (o.error) {
 					rm.send_error(o.error);
 				}
