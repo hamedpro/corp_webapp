@@ -24,9 +24,17 @@ http://localhost:4000?task_name=toggle_user_admin_state&username=hamedpro
 
 
 ### 
+POST https://api.pishro-control.ir
+Content-Type: application/json
+
+{
+    "task_name" : "get_blog_posts"
+}
+
+### 
 POST http://localhost:4000
 Content-Type: application/json
 
 {
-    "task_name" : "get_products"
+    "task_name" : "get_blog_posts"
 }

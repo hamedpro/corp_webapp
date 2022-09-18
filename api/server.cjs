@@ -905,7 +905,7 @@ async function main() {
 							};
 							con.query(
 								`
-									insert into blog_posts
+									insert into blogs
 									(name,text,last_modification_time)
 									values 
 									("${new_data["name"]}","${new_data["text"]}","${new_data["last_modification_time"]}")
@@ -922,34 +922,22 @@ async function main() {
 					}
 				);
 				break;
-			case "get_blog_posts_ids":
-				con.query(`select * from blog_posts`, (error, results) => {
-					if (error) {
-						rm.send_error(error);
-					} else {
-						var ids = [];
-						results.forEach((result) => {
-							ids.push(result.id);
-						});
-						rm.send_result(ids);
-					}
-				});
-				break;
 			case "get_blog_posts":
-				con.query(`select * from blog_posts`, (error, results) => {
+				con.query(`select * from blogs`, (error, results) => {
 					if (error) {
 						rm.send_error(error);
 					} else {
-						rm.send_result(results);
-					}
-				});
-				break;
-			case "get_blog_post":
-				con.query(`select * from blog_posts where id=${params.id}`, (error, results) => {
-					if (error) {
-						rm.send_error(error);
-					} else {
-						rm.send_result(results);
+						var blogs_images = fs.readdirSync("./uploaded/blog_images");
+						rm.send_result(
+							results.map((row) => {
+								return {
+									...row,
+									image_file_name: blogs_images.find(
+										(i) => i.split(".")[0] === row.id.toString()
+									),
+								};
+							})
+						);
 					}
 				});
 				break;
