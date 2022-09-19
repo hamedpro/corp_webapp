@@ -7,6 +7,7 @@ import { Info } from "@mui/icons-material";
 import { OrdersSection } from "./orders_section";
 import { SupportTicketsSection } from "./support_tickets_section";
 import { ProductReviews } from "./product_reviews";
+import { BlogComments } from "./blog_comments";
 export default function AdminDashboard() {
 	var [tab, set_tab] = useState("manage_products");
 	var tabs = [
@@ -42,6 +43,13 @@ export default function AdminDashboard() {
 			title: ml({ en: "manage product reviews", fa: "مدیریت بررسی های کاربران برای کالا ها" }),
 			icon: <Info />,
 		},
+		
+		{
+			id: "manage_blog_comments",
+			title: "manage blog comments",
+			icon: <Info />,
+		},
+
 	];
 	return (
 		<>
@@ -100,6 +108,11 @@ export default function AdminDashboard() {
 							<ProductReviews />
 						</>
 					)}
+					
+					{tab === "manage_blog_comments" && (
+						<BlogComments />
+					)}
+					
 				</div>
 			</div>
 		</>

@@ -36,5 +36,7 @@ POST http://localhost:4000
 Content-Type: application/json
 
 {
-    "task_name" : "get_all_blog_comments"
+    "task_name" : "verify_blog_comment",
+    "verifier_username" : "nto",
+    "blog_comment_id" : 2
 }

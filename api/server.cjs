@@ -1271,6 +1271,12 @@ async function main() {
 			case "verify_blog_comment":
 				/* admin checks the comment for illegal things
 				before publishing it publicly */
+				var o = await cq(con, `update blog_comments set verification_status = "true",verifier_username="${params.verifier_username}" where id=${Number(params.blog_comment_id)}`)
+				if (o.error) {
+					rm.send_error(o.error)
+					break;
+				}
+				rm.send()
 				break;
 			case "get_user_orders":
 				var o = await cq(con, `select * from orders where username = '${params.username}'`);
