@@ -41,7 +41,7 @@ export function ProductReviews() {
 				<Loading />
 			) : (
 				<>
-					{reviews !== null && reviews.length === 0 ? (
+					{reviews.length === 0 ? (
 						<Alert icon={<InfoRounded />}>
 							{ml({
 								en: "there is not any reviews submited",

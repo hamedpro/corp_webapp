@@ -1,9 +1,12 @@
+import { InfoRounded } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { customAjax } from "../../custom_ajax";
+import { Alert } from "../alert/comp";
 import { CustomTable } from "../custom_table/comp";
+import { Loading } from "../loading/comp";
 
 export function OrdersSection() {
-	var [orders, set_orders] = useState([]);
+	var [orders, set_orders] = useState(null);
 	function fetch_data() {
 		customAjax({
 			params: {
@@ -23,7 +26,14 @@ export function OrdersSection() {
 		<>
 			<div className="flex flex-col">
 				orders
-				<CustomTable
+				<Loading is_loading={orders === null} />
+				{orders !== null && orders.length===0 && (
+					<Alert icon={<InfoRounded />}>
+						there is not any orders submitted yet
+					</Alert>
+				)}
+				{orders !== null && orders.length !== 0 && (
+					<CustomTable
 					headerItems={[
 						ml({en:"id",fa:""}),
 						ml({en:"username",fa:""}),
@@ -43,6 +53,8 @@ export function OrdersSection() {
 						];
 					})}
 				/>
+				)}
+				
 			</div>
 		</>
 	);

@@ -45,7 +45,8 @@ export function BlogComments() {
         })
     }
     return (
-        <>
+        <div className="">
+            <p>blog comments</p>
             {blog_comments === null ? (
                 <Loading />
             ) : (
@@ -65,6 +66,6 @@ export function BlogComments() {
                     })}
                     />      
             )}
-        </>
+        </div>
     )
 }

@@ -1,10 +1,13 @@
+import { InfoRounded } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
+import { Alert } from "../alert/comp";
 import { CustomTable } from "../custom_table/comp";
+import { Loading } from "../loading/comp";
 
 export function SupportTicketsSection() {
-	var [support_tickets, set_support_tickets] = useState([]);
+	var [support_tickets, set_support_tickets] = useState(null);
 	var nav = useNavigate();
 	function fetch_data() {
 		customAjax({
@@ -34,8 +37,15 @@ export function SupportTicketsSection() {
 			{ml({
 				en: "support tickets ",
 				fa : ""
-			}) }{/* todo add filter option */}
-			<CustomTable
+			})}{/* todo add filter option */}
+			<Loading is_loading={support_tickets === null} />
+			{support_tickets !== null && support_tickets.length === 0 && (
+				<Alert icon={<InfoRounded />}>
+					there is not any support ticket submitted
+				</Alert>
+			)}
+			{support_tickets !== null && support_tickets.length !== 0 &&(
+				<CustomTable
 				headerItems={[
 					ml({en : "id",fa : ""}),
 					ml({en : "username",fa : ""}),
@@ -64,6 +74,8 @@ export function SupportTicketsSection() {
 					];
 				})}
 			/>
+			)}
+			
 		</div>
 	);
 }
