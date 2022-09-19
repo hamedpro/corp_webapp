@@ -1257,6 +1257,12 @@ async function main() {
 			case "remove_like_from_a_blog":
 				break;
 			case "new_blog_comment":
+				var o = await cq(con, `insert into blog_comments (username,blog_id,title,text,time,verification_status,verifier_username) values ('${params.username}',${Number(params.blog_id)},'${params.title}','${params.text}','${params.time}','false',Null)`)
+				if (o.error) {
+					rm.send_error(o.error)
+					break;
+				}
+				rm.send()
 				break;
 			case "delete_blog_comment":
 				break;
@@ -1330,6 +1336,13 @@ async function main() {
 					rm.send_error(e.toString());
 				}
 				break;
+			case "get_all_blog_comments": 
+				var o = await cq(con, 'select * from blog_comments')
+				if (o.error) {
+					rm.send_error(o.error)
+					break;
+				}
+				rm.send_result(o.result )
 		}
 	});
 	var server = app.listen(process.env.api_port, () => {

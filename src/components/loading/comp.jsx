@@ -3,15 +3,17 @@ import { LinearProgress } from "@mui/material";
 export function Loading({ is_loading = true, children }) {
 	return (
 		<>
-			{is_loading ? (
+			{is_loading && (
 				<>
 					<div className="flex justify-center items-center">
 						<span>{ml({ en: "loading data ...", fa: "بارگزاری اطلاعات..." })}</span>
 						<LinearProgress />
 					</div>
 				</>
-			) : (
-				<>{children}</>
+			)
+			}
+			{is_loading !== true &&(
+				<>{(()=>children)()}</>
 			)}
 		</>
 	);
