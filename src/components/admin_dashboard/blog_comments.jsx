@@ -34,7 +34,6 @@ export function BlogComments() {
             verifier_username: window.localStorage.getItem('username'),
             blog_comment_id : blog_id
         }
-        console.log(params)
         customAjax({
             params
         }).then(data => {

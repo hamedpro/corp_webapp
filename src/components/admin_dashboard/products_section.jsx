@@ -4,8 +4,9 @@ import { customAjax } from "../../../src/custom_ajax.js";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
 import { CustomTable } from "../../components/custom_table/comp";
 import { Alert } from "../alert/comp.jsx";
+import { Loading } from "../loading/comp.jsx";
 export default function ProductsSection() {
-	const [products, set_products] = useState([]);
+	const [products, set_products] = useState(null);
 	function fetch_data() {
 		customAjax({
 			params: {
@@ -127,14 +128,54 @@ export default function ProductsSection() {
 				});
 		}
 	};
+	function upload_new_product_image(product_id) {
+		var file = document.getElementById('new_product_image_input').files[0]
+		customAjax({
+			params: {
+				task_name: "new_product_image",
+				product_id 
+			},
+			files : [file]
+		}).then(data => {
+			alert("done successfuly!")
+			fetch_data()
+		}, e => {
+			alert('something went wrong')
+			console.log(e)
+		})
+	}
+	function start_upload_progress(product_id) {
+		var el = document.getElementById('new_product_image_input')
+		el.onchange= () =>upload_new_product_image(product_id)
+		el.click()
+	}
+	function del_product_image(image_file_name) {
+		if(!confirm('are you sure that you want to delete this picture?')) return 
+		customAjax({
+			params: {
+				task_name: "del_product_image",
+				image_file_name
+			}
+		}).then(data => {
+			alert('done')
+			fetch_data()
+		}, e => {
+			alert('something went wrong!')
+			console.log(e)
+		})
+	}
 	return (
 		<div className="flex flex-col">
+			<input id="new_product_image_input" type="file" className="hidden"  />
 			{ml({
 				en: "products:",
 				fa: "محصولات",
 			})}
-			{products.length === 0 && (
-				<Alert icon={<InfoRounded />}>
+			<Loading is_loading={ products === null} />
+			{products !== null && (
+				<>
+				{products.length === 0 && (
+				<Alert icon={<InfoRounded />} className="mt-2">
 					{ml({
 						en: "there is not any product",
 						fa: "اینجا هیچ محصولی وجود ندارد",
@@ -225,7 +266,7 @@ export default function ProductsSection() {
 								{ml({
 									en: "photos :",
 									fa: "عکس های محصول :",
-								})}
+								})} (to delete image click on that)
 							</h1>
 							<div className="flex space-x-2">
 								{product.images_path_names.map((image_path_name, index) => {
@@ -237,6 +278,7 @@ export default function ProductsSection() {
 											<img
 												style={{ objectFit: "contain" }}
 												className="w-full"
+												onClick={()=>del_product_image(image_path_name)}
 												src={gen_link_to_file(
 													"./product_images/" + image_path_name
 												)}
@@ -244,7 +286,9 @@ export default function ProductsSection() {
 										</div>
 									);
 								})}
-								<div className="h-16 w-16 shrink-0 flex justify-center items-center bg-blue-400 rounded-lg ">
+								<div className="h-16 w-16 shrink-0 flex justify-center items-center bg-blue-400 rounded-lg "
+									onClick={()=>start_upload_progress(product.id)}
+								>
 									<AddAPhoto />
 								</div>
 							</div>
@@ -252,6 +296,9 @@ export default function ProductsSection() {
 					</React.Fragment>
 				);
 			})}
+				</>
+			)}
+			
 		</div>
 	);
 }

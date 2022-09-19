@@ -1375,7 +1375,24 @@ async function main() {
 				}
 				rm.send()
 				break;
-			
+			case "new_product_image":
+				var this_product_images_count = fs.readdirSync('./uploaded/product_images').filter(i=>i.split('-')[0] == params.product_id).length
+				custom_upload({
+					req,
+					uploadDir: "./uploaded/product_images",
+					files_names: [params.product_id + "-" + (this_product_images_count + 1)],
+					onSuccess: () => {
+						rm.send()
+					},
+					onReject: e => {
+						rm.send_error(e)
+					}
+				})
+				break;
+			case "del_product_image":
+				fs.rmSync(path.join('./uploaded/product_images',params.image_file_name), { force: true }) 
+				rm.send()
+				break;
 		}
 	});
 	var server = app.listen(process.env.api_port, () => {
