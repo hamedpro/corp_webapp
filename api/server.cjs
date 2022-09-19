@@ -1342,13 +1342,40 @@ async function main() {
 					rm.send_error(e.toString());
 				}
 				break;
-			case "get_all_blog_comments": 
+			case "get_all_blog_comments":
 				var o = await cq(con, 'select * from blog_comments')
 				if (o.error) {
 					rm.send_error(o.error)
 					break;
 				}
-				rm.send_result(o.result )
+				rm.send_result(o.result)
+				break;
+			case "upload_icon":
+				var icon_file_name = fs.readdirSync('./uploaded/company_info').find(i=>i.split('.')[0] === params.icon_type)
+				if (icon_file_name) {
+					fs.rmSync(path.join('./uploaded/company_info',icon_file_name))
+				}
+				custom_upload({
+					req,
+					files_names: [params.icon_type],
+					uploadDir: "./uploaded/company_info",
+					onSuccess: () => {
+						rm.send()
+					},
+					onReject: (e) => {
+						rm.send_error(e)
+					}
+				})
+				break
+			case "delete_icon":
+				var file_names = fs.readdirSync('./uploaded/company_info')
+				var icon_file_name = file_names.find(i => i.split('.')[0] === params.icon_type)
+				if (icon_file_name) {
+					fs.rmSync(path.join('./uploaded/company_info', icon_file_name), {force : true})
+				}
+				rm.send()
+				break;
+			
 		}
 	});
 	var server = app.listen(process.env.api_port, () => {
