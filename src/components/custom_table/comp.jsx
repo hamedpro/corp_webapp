@@ -1,3 +1,4 @@
+import "./styles.css"
 export function CustomTable({ headerItems, rows, children, className = null }) {
 	return (
 		<div
@@ -20,8 +21,9 @@ export function CustomTable({ headerItems, rows, children, className = null }) {
 							<tr key={index} className="border border-blue-400">
 								{row.map((cell, index) => {
 									return (
-										<td key={index} onClick={cell.onClick}>
+										<td className="cutsom_table_cell" key={index} onClick={cell.onClick}>
 											{cell.value}
+											<span className="after_text hidden">(click to modify)</span>
 										</td>
 									);
 								})}
