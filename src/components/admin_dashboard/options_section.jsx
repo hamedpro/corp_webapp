@@ -53,6 +53,7 @@ export default function OptionsSection() {
 					en: "options:",
 					fa: "گزینه ها",
 				})}
+				className="mb-2"
 			>
 				<div className=" px-2">
 					<button
@@ -73,8 +74,12 @@ export default function OptionsSection() {
 					</button>
 				</div>
 			</Section>
-			<ManageIconsSection />
-			<CompanyInfoSection />
+			<div className="mb-2">
+				<ManageIconsSection />
+			</div>
+			<div className="mb-2">
+				<CompanyInfoSection />
+				</div>
 		</div>
 	);
 }

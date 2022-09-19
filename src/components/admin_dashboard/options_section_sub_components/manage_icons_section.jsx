@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { customAjax } from '../../../custom_ajax';
 import Section from '../../section/comp'
+import { StyledButton } from '../../styled_elements';
 export function ManageIconsSection() {
 	function fetch_data() {
 		
@@ -47,12 +48,12 @@ export function ManageIconsSection() {
 			<input id="common_input" type="file" className="hidden" />
 			<Section title="manage icons">
 				<div className='flex flex-col items-start px-2'>
-			<button onClick={()=>config_and_open_input("square")}>{ml({ en: "upload new square icon", fa: "بارگزاری آیکون مربع جدید" })}</button>
-			<button onClick={()=>config_and_open_input("rectangle")}>{ml({ en: "upload new rectangle icon", fa: "بارگزاری آیکون مستطیل جدید" })}</button>
-			<button onClick={()=>config_and_open_input("favicon")}>{ml({ en: "upload new favicon", fa: "ریز آیکون جدید" })}</button>
-			<button onClick={()=>del_icon('square')}>{ml({ en: "delete square icon", fa: "حذف کردن آیکون مربع" })}</button>
-			<button onClick={()=>del_icon('rectangle')}>{ml({ en: "delete rectangle icon", fa: "حذف کردن آیکون مستطیل" })}</button>
-			<button onClick={()=>del_icon('favicon')}>{ml({ en: "delete favicon", fa: "حذف کردن ریز آیکون" })}</button>
+			<StyledButton className="mb-2" onClick={()=>config_and_open_input("square")}>{ml({ en: "upload new square icon", fa: "بارگزاری آیکون مربع جدید" })}</StyledButton>
+			<StyledButton className="mb-2" onClick={()=>config_and_open_input("rectangle")}>{ml({ en: "upload new rectangle icon", fa: "بارگزاری آیکون مستطیل جدید" })}</StyledButton>
+			<StyledButton className="mb-2" onClick={()=>config_and_open_input("favicon")}>{ml({ en: "upload new favicon", fa: "ریز آیکون جدید" })}</StyledButton>
+			<StyledButton className="mb-2" onClick={()=>del_icon('square')}>{ml({ en: "delete square icon", fa: "حذف کردن آیکون مربع" })}</StyledButton>
+			<StyledButton className="mb-2" onClick={()=>del_icon('rectangle')}>{ml({ en: "delete rectangle icon", fa: "حذف کردن آیکون مستطیل" })}</StyledButton>
+			<StyledButton className="mb-2" onClick={()=>del_icon('favicon')}>{ml({ en: "delete favicon", fa: "حذف کردن ریز آیکون" })}</StyledButton>
 			</div>
 			</Section>
 		</>
