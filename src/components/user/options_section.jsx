@@ -4,9 +4,25 @@ import ListItem from "../list_item/comp.jsx";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { multi_lang_helper as ml } from "../../common.js";
-export function OptionsSection() {
+export function OptionsSection({after_options}) {
 	var nav = useNavigate();
 	var username = useParams().username;
+	function unsubscribe(type) {
+		customAjax({
+			params: {
+				task_name: "unsubscribe",
+				username,
+				type
+			}
+		}).then(() => {
+			alert('done successfuly')
+		}, e => {
+			alert('something went wrong')
+			console.log(e)
+		}).finally(() => {
+			after_options()
+		})
+	}
 	var option_funcs = {
 		change_password: () => {
 			var old_password = prompt(
@@ -30,6 +46,7 @@ export function OptionsSection() {
 						}
 					},
 					(error) => {
+						alert('something went wrong')
 						console.log(error);
 					}
 				)
@@ -40,15 +57,6 @@ export function OptionsSection() {
 		logout: () => {
 			window.localStorage.removeItem("username");
 			nav("/");
-		},
-		change_profile_bio: () => {
-			alert(
-				ml({
-					en: "this feature will be implented soon",
-					fa: "این ویژگی به زودی اضافه خواهد شد",
-				})
-			);
-			//todo all of these funcs
 		},
 		change_username: () => {
 			alert(
@@ -66,25 +74,16 @@ export function OptionsSection() {
 				})
 			);
 		},
-		unsubscribe_emails: () => {
-			alert(
-				ml({
-					en: "this feature will be implented soon",
-					fa: "این ویژگی به زودی اضافه خواهد شد",
-				})
-			);
+		unsubscribe_email: () => {
+			unsubscribe("email")
 		},
 		unsubscribe_sms: () => {
-			alert(
-				ml({
-					en: "this feature will be implented soon",
-					fa: "این ویژگی به زودی اضافه خواهد شد",
-				})
-			);
+			unsubscribe('sms')
 		},
 	};
+	
 	return (
-		<Section title={ml({ en: "options", fa: "گزینه ها" })}>
+		<Section title={ml({ en: "options", fa: "گزینه ها" })} className="mt-2 mx-1">
 			<ListItem
 				onClick={option_funcs.change_password}
 				items={[ml({ en: "change password", fa: "تغییر رمز عبور" })]}
@@ -106,7 +105,7 @@ export function OptionsSection() {
 				items={[ml({ en: "delete account", fa: "حذف حساب کاربری" })]}
 			/>
 			<ListItem
-				onClick={option_funcs.unsubscribe_emails}
+				onClick={option_funcs.unsubscribe_email}
 				items={[ml({ en: "unsubscribe emails", fa: "لغو عضویت در ایمیل ها" })]}
 			/>
 			<ListItem

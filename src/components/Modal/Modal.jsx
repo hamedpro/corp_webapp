@@ -8,6 +8,7 @@ export default function Modal({ type, hideFn = () => {}, is_visible, children, c
 			<div
 				className="fixed w-full h-full top-0 left-0 z-50"
 				style={{ backgroundColor: "rgba(0,0,0,0.5)", filter: "blur(2px)" }}
+				onClick={hideFn}
 			></div>
 		);
 	};

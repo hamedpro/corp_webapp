@@ -226,7 +226,7 @@ async function main() {
 					);
 					var output2 = await cq(
 						con,
-						`insert into users (username,hashed_password) values ('${params.username}','${hashed_password}');`
+						`insert into users (username,hashed_password,email,phone_number,time) values ('${params.username}','${hashed_password}',${params.email_address === "" ? "NULL" : JSON.stringify(params.email_address)},${params.mobile === "" ? "NULL" : JSON.stringify(params.mobile)},'${new Date().getTime()}');`
 					);
 					if (output2.error) {
 						rm.send_error(output2.error);
@@ -1391,6 +1391,11 @@ async function main() {
 				break;
 			case "del_product_image":
 				fs.rmSync(path.join('./uploaded/product_images',params.image_file_name), { force: true }) 
+				rm.send()
+				break;
+			case "unsubscribe":
+				var o = await cq(con, `update users set is_subscribed_to_${params.type} = 'false' where username = '${params.username}' `)
+				if (o.error) rm.send_error(o.error)
 				rm.send()
 				break;
 		}

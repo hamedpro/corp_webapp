@@ -16,3 +16,32 @@ html {
 .fa * {
 	direction: rtl;
 }
+@keyframes custom_animation {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0.9;
+		transform: translate(-120%,-50%);
+		position: absolute;
+	}
+	
+}
+.hamedpro8977_list_item {
+	position: relative;
+}
+.hamedpro8977_icon {
+	top: 50%;
+	opacity: 0;
+	left: 100%;
+	transform:  translateY(-50%);
+	position: absolute;
+}
+.hamedpro8977_list_item:hover .hamedpro8977_icon {
+	animation-name: custom_animation;
+	animation-duration: 400ms;
+	animation-fill-mode: forwards;
+
+	transform: translateY(-50%);
+	position: absolute;
+}

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../custom_ajax";
-import "./styles.css";
 import { Button } from "@mui/material";
 import { ArrowCircleRightRounded } from "@mui/icons-material";
 import { multi_lang_helper as ml } from "../../common";

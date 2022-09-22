@@ -97,9 +97,10 @@ export default function NewProduct() {
 				en: "new product page",
 				fa: "بخش تعریف کالای جدید",
 			})}
+			className="mx-1 mt-2"
 		>
 			<div id="new_product" className="px-2">
-				<p className="text-xl">
+				<p className="text-lg">
 					{ml({
 						en: "name:",
 						fa: "نام کالا :",
@@ -107,7 +108,7 @@ export default function NewProduct() {
 				</p>
 				<CustomInput id="name_input" />
 
-				<p className="mt-2 text-xl">
+				<p className="mt-2 text-lg">
 					{ml({
 						en: "description:",
 						fa: "متن معرفی کالا:",
@@ -176,14 +177,14 @@ export default function NewProduct() {
 						})}
 					</tbody>
 				</table>
-				<p className="mt-2 text-xl">
+				<p className="mt-2 text-lg">
 					{ml({
 						en: "price:",
 						fa: "قیمت (تومان):",
 					})}
 				</p>
 				<CustomInput id="price_input" />
-				<p className="mt-2 text-xl">
+				<p className="mt-2 text-lg">
 					{ml({
 						en: "discount percent:",
 						fa: "درصد تخفیف",
@@ -197,7 +198,7 @@ export default function NewProduct() {
 					category={category}
 				/>
 
-				<p className="mt-2 text-xl">
+				<p className="mt-2 text-lg">
 					{ml({
 						en: "images : ",
 						fa: "عکس ها:",
@@ -206,7 +207,7 @@ export default function NewProduct() {
 				<input id="images_input" type="file" multiple />
 				<button
 					onClick={submit_new_product}
-					className="block border text-xl border-blue-400 rounded mt-4 hover:text-white hover:bg-blue-600 px-2 py-1"
+					className="block border text-lg border-blue-400 rounded mt-4 hover:text-white hover:bg-blue-600 px-2 py-1"
 				>
 					{ml({
 						en: "add new product as ",

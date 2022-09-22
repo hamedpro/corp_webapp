@@ -5,6 +5,7 @@ import ListItem from "../list_item/comp";
 import Section from "../section/comp";
 import { multi_lang_helper as ml } from "../../common";
 import { CheckUserPrivilege } from "../CheckUserPrivilege/comp";
+import { Loading } from "../loading/comp";
 export default function Order() {
 	var username = useParams().username;
 	var order_id = Number(useParams().order_id);
@@ -28,14 +29,8 @@ export default function Order() {
 	//todo : use user_id instead of username in whole app becuse username can be changed
 	return (
 		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
-			{order === null ? (
-				<h1>
-					{ml({
-						en: "loading",
-						fa: "در حال بارگذاری",
-					})}
-				</h1>
-			) : (
+			<Loading is_loading={ order=== null} />
+			{order !== null && (
 				<Section title={ml({ en: "order details", fa: "جزییات سفارش ها" })}>
 					<ListItem
 						vertical={true}

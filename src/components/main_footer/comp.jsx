@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { LinkLikeP } from "../";
 import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
 import Subscripting from "./subscripting";
-import { Instagram, Telegram, Twitter } from "@mui/icons-material";
 import { AppContext } from "../../AppContext";
 import { useContext, useState } from "react";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common";
@@ -12,6 +11,7 @@ import { customAjax } from "../../custom_ajax";
 import { useEffect } from "react";
 import Section from "../section/comp";
 import { Loading } from "../loading/comp";
+import { FollowUsRow } from "../follow_us_row";
 export default function MainFooter() {
 	var nav = useNavigate();
 	var AppContextState = useContext(AppContext).AppContextState;
@@ -66,21 +66,21 @@ export default function MainFooter() {
 			<div className="bg-sky-800 text-white">
 				<div className="flex p-2 h-16 mt-2 mb-7 mx-2">
 					<div className="w-2/3 h-full flex mb-2 space-x-2">
-						<div className="h-16 w-fit bg-blue-500">
+						<div className="h-16 w-fit bg-blue-500 rounded-lg">
 							{square_icon_src ? (
 								<img
 									src={square_icon_src}
-									className="h-full w-fit"
+									className="h-full w-fit rounded-lg"
 									style={{ objectFit: "contain" }}
 								/>
 							) : (
 								<div className="h-16 w-16 bg-blue-400 mb-3 rounded"></div>
 							)}
 						</div>
-						<div className="text-lg">
+						<div className="text-xl">
 							{company_info && company_info.name}
 							<br />
-							<LinkLikeP link="/company-info" className="">
+							<LinkLikeP link="/company-info" className="text-stone-400 text-sm">
 								{ml({
 									en: "(about us)",
 									fa: "(درباره ما)",
@@ -89,18 +89,7 @@ export default function MainFooter() {
 						</div>
 					</div>
 					<div className="w-1/3 flex justify-end">
-						<button
-							onClick={() => scroll(0, 0)}
-							className="bg-blue-600 px-1 mr-1 h-fit text-sm"
-						>
-							<KeyboardArrowUpRoundedIcon />
-							<span>
-								{ml({
-									en: "go to top",
-									fa: "بالای صفحه",
-								})}
-							</span>
-						</button>
+						
 					</div>
 				</div>
 				<div className="flex flex-wrap md:flex-nowrap mx-2 p-2 md:space-x-2">
@@ -142,113 +131,33 @@ export default function MainFooter() {
 						)}
 					</div>
 				</div>
-
-				<div className="flex h-8 w-full items-center space-x-3 my-4 mx-2 px-1">
-					<h1 className="mr-6 text-xl">
-						{ml({
-							en: "follow us !",
-							fa: "ما را دنبال کنید !",
-						})}
-					</h1>
-					<Instagram
-						onClick={() => {
-							if (company_info) {
-								var id = company_info.instagram;
-								if (id === "" || !id) {
-									alert(
-										ml({
-											en: "instagram id is not set",
-											fa: "آیدی اینستاگرام هنوز ثبت نشده است",
-										})
-									);
-								} else {
-									window.location.replace(
-										`https://instagram.com/${company_info.instagram}`
-									);
-								}
-							} else {
-								alert(
-									ml({
-										en: "company info is not loaded yet",
-										fa: "اطلاعات شرکت هنوز بارگزاری نشده است",
-									})
-								);
-							}
-						}}
+				<Loading is_loading={company_info === null} />
+				{company_info !== null && (
+					<FollowUsRow
+						className="mx-2"
+						telegram={company_info.telegram}
+						instagram={company_info.instagram}
+						twitter={ company_info.twitter}
 					/>
-					<Twitter
-						onClick={() => {
-							if (company_info) {
-								var id = company_info.twitter;
-								if (id === "" || !id) {
-									alert(
-										ml({
-											en: "twitter id is not set",
-											fa: "آیدی توییتر هنوز ثبت نشده است",
-										})
-									);
-								} else {
-									window.location.replace(
-										`https://twitter.com/${company_info.twitter}`
-									);
-								}
-							} else {
-								alert(
-									ml({
-										en: "company info is not loaded yet",
-										fa: "اطلاعات شرکت هنوز بارگزاری نشده است",
-									})
-								);
-							}
-						}}
-					/>
-					<Telegram
-						onClick={() => {
-							if (company_info) {
-								var id = company_info.telegram;
-								if (id === "" || !id) {
-									alert(
-										ml({
-											en: "telegram id is not set",
-											fa: "آیدی تلگرام هنوز ثبت نشده است",
-										})
-									);
-								} else {
-									window.location.replace(
-										`https://t.me/${company_info.telegram}`
-									);
-								}
-							} else {
-								alert(
-									ml({
-										en: "company info is not loaded yet",
-										fa: "اطلاعات شرکت هنوز بارگزاری نشده است",
-									})
-								);
-							}
-						}}
-					/>
-				</div>
-				<div className="bg-sky-900 flex flex-col py-1 space-y-1">
-					<div className="flex flex-row mx-2 text-sm">
-						<div className="w-4/6 flex items-center">
-							<p>
-								{ml({
-									en: "developed by",
-									fa: "توسعه داده شده توسط",
-								})}{" "}
-								<a href="https://github.com/hamedpro">@hamedpro</a>
-							</p>
-						</div>
-					</div>
+				)}
+				<div className="bg-sky-900 flex flex-col py-1 space-y-1" style={{color:'lightgray'}}>
 					<div className="flex flex-row mx-2 text-sm flex-wrap space-x-1">
+						<p>
+							**{" "}
+							{ml({
+								en: "developed by",
+								fa: "توسعه داده شده توسط",
+							})}{" "}
+							<a href="https://github.com/hamedpro">@hamedpro</a>
+							{" "} **
+						</p>
+						<span>|</span>
 						<LinkLikeP link="/new-support-ticket">
 							{ml({
 								en: "report a bug",
 								fa: "گزارش یک اشکال نرم افزاری",
 							})}
 						</LinkLikeP>
-						<span>|</span>
 						<LinkLikeP link="/terms">
 							{ml({
 								en: "terms of use",

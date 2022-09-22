@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { HideImageRounded } from "@mui/icons-material";
+import { HideImageRounded, InfoRounded } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import Section from "../section/comp.jsx";
 import { OrdersPageOrder } from "../orders/orders_page_order.jsx";
@@ -9,6 +9,8 @@ import React from "react";
 import { OptionsSection } from "./options_section.jsx";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
 import { CheckUserPrivilege } from "../CheckUserPrivilege/comp.jsx";
+import { Loading } from "../loading/comp.jsx";
+import { Alert } from "../alert/comp.jsx";
 function Item(props) {
 	return (
 		<div
@@ -25,7 +27,7 @@ function Item(props) {
 	);
 }
 export default function User() {
-	var [orders_to_show, set_orders_to_show] = useState([]);
+	var [orders_to_show, set_orders_to_show] = useState(null);
 	var nav = useNavigate();
 	var username = useParams().username;
 	var translated_loading = ml({
@@ -112,7 +114,7 @@ export default function User() {
 		}).then(
 			(data) => {
 				var orders = data.result;
-				set_orders_to_show(orders.slice(0, 3));
+				set_orders_to_show(orders.slice(0, 5));
 			},
 			(error) => {
 				console.log(error);
@@ -187,8 +189,14 @@ export default function User() {
 						<Item>...</Item>
 					</div>
 					<OptionsSection after_options={fetch_data} />
-					<Section title={ml({ en: "orders", fa: "سفارش ها" })}>
-						{orders_to_show.map((order, index) => {
+					<Section title={"last 5 orders"} className="mt-2 mx-1" innerClassName="px-2">
+						<Loading is_loading={orders_to_show === null} />
+						{orders_to_show !== null && orders_to_show.length === 0 && (
+							<Alert icon={<InfoRounded />}>
+								there is not any orders submited for this user
+							</Alert>
+						)}
+						{orders_to_show !== null && orders_to_show.map((order, index) => {
 							return (
 								<React.Fragment key={index}>
 									<OrdersPageOrder order={order} />

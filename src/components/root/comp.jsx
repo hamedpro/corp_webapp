@@ -30,9 +30,9 @@ export default function Root() {
 	useEffect(fetch_data, []);
 	return (
 		<>
-			<ImageSlider className="mt-1 bg-sky-500" image_sources={[]} />
+			<ImageSlider className="mt-1 bg-sky-600" image_sources={[]} />
 			<ProductsRow
-				icon={<Discount />}
+				icon={<Discount sx={{color:"darkblue"}} />}
 				title={ml({
 					en: "discounted products",
 					fa: "محصولات دارای تخفیف",
@@ -41,7 +41,7 @@ export default function Root() {
 			/>
 			<DiffrentSections />
 			<ProductsRow
-				icon={<Stars />}
+				icon={<Stars sx={{color:"darkblue"}} />}
 				title={ml({
 					en: "suggested products for you",
 					fa: "کالاهای پیشنهادی برای شما",

@@ -40,7 +40,7 @@ export default function Login() {
 		);
 	}
 	return (
-		<Section title={ml({ en: "login", fa: "ورود به حساب کاربری" })}>
+		<Section title={ml({ en: "login", fa: "ورود به حساب کاربری" })} className="mx-1">
 			<div className="px-2">
 				<p>
 					{ml({
@@ -69,7 +69,7 @@ export default function Login() {
 						);
 					}}
 					id="login_button"
-					className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-600 duration-300"
+					className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-500 duration-300"
 				>
 					{ml({
 						en: "login",

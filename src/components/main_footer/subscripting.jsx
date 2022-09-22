@@ -28,7 +28,7 @@ export default function Subscripting({ className = null }) {
 				"flex flex-col border border-blue-400 rounded" + (className ? ` ${className}` : ``)
 			}
 		>
-			<div className="flex w-full space-x-1">
+			<div className="flex w-full">
 				<div className="w-1/2 border-b">
 					<Tab
 						content={ml({

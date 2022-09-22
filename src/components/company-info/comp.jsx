@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
+import { FollowUsRow } from "../follow_us_row.jsx";
 import { ImageSlider } from "../image_slider/comp.jsx";
 import LinkLikeP from "../LinkLikeP/comp.jsx";
 import { Loading } from "../loading/comp.jsx";
 import Section from "../section/comp";
+import { StyledDiv } from "../styled_elements.jsx";
 export default function CompanyInfo() {
 	var [company_info, set_company_info] = useState(null);
 	function get_data() {
@@ -66,7 +68,7 @@ export default function CompanyInfo() {
 					<div className="md:w-1/2 w-full">
 						<Loading is_loading={company_info === null} />
 						{company_info !== null && (
-							<div className="m-2 p-1 flex-col">
+							<div className="flex-col">
 								{[
 									{
 										label: ml({ en: "company name", fa: "نام شرکت" }),
@@ -100,30 +102,23 @@ export default function CompanyInfo() {
 									{
 										label: ml({ en: "address", fa: "آدرس" }),
 										key: "address",
-									},
-									{
-										label: ml({ en: "telegram id", fa: "آیدی تلگرام" }),
-										key: "telegram",
-									},
-									{
-										label: ml({ en: "instagram id", fa: "آیدی اینستاگرام" }),
-										key: "instagram",
-									},
-									{
-										label: ml({ en: "twitter", fa: "آیدی توییتر" }),
-										key: "twitter",
-									},
+									}
 								].map((item, index) => {
 									return (
 										<React.Fragment key={index}>
-											<span className="text-stone-600 text-sm">
+											<span className="text-stone-600">
 												{item.label} :{" "}
 											</span>
-											<span>{company_info[item.key]}</span>
+											<span className="text-lg">{company_info[item.key]}</span>
 											<br />
 										</React.Fragment>
 									);
 								})}
+								<FollowUsRow
+									instagram={company_info.instagram}
+									telegram={company_info.telegram}
+									twitter={ company_info.twitter}
+								/>
 							</div>
 						)}
 					</div>
@@ -157,12 +152,14 @@ export default function CompanyInfo() {
 								fa: "اگر هر مساله یا سوالی در مورد سایت ما دارید یا با یکی از شماره تلفن های داده شده تماس بگیرید یا به راحتی یک درخواست پشتیبانی جدید باز کنید :",
 							})}
 						</h1>
-						<LinkLikeP link="/new-support-ticket">
-							{ml({
-								en: "opening a new support ticket",
-								fa: "باز کردن یک درخواست پشتیبانی جدید",
-							})}
-						</LinkLikeP>
+						<StyledDiv className="w-fit mt-2">
+							<LinkLikeP link="/new-support-ticket">
+								{ml({
+									en: "opening a new support ticket",
+									fa: "باز کردن یک درخواست پشتیبانی جدید",
+								})}
+							</LinkLikeP>
+						</StyledDiv>
 					</div>
 				</Section>
 			</Section>

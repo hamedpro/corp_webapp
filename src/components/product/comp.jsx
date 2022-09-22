@@ -7,6 +7,7 @@ import AddToShoppingBagBar from "./AddToShoppingBagBar";
 import Section from "../section/comp.jsx";
 import { ImageSlider } from "../image_slider/comp.jsx";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
+import { Loading } from "../loading/comp.jsx";
 export default function Product() {
 	var product_id = useParams().product_id;
 	var translated_loading = ml({
@@ -49,7 +50,7 @@ export default function Product() {
 	useEffect(() => {
 		fetch_data();
 	}, []);
-	var [image_sources, set_image_sources] = useState([]);
+	var [image_sources, set_image_sources] = useState(null);
 	useEffect(() => {
 		customAjax({
 			params: {
@@ -67,7 +68,10 @@ export default function Product() {
 		<>
 			<div className="flex flex-col md:flex-row mx-auto border border-blue-400 mt-2 p-2 mx-1">
 				<div className="md:w-1/2">
-					{image_sources.length == 0 ? (
+					<Loading is_loading={image_sources === null} />
+					{image_sources !== null && (
+						<>
+						{image_sources.length == 0 ? (
 						<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
 							{ml({
 								en: "there is not any product image uploaded for this product",
@@ -77,6 +81,9 @@ export default function Product() {
 					) : (
 						<ImageSlider image_sources={image_sources} />
 					)}
+						</>
+					)}
+					
 				</div>
 
 				<div className="flex flex-col md:w-1/2 p-2 space-between">
@@ -102,6 +109,7 @@ export default function Product() {
 					en: "description",
 					fa: "معرفی محصول :",
 				})}
+				className="mx-1 mt-2"
 			>
 				<div className="mx-2">
 					<p className="mt-1">{product.description}</p>
@@ -112,6 +120,7 @@ export default function Product() {
 					en: "product specifications:",
 					fa: "مشخصات محصول :",
 				})}
+				className="mx-1 mt-2"
 			>
 				<div className="mx-2">
 					{/*todo add option for report data incorrect which opens pop up to open a new support ticket */}

@@ -30,7 +30,7 @@ export default function ProductItem({ id, name, price, className = undefined, di
 	return (
 		<div
 			className={
-				"p-1 flex flex-col shrink-0 cursor-pointer w-6/12 block border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
+				"p-1 flex flex-col shrink-0 cursor-pointer w-1/2 md:w-1/3 block border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
 				(className ? " " + className : "")
 			}
 			onClick={() => nav("/products/" + id)}
@@ -43,13 +43,13 @@ export default function ProductItem({ id, name, price, className = undefined, di
 				) : (
 					<div className="h-full rounded-lg bg-blue-400 w-full flex justify-center items-center">
 						<img
-								className="h-full"
-								style={{ objectFit: "contain" }}
-								src={the_image_src}
-								alt={ml({
-									en: "this product's first image",
-									fa : ""
-								})}
+							className="h-full"
+							style={{ objectFit: "contain" }}
+							src={the_image_src}
+							alt={ml({
+								en: "this product's first image",
+								fa : ""
+							})}
 						/>
 					</div>
 				)}

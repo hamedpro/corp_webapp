@@ -30,6 +30,7 @@ export default function TotalRating(props) {
 				en: "the product's user rating:",
 				fa: "بررسی کالا توسط مردم",
 			})}
+			className="mx-1 mt-2"
 		>
 			<div className="w-full ">
 				<div className="px-2 flex flex-col md:flex-row">

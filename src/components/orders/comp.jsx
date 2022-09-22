@@ -7,10 +7,13 @@ import React from "react";
 import { OrdersPageOrder } from "./orders_page_order";
 import { multi_lang_helper as ml } from "../../common";
 import { CheckUserPrivilege } from "../CheckUserPrivilege/comp";
+import { Loading } from "../loading/comp";
+import { Alert } from "../alert/comp";
+import { InfoRounded } from "@mui/icons-material";
 export default function Orders() {
 	var nav = useNavigate();
 	var username = useParams().username;
-	var [orders, set_orders] = useState([]);
+	var [orders, set_orders] = useState(null);
 	function fetch_data() {
 		customAjax({
 			params: {
@@ -34,8 +37,14 @@ export default function Orders() {
 	//add system to alert user when product comes available
 	return (
 		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
-			<Section title={ml({ en: "my orders list", fa: "لیست سفارش های من" })}>
-				{orders.map((order, index) => {
+			<Section title={ml({ en: "my orders list", fa: "لیست سفارش های من" })} className="mx-1 mt-1" innerClassName="px-2">
+				<Loading is_loading={orders === null} />
+				{orders !== null && orders.length === 0 && (
+					<Alert icon={<InfoRounded />}>
+						there is not any order for this user
+					</Alert>
+				)}
+				{orders !== null && orders.map((order, index) => {
 					return (
 						<React.Fragment key={index}>
 							<OrdersPageOrder order={order} />

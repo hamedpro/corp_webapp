@@ -9,8 +9,8 @@ import { multi_lang_helper as ml } from "../../common";
 import React from "react";
 function CustomItem({ icon, title, onClick = () => {} }) {
 	return (
-		<div className="min-h-0 w-1/3 flex flex-col  items-center shrink-0 my-3" onClick={onClick}>
-			<div className="rounded-lg bg-blue-300 h-10 w-10 flex justify-center items-center">
+		<div className="min-h-0 w-1/3 flex flex-col items-center shrink-0 my-3 cursor-pointer" onClick={onClick}>
+			<div className="rounded-lg bg-blue-300 h-10 w-10 flex justify-center items-center hover:text-white hover:bg-blue-500 duration-300">
 				{icon}
 			</div>
 			<p className="text-sm mt-1 text-center">{title}</p>
@@ -21,12 +21,7 @@ export function DiffrentSections() {
 	var nav = useNavigate();
 	return (
 		<>
-			<h1>
-				{ml({
-					en: "diffrent parts of website",
-					fa: "بخش های مختلف وب سایت",
-				})}
-			</h1>
+			
 			<div className="flex flex-wrap">
 				{[
 					{
@@ -60,7 +55,7 @@ export function DiffrentSections() {
 					},
 					{
 						title: ml({ en: "about company (about us)", fa: "معرفی شرکت (درباره ما)" }),
-						icon: <InfoIcon />,
+						icon: <InfoIcon/>,
 						onClick: () => {
 							nav("/company-info");
 						},

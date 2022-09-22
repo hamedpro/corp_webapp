@@ -46,6 +46,7 @@ const user_reviews = (props) => {
 						en: "user reviews:",
 						fa: "بررسی های کاربران :",
 					})}
+					className="mx-1 mt-2"
 				>
 					<div className="w-full flex justify-center flex-col py-3">
 						<h1 className="text-center">
@@ -75,6 +76,7 @@ const user_reviews = (props) => {
 							en: "user reviews :",
 							fa: "بررسی های کاربران:",
 						})}
+						className="mx-1 mt-2"
 					>
 						<div
 							className=" mx-2 mb-1 flex  h-40 space-x-2"
@@ -115,7 +117,7 @@ const user_reviews = (props) => {
 							</div>
 						</div>
 					</Section>
-					<Section title={ml({ en: "add a new review", fa: "اضافه کردن یک بررسی جدید" })}>
+					<Section title={ml({ en: "add a new review", fa: "اضافه کردن یک بررسی جدید" })} className="mt-2 mx-1">
 						<div className=" mx-2 bg-blue-500 p-3 h-full flex flex-col justify-center items-center">
 							<h1 className="text-white w-1/2 text-center mb-2">
 								{ml({

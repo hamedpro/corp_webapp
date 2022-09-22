@@ -3,11 +3,12 @@ import UsersSection from "./users_section";
 import ProductsSection from "./products_section";
 import "./styles.css";
 import { useState } from "react";
-import { Info } from "@mui/icons-material";
+import { Info, InfoRounded } from "@mui/icons-material";
 import { OrdersSection } from "./orders_section";
 import { SupportTicketsSection } from "./support_tickets_section";
 import { ProductReviews } from "./product_reviews";
 import { BlogComments } from "./blog_comments";
+import { Alert } from "../alert/comp";
 export default function AdminDashboard() {
 	var [tab, set_tab] = useState("manage_products");
 	var tabs = [
@@ -54,10 +55,13 @@ export default function AdminDashboard() {
 	return (
 		<>
 			<div className="md:hidden">
-				{ml({
-					en: "to view this page you should use a bigger monitor",
-					fa: "برای استفاده از امکانات این صفحه باید از کامپیوتر (مانیتوری بزرگتر) استفاده کنید",
-				})}
+				<Alert icon={<InfoRounded />} className="mx-1 mt-2">
+					{ml({
+						en: "to view this page you should use a bigger monitor",
+						fa: "برای استفاده از امکانات این صفحه باید از کامپیوتر (مانیتوری بزرگتر) استفاده کنید",
+					})}
+				</Alert>
+				
 			</div>
 			<div id="admin-dashboard" className="hidden h-full w-full md:flex">
 				<div className="w-3/12 bg-blue-500">

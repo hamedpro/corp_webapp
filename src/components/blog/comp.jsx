@@ -7,6 +7,7 @@ import { Loading } from "../loading/comp";
 import { CustomTable } from "../custom_table/comp";
 import { Alert } from "../alert/comp";
 import { InfoRounded } from "@mui/icons-material";
+import { StyledInput ,StyledDiv} from "../styled_elements";
 export default function Blog() {
 	var blog_id = useParams().blog_id;
 	var [blog, set_blog] = useState(null);
@@ -76,6 +77,7 @@ export default function Blog() {
 			<Section
 				title="comments"
 				innerClassName="px-2"
+				className="mx-1 mt-2"
 			>
 				{blog_comments !== null && blog_comments.length === 0 && (
 					<Alert icon={<InfoRounded />}>
@@ -85,7 +87,7 @@ export default function Blog() {
 				<Loading is_loading={ blog_comments === null} />
 				{blog_comments !== null && blog_comments.map((comment, index) => {
 					return (
-						<div className="border border-stone-400" key={index}>
+						<div className="border border-stone-400 mb-1 p-1 rounded" key={index}>
 							<p># {comment.id}</p>
 							<p>title : { comment.title}</p>
 							<p>text : { comment.text}</p>
@@ -94,16 +96,17 @@ export default function Blog() {
 					)
 				})}
 			</Section>
-			<Section title="new comment">
+			<Section title="new comment" className="mx-1 mt-2" innerClassName="px-2">
 				<p>share your thought with us by sumbitting a new comment !</p>
 
 				<p>comment title:</p>
-				<input id="title_input" />
+				<StyledInput id="title_input" />
 
 				<p>comment text:</p>
-				<textarea id="text_input" />
-
-				<button onClick={submit_new_comment}>submit</button>
+				<StyledInput id="text_input" />
+				<StyledDiv onClick={submit_new_comment}
+				className="w-fit mt-2 mb-1"
+				>submit</StyledDiv>
 			</Section>
 		</>
 	);

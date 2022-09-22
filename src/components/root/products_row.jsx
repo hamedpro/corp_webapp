@@ -2,15 +2,15 @@ import React from "react";
 import { Loading } from "../loading/comp";
 import ProductItem from "../products/product_item";
 import { multi_lang_helper as ml } from "../../common";
-export function ProductsRow({ products, icon, title }) {
+export function ProductsRow({ products, icon, title ,className=""}) {
 	return (
 		<>
 			{products === null ? (
 				<Loading />
 			) : (
-				<div className="flex bg-sky-200 rounded py-3 overflow-x-auto px-2">
+				<div className={["flex bg-sky-700 py-3 overflow-x-auto px-2 text-white",className].join(' ')}>
 					<div className="flex flex-col justify-center px-5 items-center space-y-2">
-						<div className="h-14 w-14 bg-blue-500 rounded-full flex justify-center items-center">
+						<div className="h-14 w-14 bg-white rounded-full flex justify-center items-center">
 							{icon}
 						</div>
 						<h1>{title}</h1>
@@ -34,7 +34,7 @@ export function ProductsRow({ products, icon, title }) {
 											name={product.name}
 											price={product.price}
 											className={
-												"w-56 overflow-hidden " +
+												"w-56 overflow-hidden bg-blue-300 text-black " +
 												(index == 0 ? "rounded-l-xl" : "") +
 												(index == products.length - 1 ? "rounded-r-xl" : "")
 											}

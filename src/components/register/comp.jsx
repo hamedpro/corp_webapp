@@ -7,11 +7,20 @@ export default function Register() {
 	function register() {
 		var entered_username = document.getElementById("username_input").value;
 		var entered_password = document.getElementById("password_input").value;
+		var entered_mobile = document.getElementById("mobile_input").value;
+		var entered_email_address = document.getElementById("email_address_input").value;
+		var re_entered_password = document.getElementById("re_enter_password_input").value;
+		if (re_entered_password !== entered_password) {
+			alert('password and re entered password are not same')
+			return 
+		}
 		customAjax({
 			params: {
 				task_name: "new_user",
 				username: entered_username,
 				password: entered_password,
+				email_address: entered_email_address,
+				mobile : entered_mobile
 			},
 		}).then(
 			(data) => {
@@ -26,7 +35,7 @@ export default function Register() {
 		);
 	}
 	return (
-		<Section title={ml({ en: "register", fa: "ثبت نام" })}>
+		<Section title={ml({ en: "register", fa: "ثبت نام" })} className="mx-1 mt-1">
 			<div className="px-2">
 				<p>
 					{ml({
@@ -35,6 +44,7 @@ export default function Register() {
 					})}
 				</p>
 				<input id="username_input" className="border border-blue-400 rounded px-1" />
+				
 				<p>
 					{ml({
 						en: "password:",
@@ -46,6 +56,35 @@ export default function Register() {
 					className="border border-blue-400 rounded px-1"
 					type="password"
 				/>
+
+				<p>
+					re-enter your password:
+				</p>
+				<input
+					id="re_enter_password_input"
+					className="border border-blue-400 rounded px-1"
+					type="password"
+				/>
+
+				<p>
+					email address: <span className="text-xs">(**optional, leave empty to ignore)</span>
+				</p>
+				<input
+					id="email_address_input"
+					className="border border-blue-400 rounded px-1"
+					type="email"
+				/>
+
+				<p>
+					mobile phone number: <span className="text-xs">(**optional, leave empty to ignore)</span>
+				</p>
+				<input
+					id="mobile_input"
+					className="border border-blue-400 rounded px-1"
+					type="text"
+				/>
+
+				
 				<button
 					className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-600 duration-300"
 					onClick={register}

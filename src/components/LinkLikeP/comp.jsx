@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-var LinkLikeP = (props) => {
+var LinkLikeP = ({className,link,children = ""}) => {
 	var nav = useNavigate();
 	return (
 		<p
-			className={typeof props.className == "undefined" ? "" : props.className}
+			className={className}
 			style={{ cursor: "pointer" }}
-			onClick={() => nav(props.link)}
+			onClick={() => nav(link)}
 		>
-			{props.children}
+			{children}
 		</p>
 	);
 };

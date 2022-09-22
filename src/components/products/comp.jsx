@@ -80,7 +80,7 @@ export default function Products() {
 				setFilterOptions={set_filter_options}
 				default_filter_options={default_filter_options}
 			/>
-			<Section title={ml({ en: "products", fa: "محصولات" })}>
+			<Section title={ml({ en: "products", fa: "محصولات" })} className="mx-1 mt-1">
 				<div className="flex mx-2 space-x-2">
 					<button
 						className="flex hover:bg-blue-400 rounded px-1"
@@ -128,6 +128,7 @@ export default function Products() {
 								price={product.price}
 								key={product.id}
 								discount_percent={product.discount_percent}
+								className="bg-white"
 							/>
 						);
 					})}
