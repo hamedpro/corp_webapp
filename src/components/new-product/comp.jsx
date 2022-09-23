@@ -47,26 +47,26 @@ export default function NewProduct() {
 		}).then(
 			(data) => {
 				var form = new FormData();
-				var files = document.getElementById("images_input").files;
-				var files_length = files.length;
-				for (var i = 0; i < files_length; i++) {
-					form.append(i, files[i]);
-				}
-				fetch(
-					new URL(
-						"?task_name=upload_product_images&product_id=" + data.result,
-						window.api_endpoint
-					).href,
-					{
-						method: "POST",
-						body: form,
-					}
-				)
-					.then((data) => data.text())
-					.then((data) => console.log(data));
+				var files = Object.keys(document.getElementById("images_input").files).map(key => {
+					return document.getElementById("images_input").files[key]
+				})
+				
+				customAjax({
+					params: {
+						task_name: "upload_product_images",
+						product_id : data.result
+					},
+					files
+				}).then(data => {
+					alert("done successfuly!")
+				}, e => {
+					alert('something went wrong')
+					console.log(e)
+				})
 			},
 			(error) => {
 				console.log(error);
+				alert('something went wrong when uploading text fields of this form \n more details in dev console')
 			}
 		);
 	}

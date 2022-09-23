@@ -32,7 +32,7 @@ export default function TotalRating(props) {
 			})}
 			className="mx-1 mt-2"
 		>
-			<div className="w-full ">
+			<div className="w-full">
 				<div className="px-2 flex flex-col md:flex-row">
 					<div className="md:w-1/2 flex justify-center items-center">
 						{props.reviews.length === 0 && (

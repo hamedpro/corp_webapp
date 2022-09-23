@@ -44,7 +44,7 @@ export async function customAjax({
 		if (verbose) {
 			console.log("this path is going to be fetched " + path);
 		}
-		response = await fetch(path, {
+		response = await fetch(path,{
 			method,
 			body: JSON.stringify(params),
 			headers,

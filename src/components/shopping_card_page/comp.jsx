@@ -7,6 +7,7 @@ import { ShoppingCardItem } from "./shopping_card_item";
 import { Alert } from "../alert/comp";
 import { multi_lang_helper as ml } from "../../common";
 import { CheckUserPrivilege } from "../CheckUserPrivilege/comp";
+import { Loading } from "../loading/comp";
 export default function ShoppingCardPage() {
 	var nav = useNavigate();
 	var username = useParams().username;
@@ -32,11 +33,7 @@ export default function ShoppingCardPage() {
 							);
 							return tmp;
 						});
-						if (oz.length !== 0) {
-							set_shopping_card_items(oz);
-						} else {
-							set_shopping_card_items(null);
-						}
+						set_shopping_card_items(oz);
 					},
 					(error) => {
 						console.log(error);
@@ -70,8 +67,9 @@ export default function ShoppingCardPage() {
 	return (
 		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
 			<div className="flex flex-col">
-				<Section title={ml({ en: "my shopping card", fa: "سبد خرید من" })} className="mb-2">
-					{shopping_card_items === null ? (
+				<Section title={ml({ en: "my shopping card", fa: "سبد خرید من" })} className="mb-2 mx-1 mt-2">
+					<Loading is_loading={shopping_card_items === null} />
+					{shopping_card_items !== null && shopping_card_items.length === 0 && (
 						<h1 className="mx-2">
 							<Alert icon={<InfoRounded />}>
 								{ml({
@@ -80,30 +78,32 @@ export default function ShoppingCardPage() {
 								})}
 							</Alert>
 						</h1>
-					) : (
-						<>
-							{shopping_card_items.map((shopping_card_item, index) => {
-								return (
-									<React.Fragment key={index}>
-										<ShoppingCardItem
-											shopping_card_item={shopping_card_item}
-											update_shopping_card_items_func={() => {
-												fetch_data();
-											}}
-										/>
-									</React.Fragment>
-								);
-							})}
-						</>
 					)}
+					
+					{shopping_card_items !== null &&  shopping_card_items.map((shopping_card_item, index) => {
+						return (
+							<React.Fragment key={index}>
+								<ShoppingCardItem
+									shopping_card_item={shopping_card_item}
+									update_shopping_card_items_func={() => {
+										fetch_data();
+									}}
+								/>
+							</React.Fragment>
+						);
+					})}
+						
+					
 				</Section>
 				<Section
 					title={ml({
 						en: "submit a new order",
 						fa: "ثبت سفارش جدید",
 					})}
+					className="mx-1 mt-1"
+					innerClassName="flex justify-center items-center"
 				>
-					<div className="flex m-2">
+					<div className="flex flex-col m-1 w-1/2 px-1 text-center justify-center items-center text-lg">
 						<p>
 							{ml({
 								en: "if you want to submit a order including these products above please enter a simple name for this order and click submit",
@@ -111,7 +111,7 @@ export default function ShoppingCardPage() {
 							})}
 						</p>
 						<input
-							className="border border-blue-400"
+							className="w-3/4 border border-blue-400 rounded mb-1 mt-3 px-1"
 							placeholder={ml({
 								en: "name of your new order",
 								fa: "نام سفارش جدید شما",
@@ -120,7 +120,7 @@ export default function ShoppingCardPage() {
 						/>
 
 						<button
-							className="h-8 mx-1 text-white bg-blue-500 rounded hover:bg-blue-600 duration-300"
+							className="w-3/4 h-8 text-white bg-blue-500 px-1 rounded hover:bg-blue-600 duration-300 mt-1"
 							onClick={submit_new_order}
 						>
 							{ml({
