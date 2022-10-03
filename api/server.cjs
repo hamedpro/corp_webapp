@@ -54,6 +54,7 @@ async function init() {
 		"./uploaded/profile_images",
 		"./uploaded/product_images",
 		"./uploaded/company_info",
+		"./uploaded/blog_images"
 	].forEach((path) => {
 		if (!fs.existsSync(path)) {
 			fs.mkdirSync(path);
@@ -178,6 +179,12 @@ async function main() {
 	app.all("/upload", async (req, res) => {
 		//
 		var rm = new response_manager(res);
+		try {
+			await init();
+		} catch (e) {
+			rm.send_error(e);
+			return;
+		}
 		var con = connect_to_db();
 		rm.add_mysql_con(con);
 		custom_upload({
