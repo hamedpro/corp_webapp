@@ -51,7 +51,7 @@ export async function customAjax({
 		});
 	}
 
-	if (!response.ok) {
+	if (!response.ok) { //todo add catch block for when fetch req iteself is rejected
 		throw new Error("response.ok was not true");
 	}
 	var parsed_json;

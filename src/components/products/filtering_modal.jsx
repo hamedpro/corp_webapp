@@ -29,12 +29,12 @@ export function FilteringModal({
 		});
 	}
 	return (
-		<Modal type="type1" className={"h-1/2 bg-sky-800"} is_visible={open} hideFn={hideFn}>
-			<div className="flex m-2 space-x-2 items-center">
+		<Modal type="type1" className={"h-2/3 bg-sky-800"} is_visible={open} hideFn={hideFn}>
+			<div className="flex m-2 space-x-2 items-center w-fit px-1 hover:bg-blue-900 rounded-lg" onClick={hideFn}>
 				<ArrowBackIosRounded
-					className="hover:bg-blue-500 rounded"
+					className="rounded"
 					sx={{ color: "white" }}
-					onClick={hideFn}
+					
 				/>
 				<h1 className="text-lg text-white">
 					{ml({
@@ -48,7 +48,7 @@ export function FilteringModal({
 					en: "current filters",
 					fa: "فیلتر های فعال",
 				})}
-				className="mt-4"
+				className="mt-4 mx-2 mb-2"
 			>
 				<div className="flex m-3 mb-0 flex-col">
 					{Object.keys(filterOptions).filter(
@@ -99,7 +99,7 @@ export function FilteringModal({
 						})}
 				</div>
 			</Section>
-			<Section title={ml({ en: "change filters", fa: "تغییر فیلتر ها" })}>
+			<Section title={ml({ en: "change filters", fa: "تغییر فیلتر ها" })} className="mx-2 mb-2">
 				<div className="flex px-2 flex-col">
 					<h1 className="text-white">
 						{ml({
@@ -110,7 +110,7 @@ export function FilteringModal({
 					<div className="flex space-x-2 my-1 mb-2">
 						<input className="w-1/2 rounded px-1" id="minimum_price_input" />
 						<button
-							className="text-white border border-stone-400 px-1"
+							className="text-white border border-stone-400 px-1 rounded"
 							onClick={apply_minimum_price_filter}
 						>
 							{ml({
@@ -129,7 +129,7 @@ export function FilteringModal({
 					<div className="flex space-x-2 my-1 mb-2">
 						<input className="w-1/2 rounded px-1" id="maximum_price_input" />
 						<button
-							className="text-white border border-stone-400 px-1"
+							className="text-white border border-stone-400 px-1 rounded"
 							onClick={apply_maximum_price_filter}
 						>
 							{ml({
@@ -139,7 +139,7 @@ export function FilteringModal({
 						</button>
 					</div>
 
-					<div className="flex">
+					<div className="flex items-center">
 						<Checkbox
 							checked={filterOptions["just_with_image"]}
 							onChange={() =>
@@ -148,6 +148,7 @@ export function FilteringModal({
 									just_with_image: !filterOptions["just_with_image"],
 								})
 							}
+							sx={{color:"white"}}
 						/>
 						<h1 className="text-white">
 							{ml({

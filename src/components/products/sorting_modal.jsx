@@ -6,22 +6,22 @@ import Modal from "../Modal/Modal.jsx";
 import { multi_lang_helper as ml } from "../../common.js";
 export function SortingModal({ open, hideFn, setSortType, sortType }) {
 	return (
-		<Modal type="type1" className={"h-1/2 bg-sky-400"} is_visible={open} hideFn={hideFn}>
-			<div className="flex m-2 space-x-2 items-center">
+		<Modal type="type1" className={"h-1/2 bg-sky-800 text-white"} is_visible={open} hideFn={hideFn}>
+			<div className="flex m-2 space-x-2 items-center w-fit px-1 hover:bg-blue-900 rounded-lg" onClick={hideFn}>
 				<ArrowBackIosRounded
-					className="hover:bg-blue-500 rounded"
+					className="rounded"
 					sx={{ color: "white" }}
-					onClick={hideFn}
+					
 				/>
 				<h1 className="text-lg text-white">
-					{ml({
+				{ml({
 						en: "sorting results",
 						fa: "مرتب کردن نتایج",
 					})}
 				</h1>
 			</div>
 			<div className="flex m-2 items-center">
-				<Checkbox checked={sortType == "default"} onChange={() => setSortType("default")} />
+				<Checkbox sx={{color:"white"}} checked={sortType == "default"} onChange={() => setSortType("default")} />
 				<h1>
 					{ml({
 						en: "default mode",
@@ -31,7 +31,7 @@ export function SortingModal({ open, hideFn, setSortType, sortType }) {
 				{/* todo add a loading here becuse sort changing is slow at least now  */}
 			</div>
 			<div className="flex m-2 items-center">
-				<Checkbox
+				<Checkbox sx={{color:"white"}}
 					checked={sortType == "expensive_to_cheap"}
 					onChange={() => setSortType("expensive_to_cheap")}
 				/>
@@ -44,7 +44,7 @@ export function SortingModal({ open, hideFn, setSortType, sortType }) {
 			</div>
 
 			<div className="flex m-2 items-center">
-				<Checkbox
+				<Checkbox sx={{color:"white"}}
 					checked={sortType == "cheap_to_expensive"}
 					onChange={() => setSortType("cheap_to_expensive")}
 				/>
