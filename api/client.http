@@ -44,9 +44,21 @@ Content-Type: application/json
 }
 
 ### 
-GET http://localhost:4000/workflows
+GET http://localhost:4000
 Content-Type: application/json
 
 {
-    
+    "task_name" : "get_users"
+}
+
+### 
+GET http://localhost:4000
+Content-Type: application/json
+
+{
+    "task_name" : "update_user",
+    "new_val_type" : "string",
+    "column_name" : "email",
+    "new_val" : "new_email2@gmail.com",
+    "username" : "root"
 }

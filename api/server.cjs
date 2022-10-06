@@ -349,9 +349,9 @@ async function main() {
 							} else {
 								rm.send_result(
 									results[0].hashed_password ==
-										hash_sha_256_hex(
-											params.password + process.env.PASSWORD_HASHING_SECRET
-										)
+									hash_sha_256_hex(
+										params.password + process.env.PASSWORD_HASHING_SECRET
+									)
 								);
 							}
 						}
@@ -412,8 +412,7 @@ async function main() {
 					`insert into products 
 					(name,description,product_specs,price,category,discount_percent) 
 					values
-					('${params.name}','${params.description}','${params.product_specs}',${Number(params.price)},'${
-						params.category
+					('${params.name}','${params.description}','${params.product_specs}',${Number(params.price)},'${params.category
 					}',${Number(params.discount_percent)})`,
 					(error) => {
 						if (error) {
@@ -493,7 +492,7 @@ async function main() {
 							if (
 								filenamei
 									.split("/")
-									[filenamei.split("/").length - 1].split("-")[0] ==
+								[filenamei.split("/").length - 1].split("-")[0] ==
 								params.product_id
 							) {
 								images_count_of_this_product += 1;
@@ -504,11 +503,10 @@ async function main() {
 						dest.pop();
 						var file_extension =
 							files[file_name]["originalFilename"].split(".")[
-								files[file_name]["originalFilename"].split(".").length - 1
+							files[file_name]["originalFilename"].split(".").length - 1
 							];
 						dest.push(
-							`${params.product_id}-${
-								images_count_of_this_product + 1
+							`${params.product_id}-${images_count_of_this_product + 1
 							}.${file_extension}`
 						);
 						dest = dest.join("/");
@@ -566,8 +564,7 @@ async function main() {
 					(username,rating_from_five,pros,cons,text,time,product_id)
 					values
 					("${params.username}",
-					${params.rating_from_five},'${params.pros}','${params.cons}',"${params.text}","${
-						params.time
+					${params.rating_from_five},'${params.pros}','${params.cons}',"${params.text}","${params.time
 					}",${Number(params.product_id)});
 				`,
 					(err) => {
@@ -672,6 +669,28 @@ async function main() {
 					}
 				);
 				break;
+			case "toggle_subscribtion":
+				//acceptable values for params.type : email,sms
+				var column_name = params.type === "email" ? 'is_subscribed_to_email' : 'is_subscribed_to_sms'
+				var o;
+				o = await cq(con, `select ${column_name} from users where username = '${params.username}'`)
+				if (o.error) {
+					rm.send_error(o.error)
+					break
+				}
+				var current_field_value = o.result[0][column_name]
+				o = await cq(con,
+					`
+					update users 
+					set ${column_name} = '${current_field_value === "false" ? "true" : "false"}' 
+					where username='${params.username}'
+					`)
+				if (o.error) {
+					rm.send_error(o.error)
+					break
+				}
+				rm.send()
+				break
 			case "send_sms":
 				// params : text , phone_numbers_array
 				var http = require("http");
@@ -1405,6 +1424,35 @@ async function main() {
 				if (o.error) rm.send_error(o.error)
 				rm.send()
 				break;
+			case "delete_user_profile_image":
+				var path_of_that_image = fs.readdirSync('./uploaded/profile_images').find(i=>i.split('.')[0]=== params.username)
+				if (path_of_that_image) {
+					fs.rmSync(`./uploaded/profile_images/${path_of_that_image}`, {
+						force: true,
+						recursive : true
+					})
+				}
+				rm.send()
+				break;
+			case "update_user":
+				var o;
+				var col_name = params.column_name 
+				var new_val = params.new_val
+				var new_val_type = params.new_val_type
+				o = await cq(con, 
+					`
+						update users
+						set ${col_name}=${new_val_type === "string" ? JSON.stringify(new_val) : new_val}
+						where username = '${params.username}'
+					`
+				)
+				if (o.error) {
+					rm.send_error(o.error)
+					break 
+				}
+				rm.send()
+				break 
+
 		}
 	});
 	var server = app.listen(process.env.api_port, () => {

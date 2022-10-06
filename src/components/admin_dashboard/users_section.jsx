@@ -1,10 +1,11 @@
 import { InfoRounded } from "@mui/icons-material";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common";
 import { CustomTable } from "../custom_table/comp.jsx";
 import { Alert } from "../alert/comp"
 import {Loading} from "../loading/comp"
+import { CustomRow } from "./custom_row.jsx";
 export default function UsersSection() {
 	const [users, set_users] = useState(null);
 	function fetch_data() {
@@ -91,54 +92,26 @@ export default function UsersSection() {
 	};
 	return (
 		<div className="flex flex-col">
-			{ml({
-				en: "users:",
-				fa: "کاربران:",
-			})}
+			<h1 className="mb-1">
+				{ml({
+					en: "users:",
+					fa: "کاربران:",
+				})}
+			</h1>
 			<Loading is_loading={users === null} />
 			{users !== null && users.length !== 0 && (
-				<CustomTable
-				headerItems={[
-					ml({
-						en: "user_id",
-						fa: "شناسه کاربر",
-					}),
-					ml({
-						en: "username",
-						fa: "نام کاربری",
-					}),
-					ml({
-						en: "is_admin",
-						fa: "دسترسی مدیر",
-					}),
-						'subscribed to email',
-						'subscribed to sms',
-						'email',
-						'phone number',
-						'time',
-						'profile_picture_file_name',
-					ml({
-						en: "options",
-						fa: "گزینه ها ",
-					}),
-					
-				]}
-				rows={users.map((user, index) => {
-					return [
+				users.map((user, index) => {
+					return (
+						<React.Fragment key={index}>
+							<CustomRow fields={[
 						{
-							value: user.id,
-							onClick: () => {
-								alert(
-									ml({
-										en: "user id can't be changed",
-										fa: "شناسه کاربر قابل تغییر نیست",
-									})
-								);
-							},
+							key: "id",
+							value: user.id
 						},
 						{
+							key: "username",
 							value: user.username,
-							onClick: () => {
+							change_function: () => {
 								modify_user({
 									task: "username",
 									payload: {
@@ -148,8 +121,9 @@ export default function UsersSection() {
 							},
 						},
 						{
+							key: "is admin",
 							value: user.is_admin,
-							onClick: () => {
+							change_function: () => {
 								modify_user({
 									task: "is_admin",
 									payload: { username: user.username },
@@ -158,59 +132,108 @@ export default function UsersSection() {
 						},
 						{
 							value: user.is_subscribed_to_email,
-							onClick: () => {
-								alert('functionality of changing this field will be added soon!')
-							}
+							change_function: () => {
+								customAjax({
+									params: {
+										username: user.username,
+										type: "email",
+										task_name : "toggle_subscribtion"
+									}
+								}).then(data => {
+									alert('done!')
+								}, e => {
+									alert('something went wrong')
+									console.log(e)
+								}).finally(fetch_data)
+							},
+							key: "is_subscribed_to_email"
 						},
 						
 						{
 							value: user.is_subscribed_to_sms,
-							onClick: () => {
-								alert('functionality of changing this field will be added soon!')
-							}
+							change_function: () => {
+								customAjax({
+									params: {
+										username: user.username,
+										type: "sms",
+										task_name : "toggle_subscribtion"
+									}
+								}).then(data => {
+									alert('done!')
+								}, e => {
+									alert('something went wrong')
+									console.log(e)
+								}).finally(fetch_data)
+							},
+							key: "is_subscribed_to_sms"
 						},
 						{
+							key: "email",
 							value: user.email,
-							onClick: () => {
-								alert('functionality of changing this field will be added soon!')
+							change_function: () => {
+								customAjax({
+									params: {
+										username: user.username,
+										new_val: prompt('enter new value'),
+										new_val_type: 'string',
+										column_name: "email",
+										task_name : "update_user"
+									}
+								}).then(() => alert('done'), e => {
+									alert('something went wrong')
+									console.log(e)
+								}).finally(fetch_data)
 							}
 						},
 						{
 							value: user.phone_number,
-							onClick: () => {
-								alert('functionality of changing this field will be added soon!')
-							}
+							change_function: () => {
+								customAjax({
+									params: {
+										username: user.username,
+										new_val: prompt('enter new value'),
+										new_val_type: 'string',
+										column_name: "phone_number",
+										task_name : "update_user"
+									}
+								}).then(() => alert('done'), e => {
+									alert('something went wrong')
+									console.log(e)
+								}).finally(fetch_data)
+							},
+							key: 'phone number'
 						},
 						{
 							value: user.time,
-							onClick: () => {
-								alert('functionality of changing this field will be added soon!')
-							}
+							key: "time"
 						},
 						{
 							value: user.profile_image_file_name,
-							onClick: () => {
-								alert('functionality of changing this field will be added soon!')
-							}
+							key: "profile_image_file_name"
 						},
-
 						{
-							value: ml({
+							key: ml({
 								en: "delete his/her profile picture",
 								fa: "حذف عکس این کاربر",
 							}),
+							type : "option",
 							onClick: () => {
-								alert(
-									ml({
-										en: "this feature is under development",
-										fa: "این ویژگی در حال توسعه است",
-									})
-								);
+								customAjax({
+									params: {
+										task_name: 'delete_user_profile_image',
+										username : user.username
+									}
+								}).then(() => alert('done'), e => {
+									alert('something went wrong')
+									console.log(e)
+								}).finally(fetch_data)
 							},
 						} /* todo implent it */,
-					];
-				})}
-			/>
+					]}/>
+						</React.Fragment>
+					);
+				})
+				
 			)}
 			{users !== null && users.length === 0 && (
 				<Alert icon={<InfoRounded />}>

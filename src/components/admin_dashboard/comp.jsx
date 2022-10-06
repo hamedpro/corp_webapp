@@ -3,7 +3,7 @@ import UsersSection from "./users_section";
 import ProductsSection from "./products_section";
 import "./styles.css";
 import { useState } from "react";
-import { Info, InfoRounded } from "@mui/icons-material";
+import { Comment, Info, InfoRounded, ListAltRounded, Person, ReviewsRounded, ShoppingBag, SupportAgentRounded, Tune, VerifiedUserRounded } from "@mui/icons-material";
 import { OrdersSection } from "./orders_section";
 import { SupportTicketsSection } from "./support_tickets_section";
 import { ProductReviews } from "./product_reviews";
@@ -15,40 +15,38 @@ export default function AdminDashboard() {
 		{
 			id: "manage_products",
 			title: ml({ en: "manage products", fa: "مدیریت محصولات" }),
-			icon: <Info />,
+			icon: <ShoppingBag />,
 		},
 		{
 			id: "manage_users",
 			title: ml({ en: "manage users", fa: "مدیریت کاربران" }),
-			icon: <Info />,
+			icon: <Person />,
 		},
 
 		{
 			id: "manage_options",
 			title: ml({ en: "manage options", fa: "مدیریت گزینه ها" }),
-			icon: <Info />,
+			icon: <Tune />,
 		},
 		{
 			id: "manage_orders",
 			title: ml({ en: "manage orders", fa: "مدیریت سفارش ها" }),
-			icon: <Info />,
+			icon: <ListAltRounded />,
 		},
 		{
 			id: "manage_support_tickets",
 			title: ml({ en: "manage support tickets", fa: "مدیریت تیکت های پشتیبانی" }),
-			icon: <Info />,
+			icon: <SupportAgentRounded />,
 		},
-
 		{
 			id: "manage_product_reviews",
 			title: ml({ en: "manage product reviews", fa: "مدیریت بررسی های کاربران برای کالا ها" }),
-			icon: <Info />,
+			icon: <ReviewsRounded />,
 		},
-		
 		{
 			id: "manage_blog_comments",
 			title: "manage blog comments",
-			icon: <Info />,
+			icon: <Comment />,
 		},
 
 	];
@@ -63,24 +61,30 @@ export default function AdminDashboard() {
 				</Alert>
 				
 			</div>
-			<div id="admin-dashboard" className="hidden h-full w-full md:flex">
+			<div id="admin-dashboard" className="hidden h-full md:flex mx-1 border border-stone-400 rounded">
 				<div className="w-3/12 bg-blue-500">
 					{tabs.map((this_tab, index) => {
 						return (
 							<div
 								key={index}
 								className={
-									"flex space-x-3 cursor-pointer hover:bg-blue-400" +
+									"p-2 items-center flex space-x-3 text-gray-200 cursor-pointer hover:bg-blue-400" +
 									(this_tab.id === tab ? " bg-blue-600" : "")
 								}
 								onClick={() => set_tab(this_tab.id)}
 							>
-								{this_tab.icon} {this_tab.title}
+								<div>
+									{this_tab.icon}
+								</div>
+								<div className="text-white">
+									{this_tab.title}
+								</div>
+								 
 							</div>
 						);
 					})}
 				</div>
-				<div className="flex w-9/12 overflow-y-auto px-3">
+				<div className="p-1 flex w-9/12 overflow-y-auto px-3">
 					{tab === "manage_products" && (
 						<>
 							<ProductsSection />
