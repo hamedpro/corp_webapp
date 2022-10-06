@@ -1,6 +1,8 @@
 import { TextareaAutosize, TextField, Typography } from "@mui/material";
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
+import Section from "../section/comp";
+import { StyledDiv, StyledInput } from "../styled_elements";
 import { OptionBox } from "./option_box";
 export function FirstAdminSetup({ set_tab }) {
 	function submit() {
@@ -57,13 +59,12 @@ export function FirstAdminSetup({ set_tab }) {
 		);
 	}
 	return (
-		<OptionBox>
-			<h1>
-				{ml({
-					en: "registering the first admin",
-					fa: "ثبت نام اولین کاربر مدیر",
-				})}
-			</h1>
+		<Section className="mx-1" title={ml({
+			en: "registering the first admin",
+			fa: "ثبت نام اولین کاربر مدیر",
+		})}
+			innerClassName="px-2"
+		>
 			<p className="text-stone-500">
 				{ml({
 					en: `first of all register a user with admin previleges. following tasks below will
@@ -72,16 +73,16 @@ export function FirstAdminSetup({ set_tab }) {
 					fa: "اول از همه باید از طریق این بخش یک حساب کاربری با دسترسی مدیر بسازید . دستورات بعدی به وسیله این حساب کاربری ثبت خواهند شد",
 				})}
 			</p>
-			<hr />
-			<OptionBox>
+			<OptionBox className="mt-2">
 				<p className="text-stone-500">
 					{ml({
 						en: "username:",
 						fa: "نام کاربری",
 					})}
 				</p>
-				<input
+				<StyledInput
 					id="username_input"
+					className="mt-1"
 					placeholder={ml({ en: "enter a username here", fa: "یک نام کاربری وارد کنید" })}
 				/>
 			</OptionBox>
@@ -92,7 +93,8 @@ export function FirstAdminSetup({ set_tab }) {
 						fa: "یک رمز عبور وارد کنید",
 					})}
 				</p>
-				<input
+				<StyledInput
+					className="mt-1"
 					id="password_input"
 					placeholder={ml({
 						en: "enter the password here",
@@ -102,12 +104,13 @@ export function FirstAdminSetup({ set_tab }) {
 				/>
 			</OptionBox>
 			<OptionBox className="mt-2">
-				<p className="text-black">
+				<h1 className="text-black text-lg">
 					{ml({
 						en: `enter your "super admin access token"`,
 						fa: "سوپر ادمین توکن خود را وارد کنید",
 					})}
-				</p>
+				</h1>
+				<hr className="my-1" />
 				<p>
 					{ml({
 						en: `this token is generated when you have set up the app in the server and its loged
@@ -115,16 +118,19 @@ export function FirstAdminSetup({ set_tab }) {
 						fa: "این توکن هنگامی که برنامه را بر روی سرور نصب کردید تولید شده است و هر بار که سایت را اجرا میکنید در کنسول سرور نوشته می شود",
 					})}
 				</p>
-				<input
+				<StyledInput
 					id="super_admin_access_token_input"
 					placeholder={ml({
 						en: "super admin access token",
 						fa: "سوپر ادمین توکن",
 					})}
+					className="mt-2"
 					type="password"
 				/>
 			</OptionBox>
-			<button onClick={submit}>{ml({ en: "submit", fa: "ثبت نهایی" })}</button>
-		</OptionBox>
+			<StyledDiv
+				className="w-fit mt-2 text-xl"
+				onClick={submit}>{ml({ en: "submit", fa: "ثبت نهایی" })}</StyledDiv>
+		</Section>
 	);
 }

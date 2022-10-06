@@ -5,7 +5,7 @@ import { FirstAdminSetup } from "./first_admin_setup";
 import { Done } from "./Done";
 import { Welcome } from "./welcome";
 export default function FirstSetup() {
-	var [tab, set_tab] = useState("welcome");
+	var [tab, set_tab] = useState("done");
 	// options : upload_text_tab , upload_media , first_admin_setup , done , welcome
 	return (
 		<>
@@ -15,11 +15,12 @@ export default function FirstSetup() {
 			{tab === "done" && <Done set_tab={set_tab} />}
 			{tab === "welcome" && <Welcome set_tab={set_tab} />}
 			{["first_admin_setup", "upload_text_tab", "upload_media"].includes(tab) && (
-				<p className="text-center">
-					page
+				<p className="text-center mt-1">
+					page { " "}
 					{tab === "first_admin_setup" && 1}
 					{tab === "upload_text_tab" && 2}
 					{tab === "upload_media" && 3}
+					{ " "}
 					from 3
 				</p>
 			)}

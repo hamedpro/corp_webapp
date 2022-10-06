@@ -1,6 +1,7 @@
 import { TextareaAutosize, TextField, Typography } from "@mui/material";
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
+import { StyledDiv, StyledInput } from "../styled_elements";
 import { OptionBox } from "./option_box";
 export function UploadTextTab({ set_tab }) {
 	function submit_to_server() {
@@ -32,9 +33,9 @@ export function UploadTextTab({ set_tab }) {
 		);
 	}
 	return (
-		<div className="w-full border border-stone-200 p-2">
-			<OptionBox>
-				<Typography variant="h5" sx={{ mt: 2 }}>
+		<div className="w-full p-2">
+			<OptionBox className="bg-sky-100">
+				<Typography variant="h5">
 					{ml({
 						en: "company's data upload section",
 						fa: "بخش بارگذاری اطلاعات شرکت",
@@ -47,44 +48,36 @@ export function UploadTextTab({ set_tab }) {
 						fa: "برای شروع کسب و کار خود اطلاعات زیر را وارد کنید ",
 					})}
 				</p>
-				<hr />
-
-				<b>
-					{ml({
-						en: "company name:",
-						fa: "نام شرکت:",
-					})}
-				</b>
-				<p className="text-stone-500">
-					{ml({
-						en: "this name will be used in the header and ...",
-						fa: "این نام در سربرگ و ... استفاده خواهد شد",
-					})}
-				</p>
-				<input
-					placeholder={ml({
-						en: "enter company name here",
-						fa: "نام شرکت را وارد کنید",
-					})}
-					id="company_name_input"
-				/>
-			</OptionBox>
-			<OptionBox className="mt-2">
-				<Typography variant="h5">
-					{ml({
-						en: "completing company's informations",
-						fa: "تکمیل اطلاعات شرکت",
-					})}
-				</Typography>
-
 				<p className="text-stone-500">
 					{ml({
 						en: "this information below will be shown in company's profile publicly",
 						fa: "از اطلاعات زیر برای معرفی شرکت در صفحه معرفی شرکت استفاه خواهد شد",
 					})}
 				</p>
-
-				<OptionBox className="mt-2">
+				<hr className="my-1" />
+				<OptionBox className="mt-2 bg-white">
+					<b>
+						{ml({
+							en: "company name:",
+							fa: "نام شرکت:",
+						})}
+					</b>
+					<p className="text-stone-500">
+						{ml({
+							en: "this name will be used in the header and ...",
+							fa: "این نام در سربرگ و ... استفاده خواهد شد",
+						})}
+					</p>
+					<StyledInput
+						className="my-1"
+						placeholder={ml({
+							en: "enter company name here",
+							fa: "نام شرکت را وارد کنید",
+						})}
+						id="company_name_input"
+					/>
+				</OptionBox>
+				<OptionBox className="mt-2 bg-white">
 					<b>
 						{ml({
 							en: "company email address:",
@@ -97,10 +90,12 @@ export function UploadTextTab({ set_tab }) {
 							fa: "این آدرس ایمیل باید به صورت فعال به پیام های مخاطبین پاسخگو باشد",
 						})}
 					</p>
-					<input id="email_address_input" placeholder={"emailAddress@gmail.com"} />
+					<StyledInput
+						className="my-1"
+						id="email_address_input" placeholder={"emailAddress@gmail.com"} />
 				</OptionBox>
 
-				<OptionBox className="mt-2">
+				<OptionBox className="mt-2 bg-white">
 					<b>
 						{ml({
 							en: "company landline phone number",
@@ -113,9 +108,11 @@ export function UploadTextTab({ set_tab }) {
 							fa: "شماره تلفن ثابت دفتر شرکت یا ... را وارد کنید",
 						})}
 					</p>
-					<input placeholder="ex: 021xxxxxxxx" id="landline_phone_number_input" />
+					<StyledInput
+						className="my-1"
+						placeholder="ex: 021xxxxxxxx" id="landline_phone_number_input" />
 				</OptionBox>
-				<OptionBox className="mt-2">
+				<OptionBox className="mt-2 bg-white">
 					<b>
 						{ml({
 							en: "a mobile phone number",
@@ -129,9 +126,11 @@ export function UploadTextTab({ set_tab }) {
 							fa: "یک شماره موبایل فعال وارد کنید تا در صورتی که تلفن ثابت در دسترس نبود ارتباط شما و مخاطبینتان قطع نشود",
 						})}
 					</p>
-					<input placeholder="09xxxxxxxxx" id="mobile_phone_number_input" />
+					<StyledInput
+						className="my-1"
+						placeholder="09xxxxxxxxx" id="mobile_phone_number_input" />
 				</OptionBox>
-				<OptionBox className="mt-2">
+				<OptionBox className="mt-2 bg-white">
 					<b>
 						{ml({
 							en: "company address:",
@@ -144,7 +143,8 @@ export function UploadTextTab({ set_tab }) {
 							fa: "آدرس کامل شرکت یا دفتر خود را وارد کنید",
 						})}
 					</p>
-					<input
+					<StyledInput
+						className="my-1"
 						id="address_input"
 						placeholder={ml({
 							en: "enter your address here",
@@ -152,86 +152,94 @@ export function UploadTextTab({ set_tab }) {
 						})}
 					/>
 				</OptionBox>
+				<OptionBox className="mt-2 bg-white">
+					<Typography variant="h5">
+						{ml({
+							en: "describe your company",
+							fa: "شرکت خود را توصیف کنید",
+						})}
+					</Typography>
+					<p className="text-stone-500">
+						{ml({
+							en: "write a description of what your company can do and introduce it shortly here",
+							fa: "به صورت کوتاه و مفید شرکت خود را تعریف کنید و خدماتی که ارایه می دهید را توضیح دهید",
+						})}
+					</p>
+					<textarea
+						className="my-1 border border-stone-400 w-4/5 rounded p-1"
+						id="company_description_textarea" rows="10"
+						placeholder="start typing here ..."
+					></textarea>
+				</OptionBox>
+
+				<OptionBox className="mt-2 bg-white">
+					<Typography variant="h5">
+						{ml({
+							en: "the story of your company",
+							fa: "داستان شرکت شما",
+						})}
+					</Typography>
+					<p className="text-stone-500">
+						{ml({
+							en: "write a story like history about your company",
+							fa: "سابقه و تاریخچه شرکت خود را به صورت یک داستان بنویسید",
+						})}
+					</p>
+					<textarea
+						className="my-1 border border-stone-400 w-4/5 rounded p-1"
+						placeholder="start typing here ..."
+						id="history_input" rows="10"></textarea>
+				</OptionBox>
+
+				<OptionBox className="mt-2 bg-white">
+					<Typography variant="h5">
+						{ml({
+							en: "your company in social media",
+							fa: "شرکت شما در فضای مجازی",
+						})}
+					</Typography>
+					<p className="text-stone-500">
+						{ml({
+							en: "if you have account in any of the following websites please enter their ids otherwise leave them empty",
+							fa: "اگر شرکت شما در هر یک از این سایت های زیر حساب کاربری دارد لطفا شناسه کاربری آنها را وارد کنید یا خالی بگذارید",
+						})}
+					</p>
+					<p>
+						{ml({
+							en: "instagram page :",
+							fa: "صفحه اینستاگرام",
+						})}
+					</p>
+					<StyledInput className="my-1" id="instagram_input" />
+					<br />
+
+					<p>
+						{ml({
+							en: "telegram channel or personal account :",
+							fa: "کانال تلگرام یا حساب کاربری شخصی :",
+						})}
+					</p>
+					<StyledInput className="my-1" id="telegram_input" />
+					<br />
+
+					<p>
+						{ml({
+							en: "twitter :",
+							fa: "توییتر:",
+						})}
+					</p>
+					<StyledInput className="my-1" id="twitter_input" />
+					<br />
+				</OptionBox>
 			</OptionBox>
-			<OptionBox className="mt-2">
-				<Typography variant="h5">
-					{ml({
-						en: "describe your company",
-						fa: "شرکت خود را توصیف کنید",
-					})}
-				</Typography>
-				<p className="text-stone-500">
-					{ml({
-						en: "write a description of what your company can do and introduce it shortly here",
-						fa: "به صورت کوتاه و مفید شرکت خود را تعریف کنید و خدماتی که ارایه می دهید را توضیح دهید",
-					})}
-				</p>
-				<textarea id="company_description_textarea" rows="10"></textarea>
-			</OptionBox>
-
-			<OptionBox className="mt-2">
-				<Typography variant="h5">
-					{ml({
-						en: "the story of your company",
-						fa: "داستان شرکت شما",
-					})}
-				</Typography>
-				<p className="text-stone-500">
-					{ml({
-						en: "write a story like history about your company",
-						fa: "سابقه و تاریخچه شرکت خود را به صورت یک داستان بنویسید",
-					})}
-				</p>
-				<textarea id="history_input" rows="10"></textarea>
-			</OptionBox>
-
-			<OptionBox className="mt-2">
-				<Typography variant="h5">
-					{ml({
-						en: "your company in social media",
-						fa: "شرکت شما در فضای مجازی",
-					})}
-				</Typography>
-				<p className="text-stone-500">
-					{ml({
-						en: "if you have account in any of the following websites please enter their ids otherwise leave them empty",
-						fa: "اگر شرکت شما در هر یک از این سایت های زیر حساب کاربری دارد لطفا شناسه کاربری آنها را وارد کنید یا خالی بگذارید",
-					})}
-				</p>
-				<p>
-					{ml({
-						en: "instagram page :",
-						fa: "صفحه اینستاگرام",
-					})}
-				</p>
-				<input id="instagram_input" />
-				<br />
-
-				<p>
-					{ml({
-						en: "telegram channel or personal account :",
-						fa: "کانال تلگرام یا حساب کاربری شخصی :",
-					})}
-				</p>
-				<input id="telegram_input" />
-				<br />
-
-				<p>
-					{ml({
-						en: "twitter :",
-						fa: "توییتر:",
-					})}
-				</p>
-				<input id="twitter_input" />
-				<br />
-			</OptionBox>
-
-			<button onClick={submit_to_server} className="border border-blue-400">
+			
+			<StyledDiv onClick={submit_to_server}
+				className="border border-blue-400 mt-2 text-lg w-fit">
 				{ml({
 					en: "submit all changes",
 					fa: "ثبت تمام تغییرات",
 				})}
-			</button>
+			</StyledDiv>
 		</div>
 	);
 }

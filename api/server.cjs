@@ -233,7 +233,7 @@ async function main() {
 					);
 					var output2 = await cq(
 						con,
-						`insert into users (username,hashed_password,email,phone_number,time) values ('${params.username}','${hashed_password}',${params.email_address === "" ? "NULL" : JSON.stringify(params.email_address)},${params.mobile === "" ? "NULL" : JSON.stringify(params.mobile)},'${new Date().getTime()}');`
+						`insert into users (username,hashed_password,email,phone_number,time) values ('${params.username}','${hashed_password}',${!params.email_address ? "NULL" : JSON.stringify(params.email_address)},${!params.mobile ? "NULL" : JSON.stringify(params.mobile)},'${new Date().getTime()}');`
 					);
 					if (output2.error) {
 						rm.send_error(output2.error);

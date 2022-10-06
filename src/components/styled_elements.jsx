@@ -9,13 +9,18 @@ export function StyledDiv({
     )
 }
 export function StyledInput({
-    onClick = () => {},
+    onClick = () => { },
     children,
     className = "",
-    id
+    id=undefined,
+    placeholder = "",
+    type="text"
 }) {
-    var default_className="border border-stone-600 rounded px-1"
+    var default_className = "border border-stone-600 rounded px-1"
     return (
-        <input id={id} onClick={onClick} className={[default_className,className].join(" ")} />
+        <input
+            type={type}
+            placeholder={placeholder}
+            id={id} onClick={onClick} className={[default_className, className].join(" ")} />
     )
 }
