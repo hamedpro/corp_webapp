@@ -3,7 +3,7 @@ export function CustomTable({ headerItems, rows, children, className = null }) {
 	return (
 		<div
 			className={
-				"border border-blue-400 bg-blue-300 rounded-lg flex flex-col p-2" +
+				"custom_table border border-blue-400 bg-blue-300 rounded-lg flex flex-col p-2" +
 				(className ? ` ${className}` : ``)
 			}
 		>
@@ -21,9 +21,9 @@ export function CustomTable({ headerItems, rows, children, className = null }) {
 							<tr key={index} className="border border-blue-400">
 								{row.map((cell, index) => {
 									return (
-										<td className="cutsom_table_cell" key={index} onClick={cell.onClick}>
+										<td className="cutsom_table_cell text-center" key={index} onClick={cell.onClick ? cell.onClick : ()=> alert('this field can not change by you')}>
 											{cell.value}
-											<span className="after_text hidden">(click to modify)</span>
+											<span className="after_text opacity-0">(click to modify)</span>
 										</td>
 									);
 								})}

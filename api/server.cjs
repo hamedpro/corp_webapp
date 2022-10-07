@@ -1452,7 +1452,25 @@ async function main() {
 				}
 				rm.send()
 				break 
-
+			case "update_cell":
+				//possible values for col_name : number,string
+				//required params: new_val,new_val_type,table_name,col_name,row_id
+				var o;
+				var new_val = params.new_val
+				var new_val_type = params.new_val_type
+				o = await cq(con,
+					`
+					update ${params.table_name}
+					set ${params.col_name}=${new_val_type === "string" ? JSON.stringify(new_val) : new_val}
+					where id=${params.row_id}
+				`)
+				if (o.error) {
+					rm.send_error(o.error)
+					break
+					//todo write all errors in a file on the server
+				}
+				rm.send()
+				break;
 		}
 	});
 	var server = app.listen(process.env.api_port, () => {

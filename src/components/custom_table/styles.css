@@ -1,5 +1,5 @@
 .cutsom_table_cell:hover .after_text{
-    display:block; 
+    opacity: 1;
 }
 .cutsom_table_cell:hover{
     border : 1px solid blue;

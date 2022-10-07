@@ -73,3 +73,4 @@ how we seperate frontend routes :
 if paths should be used by both admins and normal users -> keep it outside of admin dashboard and link to that
 if just admins should access that information -> put it inside admin dashboard
 maybe tailwind css watch script is causing the frontend to sometimes say that component x has not default export when it has or even sometimes its like the styles are not loaded and just html is being displayed
+take care about newly added columns in customRow and at all rows in admin dash : their tpye when updating the value and also whether they are even changeable or not 

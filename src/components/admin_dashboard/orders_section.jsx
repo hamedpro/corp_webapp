@@ -22,6 +22,28 @@ export function OrdersSection() {
 		);
 	}
 	useEffect(fetch_data, []);
+	function update_order({ row_id, col_name ,new_val=undefined}) {
+		if (new_val === undefined) new_val = prompt('enter new value:')
+		if (new_val === null ) {
+			alert('operation was canceled by user')
+			return 
+		}
+		customAjax({
+			params: {
+				task_name: "update_cell",
+				col_name,
+				new_val,
+				new_val_type: "string",
+				table_name: 'orders',
+				row_id
+					// todo may newly added column in future not be strings 
+					//(it now works even for id despite type is set to string but im not totally sure)
+			}
+		}).then(() => alert('done'), e => {
+			alert('something went wrong')
+			console.log(e)
+		}).finally(fetch_data)
+	}
 	return (
 		<>
 			<div className="flex flex-col">
@@ -40,16 +62,26 @@ export function OrdersSection() {
 						ml({en:"product_ids",fa:""}),
 						ml({en:"status",fa:""}),
 						ml({en:"time",fa:""}),
-						ml({en:"name",fa:""}),
+						ml({en:"order name",fa:""}),
 					]}
-					rows={orders.map((order, index) => {
+						rows={orders.map((order, index) => {
+							var tmp = (col_name) => {
+								update_order({
+									row_id : Number(order.id),
+									col_name
+								})
+							}
 						return [
-							{ value: order.id, onClick: () => {} },
-							{ value: order.username, onClick: () => {} },
-							{ value: order.product_ids, onClick: () => {} },
-							{ value: order.status, onClick: () => {} },
-							{ value: order.time, onClick: () => {} },
-							{ value: order.name, onClick: () => {} },
+							{
+								value: order.id, onClick: () => tmp('id')},
+							{ value: order.username, onClick: () => tmp('username') },
+							{ value: order.product_ids, onClick: () => tmp('product_ids') },
+							{
+								value: order.status, onClick: () => {
+									alert(`this field can not be changed manually from here \nyou should follow order delivery progress instead`)
+								}},
+							{ value: order.time},
+							{ value: order.name, onClick: () => tmp('name') },
 						];
 					})}
 				/>

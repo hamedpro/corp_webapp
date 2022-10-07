@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { customAjax } from "../../../custom_ajax";
 import Section from "../../section/comp";
 import { CustomTable } from "../../custom_table/comp";
+import { CustomRow } from "../custom_row";
 export function CompanyInfoSection() {
 	var [company_info, set_company_info] = useState(null);
 	function fetch_data() {
@@ -67,19 +68,18 @@ export function CompanyInfoSection() {
 		<Section title={ml({ en: "company information", fa: "اطلاعات شرکت" })}>
 			<div className="px-2">
 				{company_info && (
-					<CustomTable
-						headerItems={fields.map((field) => ml({ en: field.en, fa: field.fa }))}
-						rows={[
-							fields.map((field) => {
-								return {
-									value: company_info[field["value"]],
-									onClick: () => {
-										update_company_info(field["value"]);
-									},
-								};
+					<CustomRow fields={fields.map(field => {
+						return {
+							value: company_info[field.value] ,
+							key: ml({
+								en: field.en,
+								fa : field.fa
 							}),
-						]}
-					/>
+							change_function : () => {
+								update_company_info(field.value);
+							}
+						}
+					})} />
 				)}
 			</div>
 		</Section>
