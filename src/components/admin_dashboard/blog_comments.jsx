@@ -1,5 +1,7 @@
+import { Info } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { customAjax } from "../../custom_ajax";
+import { Alert } from "../alert/comp";
 import { CustomTable } from "../custom_table/comp";
 import { Loading } from "../loading/comp";
 
@@ -47,9 +49,11 @@ export function BlogComments() {
     return (
         <div className="">
             <p>blog comments</p>
-            {blog_comments === null ? (
+            {blog_comments === null && (
                 <Loading />
-            ) : (
+            )}
+            {blog_comments !== null && blog_comments.length !== 0 && (
+                
                     <CustomTable
                         headerItems={Object.keys(blog_comment_sample)}
                         rows={blog_comments.map((comment, index) => {
@@ -64,7 +68,10 @@ export function BlogComments() {
                                 }
                             })
                     })}
-                    />      
+                    />
+            )}
+            {blog_comments !== null && blog_comments.length === 0 && (
+                <Alert icon={<Info />}>there is not any blog comment in the database</Alert>
             )}
         </div>
     )

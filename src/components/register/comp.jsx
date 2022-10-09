@@ -1,10 +1,18 @@
+import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common.js";
+import LinkLikeP from "../LinkLikeP/comp.jsx";
 import Section from "../section/comp";
 export default function Register() {
+	var [terms_are_accepted,set_terms_are_accepted] = useState(false)
 	var navigator = useNavigate();
 	function register() {
+		if (!terms_are_accepted) { 
+			alert('in order to use our services you have to agree with our terms of use')
+			return
+		}
 		var entered_username = document.getElementById("username_input").value;
 		var entered_password = document.getElementById("password_input").value;
 		var entered_mobile = document.getElementById("mobile_input").value;
@@ -83,7 +91,16 @@ export default function Register() {
 					className="border border-blue-400 rounded px-1"
 					type="text"
 				/>
-
+				<div
+					onClick={() => set_terms_are_accepted(!terms_are_accepted)}
+					className="flex items-center space-x-1 mt-2"
+				>
+					{terms_are_accepted ? <CheckBox /> : <CheckBoxOutlineBlank />}
+					i accept <LinkLikeP
+						link="/terms"
+						className="inline-block"
+					>terms of use</LinkLikeP>.
+				</div>
 				
 				<button
 					className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-600 duration-300"

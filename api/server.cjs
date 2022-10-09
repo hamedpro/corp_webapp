@@ -158,7 +158,14 @@ async function init() {
 			time varchar(20),
 			verification_status varchar(20),
 			verifier_username varchar(20)
-		)
+		);
+		create table if not exists terms (
+			id int primary key auto_increment,
+			publisher_username varchar(30),
+			title varchar(30),
+			text text,
+			time varchar(20)
+		);
 		`
 	);
 	//in blog comments -> verf_status : rejected , pending, accepted
@@ -1450,6 +1457,29 @@ async function main() {
 				break;
 			case "get_download_center_items":
 				rm.send_result(fs.readdirSync('./uploaded/download_center'))
+				break;
+			case "new_term":
+				var o;
+				o = await cq(con, `
+				insert into terms 
+				(publisher_username,title,text,time)
+				values
+				('${params.publisher_username}','${params.title}','${params.text}','${params.time}')
+				`)
+				if (o.error) {
+					rm.send_error(o.error)
+					break;
+				}
+				rm.send()
+				break;
+			case "get_terms":
+				var o;
+				o = await cq(con, 'select * from terms')
+				if (o.error) {
+					rm.send_error(o.error)
+					break;
+				}
+				rm.send_result(o.result)
 				break;
 		}
 	});

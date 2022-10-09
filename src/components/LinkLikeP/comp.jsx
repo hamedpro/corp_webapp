@@ -2,13 +2,16 @@ import { useNavigate } from "react-router-dom";
 var LinkLikeP = ({className,link,children = ""}) => {
 	var nav = useNavigate();
 	return (
-		<p
-			className={className}
+		<a
+			className={[className,''].join(' ')}
 			style={{ cursor: "pointer" }}
-			onClick={() => nav(link)}
+			onClick={(e) => {
+				e.preventDefault()
+				nav(link)
+			}}
 		>
 			{children}
-		</p>
+		</a>
 	);
 };
 export default LinkLikeP;
