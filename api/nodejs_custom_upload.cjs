@@ -9,6 +9,13 @@ function custom_upload({
 	onSuccess = () => {},
 	onReject = () => {},
 }) {
+	/* 	
+		body should contain a form with files appended to it 
+		the path should contain the other required parameters like relative_path as its query parameters
+	*/
+	if(!fs.existsSync(uploadDir)){
+		fs.mkdirSync(uploadDir);
+	}
 	var form = formidable({ uploadDir });
 	form.parse(req, (err, fields, files) => {
 		//todo catch errors

@@ -166,8 +166,16 @@ async function init() {
 			text text,
 			time varchar(20)
 		);
+		create table if not exists download_center(
+			id int primary key auto_increment,
+			publisher_username varchar(30),
+			file_name varchar(40),
+			description text,
+			time varchar(20)
+		);
 		`
 	);
+	//todo take care about when user is uploading a file that has not any extension
 	//in blog comments -> verf_status : rejected , pending, accepted
 	//todo add ability to reserve each product when adding to --
 	//shopping card seperatly
@@ -231,18 +239,10 @@ async function main() {
 
 				break;
 			case "upload":
-				/* 	
-					body should contain a form with files appended to it 
-					the path should contain the other required parameters like relative_path as its query parameters
-				*/
-				var uploadDir = params.upload_dir ;
-				if (!fs.existsSync(uploadDir)) {
-					fs.mkdirSync(uploadDir);
-				}
 				custom_upload({
 					req,
 					files_names: JSON.parse(params.files_names),
-					uploadDir,
+					uploadDir : params.upload_dir,
 					onSuccess: () => {
 						rm.send();
 					},
@@ -1456,7 +1456,18 @@ async function main() {
 				rm.send()
 				break;
 			case "get_download_center_items":
-				rm.send_result(fs.readdirSync('./uploaded/download_center'))
+				o = await cq(con, "select * from download_center")
+				if (o.error) {
+					rm.send_error(o.error)
+					break
+				}
+				rm.send_result(o.result.map(row => {
+					return {
+						...row,
+						file_path : fs.readdirSync('./uploaded/download_center').find(i => i.split('.')[0] === row.file_name)
+					}
+				}))
+				break
 				break;
 			case "new_term":
 				var o;
@@ -1481,6 +1492,51 @@ async function main() {
 				}
 				rm.send_result(o.result)
 				break;
+			case "new_download_center_item":
+				var current_download_center_items = fs.readdirSync('./uploaded/download_center')
+				var file_name = params.title
+					
+				if (current_download_center_items.map(i => i.split('.')[0]).includes(file_name)) {
+					rm.send_error(`server was asked to save a file with "${file_name}" as it's name but this name is taken by another uploaded file, please try another name and try again`)
+					break
+				}
+				
+				o = await cq(con, `
+					insert into download_center
+					(publisher_username,file_name,description,time)
+					values 
+					("${params.publisher_username}","${file_name}","${params.description}","${new Date().getTime()}");
+				`)
+				//todo a name should be possible to be used with several extensions but now this is not possible
+				//and also look for related problems in "remove_download_center_item" and ... cases 
+				custom_upload({
+					req,
+					files_names : [file_name],
+					uploadDir : params.upload_dir,
+					onSuccess: () => {
+						rm.send();
+					},
+					onReject: (e) => {
+						rm.send_error(e);
+					},
+				});
+				break;
+			case "remove_download_center_item":
+				o = await cq(con, `delete from download_center where file_name="${params.title}"`)
+				if (o.error) {
+					rm.send_error(o.error);
+					break;
+				}
+				var file_name = fs.readdirSync('./uploaded/download_center').find(i => i.split('.')[0] === params.title)
+				if (file_name) {
+					fs.rmSync(path.join("./uploaded/download_center/", file_name), {
+						force: true,
+						recursive: true
+					})
+				} //todo take care when user input has single quote or ... (validate it also for security reasons)
+				rm.send()
+				break;
+				
 		}
 	});
 	var server = app.listen(process.env.api_port, () => {

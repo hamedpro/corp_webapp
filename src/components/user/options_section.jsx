@@ -93,10 +93,6 @@ export function OptionsSection({after_options}) {
 				items={[ml({ en: "logout", fa: "خروج از حساب کاربری" })]}
 			/>
 			<ListItem
-				onClick={option_funcs.change_profile_bio}
-				items={[ml({ en: "change profile bio", fa: "تغییر بیوگرافی" })]}
-			/>
-			<ListItem
 				onClick={option_funcs.change_username}
 				items={[ml({ en: "change username", fa: "تغییر نام کاربری" })]}
 			/>

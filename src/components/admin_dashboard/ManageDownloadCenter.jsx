@@ -2,7 +2,7 @@ import { useState } from "react";
 import { customAjax } from "../../custom_ajax";
 import { DownloadCenter } from "../DownloadCenter";
 import Section from "../section/comp";
-import { StyledDiv } from "../styled_elements";
+import { StyledDiv, StyledInput } from "../styled_elements";
 
 export function ManageDownloadCenter() {
     var [counter,set_counter] = useState(1)
@@ -15,9 +15,11 @@ export function ManageDownloadCenter() {
         })
         customAjax({
             params: {
-                task_name: 'upload',
-                upload_dir : './uploaded/download_center',
-                files_names : JSON.stringify([1,2,3,4])
+                task_name: 'new_download_center_item',
+                upload_dir: './uploaded/download_center',
+                publisher_username: window.localStorage.getItem('username'),
+                title: document.getElementById('file_title').value,
+                description : document.getElementById('file_description').value
             },
             files,
         }).then(data => {
@@ -31,11 +33,15 @@ export function ManageDownloadCenter() {
     }
 	return (
 		<div className="flex flex-col">
-			<DownloadCenter />
+			<DownloadCenter admin_mode/>
             <Section title="upload new files" className="mt-2" innerClassName="px-2">
                 <input id="file_input" type={'file'}
                     className="mt-1"
                 />
+                <p>enter file title here:</p>
+                <StyledInput id="file_title" className="block" />
+                <p>enter file description here:</p>
+                <StyledInput id="file_description" className="block" />
                 <StyledDiv
                     onClick={upload_files}
                     className="w-fit mt-4 text-lg"
