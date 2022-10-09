@@ -54,7 +54,8 @@ async function init() {
 		"./uploaded/profile_images",
 		"./uploaded/product_images",
 		"./uploaded/company_info",
-		"./uploaded/blog_images"
+		"./uploaded/blog_images",
+		"./uploaded/download_center"
 	].forEach((path) => {
 		if (!fs.existsSync(path)) {
 			fs.mkdirSync(path);
@@ -176,29 +177,6 @@ async function init() {
 	//todo take care about length of texts and max length of cells
 }
 async function main() {
-	app.all("/upload", async (req, res) => {
-		//
-		var rm = new response_manager(res);
-		try {
-			await init();
-		} catch (e) {
-			rm.send_error(e);
-			return;
-		}
-		var con = connect_to_db();
-		rm.add_mysql_con(con);
-		custom_upload({
-			req,
-			files_names: JSON.parse(params.files_names),
-			upload_dir: path.join("./uploaded", params.relative_path),
-			onSuccess: () => {
-				rm.send();
-			},
-			onReject: (e) => {
-				rm.send_error(e);
-			},
-		});
-	});
 	app.all("/", async (req, res) => {
 		var rm = new response_manager(res);
 		try {
@@ -246,10 +224,11 @@ async function main() {
 
 				break;
 			case "upload":
-				/* body should contain a form with files appended to it 
+				/* 	
+					body should contain a form with files appended to it 
 					the path should contain the other required parameters like relative_path as its query parameters
 				*/
-				var uploadDir = "./uploaded/blog_images";
+				var uploadDir = params.upload_dir ;
 				if (!fs.existsSync(uploadDir)) {
 					fs.mkdirSync(uploadDir);
 				}
@@ -1246,8 +1225,7 @@ async function main() {
 				console.log(product_ids);
 				var output = await cq(
 					con,
-					`insert into orders (name,username,product_ids,status,time) values ('${
-						params.name
+					`insert into orders (name,username,product_ids,status,time) values ('${params.name
 					}','${params.username}','${JSON.stringify(
 						product_ids
 					)}','submited','${new Date().getTime()}')`
@@ -1335,8 +1313,7 @@ async function main() {
 				if (Number(params.new_count) !== 0) {
 					o = await cq(
 						con,
-						`insert into shopping_card_items (username ,product_id ,time,count) values ('${
-							params.username
+						`insert into shopping_card_items (username ,product_id ,time,count) values ('${params.username
 						}',${Number(params.product_id)},'${new Date().getTime()}',${Number(
 							params.new_count
 						)})`
@@ -1377,9 +1354,9 @@ async function main() {
 				rm.send_result(o.result)
 				break;
 			case "upload_icon":
-				var icon_file_name = fs.readdirSync('./uploaded/company_info').find(i=>i.split('.')[0] === params.icon_type)
+				var icon_file_name = fs.readdirSync('./uploaded/company_info').find(i => i.split('.')[0] === params.icon_type)
 				if (icon_file_name) {
-					fs.rmSync(path.join('./uploaded/company_info',icon_file_name))
+					fs.rmSync(path.join('./uploaded/company_info', icon_file_name))
 				}
 				custom_upload({
 					req,
@@ -1397,12 +1374,12 @@ async function main() {
 				var file_names = fs.readdirSync('./uploaded/company_info')
 				var icon_file_name = file_names.find(i => i.split('.')[0] === params.icon_type)
 				if (icon_file_name) {
-					fs.rmSync(path.join('./uploaded/company_info', icon_file_name), {force : true})
+					fs.rmSync(path.join('./uploaded/company_info', icon_file_name), { force: true })
 				}
 				rm.send()
 				break;
 			case "new_product_image":
-				var this_product_images_count = fs.readdirSync('./uploaded/product_images').filter(i=>i.split('-')[0] == params.product_id).length
+				var this_product_images_count = fs.readdirSync('./uploaded/product_images').filter(i => i.split('-')[0] == params.product_id).length
 				custom_upload({
 					req,
 					uploadDir: "./uploaded/product_images",
@@ -1416,7 +1393,7 @@ async function main() {
 				})
 				break;
 			case "del_product_image":
-				fs.rmSync(path.join('./uploaded/product_images',params.image_file_name), { force: true }) 
+				fs.rmSync(path.join('./uploaded/product_images', params.image_file_name), { force: true })
 				rm.send()
 				break;
 			case "unsubscribe":
@@ -1425,21 +1402,21 @@ async function main() {
 				rm.send()
 				break;
 			case "delete_user_profile_image":
-				var path_of_that_image = fs.readdirSync('./uploaded/profile_images').find(i=>i.split('.')[0]=== params.username)
+				var path_of_that_image = fs.readdirSync('./uploaded/profile_images').find(i => i.split('.')[0] === params.username)
 				if (path_of_that_image) {
 					fs.rmSync(`./uploaded/profile_images/${path_of_that_image}`, {
 						force: true,
-						recursive : true
+						recursive: true
 					})
 				}
 				rm.send()
 				break;
 			case "update_user":
 				var o;
-				var col_name = params.column_name 
+				var col_name = params.column_name
 				var new_val = params.new_val
 				var new_val_type = params.new_val_type
-				o = await cq(con, 
+				o = await cq(con,
 					`
 						update users
 						set ${col_name}=${new_val_type === "string" ? JSON.stringify(new_val) : new_val}
@@ -1448,10 +1425,10 @@ async function main() {
 				)
 				if (o.error) {
 					rm.send_error(o.error)
-					break 
+					break
 				}
 				rm.send()
-				break 
+				break
 			case "update_cell":
 				//possible values for col_name : number,string
 				//required params: new_val,new_val_type,table_name,col_name,row_id
@@ -1470,6 +1447,9 @@ async function main() {
 					//todo write all errors in a file on the server
 				}
 				rm.send()
+				break;
+			case "get_download_center_items":
+				rm.send_result(fs.readdirSync('./uploaded/download_center'))
 				break;
 		}
 	});

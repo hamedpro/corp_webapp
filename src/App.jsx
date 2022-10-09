@@ -37,6 +37,7 @@ import { ProductCategories } from "./components/product_categories/comp";
 import { UserSupportTickets } from "./components/user_support_tickets/comp";
 import { PageNotFound } from "./components/PageNotFound/comp";
 import { multi_lang_helper as ml } from "./common";
+import { DownloadCenter } from "./components/DownloadCenter";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -131,6 +132,10 @@ function App() {
 								<PG />
 							</CheckUserPrivilege>
 						}
+					/>
+					<Route
+						path="/download-center"
+						element={<DownloadCenter />}
 					/>
 					<Route
 						path="/products/:product_id/new-product-review"

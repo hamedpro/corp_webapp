@@ -3,12 +3,13 @@ import UsersSection from "./users_section";
 import ProductsSection from "./products_section";
 import "./styles.css";
 import { useState } from "react";
-import { Comment, Info, InfoRounded, ListAltRounded, Person, ReviewsRounded, ShoppingBag, SupportAgentRounded, Tune, VerifiedUserRounded } from "@mui/icons-material";
+import { Comment, Download, Info, InfoRounded, ListAltRounded, Person, ReviewsRounded, ShoppingBag, SupportAgentRounded, Tune, VerifiedUserRounded } from "@mui/icons-material";
 import { OrdersSection } from "./orders_section";
 import { SupportTicketsSection } from "./support_tickets_section";
 import { ProductReviews } from "./product_reviews";
 import { BlogComments } from "./blog_comments";
 import { Alert } from "../alert/comp";
+import { ManageDownloadCenter } from "./ManageDownloadCenter";
 export default function AdminDashboard() {
 	var [tab, set_tab] = useState("manage_products");
 	var tabs = [
@@ -48,6 +49,11 @@ export default function AdminDashboard() {
 			title: "manage blog comments",
 			icon: <Comment />,
 		},
+		{
+			id: "manage_download_center",
+			title: "manage download center",
+			icon : <Download />
+		}
 
 	];
 	return (
@@ -116,11 +122,12 @@ export default function AdminDashboard() {
 							<ProductReviews />
 						</>
 					)}
-					
 					{tab === "manage_blog_comments" && (
 						<BlogComments />
 					)}
-					
+					{tab === "manage_download_center" && (
+						<ManageDownloadCenter />
+					)}
 				</div>
 			</div>
 		</>

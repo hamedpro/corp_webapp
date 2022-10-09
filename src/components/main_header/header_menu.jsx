@@ -7,6 +7,7 @@ import {
 	AddBusinessRounded,
 	AddCircleRounded,
 	AdminPanelSettingsRounded,
+	Download,
 	GroupRounded,
 	HomeRounded,
 	InfoRounded,
@@ -97,6 +98,11 @@ const HeaderMenu = (props) => {
 						items={[ml({ en: "blog posts", fa: "بلاگ پست ها" })]}
 						onClick={() => nav_and_hide_header_menu("/blog-posts")}
 						beforeItems={<NewspaperRounded sx={{ color: "white" }} />}
+					/>
+					<ListItem
+						items={["download center"]}
+						onClick={() => nav_and_hide_header_menu('/download-center')}
+						beforeItems={<Download sx={{ color: "white" }} />}
 					/>
 					{show_admin_routes && (
 						<>

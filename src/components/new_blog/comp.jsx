@@ -18,7 +18,7 @@ export default function NewBlog() {
 				params: {
 					task_name: "upload",
 					files_names: JSON.stringify([blog_id]),
-					relative_path: "./blog_images",
+					upload_dir : "./uploaded/blog_images"
 				},
 				files: [document.getElementById("blog_image_input").files[0]],
 				verbose: true,
