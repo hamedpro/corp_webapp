@@ -31,3 +31,5 @@ pg.cjs
 ./.env
 .env
 tmp.txt
+nohup.out
+.env.backup
