@@ -13,7 +13,8 @@ export function ProductsRow({ products, icon, title ,className=""}) {
 						<div className="h-14 w-14 bg-white rounded-full flex justify-center items-center">
 							{icon}
 						</div>
-						<h1>{title}</h1>
+							<h1>{title}</h1>
+							
 					</div>
 					{products.length == 0 ? (
 						<div className="h-full w-fit">
@@ -34,11 +35,13 @@ export function ProductsRow({ products, icon, title ,className=""}) {
 											name={product.name}
 											price={product.price}
 											className={
-												"w-56 overflow-hidden bg-blue-300 text-black " +
+												"w-1/2 md:1/4 overflow-hidden bg-blue-300 text-black " +
 												(index == 0 ? "rounded-l-xl" : "") +
 												(index == products.length - 1 ? "rounded-r-xl" : "")
 											}
 											discount_percent={product.discount_percent}
+											description={product.description}
+											category={product.category}
 										/>
 									</React.Fragment>
 								);

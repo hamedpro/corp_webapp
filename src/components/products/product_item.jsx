@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
-export default function ProductItem({ id, name, price, className = undefined, discount_percent }) {
+import { Category, InfoRounded } from "@mui/icons-material";
+export default function ProductItem({ id, name, price, className = undefined, discount_percent, description="" ,category=""}) {
 	//id stands for product id
 	var nav = useNavigate();
 	var [the_image_src, set_the_image_src] = useState(null);
@@ -54,8 +55,16 @@ export default function ProductItem({ id, name, price, className = undefined, di
 					</div>
 				)}
 			</div>
-			<p className="mx-auto mx-1 mt-1">{name}</p>
-			<div className="flex flex-col">
+			<div className="mx-auto mx-1 mt-1">
+				<h1 className="text-3xl">{name}</h1>
+				<div className="flex items-center space-x-1 mt-3">
+					<InfoRounded sx={{color:"darkblue"}}/> <span className="text-lg">{description}</span>
+				</div>
+				<div className="flex items-center space-x-1">
+					<Category sx={{color:"darkblue"}}/> <span className="text-lg">{category}</span>
+				</div>
+			</div>
+			<div className="flex flex-col mt-auto p-1">
 				{discount_percent === 0 ? (
 					<>
 						{price} {ml({ en: "toman", fa: "تومن" })}
@@ -69,7 +78,7 @@ export default function ProductItem({ id, name, price, className = undefined, di
 						</span>
 						<b className="">
 							-{discount_percent}% :{" "}
-							{Math.round((price * ((100 - discount_percent) / 100)) / 1000) * 1000}
+							{Math.round((price * ((100 - discount_percent) / 100)) / 1000) * 1000} {ml({ en: "toman", fa: "تومن" })}
 						</b>
 					</>
 				)}

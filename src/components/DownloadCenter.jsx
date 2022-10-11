@@ -74,8 +74,9 @@ export function DownloadCenter({ admin_mode = false }) {
                                                 </>
                                             )}
 										</div>
+										<span className="block text-stone-700 mt-1">description : {item.description }</span>
 
-                                        <span className="block text-stone-500 text-sm mt-2">updated in {new Date(Number(item.time)).toString()} by @{item.publisher_username}</span>
+                                        <span className="block text-stone-500 text-sm mt-1">updated in {new Date(Number(item.time)).toString()} by @{item.publisher_username}</span>
 									</div>
 								);
 							})}

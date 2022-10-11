@@ -5,7 +5,7 @@ export default function Section(props) {
 				"section" + (typeof props.className == "undefined" ? "" : " " + props.className)
 			}
 		>
-			<div className={["border border-blue-400 rounded pb-2 h-full"].join(" ")}>
+			<div className={["border border-blue-400 rounded pb-2"].join(" ")}>
 				<div className={["w-full h-8 rounded-t relative bg-blue-400 mb-4"].join(' ')}
 				style={(props.top_line_style ? props.top_line_style : {} )}
 				> 

@@ -4,22 +4,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Modal from "../Modal/Modal.jsx";
 import { multi_lang_helper as ml } from "../../common.js";
+import { ArrowTitle } from "../ArrowTitle.jsx";
 export function SortingModal({ open, hideFn, setSortType, sortType }) {
 	return (
 		<Modal type="type1" className={"h-1/2 bg-sky-800 text-white"} is_visible={open} hideFn={hideFn}>
-			<div className="flex m-2 space-x-2 items-center w-fit px-1 hover:bg-blue-900 rounded-lg" onClick={hideFn}>
-				<ArrowBackIosRounded
-					className="rounded"
-					sx={{ color: "white" }}
-					
-				/>
-				<h1 className="text-lg text-white">
-				{ml({
+			<ArrowTitle title={ml({
 						en: "sorting results",
 						fa: "مرتب کردن نتایج",
-					})}
-				</h1>
-			</div>
+					})} onClick={hideFn} />
 			<div className="flex m-2 items-center">
 				<Checkbox sx={{color:"white"}} checked={sortType == "default"} onChange={() => setSortType("default")} />
 				<h1>

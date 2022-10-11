@@ -65,19 +65,18 @@ export default function MainFooter() {
 			<ChangeLangModal hideFn={() => set_is_modal_open(false)} is_visible={is_modal_open} />
 			<div className="bg-sky-800 text-white">
 				<div className="flex p-2 h-16 mt-2 mb-7 mx-2">
-					<div className="w-2/3 h-full flex mb-2 space-x-2">
-						<div className="h-16 w-fit bg-blue-500 rounded-lg">
-							{square_icon_src ? (
-								<img
-									src={square_icon_src}
-									className="h-full w-fit rounded-lg"
-									style={{ objectFit: "contain" }}
-								/>
-							) : (
-								<div className="h-16 w-16 bg-blue-400 mb-3 rounded"></div>
-							)}
-						</div>
-						<div className="text-xl">
+					<div className="h-full w-full flex mb-2 space-x-2">
+						{square_icon_src ? (
+							<img
+								src={square_icon_src}
+								className="h-full rounded-lg"
+								style={{ objectFit: "contain" }}
+							/>
+						) : (
+							<div className="h-16 w-16 bg-blue-400 mb-3 rounded"></div>
+						)}
+						
+						<div className="text-xl w-2/3">
 							{company_info && company_info.name}
 							<br />
 							<LinkLikeP link="/company-info" className="text-stone-400 text-sm">
@@ -88,13 +87,10 @@ export default function MainFooter() {
 							</LinkLikeP>
 						</div>
 					</div>
-					<div className="w-1/3 flex justify-end">
-						
-					</div>
 				</div>
 				<div className="flex flex-wrap md:flex-nowrap mx-2 p-2 md:space-x-2">
 					<Subscripting className={"w-full shrink-0 md:shrink md:w-1/2"} />
-					<div className="w-full md:w-1/2 shrink-0 md:shrink  md:mt-0 rounded text-black">
+					<div className="w-full md:w-1/2 md:h-full shrink-0 md:shrink  md:mt-0 rounded text-black">
 						{company_info === null ? (
 							<div className="w-full h-full border  border-blue-400 rounded-lg">
 								<Loading />
@@ -105,7 +101,8 @@ export default function MainFooter() {
 									en: "about the company",
 									fa: "درباره شرکت",
 								})}
-								className="h-full mt-2 md:mt-0"
+									className="h-full mt-2 md:mt-0"
+									innerClassName="h-full"
 							>
 								<div className="text-white px-2">
 									<div>

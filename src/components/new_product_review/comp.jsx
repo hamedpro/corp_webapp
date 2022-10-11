@@ -1,9 +1,11 @@
-import { ArrowBackIosNewRounded, DeleteRounded } from "@mui/icons-material";
+import { ArrowBackIosNewRounded, DeleteRounded, Info } from "@mui/icons-material";
 import { Button, Rating } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
+import { Alert } from "../alert/comp";
+import { ArrowTitle } from "../ArrowTitle";
 import ListItem from "../list_item/comp";
 export function NewProductReview({}) {
 	var username = window.localStorage.getItem("username");
@@ -78,42 +80,15 @@ export function NewProductReview({}) {
 			style={{ overflowY: "scroll" }}
 		>
 			<div
-				className="w-full h-16 bg-blue-600 fixed flex pt-2 flex-col"
+				className="w-full h-20 bg-blue-600 fixed flex flex-col justify-center"
 				style={{ zIndex: 51 }}
 			>
-				<div
-					className="flex items-center space-x-1"
-					onClick={() => nav(`/products/${product_id}/reviews`)}
-				>
-					<ArrowBackIosNewRounded
-						sx={{ color: "white" }}
-						className="hover:bg-blue-800 rounded ml-1 p-1 h-14 w-14"
-					/>
-					<span className="text-xl py-0 my-0 text-white">
-						{ml({
-							en: "your review",
-							fa: "نظر شما",
-						})}
-					</span>
-				</div>
-				<div className="flex">
-					<p className="left-8 relative text-stone-400">
-						{ml({
-							en: "about",
-							fa: "درباره",
-						})}{" "}
-						"
-						{product === null
-							? ml({
-									en: "loading data...",
-									fa: "در حال بارگزاری اطلاعات ...",
-							  })
-							: product.name}
-						"
-					</p>
-				</div>
+				<ArrowTitle title={"submit your review"} onClick={() => nav(`/products/${product_id}/reviews`)} />
+				{product !== null && (
+					<p className="px-5 text-stone-300 text-lg">about { product.name }</p>
+				)}
 			</div>
-			<div className="w-full h-16 relative"></div>
+			<div className="w-full h-20 relative"></div>
 			{/* todo add column : i suggest it to buy or not and submit anynomus */}
 			<h1 className="text-lg p-2 text-white">
 				{ml({
@@ -139,9 +114,9 @@ export function NewProductReview({}) {
 				})}
 			</h1>
 			<div className="flex">
-				<input id="new_pro_input" type="text" className="w-3/4 ml-2 h-8 rounded px-2" />
+				<input placeholder="to add new item enter it and hit add button" id="new_pro_input" type="text" className="w-3/4 ml-2 h-8 rounded px-2" />
 				<button
-					className="h-8 w-8 p-2 text-white bg-blue-600 rounded ml-2 flex justify-center items-center"
+					className="h-8 w-14 p-2 px-3 text-white bg-blue-600 rounded ml-2 flex justify-center items-center"
 					onClick={add_a_new_pro}
 				>
 					{ml({
@@ -168,11 +143,11 @@ export function NewProductReview({}) {
 				})}
 			</h1>
 			<div className="flex">
-				<input id="new_con_input" type="text" className="w-3/4 ml-2 h-8 rounded px-2" />
+				<input placeholder="to add new item enter it and hit add button" id="new_con_input" type="text" className="w-3/4 ml-2 h-8 rounded p-2" />
 
 				<button
 					onClick={add_a_new_con}
-					className="h-8 w-8 p-2 text-white bg-blue-600 rounded ml-2 flex justify-center items-center"
+					className="h-8 w-14 p-2 px-3 text-white bg-blue-600 rounded ml-2 flex justify-center items-center"
 				>
 					{ml({
 						en: "add",
@@ -190,17 +165,17 @@ export function NewProductReview({}) {
 					</div>
 				);
 			})}
-			<div className="p-2 mt-2">
-				<h1 className="text-lg mb-1 text-white">
+			<div className="p-0 mt-4">
+				<h1 className="text-lg mb-1 text-white px-2">
 					{ml({
 						en: "your review text :",
 						fa: "متن بررسی شما ",
 					})}
 				</h1>
-				<textarea id="review_text_textarea" className="p-1 rounded" />
+				<textarea rows={5} id="review_text_textarea" className="p-2 rounded w-3/4 ml-2" placeholder="describe your exprience or share useful information about this product with people"/>
 			</div>
 
-			<div className="w-full border-t border-stone-400 h-1"></div>
+			<div className="w-full border-t border-stone-400 h-1 mt-1"></div>
 			<div className="mx-auto flex items-center justify-center flex-col w-3/4">
 				<Button
 					variant="contained"
@@ -215,12 +190,12 @@ export function NewProductReview({}) {
 					})}{" "}
 					@{username}
 				</Button>
-				<p className="text-xs text-center mt-3">
-					{ml({
+				<Alert icon={<Info />} className="mt-4 mb-2" >
+				{ml({
 						en: "your review will be shown after it's verified by any of the admins",
 						fa: "بررسی شما بعد از تایید توسط یکی از مدیران نمایش داده خواهد شد",
 					})}
-				</p>
+				</Alert>
 			</div>
 		</div>
 	);

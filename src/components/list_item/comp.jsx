@@ -39,7 +39,6 @@ export default function ListItem(props) {
 			{props.remove_arrow !== true ? (
 				<div className="hamedpro8977_icon flex justify-content-center items-center">
 					<ArrowCircleRightRounded sx={{ color: "white" }} />{" "}
-					{/* todo  fix issue of positioning arrow icon  */}
 				</div>
 			) : null}
 		</div>

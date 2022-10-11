@@ -130,7 +130,7 @@ const user_reviews = (props) => {
 								sx={{ color: "white", borderColor: "gray" }}
 								variant="outlined"
 								size="small"
-								onClick={() => nav(`/products/${props.product_id}/new-user-review`)}
+								onClick={() => nav(`/products/${props.product_id}/new-product-review`)}
 							>
 								{ml({
 									en: "add a new review",

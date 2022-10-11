@@ -5,6 +5,7 @@ import Section from "../section/comp";
 import { Alert } from "../alert/comp";
 import { clone_simple_object } from "../../common";
 import { multi_lang_helper as ml } from "../../common";
+import { ArrowTitle } from "../ArrowTitle.jsx";
 export function FilteringModal({
 	open,
 	hideFn,
@@ -30,19 +31,10 @@ export function FilteringModal({
 	}
 	return (
 		<Modal type="type1" className={"h-2/3 bg-sky-800"} is_visible={open} hideFn={hideFn}>
-			<div className="flex m-2 space-x-2 items-center w-fit px-1 hover:bg-blue-900 rounded-lg" onClick={hideFn}>
-				<ArrowBackIosRounded
-					className="rounded"
-					sx={{ color: "white" }}
-					
-				/>
-				<h1 className="text-lg text-white">
-					{ml({
+			<ArrowTitle title={ml({
 						en: "filtering results",
 						fa: "فیلتر کردن نتایج",
-					})}
-				</h1>
-			</div>
+					})} onClick={hideFn} />
 			<Section
 				title={ml({
 					en: "current filters",

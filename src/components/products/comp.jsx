@@ -129,6 +129,8 @@ export default function Products() {
 								key={product.id}
 								discount_percent={product.discount_percent}
 								className="bg-white"
+								description={product.description}
+								category={product.category}
 							/>
 						);
 					})}
