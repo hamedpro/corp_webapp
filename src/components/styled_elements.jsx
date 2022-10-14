@@ -14,13 +14,29 @@ export function StyledInput({
     className = "",
     id=undefined,
     placeholder = "",
-    type="text"
+    type = "text",
+    textarea_mode = false
 }) {
     var default_className = "border border-stone-600 rounded px-1"
     return (
-        <input
-            type={type}
-            placeholder={placeholder}
-            id={id} onClick={onClick} className={[default_className, className].join(" ")} />
+        <>
+            {textarea_mode ? (
+                <textarea
+                type={type}
+                placeholder={placeholder}
+                id={id} onClick={onClick} 
+                className={[default_className, className].join(" ")} 
+                /> 
+            ): (
+                    
+                <input
+                    type={type}
+                    placeholder={placeholder}
+                    id={id} onClick={onClick} 
+                    className={[default_className, className].join(" ")} 
+                />
+            )}
+        </>
+        
     )
 }

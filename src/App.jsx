@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import "./output.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -38,6 +38,9 @@ import { UserSupportTickets } from "./components/user_support_tickets/comp";
 import { PageNotFound } from "./components/PageNotFound/comp";
 import { multi_lang_helper as ml } from "./common";
 import { DownloadCenter } from "./components/DownloadCenter";
+import { Info } from "@mui/icons-material";
+import { Notifications } from "./components/Notifications";
+import { Logs } from "./components/Logs";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -104,9 +107,10 @@ function App() {
 		//todo get a default lang from users when initialization of app and use it here
 	}
 	var current_lang = window.localStorage.getItem("language");
-
+	
 	return (
 		<div className="h-full w-full 2xl:bg-green-300 overflow-x-hidden overflow-y-hidden">
+			<Notifications />
 			<div
 				className={[
 					"relative mx-auto w-full 2xl:w-2/3 w-full h-full overflow-x-hidden",
@@ -213,6 +217,12 @@ function App() {
 						element={
 							<FirstSetup />
 							/* todo prevent other to access first setup page  */
+						}
+					/>
+					<Route
+						path="/logs"
+						element={
+							<Logs />
 						}
 					/>
 				</Routes>

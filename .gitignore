@@ -33,3 +33,4 @@ pg.cjs
 tmp.txt
 nohup.out
 .env.backup
+pink_task_server.cjs

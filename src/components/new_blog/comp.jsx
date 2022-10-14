@@ -1,6 +1,7 @@
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
 import Section from "../section/comp";
+import { StyledDiv, StyledInput } from "../styled_elements";
 export default function NewBlog() {
 	async function upload_new_blog() {
 		try {
@@ -39,28 +40,29 @@ export default function NewBlog() {
 			className="px-2"
 		>
 			<div className="px-2">
-				<p>{ml({ en: "blog title :", fa: "موضوع بلاگ" })}</p>
-				<input id="blog_title_input" className={inputClassName} />
-
-				<p>{ml({ en: "blog image :", fa: "عکس بلاگ" })}</p>
+				<p className="mb-1">{ml({ en: "blog title :", fa: "موضوع بلاگ" })}</p>
+				<StyledInput id="blog_title_input" className={inputClassName} />
+				
+				<p className="mt-2 mb-1">{ml({ en: "blog image :", fa: "عکس بلاگ" })}</p>
 				<input type="file" id="blog_image_input" />
 
-				<p>{ml({ en: "blog text :", fa: "متن بلاگ" })}</p>
-				<textarea
+				<p className="mt-2 mb-1">{ml({ en: "blog text :", fa: "متن بلاگ" })}</p>
+				<StyledInput
+					textarea_mode
 					id="blog_text_input"
 					className={[inputClassName, "block"].join(" ")}
-				></textarea>
+				/>
 
-				<button
+				<StyledDiv
 					onClick={upload_new_blog}
-					className="bg-gray-800 text-white px-2 py-1 rounded-lg mt-2"
+					className="w-fit bg-blue-400 hover:bg-blue-600 duration-300 text-white px-2 py-1 rounded-lg mt-2"
 				>
 					{ml({
 						en: "submit as",
 						fa: "ثبت به عنوان",
 					})}{" "}
 					@{window.localStorage.getItem("username")}
-				</button>
+				</StyledDiv>
 			</div>
 		</Section>
 	);

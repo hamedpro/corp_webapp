@@ -6,6 +6,7 @@ export async function customAjax({
 	super_admin_access_token = null,
 	jwt = null,
 	verbose = false,
+	disable_notifications_and_logs = false,
 }) {
 	var method = "POST";
 	var base_path = window.api_endpoint;
@@ -44,27 +45,53 @@ export async function customAjax({
 		if (verbose) {
 			console.log("this path is going to be fetched " + path);
 		}
-		response = await fetch(path,{
+		response = await fetch(path, {
 			method,
 			body: JSON.stringify(params),
 			headers,
 		});
 	}
 
-	if (!response.ok) { //todo add catch block for when fetch req iteself is rejected
-		throw new Error("response.ok was not true");
+	if (!response.ok) {
+		//todo add catch block for when fetch req iteself is rejected
+		error_text = `network related problem : fetch request was not successful (status was not in the range 200-299) : response.status = ${response.status}`;
+		if (!disable_notifications_and_logs) {
+			window.new_log({
+				type: "error",
+				title: "network related problem",
+				text: error_text,
+			});
+		}
+		throw new Error(error_text);
 	}
 	var parsed_json;
 	try {
 		parsed_json = await response.json();
 	} catch (e) {
-		throw new Error("response.ok was true but response was invalid json");
+		error_text =
+			"network related problem : fetch request was successful (status was in the range 200-299) but server response was not a valid stringified json ";
+		if (!disable_notifications_and_logs) {
+			window.new_log({
+				type: "error",
+				title: "network related problem",
+				text: error_text,
+			});
+		}
+		throw new Error(error_text);
 	}
 	if (parsed_json.errors.length !== 0) {
-		throw {
-			details: "errors field of the response was not empty",
-			errors: parsed_json.errors,
-		};
+		error_text = `network related problem : fetch request was successful and response was parsed successfuly but server reported one or more errors : ${parsed_json.errors.join(
+			" -- "
+		)}`;
+		if (!disable_notifications_and_logs) {
+			window.new_log({
+				type: "error",
+				title: "network related problem",
+				text: error_text,
+			});
+		}
+
+		throw error_text;
 	} else {
 		return parsed_json;
 	}

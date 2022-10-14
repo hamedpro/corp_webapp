@@ -41,7 +41,7 @@ export default function SearchModal(props) {
 		);
 	}
 	return (
-		<div className="h-full w-full fixed bg-blue-800 top-0 left-0 z-50 flex flex-col">
+		<div className="h-full w-full fixed bg-sky-800 top-0 left-0 z-50 flex flex-col">
 			<ArrowTitle title="search center" onClick={props.hide_func} />
 			<div className="flex mx-2 my-2 h-10">
 				<input

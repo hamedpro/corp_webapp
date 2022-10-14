@@ -80,7 +80,6 @@ export function getUserPrivilege() {
 }
 //todo do detecting if access is denied or not server side
 export function shuffle(array) {
-	//todo i've copy pasted this func so test it
 	let currentIndex = array.length,
 		randomIndex;
 

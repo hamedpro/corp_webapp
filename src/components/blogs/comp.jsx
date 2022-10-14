@@ -1,11 +1,12 @@
-import { InfoRounded } from "@mui/icons-material";
+import { Edit, Info, InfoOutlined, InfoRounded, Person } from "@mui/icons-material";
 import Section from "../section/comp";
 import { Alert } from "../alert/comp";
-import { multi_lang_helper as ml } from "../../common";
+import { gen_link_to_file, multi_lang_helper as ml } from "../../common";
 import { Loading } from "../loading/comp";
 import React, { useEffect, useState } from "react";
 import { customAjax } from "../../custom_ajax";
-import { BlogCard } from "./BlogCard";
+import { ImageRow } from "../ImageRow";
+import { useNavigate } from "react-router-dom";
 export default function Blogs() {
 	var [blogs, set_blogs] = useState(null);
 	function fetch_data() {
@@ -23,6 +24,7 @@ export default function Blogs() {
 		);
 	}
 	useEffect(fetch_data, []);
+	var nav = useNavigate()
 	return (
 		<>
 			<Section
@@ -38,7 +40,15 @@ export default function Blogs() {
 					blogs.map((blog, index) => {
 						return (
 							<React.Fragment key={index}>
-								<BlogCard data={blog} />
+								<ImageRow onClick={()=> nav(`/blog-posts/${blog.id}`)}
+									images={[gen_link_to_file(`./blog_images/${blog.image_file_name}`)]}
+									items={[
+										{ icon: <InfoOutlined sx={{ color: "darkblue" }} />, text: blog.text },
+										{ icon: <Person sx={{ color: 'darkblue' }} />, text: blog.username },
+										{icon : <Edit sx={{color:'darkblue'}}/>,text : `last modified : ${new Date(Number(blog.last_modification_time)).toString()}`}
+									]}
+									title={blog.title}
+								/>
 							</React.Fragment>
 						);
 					})}
