@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { customAjax } from "../../custom_ajax";
 import { multi_lang_helper as ml, shuffle } from "../../common";
 import { DiffrentSections } from "./diffrent_sections";
+import { StyledDiv } from "../styled_elements";
 export default function Root() {
 	var [products, set_products] = useState(null);
 	function fetch_data() {
@@ -30,7 +31,22 @@ export default function Root() {
 	useEffect(fetch_data, []);
 	return (
 		<>
-			<ImageSlider className="mt-1 bg-sky-600" image_sources={[]} />
+			<div className="bg-blue-500 h-60 w-full p-4">
+				<h1 className="text-3xl text-white">{ml({
+					en: "online panel address :",
+					fa : "آدرس پنل اینترنتی :"
+				})}</h1>
+				<button onClick={() => {
+					window.location.assign('http://mpkchiller.com/dimmer')
+				}}>
+					<StyledDiv
+						className="mt-3 px-2 py-1 text-xl bg-blue-600 text-white hover:bg-blue-800 duration-300"
+					>{ml({
+						en: "open link",
+						fa : "باز کردن پیوند"
+					})} (http://mpkchiller.com/dimmer) </StyledDiv>
+				</button>
+			</div>
 			<ProductsRow
 				icon={<Discount sx={{color:"darkblue"}} />}
 				title={ml({

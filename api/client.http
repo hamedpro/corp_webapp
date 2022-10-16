@@ -71,3 +71,11 @@ Content-Type: application/json
 {
     "task_name" : "get_products"
 }
+
+### 
+GET https://api.pishro-control.ir
+Content-Type: application/json
+
+{
+    "task_name" : "get_products"
+}
