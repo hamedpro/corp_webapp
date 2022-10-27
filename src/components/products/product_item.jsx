@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
-import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
+import { gen_link_to_file, multi_lang_helper as ml, trim_text_if_its_long } from "../../common.js";
 import { Category, InfoRounded } from "@mui/icons-material";
 export default function ProductItem({ id, name, price, className = undefined, discount_percent, description="" ,category=""}) {
 	//id stands for product id
@@ -57,8 +57,8 @@ export default function ProductItem({ id, name, price, className = undefined, di
 			</div>
 			<div className="mx-auto mx-1 mt-1">
 				<h1 className="text-3xl">{name}</h1>
-				<div className="flex items-center space-x-1 mt-3">
-					<InfoRounded sx={{color:"darkblue"}}/> <span className="text-lg">{description}</span>
+				<div className="flex space-x-1 mt-3">
+					<InfoRounded sx={{color:"darkblue"}}/> <span className="text-lg break-all">{trim_text_if_its_long(description,50)}</span>
 				</div>
 				<div className="flex items-center space-x-1">
 					<Category sx={{color:"darkblue"}}/> <span className="text-lg">{category}</span>

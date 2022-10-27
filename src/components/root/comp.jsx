@@ -54,7 +54,6 @@ export default function Root() {
 					fa: "محصولات دارای تخفیف",
 				})}
 				products={discounted_products()}
-				className="md:h-96"
 			/>
 			<DiffrentSections />
 			<ProductsRow
@@ -64,7 +63,6 @@ export default function Root() {
 					fa: "کالاهای پیشنهادی برای شما",
 				})}
 				products={suggested_products()}
-				className="md:h-96"
 			/>
 		</>
 	);
