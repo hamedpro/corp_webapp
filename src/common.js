@@ -40,6 +40,7 @@ export function clone_simple_object(object_to_clone) {
 	return cloned_object;
 }
 export function multi_lang_helper({ en, fa }) {
+	return fa; // we dont support multi language anymore. (just persian)
 	var lang = window.localStorage.getItem("language");
 	if (lang === null) {
 		return fa; //defalt lang is set here
