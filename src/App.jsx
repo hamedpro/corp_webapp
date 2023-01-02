@@ -10,19 +10,14 @@ import {
 	CompanyInfo,
 	Login,
 	MainHeader,
-	NewSupportTicket,
 	Product,
 	Products,
 	Register,
 	Root,
-	SupportTicket,
 	MainFooter,
 	NewProduct,
 	User,
 	NavBar,
-	Blog,
-	Blogs,
-	NewBlog,
 	Terms,
 	FirstSetup,
 	NewProductReview,
@@ -34,13 +29,9 @@ import { ShoppingCardPage } from "./components";
 import { PG } from "./components/pg/pg";
 import { CheckUserPrivilege } from "./components/CheckUserPrivilege/comp";
 import { ProductCategories } from "./components/product_categories/comp";
-import { UserSupportTickets } from "./components/user_support_tickets/comp";
 import { PageNotFound } from "./components/PageNotFound/comp";
 import { multi_lang_helper as ml } from "./common";
 import { DownloadCenter } from "./components/DownloadCenter";
-import { Info } from "@mui/icons-material";
-import { Notifications } from "./components/Notifications";
-import { Logs } from "./components/Logs";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -107,10 +98,9 @@ function App() {
 		//todo get a default lang from users when initialization of app and use it here
 	}
 	var current_lang = window.localStorage.getItem("language");
-	
+
 	return (
 		<div className="h-full w-full 2xl:bg-green-300 overflow-x-hidden overflow-y-hidden">
-			<Notifications />
 			<div
 				className={[
 					"relative mx-auto w-full 2xl:w-2/3 w-full h-full overflow-x-hidden",
@@ -137,10 +127,7 @@ function App() {
 							</CheckUserPrivilege>
 						}
 					/>
-					<Route
-						path="/download-center"
-						element={<DownloadCenter />}
-					/>
+					<Route path="/download-center" element={<DownloadCenter />} />
 					<Route
 						path="/products/:product_id/new-product-review"
 						element={
@@ -152,11 +139,6 @@ function App() {
 					<Route exact path="/users/:username/orders" element={<Orders />} />
 					<Route exact path="/users/:username/orders/:order_id" element={<Order />} />
 					<Route exact path="/products/categories" element={<ProductCategories />} />
-					<Route
-						exact
-						path="/users/:username/support-tickets"
-						element={<UserSupportTickets />}
-					/>
 					<Route
 						exact
 						path="/users/:username/shopping-card"
@@ -172,14 +154,6 @@ function App() {
 					/>
 					<Route path="/company-info" element={<CompanyInfo />} />
 					<Route path="/login" element={<Login />} />
-					<Route
-						path="/new-support-ticket"
-						element={
-							<CheckUserPrivilege level="loged_in">
-								<NewSupportTicket />
-							</CheckUserPrivilege>
-						}
-					/>
 
 					<Route exact path="/products/:product_id" element={<Product />} />
 					<Route exact path="/products/:product_id/reviews" element={<ReviewsPage />} />
@@ -196,33 +170,12 @@ function App() {
 					/>
 					<Route path="/register" element={<Register />} />
 					<Route path="/" element={<Root />} />
-					<Route
-						path="/support-tickets/:support_ticket_id"
-						element={<SupportTicket />}
-						exact
-					></Route>
-					<Route exact path="/blog-posts/:blog_id" element={<Blog />} />
-					<Route exact path="/blog-posts" element={<Blogs />} />
-					<Route
-						path="/new-blog-post"
-						element={
-							<CheckUserPrivilege level="admin">
-								<NewBlog />
-							</CheckUserPrivilege>
-						}
-					/>
 					<Route path="/terms" element={<Terms />} />
 					<Route
 						path="/first-setup"
 						element={
 							<FirstSetup />
 							/* todo prevent other to access first setup page  */
-						}
-					/>
-					<Route
-						path="/logs"
-						element={
-							<Logs />
 						}
 					/>
 				</Routes>
