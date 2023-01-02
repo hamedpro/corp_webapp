@@ -1,3 +1,7 @@
+@font-face {
+	font-family: "markazi_text";
+	src: url('../Markazi_Text/MarkaziText-VariableFont_wght.ttf');
+}
 table.custom_border {
 	border: 1px solid black;
 }
@@ -12,7 +16,9 @@ html {
 	overflow-x: hidden;
 	overflow-y: auto;
 }
-
+* {
+	font-family: "markazi_text";
+}
 .fa * {
 	direction: rtl;
 }

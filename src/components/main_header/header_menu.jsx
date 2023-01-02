@@ -67,7 +67,7 @@ const HeaderMenu = (props) => {
 						beforeItems={<HomeRounded sx={{ color: "white" }} />}
 					/>
 					<ListItem
-						items={[ml({ en: "login", fa: "ورود ه حساب کاربری" })]}
+						items={[ml({ en: "login", fa: "ورود به حساب کاربری" })]}
 						onClick={() => nav_and_hide_header_menu("/login")}
 						beforeItems={<LoginRoundedIcon sx={{ color: "white" }} />}
 					/>
@@ -84,33 +84,18 @@ const HeaderMenu = (props) => {
 						beforeItems={<InfoRounded sx={{ color: "white" }} />}
 					/>
 					<ListItem
-						items={[ml({ en: "new support ticket", fa: "ثبت تیکت پشتیبانی جدید" })]}
-						onClick={() => nav_and_hide_header_menu("/new-support-ticket")}
-						beforeItems={<SupportAgent sx={{ color: "white" }} />}
-					/>
-					<ListItem
 						items={[ml({ en: "products", fa: "محصولات" })]}
 						onClick={() => nav_and_hide_header_menu("/products")}
 						beforeItems={<StoreRounded sx={{ color: "white" }} />}
 					/>
 
 					<ListItem
-						items={[ml({ en: "blog posts", fa: "بلاگ پست ها" })]}
-						onClick={() => nav_and_hide_header_menu("/blog-posts")}
-						beforeItems={<NewspaperRounded sx={{ color: "white" }} />}
-					/>
-					<ListItem
-						items={["download center"]}
-						onClick={() => nav_and_hide_header_menu('/download-center')}
+						items={["بخش دانلود ها"]}
+						onClick={() => nav_and_hide_header_menu("/download-center")}
 						beforeItems={<Download sx={{ color: "white" }} />}
 					/>
 					{show_admin_routes && (
 						<>
-							<ListItem
-								items={[ml({ en: "new blog post", fa: "بلاگ پست جدید" })]}
-								onClick={() => nav_and_hide_header_menu("/new-blog-post")}
-								beforeItems={<AddCircleRounded sx={{ color: "white" }} />}
-							/>
 							<ListItem
 								items={[ml({ en: "add new product", fa: "اضافه کردن محصول جدید" })]}
 								onClick={() => nav_and_hide_header_menu("/new-product")}

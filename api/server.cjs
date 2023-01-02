@@ -226,7 +226,13 @@ async function main() {
 					);
 					var output2 = await cq(
 						con,
-						`insert into users (username,hashed_password,email,phone_number,time) values ('${params.username}','${hashed_password}',${!params.email_address ? "NULL" : JSON.stringify(params.email_address)},${!params.mobile ? "NULL" : JSON.stringify(params.mobile)},'${new Date().getTime()}');`
+						`insert into users (username,hashed_password,email,phone_number,time) values ('${
+							params.username
+						}','${hashed_password}',${
+							!params.email_address ? "NULL" : JSON.stringify(params.email_address)
+						},${
+							!params.mobile ? "NULL" : JSON.stringify(params.mobile)
+						},'${new Date().getTime()}');`
 					);
 					if (output2.error) {
 						rm.send_error(output2.error);
@@ -242,7 +248,7 @@ async function main() {
 				custom_upload({
 					req,
 					files_names: JSON.parse(params.files_names),
-					uploadDir : params.upload_dir,
+					uploadDir: params.upload_dir,
 					onSuccess: () => {
 						rm.send();
 					},
@@ -307,7 +313,6 @@ async function main() {
 				break;
 			//todo add checks for types and forexample when accessing user -
 			// check if the user even exists or not !
-			//todo convert to typescript
 			//todo : use ssr
 			case "change_username":
 				con.query(
@@ -335,9 +340,9 @@ async function main() {
 							} else {
 								rm.send_result(
 									results[0].hashed_password ==
-									hash_sha_256_hex(
-										params.password + process.env.PASSWORD_HASHING_SECRET
-									)
+										hash_sha_256_hex(
+											params.password + process.env.PASSWORD_HASHING_SECRET
+										)
 								);
 							}
 						}
@@ -398,7 +403,8 @@ async function main() {
 					`insert into products 
 					(name,description,product_specs,price,category,discount_percent) 
 					values
-					('${params.name}','${params.description}','${params.product_specs}',${Number(params.price)},'${params.category
+					('${params.name}','${params.description}','${params.product_specs}',${Number(params.price)},'${
+						params.category
 					}',${Number(params.discount_percent)})`,
 					(error) => {
 						if (error) {
@@ -478,7 +484,7 @@ async function main() {
 							if (
 								filenamei
 									.split("/")
-								[filenamei.split("/").length - 1].split("-")[0] ==
+									[filenamei.split("/").length - 1].split("-")[0] ==
 								params.product_id
 							) {
 								images_count_of_this_product += 1;
@@ -489,10 +495,11 @@ async function main() {
 						dest.pop();
 						var file_extension =
 							files[file_name]["originalFilename"].split(".")[
-							files[file_name]["originalFilename"].split(".").length - 1
+								files[file_name]["originalFilename"].split(".").length - 1
 							];
 						dest.push(
-							`${params.product_id}-${images_count_of_this_product + 1
+							`${params.product_id}-${
+								images_count_of_this_product + 1
 							}.${file_extension}`
 						);
 						dest = dest.join("/");
@@ -550,7 +557,8 @@ async function main() {
 					(username,rating_from_five,pros,cons,text,time,product_id)
 					values
 					("${params.username}",
-					${params.rating_from_five},'${params.pros}','${params.cons}',"${params.text}","${params.time
+					${params.rating_from_five},'${params.pros}','${params.cons}',"${params.text}","${
+						params.time
 					}",${Number(params.product_id)});
 				`,
 					(err) => {
@@ -630,203 +638,6 @@ async function main() {
 					}
 				});
 				break;
-			case "sub_to_email":
-				con.query(
-					`update users set is_subscribed_to_email = "true" where username = "${params.username}"`,
-					(error) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							rm.send();
-						}
-					}
-				);
-				break;
-			case "sub_to_sms":
-				//check if res.send and ... are async take care about their line orders
-				con.query(
-					`update users set is_subscribed_to_sms = "true" where username = "${params.username}"`,
-					(error) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							rm.send();
-						}
-					}
-				);
-				break;
-			case "toggle_subscribtion":
-				//acceptable values for params.type : email,sms
-				var column_name = params.type === "email" ? 'is_subscribed_to_email' : 'is_subscribed_to_sms'
-				var o;
-				o = await cq(con, `select ${column_name} from users where username = '${params.username}'`)
-				if (o.error) {
-					rm.send_error(o.error)
-					break
-				}
-				var current_field_value = o.result[0][column_name]
-				o = await cq(con,
-					`
-					update users 
-					set ${column_name} = '${current_field_value === "false" ? "true" : "false"}' 
-					where username='${params.username}'
-					`)
-				if (o.error) {
-					rm.send_error(o.error)
-					break
-				}
-				rm.send()
-				break
-			case "send_sms":
-				// params : text , phone_numbers_array
-				var http = require("http");
-
-				var options = {
-					host: "localhost",
-					port: 4000,
-					path: "/",
-					method: "GET",
-				};
-
-				http.request(options, (response) => {
-					var str = "";
-
-					response.on("data", function (chunk) {
-						str += chunk;
-					});
-
-					response.on("end", function () {
-						console.log(str);
-					});
-				}).end();
-				break;
-			case "send_email":
-				// params : email_addresses , text
-				var transporter = nodemailer.createTransport({
-					service: "gmail",
-					auth: {
-						user: "youremail@gmail.com",
-						pass: "yourpassword",
-					},
-				});
-
-				var mailOptions = {
-					from: "youremail@gmail.com",
-					to: "myfriend@yahoo.com",
-					subject: "Sending Email using Node.js",
-					text: "That was easy!",
-				};
-
-				transporter.sendMail(mailOptions, function (error, info) {
-					if (error) {
-						rm.send_error(error);
-					} else {
-						rm.send_result(info.response);
-					}
-				});
-				break;
-			case "new_support_ticket":
-				var query = `
-					insert into support_tickets (username,text,title,type)
-					values ('${params.username}','${params.text}','${params.title}','${params.type}')
-				`;
-				con.query(query, (error) => {
-					if (error) {
-						rm.send_error(error);
-					} else {
-						rm.send_result(true);
-					}
-				});
-				break;
-			case "delete_support_ticket":
-				if (isNaN(params.id)) {
-					rm.send_error("given 'id' must be a number");
-					break;
-				}
-				con.query(`delete from support_tickets where id = ${params.id}`, (error) => {
-					if (error) {
-						rm.send_error(error);
-					} else {
-						rm.send_result(true);
-					}
-				});
-				break;
-			case "toggle_support_ticket":
-				con.query(
-					`select is_proceed from support_tickets where id=${params.id}`,
-					(error, results) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							var new_string = results[0].is_proceed == "true" ? "false" : "true";
-							con.query(
-								`update support_tickets set is_proceed = "${new_string}", proceeded_by = "${params.proceeded_by}"`,
-								(error) => {
-									if (error) {
-										rm.send_error(error);
-									} else {
-										rm.send();
-									}
-								}
-							);
-						}
-					}
-				);
-				break;
-			case "comment_support_ticket":
-				con.query(
-					`insert into support_tickets_comments (support_ticket_id,text,username) values (${params.support_ticket_id},'${params.text}','${params.username}')`,
-					(error) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							rm.send_result(true);
-						}
-					}
-				);
-				break;
-			case "update_support_ticket_comment":
-				con.query(
-					`update support_tickets_comments set text = '${params.new_text}'`,
-					(error) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							rm.send_result(true);
-						}
-					}
-				);
-				break;
-			case "delete_support_ticket_comment":
-				con.query(`delete from support_tickets_comments where id=${params.id}`, (error) => {
-					if (error) {
-						rm.send_error(error);
-					} else {
-						rm.send_result(true);
-					}
-				});
-				break;
-			case "get_support_ticket_comments":
-				con.query(
-					`select * from support_tickets_comments where support_ticket_id = ${params.support_ticket_id}`,
-					(error, result) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							rm.send_result(result);
-						}
-					}
-				);
-				break;
-			case "get_support_tickets":
-				con.query(`select * from support_tickets`, (error, results) => {
-					if (error) {
-						rm.send_error(error);
-					} else {
-						rm.send_result(results);
-					}
-				});
-				break;
 			case "set_company_info":
 				// params.company_info should be a stringified json
 				var o = await cq(con, 'delete from paired_data where pair_key = "company_info"');
@@ -880,80 +691,6 @@ async function main() {
 						}
 					}
 				);
-				break;
-			case "add_new_blog":
-				var cq_out = await cq(
-					con,
-					`insert into blogs (username,title,text,last_modification_time) 
-				values ("${params.username}","${params.title}","${params.text}","${new Date().getTime()}")`
-				);
-				if (cq_out.error) {
-					rm.send_error(cq_out.error);
-					break;
-				}
-
-				cq_out = await cq(con, `select * from blogs where username = '${params.username}'`);
-				if (cq_out.error) {
-					rm.send_error(cq_out.error);
-				}
-				var filtered_rows = cq_out.result.filter((row) => row.username == params.username);
-				rm.send_result(filtered_rows[filtered_rows.length - 1].id);
-				break;
-			case "modify_blog_post":
-				con.query(
-					`select * from blogs where id=${params.blog_post_id}`,
-					(error, results) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							var old_data = results[0];
-							var new_data = {
-								name: "name" in params ? params["name"] : old_data["name"],
-								text: "text" in params ? params["text"] : old_data["text"],
-								last_modification_time:
-									"last_modification_time" in params
-										? params["last_modification_time"]
-										: old_data["last_modification_time"],
-							};
-							con.query(
-								`
-									insert into blogs
-									(name,text,last_modification_time)
-									values 
-									("${new_data["name"]}","${new_data["text"]}","${new_data["last_modification_time"]}")
-									`,
-								(error) => {
-									if (error) {
-										rm.send_error(error);
-									} else {
-										rm.send_result(true);
-									}
-								}
-							);
-						}
-					}
-				);
-				break;
-			case "get_blog_posts":
-				con.query(`select * from blogs`, (error, results) => {
-					if (error) {
-						rm.send_error(error);
-					} else {
-						var blogs_images = fs.readdirSync("./uploaded/blog_images");
-						rm.send_result(
-							results.map((row) => {
-								return {
-									...row,
-									image_file_name: blogs_images.find(
-										(i) => i.split(".")[0] === row.id.toString()
-									),
-								};
-							})
-						);
-					}
-				});
-				break;
-			case "share_blog_post":
 				break;
 			case "get_paths_of_images_of_a_product":
 				var file_names = fs.readdirSync("./uploaded/product_images");
@@ -1147,8 +884,6 @@ async function main() {
 					}
 				);
 				break;
-			case "pg":
-				break;
 			case "undo_all":
 				//it returns the app to its first state
 				//todo : may in addition to droping database it be required to do another stuff
@@ -1232,7 +967,8 @@ async function main() {
 				console.log(product_ids);
 				var output = await cq(
 					con,
-					`insert into orders (name,username,product_ids,status,time) values ('${params.name
+					`insert into orders (name,username,product_ids,status,time) values ('${
+						params.name
 					}','${params.username}','${JSON.stringify(
 						product_ids
 					)}','submited','${new Date().getTime()}')`
@@ -1263,32 +999,6 @@ async function main() {
 				break;
 			//todo add ability to another changes to the order and its products
 			//todo complete these cases
-			case "add_like_to_a_blog":
-				break;
-			case "remove_like_from_a_blog":
-				break;
-			case "new_blog_comment":
-				var o = await cq(con, `insert into blog_comments (username,blog_id,title,text,time,verification_status,verifier_username) values ('${params.username}',${Number(params.blog_id)},'${params.title}','${params.text}','${params.time}','false',Null)`)
-				if (o.error) {
-					rm.send_error(o.error)
-					break;
-				}
-				rm.send()
-				break;
-			case "delete_blog_comment":
-				break;
-			case "change_blog_comment":
-				break;
-			case "verify_blog_comment":
-				/* admin checks the comment for illegal things
-				before publishing it publicly */
-				var o = await cq(con, `update blog_comments set verification_status = "true",verifier_username="${params.verifier_username}" where id=${Number(params.blog_comment_id)}`)
-				if (o.error) {
-					rm.send_error(o.error)
-					break;
-				}
-				rm.send()
-				break;
 			case "get_user_orders":
 				var o = await cq(con, `select * from orders where username = '${params.username}'`);
 				if (o.error) {
@@ -1320,7 +1030,8 @@ async function main() {
 				if (Number(params.new_count) !== 0) {
 					o = await cq(
 						con,
-						`insert into shopping_card_items (username ,product_id ,time,count) values ('${params.username
+						`insert into shopping_card_items (username ,product_id ,time,count) values ('${
+							params.username
 						}',${Number(params.product_id)},'${new Date().getTime()}',${Number(
 							params.new_count
 						)})`
@@ -1352,167 +1063,179 @@ async function main() {
 					rm.send_error(e.toString());
 				}
 				break;
-			case "get_all_blog_comments":
-				var o = await cq(con, 'select * from blog_comments')
-				if (o.error) {
-					rm.send_error(o.error)
-					break;
-				}
-				rm.send_result(o.result)
-				break;
 			case "upload_icon":
-				var icon_file_name = fs.readdirSync('./uploaded/company_info').find(i => i.split('.')[0] === params.icon_type)
+				var icon_file_name = fs
+					.readdirSync("./uploaded/company_info")
+					.find((i) => i.split(".")[0] === params.icon_type);
 				if (icon_file_name) {
-					fs.rmSync(path.join('./uploaded/company_info', icon_file_name))
+					fs.rmSync(path.join("./uploaded/company_info", icon_file_name));
 				}
 				custom_upload({
 					req,
 					files_names: [params.icon_type],
 					uploadDir: "./uploaded/company_info",
 					onSuccess: () => {
-						rm.send()
+						rm.send();
 					},
 					onReject: (e) => {
-						rm.send_error(e)
-					}
-				})
-				break
+						rm.send_error(e);
+					},
+				});
+				break;
 			case "delete_icon":
-				var file_names = fs.readdirSync('./uploaded/company_info')
-				var icon_file_name = file_names.find(i => i.split('.')[0] === params.icon_type)
+				var file_names = fs.readdirSync("./uploaded/company_info");
+				var icon_file_name = file_names.find((i) => i.split(".")[0] === params.icon_type);
 				if (icon_file_name) {
-					fs.rmSync(path.join('./uploaded/company_info', icon_file_name), { force: true })
+					fs.rmSync(path.join("./uploaded/company_info", icon_file_name), {
+						force: true,
+					});
 				}
-				rm.send()
+				rm.send();
 				break;
 			case "new_product_image":
-				var this_product_images_count = fs.readdirSync('./uploaded/product_images').filter(i => i.split('-')[0] == params.product_id).length
+				var this_product_images_count = fs
+					.readdirSync("./uploaded/product_images")
+					.filter((i) => i.split("-")[0] == params.product_id).length;
 				custom_upload({
 					req,
 					uploadDir: "./uploaded/product_images",
 					files_names: [params.product_id + "-" + (this_product_images_count + 1)],
 					onSuccess: () => {
-						rm.send()
+						rm.send();
 					},
-					onReject: e => {
-						rm.send_error(e)
-					}
-				})
+					onReject: (e) => {
+						rm.send_error(e);
+					},
+				});
 				break;
 			case "del_product_image":
-				fs.rmSync(path.join('./uploaded/product_images', params.image_file_name), { force: true })
-				rm.send()
-				break;
-			case "unsubscribe":
-				var o = await cq(con, `update users set is_subscribed_to_${params.type} = 'false' where username = '${params.username}' `)
-				if (o.error) rm.send_error(o.error)
-				rm.send()
+				fs.rmSync(path.join("./uploaded/product_images", params.image_file_name), {
+					force: true,
+				});
+				rm.send();
 				break;
 			case "delete_user_profile_image":
-				var path_of_that_image = fs.readdirSync('./uploaded/profile_images').find(i => i.split('.')[0] === params.username)
+				var path_of_that_image = fs
+					.readdirSync("./uploaded/profile_images")
+					.find((i) => i.split(".")[0] === params.username);
 				if (path_of_that_image) {
 					fs.rmSync(`./uploaded/profile_images/${path_of_that_image}`, {
 						force: true,
-						recursive: true
-					})
+						recursive: true,
+					});
 				}
-				rm.send()
+				rm.send();
 				break;
 			case "update_user":
 				var o;
-				var col_name = params.column_name
-				var new_val = params.new_val
-				var new_val_type = params.new_val_type
-				o = await cq(con,
+				var col_name = params.column_name;
+				var new_val = params.new_val;
+				var new_val_type = params.new_val_type;
+				o = await cq(
+					con,
 					`
 						update users
 						set ${col_name}=${new_val_type === "string" ? JSON.stringify(new_val) : new_val}
 						where username = '${params.username}'
 					`
-				)
+				);
 				if (o.error) {
-					rm.send_error(o.error)
-					break
+					rm.send_error(o.error);
+					break;
 				}
-				rm.send()
-				break
+				rm.send();
+				break;
 			case "update_cell":
 				//possible values for col_name : number,string
 				//required params: new_val,new_val_type,table_name,col_name,row_id
 				var o;
-				var new_val = params.new_val
-				var new_val_type = params.new_val_type
-				o = await cq(con,
+				var new_val = params.new_val;
+				var new_val_type = params.new_val_type;
+				o = await cq(
+					con,
 					`
 					update ${params.table_name}
 					set ${params.col_name}=${new_val_type === "string" ? JSON.stringify(new_val) : new_val}
 					where id=${params.row_id}
-				`)
+				`
+				);
 				if (o.error) {
-					rm.send_error(o.error)
-					break
+					rm.send_error(o.error);
+					break;
 					//todo write all errors in a file on the server
 				}
-				rm.send()
+				rm.send();
 				break;
 			case "get_download_center_items":
-				o = await cq(con, "select * from download_center")
+				o = await cq(con, "select * from download_center");
 				if (o.error) {
-					rm.send_error(o.error)
-					break
+					rm.send_error(o.error);
+					break;
 				}
-				rm.send_result(o.result.map(row => {
-					return {
-						...row,
-						file_path : fs.readdirSync('./uploaded/download_center').find(i => i.split('.')[0] === row.file_name)
-					}
-				}))
-				break
+				rm.send_result(
+					o.result.map((row) => {
+						return {
+							...row,
+							file_path: fs
+								.readdirSync("./uploaded/download_center")
+								.find((i) => i.split(".")[0] === row.file_name),
+						};
+					})
+				);
+				break;
 				break;
 			case "new_term":
 				var o;
-				o = await cq(con, `
+				o = await cq(
+					con,
+					`
 				insert into terms 
 				(publisher_username,title,text,time)
 				values
 				('${params.publisher_username}','${params.title}','${params.text}','${params.time}')
-				`)
+				`
+				);
 				if (o.error) {
-					rm.send_error(o.error)
+					rm.send_error(o.error);
 					break;
 				}
-				rm.send()
+				rm.send();
 				break;
 			case "get_terms":
 				var o;
-				o = await cq(con, 'select * from terms')
+				o = await cq(con, "select * from terms");
 				if (o.error) {
-					rm.send_error(o.error)
+					rm.send_error(o.error);
 					break;
 				}
-				rm.send_result(o.result)
+				rm.send_result(o.result);
 				break;
 			case "new_download_center_item":
-				var current_download_center_items = fs.readdirSync('./uploaded/download_center')
-				var file_name = params.title
-					
-				if (current_download_center_items.map(i => i.split('.')[0]).includes(file_name)) {
-					rm.send_error(`server was asked to save a file with "${file_name}" as it's name but this name is taken by another uploaded file, please try another name and try again`)
-					break
+				var current_download_center_items = fs.readdirSync("./uploaded/download_center");
+				var file_name = params.title;
+
+				if (current_download_center_items.map((i) => i.split(".")[0]).includes(file_name)) {
+					rm.send_error(
+						`server was asked to save a file with "${file_name}" as it's name but this name is taken by another uploaded file, please try another name and try again`
+					);
+					break;
 				}
-				
-				o = await cq(con, `
+
+				o = await cq(
+					con,
+					`
 					insert into download_center
 					(publisher_username,file_name,description,time)
 					values 
 					("${params.publisher_username}","${file_name}","${params.description}","${new Date().getTime()}");
-				`)
+				`
+				);
 				//todo a name should be possible to be used with several extensions but now this is not possible
-				//and also look for related problems in "remove_download_center_item" and ... cases 
+				//and also look for related problems in "remove_download_center_item" and ... cases
 				custom_upload({
 					req,
-					files_names : [file_name],
-					uploadDir : params.upload_dir,
+					files_names: [file_name],
+					uploadDir: params.upload_dir,
 					onSuccess: () => {
 						rm.send();
 					},
@@ -1522,21 +1245,22 @@ async function main() {
 				});
 				break;
 			case "remove_download_center_item":
-				o = await cq(con, `delete from download_center where file_name="${params.title}"`)
+				o = await cq(con, `delete from download_center where file_name="${params.title}"`);
 				if (o.error) {
 					rm.send_error(o.error);
 					break;
 				}
-				var file_name = fs.readdirSync('./uploaded/download_center').find(i => i.split('.')[0] === params.title)
+				var file_name = fs
+					.readdirSync("./uploaded/download_center")
+					.find((i) => i.split(".")[0] === params.title);
 				if (file_name) {
 					fs.rmSync(path.join("./uploaded/download_center/", file_name), {
 						force: true,
-						recursive: true
-					})
+						recursive: true,
+					});
 				} //todo take care when user input has single quote or ... (validate it also for security reasons)
-				rm.send()
+				rm.send();
 				break;
-				
 		}
 	});
 	var server = app.listen(process.env.api_port, () => {
