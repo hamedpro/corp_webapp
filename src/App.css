@@ -27,8 +27,8 @@ html {
 		opacity: 0;
 	}
 	to {
-		opacity: 0.9;
-		transform: translate(-120%,-50%);
+		opacity: 1;
+		transform: translate(+100%,-50%);
 		position: absolute;
 	}
 	
@@ -39,7 +39,7 @@ html {
 .hamedpro8977_icon {
 	top: 50%;
 	opacity: 0;
-	left: 100%;
+	left: 0%;
 	transform:  translateY(-50%);
 	position: absolute;
 }
@@ -47,7 +47,6 @@ html {
 	animation-name: custom_animation;
 	animation-duration: 400ms;
 	animation-fill-mode: forwards;
-
 	transform: translateY(-50%);
 	position: absolute;
 }

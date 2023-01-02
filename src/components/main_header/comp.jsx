@@ -81,7 +81,7 @@ export default function MainHeader() {
 							</CustomButton>
 							<h1
 								onClick={() => nav("/")}
-								className="cursor-pointer px-2 text-lg m-0 p-0 bg-sky-600 rounded-lg pb-1 text-white ml-2 rounded h-10 flex items-center"
+								className="cursor-pointer px-2 text-lg p-0 bg-sky-600 rounded-lg pb-1 text-white mx-2 rounded h-10 flex items-center"
 							>
 								{company_name}
 							</h1>
@@ -95,13 +95,17 @@ export default function MainHeader() {
 								<>
 									<CustomButton
 										onClick={() => nav("/users/" + username + "/shopping-card")}
+										className="mx-2"
 									>
 										<LocalMallRounded
 											sx={{ color: "white" }}
 											fontSize="large"
 										/>
 									</CustomButton>
-									<CustomButton onClick={() => nav("/users/" + username)}>
+									<CustomButton
+										onClick={() => nav("/users/" + username)}
+										className="mx-2"
+									>
 										<PersonRounded sx={{ color: "white" }} fontSize="large" />
 									</CustomButton>
 								</>

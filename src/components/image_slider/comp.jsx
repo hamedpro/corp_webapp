@@ -26,13 +26,16 @@ export function ImageSlider({ image_sources, className = "" }) {
 					<div className="absolute w-24 left-1 bottom-1 flex flex-col bg-blue-200 opacity-50 pt-1 rounded">
 						<div className="flex justify-between px-1">
 							<button onClick={image_back} className="image_change_button">
-								<ArrowBackIosNewRoundedIcon fontSize="small" />
-							</button>
-							<button onClick={image_next} className="image_change_button">
 								<ArrowForwardIosRoundedIcon fontSize="small" />
 							</button>
+							<button onClick={image_next} className="image_change_button">
+								<ArrowBackIosNewRoundedIcon fontSize="small" />
+							</button>
 						</div>
-						<div className="flex px-2 image_change_dots_container">
+						<div
+							className="flex px-2 image_change_dots_container"
+							style={{ direction: "ltr" }}
+						>
 							{image_sources.map((image_src, index) => {
 								return (
 									<span key={index}>

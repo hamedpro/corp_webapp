@@ -1,4 +1,4 @@
-import { ArrowCircleRightRounded } from "@mui/icons-material";
+import { ArrowCircleLeftRounded, ArrowCircleRightRounded } from "@mui/icons-material";
 import React from "react";
 export default function ListItem(props) {
 	return (
@@ -38,7 +38,7 @@ export default function ListItem(props) {
 			})}
 			{props.remove_arrow !== true ? (
 				<div className="hamedpro8977_icon flex justify-content-center items-center">
-					<ArrowCircleRightRounded sx={{ color: "white" }} />{" "}
+					<ArrowCircleLeftRounded sx={{ color: "white" }} />
 				</div>
 			) : null}
 		</div>

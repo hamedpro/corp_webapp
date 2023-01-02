@@ -28,7 +28,6 @@ import Order from "./components/order/comp";
 import { ShoppingCardPage } from "./components";
 import { PG } from "./components/pg/pg";
 import { CheckUserPrivilege } from "./components/CheckUserPrivilege/comp";
-import { ProductCategories } from "./components/product_categories/comp";
 import { PageNotFound } from "./components/PageNotFound/comp";
 import { multi_lang_helper as ml } from "./common";
 import { DownloadCenter } from "./components/DownloadCenter";
@@ -138,7 +137,6 @@ function App() {
 					/>
 					<Route exact path="/users/:username/orders" element={<Orders />} />
 					<Route exact path="/users/:username/orders/:order_id" element={<Order />} />
-					<Route exact path="/products/categories" element={<ProductCategories />} />
 					<Route
 						exact
 						path="/users/:username/shopping-card"
