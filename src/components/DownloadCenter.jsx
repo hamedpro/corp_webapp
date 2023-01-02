@@ -40,46 +40,53 @@ export function DownloadCenter({ admin_mode = false }) {
 			{download_center_items === null ? (
 				<Loading />
 			) : (
-				<Section title="downloadble items" className="mt-1 mx-1">
+				<Section title="فایل های قابل دانلود" className="mt-1 mx-1">
 					<div className="px-3">
 						<Alert icon={<Info />} className="mb-2">
-							to download each item right click on that and click "save link as ..."
+							برای دانلود هر مورد روی آن مورد کلیک کنید و این گزینه را انتخاب کنید :‌
+							"save link as ..."
 						</Alert>
-						{download_center_items
-							.map((item, index) => {
-								return (
-									<div key={index} className=" border rounded border-stone-400 p-1 mb-1 ">
-										<div className="flex space-x-1">
-											<a
-												key={index}
-												href={
-													new URL(
-														`/download_center/${item.file_path}`,
-														window.api_endpoint
-													).href
-												}
-												download
-												className="px-1 block bg-blue-100 hover:bg-blue-500 w-fit hover:text-white rounded"
-											>
-												<Download />
-												downlaod "{item.file_path}"
-											</a>
-                                            {admin_mode && (
-                                                <>
-                                                    <span>|</span>
-                                                    <span
-                                                        className="h-full bg-red-100 hover:text-white hover:bg-red-500 rounded px-1"
-                                                        onClick={()=>delete_download_center_item(item.file_name)}
-                                                    >delete</span>
-                                                </>
-                                            )}
-										</div>
-										<span className="block text-stone-700 mt-1">description : {item.description }</span>
-
-                                        <span className="block text-stone-500 text-sm mt-1">updated in {new Date(Number(item.time)).toString()} by @{item.publisher_username}</span>
+						{download_center_items.map((item, index) => {
+							return (
+								<div
+									key={index}
+									className=" border rounded border-stone-400 p-1 mb-1 "
+								>
+									<div className="flex space-x-1">
+										<a
+											key={index}
+											href={
+												new URL(
+													`/download_center/${item.file_path}`,
+													window.api_endpoint
+												).href
+											}
+											download
+											className="px-1 block bg-blue-100 hover:bg-blue-500 w-fit hover:text-white rounded"
+										>
+											<Download />
+											{item.file_path}
+										</a>
+										{admin_mode && (
+											<>
+												<span>|</span>
+												<span
+													className="h-full bg-red-100 hover:text-white hover:bg-red-500 rounded px-1"
+													onClick={() =>
+														delete_download_center_item(item.file_name)
+													}
+												>
+													delete
+												</span>
+											</>
+										)}
 									</div>
-								);
-							})}
+									<span className="block text-stone-700 mt-1">
+										توضیحات : {item.description}
+									</span>
+								</div>
+							);
+						})}
 					</div>
 				</Section>
 			)}
