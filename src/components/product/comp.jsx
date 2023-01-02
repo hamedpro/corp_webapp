@@ -28,10 +28,16 @@ export default function Product() {
 		for (var i = 0; i < files.length; i++) {
 			form.append(i, files[i]);
 		}
-		fetch(new URL((`?task_name=upload_product_images&product_id=` + product_id),window.api_endpoint).href, {
-			method: "POST",
-			body: form,
-		});
+		fetch(
+			new URL(
+				`?task_name=upload_product_images&product_id=` + product_id,
+				window.api_endpoint
+			).href,
+			{
+				method: "POST",
+				body: form,
+			}
+		);
 	}
 	function fetch_data() {
 		customAjax({
@@ -71,19 +77,18 @@ export default function Product() {
 					<Loading is_loading={image_sources === null} />
 					{image_sources !== null && (
 						<>
-						{image_sources.length == 0 ? (
-						<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
-							{ml({
-								en: "there is not any product image uploaded for this product",
-								fa: "برای این محصول هیچ تصویری بارگذاری نشده است",
-							})}
-						</div>
-					) : (
-						<ImageSlider image_sources={image_sources} />
-					)}
+							{image_sources.length == 0 ? (
+								<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
+									{ml({
+										en: "there is not any product image uploaded for this product",
+										fa: "برای این محصول هیچ تصویری بارگذاری نشده است",
+									})}
+								</div>
+							) : (
+								<ImageSlider image_sources={image_sources} />
+							)}
 						</>
 					)}
-					
 				</div>
 
 				<div className="flex flex-col md:w-1/2 p-2 space-between">
@@ -92,14 +97,14 @@ export default function Product() {
 							#{product.id} : {product.name}
 						</h1>
 					</div>
-					<h1 className="m-2 my-1">{ml({
-						en: 'description :',
-						fa : ""
-					})} {product.description}</h1>
-					<h1 className="m-2 my-1">{ml({
-						en : "category :",
-						fa : ""
-					})} {product.category}</h1>
+					<h1 className="m-2 my-1">
+						{ml({
+							en: "description :",
+							fa: "",
+						})}{" "}
+						{product.description}
+					</h1>
+					
 					<AddToShoppingBagBar price={product.price} product_id={product.id} />
 				</div>
 			</div>

@@ -21,7 +21,6 @@ export function DiffrentSections() {
 	var nav = useNavigate();
 	return (
 		<>
-			
 			<div className="flex flex-wrap">
 				{[
 					{
@@ -55,7 +54,7 @@ export function DiffrentSections() {
 					},
 					{
 						title: ml({ en: "about company (about us)", fa: "معرفی شرکت (درباره ما)" }),
-						icon: <InfoIcon/>,
+						icon: <InfoIcon />,
 						onClick: () => {
 							nav("/company-info");
 						},

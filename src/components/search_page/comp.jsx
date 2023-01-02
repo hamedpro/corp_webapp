@@ -88,7 +88,6 @@ export default function SearchModal(props) {
 								discount_percent={product.discount_percent}
 								className="bg-white"
 								description={product.description}
-								category={product.category}
 							/>
 						);
 					})}

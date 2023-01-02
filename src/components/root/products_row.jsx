@@ -41,7 +41,6 @@ export function ProductsRow({ products, icon, title ,className=""}) {
 											}
 											discount_percent={product.discount_percent}
 											description={product.description}
-											category={product.category}
 										/>
 									</React.Fragment>
 								);

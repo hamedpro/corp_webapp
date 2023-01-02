@@ -92,8 +92,7 @@ async function init() {
 			description text(1000),
 			product_specs text(1000),
 			price int(15),
-			discount_percent int(3) default 0,
-			category varchar(100)
+			discount_percent int(3) default 0
 		);
 		create table if not exists reviews(
 			id int primary key auto_increment,
@@ -401,11 +400,11 @@ async function main() {
 				}
 				con.query(
 					`insert into products 
-					(name,description,product_specs,price,category,discount_percent) 
+					(name,description,product_specs,price,discount_percent) 
 					values
-					('${params.name}','${params.description}','${params.product_specs}',${Number(params.price)},'${
-						params.category
-					}',${Number(params.discount_percent)})`,
+					('${params.name}','${params.description}','${params.product_specs}',${Number(
+						params.price
+					)},${Number(params.discount_percent)})`,
 					(error) => {
 						if (error) {
 							rm.send_error(error);

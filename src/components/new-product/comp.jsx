@@ -1,20 +1,10 @@
 import React, { useContext, useState } from "react";
 import "./s.css";
 import { customAjax } from "../../../src/custom_ajax.js";
-import { MenuItem, Select } from "@mui/material";
-import { SelectCategory } from "./select_category";
 import Section from "../section/comp";
 import { multi_lang_helper as ml } from "../../common";
 function CustomInput({ id }) {
 	return <input id={id} className="border border-green-400 rounded px-2 py-1" />;
-}
-
-function cloned_obj(obj) {
-	var tmp = {};
-	for (key in obj) {
-		tmp[key] = obj[key];
-	}
-	return tmp;
 }
 function cloned_array(arr) {
 	var tmp = [];
@@ -24,49 +14,48 @@ function cloned_array(arr) {
 	return tmp;
 }
 export default function NewProduct() {
-	var [category, set_category] = useState(null);
 	const [specs, set_specs] = useState([]);
 	const [count, set_count] = useState(0);
-	var [select_category_tab, set_select_category_tab] = useState("existing");
-
 	async function submit_new_product() {
 		customAjax({
-			//todo check if category is null or required param is not given in all app
+			//todo check if required param is not given in all app
 			params: {
 				task_name: "new_product",
 				name: document.getElementById("name_input").value,
 				description: document.getElementById("description_input").value,
 				product_specs: JSON.stringify(specs),
 				price: document.getElementById("price_input").value,
-				category:
-					select_category_tab == "existing"
-						? category
-						: document.getElementById("new_category_input").value,
 				discount_percent: Number(document.getElementById("discount_percent").value),
 			},
 		}).then(
 			(data) => {
 				var form = new FormData();
-				var files = Object.keys(document.getElementById("images_input").files).map(key => {
-					return document.getElementById("images_input").files[key]
-				})
-				
+				var files = Object.keys(document.getElementById("images_input").files).map(
+					(key) => {
+						return document.getElementById("images_input").files[key];
+					}
+				);
 				customAjax({
 					params: {
 						task_name: "upload_product_images",
-						product_id : data.result
+						product_id: data.result,
 					},
-					files
-				}).then(data => {
-					alert("done successfuly!")
-				}, e => {
-					alert('something went wrong')
-					console.log(e)
-				})
+					files,
+				}).then(
+					(data) => {
+						alert("done successfuly!");
+					},
+					(e) => {
+						alert("something went wrong");
+						console.log(e);
+					}
+				);
 			},
 			(error) => {
 				console.log(error);
-				alert('something went wrong when uploading text fields of this form \n more details in dev console')
+				alert(
+					"something went wrong when uploading text fields of this form \n more details in dev console"
+				);
 			}
 		);
 	}
@@ -191,13 +180,6 @@ export default function NewProduct() {
 					})}
 				</p>
 				<CustomInput id="discount_percent" />
-				<SelectCategory
-					select_category_tab={select_category_tab}
-					set_select_category_tab={set_select_category_tab}
-					set_category={set_category}
-					category={category}
-				/>
-
 				<p className="mt-2 text-lg">
 					{ml({
 						en: "images : ",

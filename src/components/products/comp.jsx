@@ -130,7 +130,6 @@ export default function Products() {
 								discount_percent={product.discount_percent}
 								className="bg-white"
 								description={product.description}
-								category={product.category}
 							/>
 						);
 					})}
