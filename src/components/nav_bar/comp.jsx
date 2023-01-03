@@ -84,7 +84,7 @@ export default function NavBar() {
 			link = link.join("/");
 			tmp.push({
 				name:
-					translated_names.find((i) => i.original === sp) !== null
+					translated_names.find((i) => i.original === sp) !== undefined
 						? translated_names.find((i) => i.original === sp)["fa"]
 						: sp,
 				link,
