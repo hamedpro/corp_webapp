@@ -90,12 +90,7 @@ function App() {
 		//todo first setup system should handle both situations : first_setup is done or not
 		//it should not face any issue when first setup is not done
 	}, []);
-
-	if (window.localStorage.getItem("language") === null) {
-		window.localStorage.setItem("language", "fa");
-		//todo get a default lang from users when initialization of app and use it here
-	}
-	var current_lang = window.localStorage.getItem("language");
+	var current_lang = "fa";
 
 	return (
 		<div className="h-full w-full 2xl:bg-green-300 overflow-x-hidden overflow-y-hidden">
