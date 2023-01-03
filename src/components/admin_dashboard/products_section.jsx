@@ -294,7 +294,7 @@ export default function ProductsSection() {
 											en: "photos :",
 											fa: "عکس های محصول :",
 										})}{" "}
-										(to delete image click on that)
+										(برای حذف کردن عکس روی آن کلیک کنید)
 									</h1>
 									<div className="flex space-x-2">
 										{product.images_path_names.map((image_path_name, index) => {
@@ -323,8 +323,11 @@ export default function ProductsSection() {
 											<AddAPhoto />
 										</div>
 									</div>
-									<StyledDiv onClick={() => delete_product(product.id)} className="mt-2">
-										delete this product
+									<StyledDiv
+										onClick={() => delete_product(product.id)}
+										className="mt-2"
+									>
+										حذف کردن این کالا
 									</StyledDiv>
 								</CustomTable>
 							</React.Fragment>

@@ -81,7 +81,7 @@ export default function MainHeader() {
 							</CustomButton>
 							<h1
 								onClick={() => nav("/")}
-								className="cursor-pointer px-2 text-lg p-0 bg-sky-600 rounded-lg pb-1 text-white mx-2 rounded h-10 flex items-center"
+								className="cursor-pointer px-2 text-lg p-0 bg-sky-600 pb-1 text-white mx-2 rounded h-10 flex items-center"
 							>
 								{company_name}
 							</h1>
@@ -122,7 +122,7 @@ export default function MainHeader() {
 							<h1 className="text-gray-100">
 								{ml({
 									en: "type something here",
-									fa: "چیزی اینجا بنویسید",
+									fa: "جستجو در بین کالا ها ...",
 								})}
 							</h1>
 						</div>

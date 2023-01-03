@@ -33,23 +33,17 @@ export function ManageDownloadCenter() {
     }
 	return (
 		<div className="flex flex-col">
-			<DownloadCenter admin_mode/>
-            <Section title="upload new files" className="mt-2" innerClassName="px-2">
-                <input id="file_input" type={'file'}
-                    className="mt-1"
-                />
-                <p>enter file title here:</p>
-                <StyledInput id="file_title" className="block" />
-                <p>enter file description here:</p>
-                <StyledInput id="file_description" className="block" />
-                <StyledDiv
-                    onClick={upload_files}
-                    className="w-fit mt-4 text-lg"
-                >
-                upload selected files
-                </StyledDiv>
-
-            </Section>
+			<DownloadCenter admin_mode />
+			<Section title="بارگذاری فایل جدید" className="mt-2" innerClassName="px-2">
+				<input id="file_input" type={"file"} className="mt-1" />
+				<p>نام فایل جدید را وارد کنید :‌</p>
+				<StyledInput id="file_title" className="block" />
+				<p>توضیحی برای فایل جدید وارد کنید :‌</p>
+				<StyledInput id="file_description" className="block" />
+				<StyledDiv onClick={upload_files} className="w-fit mt-4 text-lg">
+					بارگذاری این فایل
+				</StyledDiv>
+			</Section>
 		</div>
 	);
 }

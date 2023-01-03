@@ -18,7 +18,6 @@ import {
 	NewProduct,
 	User,
 	NavBar,
-	Terms,
 	FirstSetup,
 	NewProductReview,
 } from "./components";
@@ -102,7 +101,7 @@ function App() {
 		<div className="h-full w-full 2xl:bg-green-300 overflow-x-hidden overflow-y-hidden">
 			<div
 				className={[
-					"relative mx-auto w-full 2xl:w-2/3 w-full h-full overflow-x-hidden",
+					"relative mx-auto w-full 2xl:w-2/3 h-full overflow-x-hidden",
 					current_lang,
 				].join(" ")}
 			>
@@ -168,7 +167,6 @@ function App() {
 					/>
 					<Route path="/register" element={<Register />} />
 					<Route path="/" element={<Root />} />
-					<Route path="/terms" element={<Terms />} />
 					<Route
 						path="/first-setup"
 						element={

@@ -6,21 +6,16 @@ import { multi_lang_helper as ml } from "../../common.js";
 import LinkLikeP from "../LinkLikeP/comp.jsx";
 import Section from "../section/comp";
 export default function Register() {
-	var [terms_are_accepted,set_terms_are_accepted] = useState(false)
 	var navigator = useNavigate();
 	function register() {
-		if (!terms_are_accepted) { 
-			alert('in order to use our services you have to agree with our terms of use')
-			return
-		}
 		var entered_username = document.getElementById("username_input").value;
 		var entered_password = document.getElementById("password_input").value;
 		var entered_mobile = document.getElementById("mobile_input").value;
 		var entered_email_address = document.getElementById("email_address_input").value;
 		var re_entered_password = document.getElementById("re_enter_password_input").value;
 		if (re_entered_password !== entered_password) {
-			alert('password and re entered password are not same')
-			return 
+			alert("password and re entered password are not same");
+			return;
 		}
 		customAjax({
 			params: {
@@ -28,7 +23,7 @@ export default function Register() {
 				username: entered_username,
 				password: entered_password,
 				email_address: entered_email_address,
-				mobile : entered_mobile
+				mobile: entered_mobile,
 			},
 		}).then(
 			(data) => {
@@ -52,7 +47,7 @@ export default function Register() {
 					})}
 				</p>
 				<input id="username_input" className="border border-blue-400 rounded px-1" />
-				
+
 				<p>
 					{ml({
 						en: "password:",
@@ -65,43 +60,27 @@ export default function Register() {
 					type="password"
 				/>
 
-				<p>
-					re-enter your password:
-				</p>
+				<p>رمز عبور خود را دوباره وارد کنید:</p>
 				<input
 					id="re_enter_password_input"
 					className="border border-blue-400 rounded px-1"
 					type="password"
 				/>
 
-				<p>
-					email address: <span className="text-xs">(**optional, leave empty to ignore)</span>
-				</p>
+				<p>آدرس پست الکترونیکی (اختیاری)</p>
 				<input
 					id="email_address_input"
 					className="border border-blue-400 rounded px-1"
 					type="email"
 				/>
 
-				<p>
-					mobile phone number: <span className="text-xs">(**optional, leave empty to ignore)</span>
-				</p>
+				<p>شماره موبایل (اختیاری)</p>
 				<input
 					id="mobile_input"
 					className="border border-blue-400 rounded px-1"
 					type="text"
 				/>
-				<div
-					onClick={() => set_terms_are_accepted(!terms_are_accepted)}
-					className="flex items-center space-x-1 mt-2"
-				>
-					{terms_are_accepted ? <CheckBox /> : <CheckBoxOutlineBlank />}
-					i accept <LinkLikeP
-						link="/terms"
-						className="inline-block"
-					>terms of use</LinkLikeP>.
-				</div>
-				
+
 				<button
 					className="border border-blue-400 rounded block mt-2 px-2 py-1 hover:text-white hover:bg-blue-600 duration-300"
 					onClick={register}

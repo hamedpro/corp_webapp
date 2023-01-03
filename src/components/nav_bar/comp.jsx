@@ -16,7 +16,65 @@ export default function NavBar() {
 			}),
 			link: "/",
 		});
+		var translated_names = [
+			{
+				original: "register",
+				fa: "ثبت نام کاربر جدید",
+			},
+			{
+				original: "api_test_page",
+				fa: "صفحه تست api",
+			},
+			{
+				original: "download-center",
+				fa: "بخش فایل های قابل دانلود",
+			},
+			{
+				original: "products",
+				fa: "محصولات",
+			},
+			{
+				original: "new-product-review",
+				fa: "بررسی جدید برای محصول",
+			},
+			{
+				original: "orders",
+				fa: "سفارش ها",
+			},
+			{
+				original: "users",
+				fa: "کاربران",
+			},
+			{
+				original: "shopping-card",
+				fa: "سبد خرید",
+			},
+			{
+				original: "admin-dashboard",
+				fa: "پنل مدیریت مدیران",
+			},
 
+			{
+				original: "company-info",
+				fa: "اطلاعات شرکت",
+			},
+			{
+				original: "login",
+				fa: "ورود به حساب کاربری",
+			},
+			{
+				original: "reviews",
+				fa: "بررسی ها",
+			},
+			{
+				original: "new-product",
+				fa: "محصول جدید",
+			},
+			{
+				original: "first-setup",
+				fa: "راه اندازی اولیه",
+			},
+		];
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {
 				return;
@@ -25,7 +83,10 @@ export default function NavBar() {
 			link.length = index + 1;
 			link = link.join("/");
 			tmp.push({
-				name: sp,
+				name:
+					translated_names.find((i) => i.original === sp) !== null
+						? translated_names.find((i) => i.original === sp)["fa"]
+						: sp,
 				link,
 			});
 			set_paths(tmp);

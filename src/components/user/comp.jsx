@@ -189,20 +189,21 @@ export default function User() {
 						<Item>...</Item>
 					</div>
 					<OptionsSection after_options={fetch_data} />
-					<Section title={"last 5 orders"} className="mt-2 mx-1" innerClassName="px-2">
+					<Section title={"۵ سفارش آخر"} className="mt-2 mx-1" innerClassName="px-2">
 						<Loading is_loading={orders_to_show === null} />
 						{orders_to_show !== null && orders_to_show.length === 0 && (
 							<Alert icon={<InfoRounded />}>
-								there is not any orders submited for this user
+								این کاربر تاکنون هیچ سفارشی ثبت نکرده است.
 							</Alert>
 						)}
-						{orders_to_show !== null && orders_to_show.map((order, index) => {
-							return (
-								<React.Fragment key={index}>
-									<OrdersPageOrder order={order} />
-								</React.Fragment>
-							);
-						})}
+						{orders_to_show !== null &&
+							orders_to_show.map((order, index) => {
+								return (
+									<React.Fragment key={index}>
+										<OrdersPageOrder order={order} />
+									</React.Fragment>
+								);
+							})}
 					</Section>
 				</div>
 			</>

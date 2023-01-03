@@ -20,24 +20,38 @@ export function CustomRow({fields, extra = null }) {
             {fields.map((field,index) => {
                 if (field.type === "option") {
                     return (
-                        <div key={index } className="flex items-center space-x-1">
-                            <span className={styles.info_area}>{field.key}</span>
-                            <span> | </span>
-                            <span className={styles.action_area} onClick={field.onClick}><Done />apply</span>
-                        </div>       
-                    )
+						<div key={index} className="flex items-center space-x-1">
+							<span className={styles.info_area}>{field.key}</span>
+							<span> | </span>
+							<span className={styles.action_area} onClick={field.onClick}>
+								<Done />
+								تایید
+							</span>
+						</div>
+					);
                 } else {
                     return (
-                        <div key={index} className="flex items-center space-x-1">
-                            <span className={styles.info_area}>field key : {field.key}</span>
-                            <span> | </span>
-                            <span className={styles.info_area}>field value : {String(field.value)}</span>
-                            <span> | </span>
-                            <span className={styles.action_area} onClick={field.change_function ? field.change_function : () => {
-                                alert(`"${field.key}" :this field is not allowed to change`)
-                            }}><Edit /> modify</span>
-                        </div>   
-                    )
+						<div key={index} className="flex items-center space-x-1">
+							<span className={styles.info_area}>نام مشخصه : {field.key}</span>
+							<span> | </span>
+							<span className={styles.info_area}>
+								مقدار مشخصه : {String(field.value)}
+							</span>
+							<span> | </span>
+							<span
+								className={styles.action_area}
+								onClick={
+									field.change_function
+										? field.change_function
+										: () => {
+												alert(`"${field.key}" : این مشخصه قابل تغییر نیست`);
+										  }
+								}
+							>
+								<Edit /> ویرایش
+							</span>
+						</div>
+					);
                 }
             })}
             {extra}

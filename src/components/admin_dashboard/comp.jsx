@@ -35,26 +35,18 @@ export default function AdminDashboard() {
 			icon: <ListAltRounded />,
 		},
 		{
-			id: "manage_support_tickets",
-			title: ml({ en: "manage support tickets", fa: "مدیریت تیکت های پشتیبانی" }),
-			icon: <SupportAgentRounded />,
-		},
-		{
 			id: "manage_product_reviews",
-			title: ml({ en: "manage product reviews", fa: "مدیریت بررسی های کاربران برای کالا ها" }),
+			title: ml({
+				en: "manage product reviews",
+				fa: "مدیریت بررسی های کاربران برای کالا ها",
+			}),
 			icon: <ReviewsRounded />,
 		},
 		{
-			id: "manage_blog_comments",
-			title: "manage blog comments",
-			icon: <Comment />,
-		},
-		{
 			id: "manage_download_center",
-			title: "manage download center",
-			icon : <Download />
-		}
-
+			title: "مدیریت بخش فایل های قابل دانلود",
+			icon: <Download />,
+		},
 	];
 	return (
 		<>
@@ -65,9 +57,11 @@ export default function AdminDashboard() {
 						fa: "برای استفاده از امکانات این صفحه باید از کامپیوتر (مانیتوری بزرگتر) استفاده کنید",
 					})}
 				</Alert>
-				
 			</div>
-			<div id="admin-dashboard" className="hidden h-full md:flex mx-1 border border-stone-400 rounded">
+			<div
+				id="admin-dashboard"
+				className="hidden h-full md:flex mx-1 border border-stone-400 rounded"
+			>
 				<div className="w-3/12 bg-blue-500">
 					{tabs.map((this_tab, index) => {
 						return (
@@ -79,13 +73,8 @@ export default function AdminDashboard() {
 								}
 								onClick={() => set_tab(this_tab.id)}
 							>
-								<div>
-									{this_tab.icon}
-								</div>
-								<div className="text-white">
-									{this_tab.title}
-								</div>
-								 
+								<div>{this_tab.icon}</div>
+								<div className="text-white">{this_tab.title}</div>
 							</div>
 						);
 					})}
@@ -111,23 +100,13 @@ export default function AdminDashboard() {
 							<OrdersSection />
 						</>
 					)}
-					{tab === "manage_support_tickets" && (
-						<>
-							<SupportTicketsSection />
-						</>
-					)}
 
 					{tab === "manage_product_reviews" && (
 						<>
 							<ProductReviews />
 						</>
 					)}
-					{tab === "manage_blog_comments" && (
-						<BlogComments />
-					)}
-					{tab === "manage_download_center" && (
-						<ManageDownloadCenter />
-					)}
+					{tab === "manage_download_center" && <ManageDownloadCenter />}
 				</div>
 			</div>
 		</>
