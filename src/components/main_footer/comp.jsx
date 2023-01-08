@@ -54,35 +54,13 @@ export default function MainFooter() {
 	if (company_info === null) return <h1>loading...</h1>;
 	return (
 		<div className="bg-sky-800 text-white">
-			<div className="flex p-2 h-16 mt-2 mb-7 mx-2">
-				<div className="h-full w-full flex mb-2 space-x-2 items-center ">
+			<div className="flex p-2 h-16 mt-2 mx-2">
+				<div className="h-full w-full flex mb-2 items-center ">
 					<FactoryOutlined sx={{ height: "40px", width: "40px" }} />
-					<div className="text-xl">{company_info && company_info.name}</div>
+					<div className="text-2xl mx-2">{company_info && company_info.name}</div>
 				</div>
 			</div>
-			<div className="flex mx-2 p-2 text-black">
-				<Section
-					title="درباره شرکت"
-					className="h-full mt-2 md:mt-0"
-					innerClassName="h-full"
-				>
-					<div className="text-white px-2">
-						<div>
-							{"نام شرکت : "}
-							{company_info.name}
-						</div>
-						<div>
-							{"توصیف شرکت : "}
-							{company_info.description}
-						</div>
-						<div>
-							{"تاریخچه شرکت : "}
-							{company_info.history}{" "}
-						</div>
-						<LinkLikeP link="/company-info">{"مشاهده بیشتر"}</LinkLikeP>
-					</div>
-				</Section>
-			</div>
+
 			<FollowUsRow
 				className="mx-2"
 				telegram={company_info.telegram}
