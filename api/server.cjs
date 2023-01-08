@@ -55,7 +55,7 @@ async function init() {
 		"./uploaded/product_images",
 		"./uploaded/company_info",
 		"./uploaded/blog_images",
-		"./uploaded/download_center"
+		"./uploaded/download_center",
 	].forEach((path) => {
 		if (!fs.existsSync(path)) {
 			fs.mkdirSync(path);
@@ -91,8 +91,7 @@ async function init() {
 			name varchar(200) , 
 			description text(1000),
 			product_specs text(1000),
-			price int(15),
-			discount_percent int(3) default 0
+			price int(15)
 		);
 		create table if not exists reviews(
 			id int primary key auto_increment,
@@ -114,7 +113,6 @@ async function init() {
 			is_proceed varchar(20) default "false",
 			proceeded_by varchar(50)
 		);
-		
 		create table if not exists support_tickets_comments(
 			id int primary key auto_increment,
 			support_ticket_id int(10),
@@ -400,11 +398,9 @@ async function main() {
 				}
 				con.query(
 					`insert into products 
-					(name,description,product_specs,price,discount_percent) 
+					(name,description,product_specs,price) 
 					values
-					('${params.name}','${params.description}','${params.product_specs}',${Number(
-						params.price
-					)},${Number(params.discount_percent)})`,
+					('${params.name}','${params.description}','${params.product_specs}',${Number(params.price)})`,
 					(error) => {
 						if (error) {
 							rm.send_error(error);
@@ -413,6 +409,7 @@ async function main() {
 								if (error) {
 									rm.send_error(error);
 								} else {
+									//todo change way of getting id of last inserted row
 									if (result[result.length - 1].name == params.name) {
 										rm.send_result(result[result.length - 1].id);
 									} else {

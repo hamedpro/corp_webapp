@@ -25,7 +25,6 @@ export default function NewProduct() {
 				description: document.getElementById("description_input").value,
 				product_specs: JSON.stringify(specs),
 				price: document.getElementById("price_input").value,
-				discount_percent: Number(document.getElementById("discount_percent").value),
 			},
 		}).then(
 			(data) => {
@@ -173,13 +172,6 @@ export default function NewProduct() {
 					})}
 				</p>
 				<CustomInput id="price_input" />
-				<p className="mt-2 text-lg">
-					{ml({
-						en: "discount percent:",
-						fa: "درصد تخفیف",
-					})}
-				</p>
-				<CustomInput id="discount_percent" />
 				<p className="mt-2 text-lg">
 					{ml({
 						en: "images : ",

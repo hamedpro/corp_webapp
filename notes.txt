@@ -66,7 +66,6 @@ sometimes after making changes to a jsx component file an error appear in consol
 when trying to change password with task_name = change_password i got error : cannot read property of undefined (password) current line :216
 tailwind watch i think either not work or work very slowly even with pretier disabled sometimes i see changes when i save the file for 2nd time 
 every price in this app should be in toman
-add support for discount
 
 
 how we seperate frontend routes : 
@@ -74,3 +73,5 @@ if paths should be used by both admins and normal users -> keep it outside of ad
 if just admins should access that information -> put it inside admin dashboard
 maybe tailwind css watch script is causing the frontend to sometimes say that component x has not default export when it has or even sometimes its like the styles are not loaded and just html is being displayed
 take care about newly added columns in customRow and at all rows in admin dash : their tpye when updating the value and also whether they are even changeable or not 
+
+currently there is a user with admin privileges : username : vahidpro pass : vahid

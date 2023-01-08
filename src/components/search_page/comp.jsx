@@ -85,7 +85,6 @@ export default function SearchModal(props) {
 								name={product.name}
 								price={product.price}
 								key={product.id}
-								discount_percent={product.discount_percent}
 								className="bg-white"
 								description={product.description}
 							/>

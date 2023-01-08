@@ -4,14 +4,7 @@ import { customAjax } from "../../../src/custom_ajax.js";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
 import { gen_link_to_file, multi_lang_helper as ml, trim_text_if_its_long } from "../../common.js";
 import { Category, InfoRounded } from "@mui/icons-material";
-export default function ProductItem({
-	id,
-	name,
-	price,
-	className = undefined,
-	discount_percent,
-	description = "",
-}) {
+export default function ProductItem({ id, name, price, className = undefined, description = "" }) {
 	//id stands for product id
 	var nav = useNavigate();
 	var [the_image_src, set_the_image_src] = useState(null);
@@ -72,24 +65,7 @@ export default function ProductItem({
 				</div>
 			</div>
 			<div className="flex flex-col mt-auto p-1">
-				{discount_percent === 0 ? (
-					<>
-						{price} {ml({ en: "toman", fa: "تومن" })}
-					</>
-				) : (
-					<>
-						{/* tell the admin this discounted price is rounded */}
-						{/* convert all prices to toman in all app  */}
-						<span className="line-through text-sm">
-							{price} {ml({ en: "toman", fa: "تومن" })}
-						</span>
-						<b className="">
-							-{discount_percent}% :{" "}
-							{Math.round((price * ((100 - discount_percent) / 100)) / 1000) * 1000}{" "}
-							{ml({ en: "toman", fa: "تومن" })}
-						</b>
-					</>
-				)}
+					{price} {ml({ en: "toman", fa: "تومن" })}
 			</div>
 		</div>
 	);

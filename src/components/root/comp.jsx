@@ -23,41 +23,36 @@ export default function Root() {
 			}
 		);
 	}
-	var discounted_products = () =>
-		products === null ? null : products.filter((p) => p.discount_percent !== 0).slice(0, 7);
-
 	var suggested_products = () => (products === null ? null : shuffle(products).slice(0, 7));
 	var nav = useNavigate();
 	useEffect(fetch_data, []);
 	return (
 		<>
 			<div className="bg-blue-500 h-60 w-full p-4">
-				<h1 className="text-3xl text-white">{ml({
-					en: "online panel address :",
-					fa : "آدرس پنل اینترنتی :"
-				})}</h1>
-				<button onClick={() => {
-					window.location.assign('http://mpkchiller.com/dimmer')
-				}}>
-					<StyledDiv
-						className="mt-3 px-2 py-1 text-xl bg-blue-600 text-white hover:bg-blue-800 duration-300"
-					>{ml({
-						en: "open link",
-						fa : "باز کردن پیوند"
-					})} (http://mpkchiller.com/dimmer) </StyledDiv>
+				<h1 className="text-3xl text-white">
+					{ml({
+						en: "online panel address :",
+						fa: "آدرس پنل اینترنتی :",
+					})}
+				</h1>
+				<button
+					onClick={() => {
+						window.location.assign("http://mpkchiller.com/dimmer");
+					}}
+				>
+					<StyledDiv className="mt-3 px-2 py-1 text-xl bg-blue-600 text-white hover:bg-blue-800 duration-300">
+						{ml({
+							en: "open link",
+							fa: "باز کردن پیوند",
+						})}{" "}
+						(http://mpkchiller.com/dimmer){" "}
+					</StyledDiv>
 				</button>
 			</div>
-			<ProductsRow
-				icon={<Discount sx={{color:"darkblue"}} />}
-				title={ml({
-					en: "discounted products",
-					fa: "محصولات دارای تخفیف",
-				})}
-				products={discounted_products()}
-			/>
+
 			<DiffrentSections />
 			<ProductsRow
-				icon={<Stars sx={{color:"darkblue"}} />}
+				icon={<Stars sx={{ color: "darkblue" }} />}
 				title={ml({
 					en: "suggested products for you",
 					fa: "کالاهای پیشنهادی برای شما",

@@ -39,7 +39,6 @@ export function ProductsRow({ products, icon, title ,className=""}) {
 												(index == 0 ? "rounded-l-xl" : "") +
 												(index == products.length - 1 ? "rounded-r-xl" : "")
 											}
-											discount_percent={product.discount_percent}
 											description={product.description}
 										/>
 									</React.Fragment>
