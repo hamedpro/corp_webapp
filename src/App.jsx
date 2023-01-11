@@ -30,6 +30,8 @@ import { CheckUserPrivilege } from "./components/CheckUserPrivilege/comp";
 import { PageNotFound } from "./components/PageNotFound/comp";
 import { multi_lang_helper as ml } from "./common";
 import { DownloadCenter } from "./components/DownloadCenter";
+import { NewWriting } from "./components/NewWriting";
+import { Writing } from "./components/Writing";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -162,6 +164,8 @@ function App() {
 					/>
 					<Route path="/register" element={<Register />} />
 					<Route path="/" element={<Root />} />
+					<Route path="/writings/new" element={<NewWriting />} />
+					<Route path="/writings/:writing_id" element={<Writing />} />
 					<Route
 						path="/first-setup"
 						element={

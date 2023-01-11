@@ -170,6 +170,14 @@ async function init() {
 			description text,
 			time varchar(20)
 		);
+		create table if not exists writings(
+			id int primary key auto_increment,
+			title varchar(100),
+			text text,
+			image_filename varchar(100),
+			publish_date varchar(20),
+			publisher_username varchar(40)
+		)
 		`
 	);
 	//todo take care about when user is uploading a file that has not any extension
@@ -201,7 +209,21 @@ async function main() {
 		var con = connect_to_db();
 		rm.add_mysql_con(con);
 		var params = { ...req.body, ...req.query };
-
+		if (req.headers.task_name === "upload") {
+			var form = formidable();
+			form.parse(req, (error, fields, files) => {
+				var file = files.file;
+				var new_file_name =
+					new Date().getTime() + Math.round(Math.random() * 1000) + file.originalFilename;
+				try {
+					fs.cpSync(file.filepath, "./uploaded/" + new_file_name);
+					res.json({ new_filename: new_file_name });
+				} catch (error) {
+					res.json("error");
+				}
+			});
+			return;
+		}
 		if (!("task_name" in params)) {
 			rm.send_error("there is no task_name field present in your request");
 			return;
@@ -241,18 +263,24 @@ async function main() {
 				}
 
 				break;
-			case "upload":
-				custom_upload({
-					req,
-					files_names: JSON.parse(params.files_names),
-					uploadDir: params.upload_dir,
-					onSuccess: () => {
-						rm.send();
-					},
-					onReject: (e) => {
-						rm.send_error(e);
-					},
-				});
+			case "new_writing":
+				var output = await cq(
+					con,
+					`insert into writings (title,text,image_filename,publish_date,publisher_username) values ("${params.title}","${params.text}","${params.image_filename}","${params.publish_date}","${params.publisher_username}");`
+				);
+				if (output.error) {
+					rm.send_error(output.error);
+				} else {
+					rm.send();
+				}
+				break;
+			case "get_table":
+				var output = await cq(con, `select * from ${params.table_name}`);
+				if (output.error) {
+					rm.send_error(output.error);
+				} else {
+					rm.send_result(output.result);
+				}
 				break;
 			case "get_users":
 				//todo add his shopping card as a prop
