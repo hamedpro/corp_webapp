@@ -54,19 +54,6 @@ export default function MainFooter() {
 	if (company_info === null) return <h1>loading...</h1>;
 	return (
 		<div className="bg-sky-800 text-white">
-			<div className="flex p-2 h-16 mt-2 mx-2">
-				<div className="h-full w-full flex mb-2 items-center ">
-					<FactoryOutlined sx={{ height: "40px", width: "40px" }} />
-					<div className="text-2xl mx-2">{company_info && company_info.name}</div>
-				</div>
-			</div>
-
-			<FollowUsRow
-				className="mx-2"
-				telegram={company_info.telegram}
-				instagram={company_info.instagram}
-				twitter={company_info.twitter}
-			/>
 			<div className="bg-sky-900 flex flex-col py-1 space-y-1" style={{ color: "lightgray" }}>
 				<div className="flex flex-row mx-2 text-sm flex-wrap space-x-1">
 					<p>

@@ -2,12 +2,7 @@ import { Instagram, Telegram, Twitter } from "@mui/icons-material"
 export function FollowUsRow({ telegram = null, instagram = null, twitter = null,className="" }) {
     return (
 		<div className={["flex h-8 w-full items-center space-x-3 my-2 px-2", className].join(" ")}>
-			<h1 className="text-xl ml-6">
-				{ml({
-					en: "follow us !",
-					fa: "ما را دنبال کنید !",
-				})}
-			</h1>
+			<h1 className="text-xl ml-6">با ما همراه باشید :</h1>
 			<Instagram
 				onClick={() => {
 					if (instagram === null) {

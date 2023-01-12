@@ -26,21 +26,22 @@ function Writings({ writings }) {
 				<h1>آخرین نوشته ها</h1>
 				<Link to="/writings">مشاهده همه نوشته ها</Link>
 			</div>
-			<div className="w-full flex h-fit">
+			<div className="w-full flex h-fit flex-col sm:flex-row items-center sm:items-stretch">
 				{sorted_writings.length === 0 ? (
 					`there is not anything to show. (count of all published writings : ${sorted_writings.length})`
 				) : (
 					<>
 						<div
-							className="bg-blue-300 rounded-lg w-1/3 mx-2 flex justify-center items-center relative text-white overflow-hidden"
+							className="bg-blue-300 cursor-pointer rounded-lg w-full sm:w-1/3 mx-2 flex justify-center items-center relative text-white overflow-hidden"
 							style={{ aspectRatio: 1 }}
+							onClick={() => nav(`/writings/${sorted_writings[0].id}`)}
 						>
 							<img
 								src={window.api_endpoint + "/" + sorted_writings[0].image_filename}
 								className="first_writing_image duration-200 h-full aspect-auto"
 							/>
 							<div className="absolute h-1/2 top-0 w-full p-2">
-								<p className="text-xs">
+								<p className="text-sm">
 									حدود{" "}
 									{Math.round(
 										(new Date().getTime() - sorted_writings[0].publish_date) /
@@ -51,40 +52,64 @@ function Writings({ writings }) {
 							</div>
 							<div className="absolute h-1/2 top-1/2 w-full  p-2">
 								<h1 className="text-4xl"> {sorted_writings[0].title}</h1>
-								<p className="text-2xl">{sorted_writings[0].publisher_username}</p>
+								<p className="text-2xl">
+									{sorted_writings[0].text.split("").slice(0, 40).join("") +
+										" ..."}
+								</p>
 							</div>
 						</div>
 					</>
 				)}
-				<div className="flex flex-col w-2/3 rounded-lg overflow-hidden">
+				<div className="flex flex-col w-full sm:w-2/3 rounded-lg overflow-hidden mt-6 sm:mt-0">
 					{[1, 2, 3].map((number, index) => {
 						var writing = sorted_writings[number];
 						if (writing !== undefined) {
 							return (
 								<div
 									key={index}
-									className="w-full h-1/3 bg-blue-100  text-blue-600 flex-row border-b border-blue-300 flex items-center pr-4 cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200"
+									className={`w-full h-1/3 bg-blue-100  text-blue-600 
+										flex-row border-b border-blue-300 flex 
+										cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200 px-6`}
 									onClick={() => nav(`/writings/${writing.id}`)}
 								>
-									<div className="h-20 aspect-square flex justify-center items-center">
-										<img
-											src={gen_link_to_file(writing.image_filename)}
-											className="rounded"
-										/>
+									<div className="flex items-center">
+										<div className="w-20 h-20 flex justify-center items-center">
+											<img
+												src={gen_link_to_file(writing.image_filename)}
+												className="rounded"
+											/>
+										</div>
 									</div>
-									<h1 className="p-2 items-start">
-										نوشته شماره {writing.id} : {writing.title}
-									</h1>
+									<div className="flex flex-col p-2 justify-center">
+										<h1 className="items-start text-2xl">
+											نوشته {writing.id} : {writing.title}
+										</h1>
+										<p className="text-sm">
+											حدود{" "}
+											{Math.round(
+												(new Date().getTime() - writing.publish_date) /
+													3600000
+											)}{" "}
+											ساعت پیش | توسط {writing.publisher_username}
+										</p>
+									</div>
 								</div>
 							);
 						} else {
 							return (
 								<div
 									key={index}
-									className="w-full h-1/3 bg-blue-100  text-blue-600 flex-row border-b border-blue-300 flex items-center pr-4 cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200"
+									className={`w-full h-1/3 bg-blue-100 flex-col
+										text-blue-600 border-b border-blue-300 flex px-6 justify-center
+										cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200 py-4 sm:py-0`}
 								>
-									کلا {sorted_writings.length} نوشته منتشر شده است پس نوشته شماره
-									{number + 1} ای برای نمایش وجود ندارد
+									<h1 className="text-xl">
+										نوشته شماره {number + 1} برای نمایش وجود ندارد
+									</h1>
+									<p className="text-sm">
+										{" "}
+										(در مجموع {sorted_writings.length} نوشته منتشر شده است)
+									</p>
 								</div>
 							);
 						}
