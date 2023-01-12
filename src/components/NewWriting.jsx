@@ -1,11 +1,13 @@
 import React from "react";
 import { customAjax } from "../custom_ajax";
+import Section from "./section/comp";
+import { StyledDiv, StyledInput } from "./styled_elements";
 
 export const NewWriting = () => {
 	async function submit_new_writing() {
 		var el_files = document.getElementById("image_input").files;
 		if (el_files.length === 0) {
-			alert("please select a photo ");
+			alert("please select a photo");
 			return;
 		}
 		var form = new FormData();
@@ -33,16 +35,17 @@ export const NewWriting = () => {
 		);
 	}
 	return (
-		<div>
-			<h1>new writing page </h1>
+		<Section title="ثبت نوشته جدید" className="m-1" innerClassName="p-2">
+			<h1>انتخاب تصویر برای نوشته جدید:</h1>
 			<input id="image_input" type="file" />
 
-			<h1>enter a title for this writing</h1>
-			<input id="title_input" />
-
-			<h1>enter a text for this writing</h1>
-			<input id="text_input" />
-			<button onClick={submit_new_writing}>send this </button>
-		</div>
+			<h1>یک عنوان برای این نوشته وارد کنید:</h1>
+			<StyledInput id="title_input" />
+			<h1>متن این نوشته را اینجا وارد کنید :</h1>
+			<StyledInput textarea_mode={true} id="text_input" className="w-1/2 " />
+			<StyledDiv onClick={submit_new_writing} className="w-fit">
+				انتشار این نوشته{" "}
+			</StyledDiv>
+		</Section>
 	);
 };
