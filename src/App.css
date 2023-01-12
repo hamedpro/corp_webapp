@@ -9,6 +9,12 @@ table.custom_border td {
 	border: 1px solid black;
 	padding: 0px 10px 0px 10px;
 }
+#root {
+	height: 100%;
+}
+#x-container{
+	min-height: calc(100% - 7rem);
+}
 body,
 html {
 	height: 100%;

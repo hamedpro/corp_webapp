@@ -74,6 +74,26 @@ export default function NavBar() {
 				original: "first-setup",
 				fa: "راه اندازی اولیه",
 			},
+			{
+				original: "writings",
+				fa: "نوشته",
+			},
+			{
+				original: "writing",
+				fa: "نوشته",
+			},
+			{
+				original: "about-us",
+				fa: "درباره ما",
+			},
+			{
+				original: "contact-us",
+				fa: "تماس با ما",
+			},
+			{
+				original: "new",
+				fa: "جدید",
+			},
 		];
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {

@@ -100,14 +100,6 @@ export function OptionsSection({after_options}) {
 				onClick={option_funcs.delete_account}
 				items={[ml({ en: "delete account", fa: "حذف حساب کاربری" })]}
 			/>
-			<ListItem
-				onClick={option_funcs.unsubscribe_email}
-				items={[ml({ en: "unsubscribe emails", fa: "لغو عضویت در ایمیل ها" })]}
-			/>
-			<ListItem
-				onClick={option_funcs.unsubscribe_sms}
-				items={[ml({ en: "unsubscribe sms", fa: "لغو عضویت در پیامک ها" })]}
-			/>
 		</Section>
 	);
 }

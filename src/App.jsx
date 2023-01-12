@@ -104,77 +104,83 @@ function App() {
 			>
 				<MainHeader />
 				<NavBar />
-				<Routes>
-					<Route path="*" element={<PageNotFound />} />
-					<Route
-						path="/api_test_page"
-						element={
-							<CheckUserPrivilege level="admin">
-								<ApiTestPage />
-							</CheckUserPrivilege>
-						}
-					/>
-					<Route
-						path="/pg"
-						element={
-							<CheckUserPrivilege level="admin">
-								<PG />
-							</CheckUserPrivilege>
-						}
-					/>
-					<Route path="/download-center" element={<DownloadCenter />} />
-					<Route
-						path="/products/:product_id/new-product-review"
-						element={
-							<CheckUserPrivilege level="loged_in">
-								<NewProductReview />
-							</CheckUserPrivilege>
-						}
-					/>
-					<Route exact path="/users/:username/orders" element={<Orders />} />
-					<Route exact path="/users/:username/orders/:order_id" element={<Order />} />
-					<Route
-						exact
-						path="/users/:username/shopping-card"
-						element={<ShoppingCardPage />}
-					/>
-					<Route
-						path="/admin-dashboard"
-						element={
-							<CheckUserPrivilege level="admin">
-								<AdminDashboard />
-							</CheckUserPrivilege>
-						}
-					/>
-					<Route path="/about-us" element={<AboutUs />} />
-					<Route path="/login" element={<Login />} />
+				<div id="x-container">
+					<Routes>
+						<Route path="*" element={<PageNotFound />} />
+						<Route
+							path="/api_test_page"
+							element={
+								<CheckUserPrivilege level="admin">
+									<ApiTestPage />
+								</CheckUserPrivilege>
+							}
+						/>
+						<Route
+							path="/pg"
+							element={
+								<CheckUserPrivilege level="admin">
+									<PG />
+								</CheckUserPrivilege>
+							}
+						/>
+						<Route path="/download-center" element={<DownloadCenter />} />
+						<Route
+							path="/products/:product_id/new-product-review"
+							element={
+								<CheckUserPrivilege level="loged_in">
+									<NewProductReview />
+								</CheckUserPrivilege>
+							}
+						/>
+						<Route exact path="/users/:username/orders" element={<Orders />} />
+						<Route exact path="/users/:username/orders/:order_id" element={<Order />} />
+						<Route
+							exact
+							path="/users/:username/shopping-card"
+							element={<ShoppingCardPage />}
+						/>
+						<Route
+							path="/admin-dashboard"
+							element={
+								<CheckUserPrivilege level="admin">
+									<AdminDashboard />
+								</CheckUserPrivilege>
+							}
+						/>
+						<Route path="/about-us" element={<AboutUs />} />
+						<Route path="/login" element={<Login />} />
 
-					<Route exact path="/products/:product_id" element={<Product />} />
-					<Route exact path="/products/:product_id/reviews" element={<ReviewsPage />} />
-					<Route exact path="/users/:username" element={<User />} />
+						<Route exact path="/products/:product_id" element={<Product />} />
+						<Route
+							exact
+							path="/products/:product_id/reviews"
+							element={<ReviewsPage />}
+						/>
+						<Route exact path="/users/:username" element={<User />} />
 
-					<Route exact path="/products" element={<Products />} />
-					<Route
-						path="/new-product"
-						element={
-							<CheckUserPrivilege level={"admin"}>
-								<NewProduct />
-							</CheckUserPrivilege>
-						}
-					/>
-					<Route path="/register" element={<Register />} />
-					<Route path="/" element={<Root />} />
-					<Route path="/writings/new" element={<NewWriting />} />
-					<Route path="/writings/:writing_id" element={<Writing />} />
-					<Route path="/writings" element={<Writings />} />
-					<Route
-						path="/first-setup"
-						element={
-							<FirstSetup />
-							/* todo prevent other to access first setup page  */
-						}
-					/>
-				</Routes>
+						<Route exact path="/products" element={<Products />} />
+						<Route
+							path="/new-product"
+							element={
+								<CheckUserPrivilege level={"admin"}>
+									<NewProduct />
+								</CheckUserPrivilege>
+							}
+						/>
+						<Route path="/register" element={<Register />} />
+						<Route path="/" element={<Root />} />
+						<Route path="/writings/new" element={<NewWriting />} />
+						<Route path="/writings/:writing_id" element={<Writing />} />
+						<Route path="/writings" element={<Writings />} />
+						<Route
+							path="/first-setup"
+							element={
+								<FirstSetup />
+								/* todo prevent other to access first setup page  */
+							}
+						/>
+					</Routes>
+				</div>
 				<MainFooter />
 			</div>
 		</div>
