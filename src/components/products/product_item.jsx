@@ -31,7 +31,7 @@ export default function ProductItem({ id, name, price, className = undefined, de
 	return (
 		<div
 			className={
-				"p-1 flex flex-col shrink-0 cursor-pointer w-1/2 md:w-1/3 block border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
+				"w-1/3 sm:w-1/4 p-1 flex flex-col shrink-0 cursor-pointer border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
 				(className ? " " + className : "")
 			}
 			onClick={() => nav("/products/" + id)}
@@ -55,7 +55,7 @@ export default function ProductItem({ id, name, price, className = undefined, de
 					</div>
 				)}
 			</div>
-			<div className="mx-auto mx-1 mt-1">
+			<div className="mx-auto mt-1">
 				<h1 className="text-3xl">{name}</h1>
 				<div className="flex space-x-1 mt-3">
 					<InfoRounded sx={{ color: "darkblue" }} />{" "}
@@ -65,7 +65,7 @@ export default function ProductItem({ id, name, price, className = undefined, de
 				</div>
 			</div>
 			<div className="flex flex-col mt-auto p-1">
-					{price} {ml({ en: "toman", fa: "تومن" })}
+				{price} {ml({ en: "toman", fa: "تومن" })}
 			</div>
 		</div>
 	);

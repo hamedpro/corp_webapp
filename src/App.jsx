@@ -95,12 +95,11 @@ function App() {
 	var current_lang = "fa";
 
 	return (
-		<div className="h-full w-full 2xl:bg-green-300 overflow-x-hidden overflow-y-hidden">
+		<div className="h-full w-full overflow-x-hidden overflow-y-hidden">
 			<div
-				className={[
-					"relative mx-auto w-full 2xl:w-2/3 h-full overflow-x-hidden",
-					current_lang,
-				].join(" ")}
+				className={["relative mx-auto w-full h-full overflow-x-hidden", current_lang].join(
+					" "
+				)}
 			>
 				<MainHeader />
 				<NavBar />
