@@ -1,12 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { LinkLikeP } from "../";
 import { useState } from "react";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
 import { useEffect } from "react";
-import Section from "../section/comp";
-import { FollowUsRow } from "../follow_us_row";
-import { FactoryOutlined } from "@mui/icons-material";
 export default function MainFooter() {
 	var nav = useNavigate();
 	var [company_info, set_company_info] = useState(null);

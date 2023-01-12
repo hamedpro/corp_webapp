@@ -1,0 +1,15 @@
+
+> corp_webapp@0.0.0 dev
+> npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css --watch & (export $(less .env) && vite --host --strictPort --port $frontend_port) & (export $(less .env) && nodemon ./api/server.cjs)
+
+[33m[nodemon] 2.0.20[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: cjs,json[39m
+[32m[nodemon] starting `node ./api/server.cjs`[39m
+server is listening on port 4000
+
+  VITE v3.1.1  ready in 193 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://192.168.1.62:3000/

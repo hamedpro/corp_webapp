@@ -32,6 +32,7 @@ import { multi_lang_helper as ml } from "./common";
 import { DownloadCenter } from "./components/DownloadCenter";
 import { NewWriting } from "./components/NewWriting";
 import { Writing } from "./components/Writing";
+import { Writings } from "./components/Writings";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -165,6 +166,7 @@ function App() {
 					<Route path="/" element={<Root />} />
 					<Route path="/writings/new" element={<NewWriting />} />
 					<Route path="/writings/:writing_id" element={<Writing />} />
+					<Route path="/writings" element={<Writings />} />
 					<Route
 						path="/first-setup"
 						element={
