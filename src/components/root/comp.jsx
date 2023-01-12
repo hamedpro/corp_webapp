@@ -164,7 +164,7 @@ export default function Root() {
 				button_text={"برو به بخش دانلود ها"}
 				title="کنترل اینترنتی"
 				info={"فایل های قابل بارگیری را از اینجا بارگیری کنید"}
-				button_onclick={() => () => nav("/download-center")}
+				button_onclick={() => nav("/download-center")}
 			/>
 
 			<Writings writings={writings} />
@@ -173,7 +173,7 @@ export default function Root() {
 				button_text={"برو به درباره ما"}
 				title="درباره ما"
 				info={"توضیحات شرکت اینجا نمایش داده خواهد شد"}
-				button_onclick={() => () => nav("/about-us")}
+				button_onclick={() => nav("/about-us")}
 			/>
 
 			<CustomBlock
@@ -181,7 +181,7 @@ export default function Root() {
 				button_text={"برو به تماس با ما"}
 				title="تماس با ما"
 				info={"پل های ارتباطی ما را مشاهده کنید"}
-				button_onclick={() => () => nav("/contact-us")}
+				button_onclick={() => nav("/contact-us")}
 			/>
 		</>
 	);

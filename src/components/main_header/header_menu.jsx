@@ -5,16 +5,12 @@ import { useEffect, useState } from "react";
 import "./styles.css";
 import {
 	AddBusinessRounded,
-	AddCircleRounded,
 	AdminPanelSettingsRounded,
 	Download,
-	GroupRounded,
 	HomeRounded,
 	InfoRounded,
-	NewspaperRounded,
 	PersonAddRounded,
 	StoreRounded,
-	SupportAgent,
 } from "@mui/icons-material";
 import Section from "../section/comp";
 import { multi_lang_helper as ml } from "../../common";
@@ -42,7 +38,9 @@ const HeaderMenu = (props) => {
 			(error) => {}
 		);
 	}, [props.visibility]);
-
+	if (!props.visibility) {
+		return null;
+	}
 	return (
 		<>
 			{/* <div
@@ -52,12 +50,7 @@ const HeaderMenu = (props) => {
 			></div> */}
 			{/* todo export the above fixed div as a background component for pop ups and modals and 
 			update every where which use this or something like this */}
-			<div
-				className={
-					"bg-white absolute w-full p-0 m-0 z-40 overflow-y-auto top-28 header_menu overflow-x-hidden px-1 pt-1 duration-300" +
-					(props.visibility ? " opacity-1" : " opacity-0")
-				}
-			>
+			<div className="bg-white absolute w-full p-0 m-0 z-40 overflow-y-auto top-28 header_menu overflow-x-hidden px-1 pt-1">
 				<Section
 					title={ml({
 						en: "routes",
