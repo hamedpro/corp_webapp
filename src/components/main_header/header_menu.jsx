@@ -6,11 +6,14 @@ import "./styles.css";
 import {
 	AddBusinessRounded,
 	AdminPanelSettingsRounded,
+	ArticleRounded,
 	Download,
 	HomeRounded,
 	InfoRounded,
 	PersonAddRounded,
+	SettingsRemoteRounded,
 	StoreRounded,
+	SupportAgentRounded,
 } from "@mui/icons-material";
 import Section from "../section/comp";
 import { multi_lang_helper as ml } from "../../common";
@@ -63,26 +66,30 @@ const HeaderMenu = (props) => {
 						beforeItems={<HomeRounded sx={{ color: "white" }} />}
 					/>
 					<ListItem
-						items={[ml({ en: "login", fa: "ورود به حساب کاربری" })]}
-						onClick={() => nav_and_hide_header_menu("/login")}
-						beforeItems={<LoginRoundedIcon sx={{ color: "white" }} />}
-					/>
-
-					<ListItem
-						items={[ml({ en: "register new user", fa: "ثبت نام کاربر جدید" })]}
-						onClick={() => nav_and_hide_header_menu("/register")}
-						beforeItems={<PersonAddRounded sx={{ color: "white" }} />}
-					/>
-
-					<ListItem
-						items={[ml({ en: "about company", fa: "درباره شرکت" })]}
-						onClick={() => nav_and_hide_header_menu("/company-info")}
-						beforeItems={<InfoRounded sx={{ color: "white" }} />}
-					/>
-					<ListItem
 						items={[ml({ en: "products", fa: "محصولات" })]}
 						onClick={() => nav_and_hide_header_menu("/products")}
 						beforeItems={<StoreRounded sx={{ color: "white" }} />}
+					/>
+
+					<ListItem
+						items={["بخش کنترل اینترنتی"]}
+						onClick={() => {
+							props.hide_header_menu();
+							window.location.assign("http://mpkchiller.com/dimmer");
+						}}
+						beforeItems={<SettingsRemoteRounded sx={{ color: "white" }} />}
+					/>
+
+					<ListItem
+						items={["درباره ما"]}
+						onClick={() => nav_and_hide_header_menu("/about-us")}
+						beforeItems={<InfoRounded sx={{ color: "white" }} />}
+					/>
+
+					<ListItem
+						items={["تماس با ما"]}
+						onClick={() => nav_and_hide_header_menu("/contact-us")}
+						beforeItems={<SupportAgentRounded sx={{ color: "white" }} />}
 					/>
 
 					<ListItem
@@ -97,6 +104,13 @@ const HeaderMenu = (props) => {
 								onClick={() => nav_and_hide_header_menu("/new-product")}
 								beforeItems={<AddBusinessRounded sx={{ color: "white" }} />}
 							/>
+
+							<ListItem
+								items={["انتشار نوشته جدید"]}
+								onClick={() => nav_and_hide_header_menu("/writings/new")}
+								beforeItems={<ArticleRounded sx={{ color: "white" }} />}
+							/>
+
 							<ListItem
 								items={[ml({ en: "admin dashboard", fa: "داشبورد مدیر" })]}
 								onClick={() => nav_and_hide_header_menu("/admin-dashboard")}

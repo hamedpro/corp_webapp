@@ -7,7 +7,6 @@ import { gen_link_to_file } from "./common";
 import {
 	ApiTestPage,
 	AdminDashboard,
-	CompanyInfo,
 	Login,
 	MainHeader,
 	Product,
@@ -33,6 +32,7 @@ import { DownloadCenter } from "./components/DownloadCenter";
 import { NewWriting } from "./components/NewWriting";
 import { Writing } from "./components/Writing";
 import { Writings } from "./components/Writings";
+import AboutUs from "./components/AboutUs/AboutUs.jsx";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -146,7 +146,7 @@ function App() {
 							</CheckUserPrivilege>
 						}
 					/>
-					<Route path="/company-info" element={<CompanyInfo />} />
+					<Route path="/about-us" element={<AboutUs />} />
 					<Route path="/login" element={<Login />} />
 
 					<Route exact path="/products/:product_id" element={<Product />} />

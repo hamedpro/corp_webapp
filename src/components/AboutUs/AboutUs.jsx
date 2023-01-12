@@ -7,7 +7,7 @@ import LinkLikeP from "../LinkLikeP/comp.jsx";
 import { Loading } from "../loading/comp.jsx";
 import Section from "../section/comp";
 import { StyledDiv } from "../styled_elements.jsx";
-export default function CompanyInfo() {
+export default function AboutUs() {
 	var [company_info, set_company_info] = useState(null);
 	function get_data() {
 		customAjax({
@@ -102,14 +102,14 @@ export default function CompanyInfo() {
 									{
 										label: ml({ en: "address", fa: "آدرس" }),
 										key: "address",
-									}
+									},
 								].map((item, index) => {
 									return (
 										<React.Fragment key={index}>
-											<span className="text-stone-600">
-												{item.label} :{" "}
+											<span className="text-stone-600">{item.label} : </span>
+											<span className="text-lg">
+												{company_info[item.key]}
 											</span>
-											<span className="text-lg">{company_info[item.key]}</span>
 											<br />
 										</React.Fragment>
 									);
@@ -117,7 +117,7 @@ export default function CompanyInfo() {
 								<FollowUsRow
 									instagram={company_info.instagram}
 									telegram={company_info.telegram}
-									twitter={ company_info.twitter}
+									twitter={company_info.twitter}
 								/>
 							</div>
 						)}
