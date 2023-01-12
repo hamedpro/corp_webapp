@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ImageSlider } from "../image_slider/comp";
 import { ProductsRow } from "./products_row";
+import "./styles.css";
 import {
 	Article,
 	Business,
@@ -21,7 +22,7 @@ function Writings({ writings }) {
 	var sorted_writings = writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
 	return (
 		<div className="bg-sky-700 flex p-4 justify-center h-full my-1 overflow-x-auto flex-col">
-			<div className="flex justify-between px-2 text-white">
+			<div className="flex justify-between px-2 text-white mb-2">
 				<h1>آخرین نوشته ها</h1>
 				<Link to="/writings">مشاهده همه نوشته ها</Link>
 			</div>
@@ -31,41 +32,57 @@ function Writings({ writings }) {
 				) : (
 					<>
 						<div
-							className="bg-blue-900 w-1/3 mx-2 flex justify-center items-center relative text-white "
+							className="bg-blue-300 rounded-lg w-1/3 mx-2 flex justify-center items-center relative text-white overflow-hidden"
 							style={{ aspectRatio: 1 }}
 						>
 							<img
 								src={window.api_endpoint + "/" + sorted_writings[0].image_filename}
+								className="first_writing_image duration-200 h-full aspect-auto"
 							/>
-							<h1 className="absolute top-1/3">{sorted_writings[0].title}</h1>
-							<p className="absolute top-1/2">
-								{sorted_writings[0].publisher_username}
-							</p>
+							<div className="absolute h-1/2 top-0 w-full p-2">
+								<p className="text-xs">
+									حدود{" "}
+									{Math.round(
+										(new Date().getTime() - sorted_writings[0].publish_date) /
+											3600000
+									)}{" "}
+									ساعت پیش | توسط {writings[0].publisher_username}
+								</p>
+							</div>
+							<div className="absolute h-1/2 top-1/2 w-full  p-2">
+								<h1 className="text-4xl"> {sorted_writings[0].title}</h1>
+								<p className="text-2xl">{sorted_writings[0].publisher_username}</p>
+							</div>
 						</div>
 					</>
 				)}
-				<div className="flex flex-col w-2/3">
+				<div className="flex flex-col w-2/3 rounded-lg overflow-hidden">
 					{[1, 2, 3].map((number, index) => {
 						var writing = sorted_writings[number];
 						if (writing !== undefined) {
 							return (
 								<div
 									key={index}
-									className="w-full h-1/3 bg-red-00 text-white border border-blue-400 flex-row flex"
+									className="w-full h-1/3 bg-blue-100  text-blue-600 flex-row border-b border-blue-300 flex items-center pr-4 cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200"
 									onClick={() => nav(`/writings/${writing.id}`)}
 								>
-									<div className="h-20 bg-green-700 w-20 flex justify-center items-center">
-										{" "}
-										<img src={gen_link_to_file(writing.image_filename)} />
+									<div className="h-20 aspect-square flex justify-center items-center">
+										<img
+											src={gen_link_to_file(writing.image_filename)}
+											className="rounded"
+										/>
 									</div>
-									<h1>
+									<h1 className="p-2 items-start">
 										نوشته شماره {writing.id} : {writing.title}
 									</h1>
 								</div>
 							);
 						} else {
 							return (
-								<div key={index} className="w-full h-1/3 bg-red-800 text-white ">
+								<div
+									key={index}
+									className="w-full h-1/3 bg-blue-100  text-blue-600 flex-row border-b border-blue-300 flex items-center pr-4 cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200"
+								>
 									کلا {sorted_writings.length} نوشته منتشر شده است پس نوشته شماره
 									{number + 1} ای برای نمایش وجود ندارد
 								</div>
@@ -79,7 +96,7 @@ function Writings({ writings }) {
 }
 function CustomBlock({ title, info, button_text, button_onclick, Icon }) {
 	return (
-		<div className="bg-sky-700 flex p-4 items-center h-full my-1 justify-center flex-col">
+		<div className="bg-sky-700 flex p-4 items-center h-full my-1 justify-center sm:justify-start flex-col sm:flex-row">
 			<div
 				className="w-1/4 rounded-lg flex justify-center items-center"
 				style={{ aspectRatio: 1 }}
@@ -134,7 +151,6 @@ export default function Root() {
 				title="محصولات ما"
 				products={suggested_products()}
 			/>
-			<div className="w-full"></div>
 			<CustomBlock
 				Icon={Settings}
 				button_text={"برو به کنترل اینترنتی"}

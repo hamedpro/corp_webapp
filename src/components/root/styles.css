@@ -1,0 +1,3 @@
+div:hover > .first_writing_image{
+    transform: scale(110%);
+}
