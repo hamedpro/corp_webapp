@@ -10,6 +10,7 @@ export async function custom_axios({
 	var method = "POST"; // case insensitive,
 	var headers = {
 		task,
+		api_version: 2,
 	};
 	if (content_type_json) {
 		headers["Content-Type"] = "application/json";
@@ -50,7 +51,6 @@ export var get_collection = ({ collection_name, filters, global_data }) => {
 				collection_name,
 				filters,
 			},
-			route: "/api-v2",
 		});
 	}
 };
@@ -62,7 +62,6 @@ export var delete_document = ({ collection_name, filters }) =>
 			filters,
 			collection_name,
 		},
-		route: "/api-v2",
 	});
 export var new_document = ({ collection_name, document }) =>
 	custom_axios({
@@ -71,8 +70,6 @@ export var new_document = ({ collection_name, document }) =>
 			collection_name,
 			document,
 		},
-
-		route: "/api-v2",
 	});
 export var update_document = ({ collection, update_filter, update_set }) =>
 	custom_axios({
@@ -82,6 +79,4 @@ export var update_document = ({ collection, update_filter, update_set }) =>
 			update_filter,
 			update_set,
 		},
-
-		route: "/api-v2",
 	});
