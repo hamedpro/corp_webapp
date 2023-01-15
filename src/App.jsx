@@ -33,6 +33,9 @@ import { NewWriting } from "./components/NewWriting";
 import { Writing } from "./components/Writing";
 import { Writings } from "./components/Writings";
 import AboutUs from "./components/AboutUs/AboutUs.jsx";
+import { ContactUs } from "./components/ContactUs";
+import { NewSupportMessage } from "./components/NewSupportMessage";
+import { SupportMessage } from "./components/SupportMessage";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -172,6 +175,12 @@ function App() {
 						<Route path="/writings/new" element={<NewWriting />} />
 						<Route path="/writings/:writing_id" element={<Writing />} />
 						<Route path="/writings" element={<Writings />} />
+						<Route path="/contact-us" element={<ContactUs />} />
+						<Route path="/new-support-message" element={<NewSupportMessage />} />
+						<Route
+							path="/support_messages/:support_message_id"
+							element={<SupportMessage />}
+						/>
 						<Route
 							path="/first-setup"
 							element={

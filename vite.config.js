@@ -9,4 +9,7 @@ export default defineConfig({
 	define: {
 		API_ENDPOINT: JSON.stringify(process.env.api_endpoint),
 	},
+	server: {
+		open: `http://localhost:${process.env.frontend_port}`,
+	},
 });

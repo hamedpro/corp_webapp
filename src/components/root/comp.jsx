@@ -115,7 +115,7 @@ export function Writings({ writings }) {
 		</div>
 	);
 }
-function CustomBlock({ title, info, button_text, button_onclick, Icon }) {
+export function CustomBlock({ title, info, button_text, button_onclick, Icon }) {
 	return (
 		<div className="bg-sky-700 flex p-4 items-center h-full my-1 justify-center sm:justify-start flex-col sm:flex-row">
 			<div

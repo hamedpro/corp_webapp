@@ -94,6 +94,10 @@ export default function NavBar() {
 				original: "new",
 				fa: "جدید",
 			},
+			{
+				original: "new-support-message",
+				fa: "درخواست پشتیبانی جدید",
+			},
 		];
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {

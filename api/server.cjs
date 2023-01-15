@@ -14,6 +14,7 @@ app.use(express.static("./uploaded/"));
 var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_query
 var path = require("path");
+var { MongoClient, ObjectId } = require("mongodb");
 async function is_first_setup_done({ con }) {
 	var o = await cq(con, 'select * from paired_data where pair_key = "company_info"');
 	if (o.error) {
@@ -197,15 +198,17 @@ async function init() {
 	//todo take care about length of texts and max length of cells
 }
 async function main() {
+	var client = new MongoClient("mongodb://localhost:27017");
+	var db = client.db("corp_webapp");
+
 	app.all("/", async (req, res) => {
 		var rm = new response_manager(res);
 		try {
 			await init();
 		} catch (e) {
 			rm.send_error(e);
-			return;
+			throw e;
 		}
-
 		var con = connect_to_db();
 		rm.add_mysql_con(con);
 		var params = { ...req.body, ...req.query };
@@ -1285,6 +1288,41 @@ async function main() {
 				} //todo take care when user input has single quote or ... (validate it also for security reasons)
 				rm.send();
 				break;
+		}
+	});
+	app.all("/api-v2", async (req, res) => {
+		var task = req.headers.task;
+		if (task === "get_collection") {
+			//body should be like this :{collection_name : string ,filters : {}}
+			var filters = req.body.filters;
+			if (Object.keys(filters).includes("_id")) {
+				filters["_id"] = ObjectId(filters["_id"]);
+			}
+			var tasks = await db.collection(req.body.collection_name).find(filters).toArray();
+			res.json(tasks);
+		} else if (task === "new_document") {
+			//body should be like this : {collection_name : string , document : object}
+			var inserted_row = await db
+				.collection(req.body.collection_name)
+				.insertOne(req.body.document);
+			res.json(inserted_row.insertedId);
+		} else if (task === "update_document") {
+			//body must be like : {collection : string,update_filter : object, update_set : object}
+			var update_filter = req.body.update_filter;
+			if (update_filter._id !== undefined) {
+				update_filter._id = ObjectId(update_filter._id);
+			}
+			var update_statement = await db
+				.collection(req.body.collection)
+				.updateOne(update_filter, { $set: req.body.update_set });
+			res.json(update_statement);
+		} else if (task === "delete_document") {
+			//body should look like this : {filter_object : object , collection_name : string}
+			var filters = req.body.filters;
+			if (Object.keys(filters).includes("_id")) {
+				filters["_id"] = ObjectId(filters["_id"]);
+			}
+			res.json(await db.collection(req.body.collection_name).deleteOne(filters));
 		}
 	});
 	var server = app.listen(process.env.api_port, () => {
