@@ -198,8 +198,8 @@ async function init() {
 	//todo take care about length of texts and max length of cells
 }
 async function main() {
-	var client = new MongoClient("mongodb://127.0.0.1:27017");
-	var db = client.db("corp_webapp");
+	var client = new MongoClient(process.env.mongodb_url);
+	var db = client.db(process.env.mongodb_db_name);
 
 	app.all("/", async (req, res) => {
 		if (Number(req.headers.api_version) === 2) {
