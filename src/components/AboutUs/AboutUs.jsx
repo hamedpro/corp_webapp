@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
-import { FollowUsRow } from "../follow_us_row.jsx";
-import { ImageSlider } from "../image_slider/comp.jsx";
 import LinkLikeP from "../LinkLikeP/comp.jsx";
 import { Loading } from "../loading/comp.jsx";
 import Section from "../section/comp";

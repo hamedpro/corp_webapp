@@ -126,7 +126,14 @@ function App() {
 								</CheckUserPrivilege>
 							}
 						/>
-						<Route path="/download-center" element={<DownloadCenter />} />
+						<Route
+							path="/download-center"
+							element={
+								<div className="mx-1">
+									<DownloadCenter />
+								</div>
+							}
+						/>
 						<Route
 							path="/products/:product_id/new-product-review"
 							element={

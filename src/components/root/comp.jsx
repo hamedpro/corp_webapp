@@ -48,9 +48,9 @@ export function Writings({ writings }) {
 	var sorted_writings = writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
 	return (
 		<div className="bg-sky-700 flex p-4 justify-center h-full my-1 overflow-x-auto flex-col">
-			<div className="flex justify-between px-2 text-white mb-2">
-				<h1>آخرین نوشته ها</h1>
-				<Link to="/writings">مشاهده همه نوشته ها</Link>
+			<div className="flex justify-between px-2 text-white mb-2 items-center text-lg">
+				<h1 className="">آخرین نوشته ها</h1>
+				<Link to="/writings">مشاهده بیشتر</Link>
 			</div>
 			<div className="w-full flex h-fit flex-col sm:flex-row items-center sm:items-stretch">
 				{sorted_writings.length === 0 ? (
@@ -76,9 +76,12 @@ export function Writings({ writings }) {
 									ساعت پیش | توسط {writings[0].publisher_username}
 								</p>
 							</div>
-							<div className="absolute h-1/2 top-1/2 w-full  p-2">
-								<h1 className="text-4xl"> {sorted_writings[0].title}</h1>
-								<p className="text-2xl">
+							<div
+								className="absolute h-1/3 top-2/3 w-full  p-2"
+								style={{ background: "rgb(0, 0 ,255,0.6)" }}
+							>
+								<h1 className="text-2xl"> {sorted_writings[0].title}</h1>
+								<p className="text-lg">
 									{sorted_writings[0].text.split("").slice(0, 40).join("") +
 										" ..."}
 								</p>
@@ -124,7 +127,7 @@ export function CustomBlock({ title, info, button_text, button_onclick, Icon }) 
 			>
 				<Icon sx={{ width: "90%", height: "90%", color: "white" }} />
 			</div>
-			<div className="h-full text-white w-1/2 p-2 text-center">
+			<div className="h-full text-white w-3/4 p-2 text-center">
 				<div>
 					<h1 className="text-4xl mb-2">{title}</h1>
 					<p className="mb-6 text-lg">{info}</p>
@@ -183,7 +186,7 @@ export default function Root() {
 			<CustomBlock
 				Icon={Download}
 				button_text={"برو به بخش دانلود ها"}
-				title="کنترل اینترنتی"
+				title="بخش دانلود ها"
 				info={"فایل های قابل بارگیری را از اینجا بارگیری کنید"}
 				button_onclick={() => nav("/download-center")}
 			/>

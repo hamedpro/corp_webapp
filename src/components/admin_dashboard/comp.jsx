@@ -3,13 +3,22 @@ import UsersSection from "./users_section";
 import ProductsSection from "./products_section";
 import "./styles.css";
 import { useState } from "react";
-import { Comment, Download, Info, InfoRounded, ListAltRounded, Person, ReviewsRounded, ShoppingBag, SupportAgentRounded, Tune, VerifiedUserRounded } from "@mui/icons-material";
+import {
+	Download,
+	InfoRounded,
+	ListAltRounded,
+	Person,
+	ReviewsRounded,
+	ShoppingBag,
+	SupportAgent,
+	SupportAgentRounded,
+	Tune,
+} from "@mui/icons-material";
 import { OrdersSection } from "./orders_section";
-import { SupportTicketsSection } from "./support_tickets_section";
 import { ProductReviews } from "./product_reviews";
-import { BlogComments } from "./blog_comments";
 import { Alert } from "../alert/comp";
 import { ManageDownloadCenter } from "./ManageDownloadCenter";
+import { SupportMessagesSection } from "./SupportMessagesSection";
 export default function AdminDashboard() {
 	var [tab, set_tab] = useState("manage_products");
 	var tabs = [
@@ -46,6 +55,11 @@ export default function AdminDashboard() {
 			id: "manage_download_center",
 			title: "مدیریت بخش فایل های قابل دانلود",
 			icon: <Download />,
+		},
+		{
+			id: "support_messages_section",
+			title: "رسیدگی به درخواست های پشتیبانی",
+			icon: <SupportAgentRounded />,
 		},
 	];
 	return (
@@ -107,6 +121,7 @@ export default function AdminDashboard() {
 						</>
 					)}
 					{tab === "manage_download_center" && <ManageDownloadCenter />}
+					{tab === "support_messages_section" && <SupportMessagesSection />}
 				</div>
 			</div>
 		</>

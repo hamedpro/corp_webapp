@@ -23,11 +23,11 @@ export const SupportMessage = ({}) => {
 	}, []);
 	if (support_message === null) return <h1>loading ... </h1>;
 	return (
-		<Section title={`درخواست پشتیبانی شماره ${support_message_id}`} className="m-2">
+		<div className="m-2">
 			<SupportMessageInfo support_message={support_message} />
 			<CheckUserPrivilege level="admin">
 				<SupportMessageManagement support_message={support_message} get_data={get_data} />
 			</CheckUserPrivilege>
-		</Section>
+		</div>
 	);
 };

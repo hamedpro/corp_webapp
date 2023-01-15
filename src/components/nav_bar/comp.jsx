@@ -98,6 +98,10 @@ export default function NavBar() {
 				original: "new-support-message",
 				fa: "درخواست پشتیبانی جدید",
 			},
+			{
+				original: "support_messages",
+				fa: "درخواست های پشتیبانی",
+			},
 		];
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {

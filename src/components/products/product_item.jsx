@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
 import { gen_link_to_file, multi_lang_helper as ml, trim_text_if_its_long } from "../../common.js";
-import { Category, InfoRounded } from "@mui/icons-material";
+import { Category, InfoRounded, MoneyRounded, SellRounded } from "@mui/icons-material";
 export default function ProductItem({ id, name, price, className = undefined, description = "" }) {
 	//id stands for product id
 	var nav = useNavigate();
@@ -31,7 +31,7 @@ export default function ProductItem({ id, name, price, className = undefined, de
 	return (
 		<div
 			className={
-				"w-1/3 sm:w-1/4 p-1 flex flex-col shrink-0 cursor-pointer border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
+				"w-2/3 sm:w-1/4 p-1 flex flex-col shrink-0 cursor-pointer border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
 				(className ? " " + className : "")
 			}
 			onClick={() => nav("/products/" + id)}
@@ -55,17 +55,20 @@ export default function ProductItem({ id, name, price, className = undefined, de
 					</div>
 				)}
 			</div>
-			<div className="mx-auto mt-1">
+			<div className=" mt-1">
 				<h1 className="text-3xl">{name}</h1>
 				<div className="flex space-x-1 mt-3">
-					<InfoRounded sx={{ color: "darkblue" }} />{" "}
+					<InfoRounded sx={{ color: "darkblue" }} className="pt-1" />{" "}
 					<span className="text-lg break-all">
 						{trim_text_if_its_long(description, 50)}
 					</span>
 				</div>
 			</div>
-			<div className="flex flex-col mt-auto p-1">
-				{price} {ml({ en: "toman", fa: "تومن" })}
+			<div className=" mt-1">
+				<div className="flex space-x-1 mt-3">
+					<SellRounded sx={{ color: "darkblue" }} className="pt-1" />{" "}
+					<span className="text-lg break-all">{price} تومن</span>
+				</div>
 			</div>
 		</div>
 	);

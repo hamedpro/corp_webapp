@@ -2,10 +2,18 @@ import { React } from "react";
 import Section from "./section/comp";
 export const SupportMessageInfo = ({ support_message }) => {
 	return (
-		<Section title="اطلاعات درخواست پشتیبانی" innerClassName="p-2" className="m-2">
-			<h1>عنوان درخواست پشتیبانی :‌ {support_message.title}</h1>
-			<h1>متن درخواست پشتیبانی :‌ {support_message.text}</h1>
-			<h1>تاریخ درخواست پشتیبانی :‌ {new Date(support_message.date).toString()}</h1>
+		<Section title="اطلاعات درخواست پشتیبانی" innerClassName="px-2" className="m-2">
+			<span className="text-stone-600">عنوان : </span>
+			<span className="text-lg">{support_message.title}</span>
+			<br />
+
+			<span className="text-stone-600">متن : </span>
+			<span className="text-lg">{support_message.text}</span>
+			<br />
+
+			<span className="text-stone-600">تاریخ ثبت درخواست : </span>
+			<span className="text-lg">{new Date(support_message.date).toString()}</span>
+			<br />
 		</Section>
 	);
 };

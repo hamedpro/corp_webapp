@@ -40,7 +40,7 @@ export function DownloadCenter({ admin_mode = false }) {
 			{download_center_items === null ? (
 				<Loading />
 			) : (
-				<Section title="فایل های قابل دانلود" className="mt-1 mx-1">
+				<Section title="فایل های قابل دانلود" className="mt-1">
 					<div className="px-3">
 						<Alert icon={<Info />} className="mb-2">
 							برای دانلود هر مورد روی آن مورد کلیک کنید و این گزینه را انتخاب کنید :‌
