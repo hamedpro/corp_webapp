@@ -8,17 +8,12 @@ export function ProductsRow({ products, icon, title, className = "" }) {
 			{products === null ? (
 				<Loading />
 			) : (
-				<div
-					className={[
-						"flex bg-sky-700 overflow-x-auto text-white flex-col p-2",
-						className,
-					].join(" ")}
-				>
+				<div className={["flex bg-sky-700 text-white flex-col p-2", className].join(" ")}>
 					<div className="flex justify-between text-lg">
 						<h1>محصولات ما</h1>
 						<h1 className="underline">مشاهده همه محصولات</h1>
 					</div>
-					<div className="w-full p-2 flex">
+					<div className="w-full p-2 flex  overflow-x-auto">
 						{products.length == 0 ? (
 							<div className="h-full w-fit">
 								<h1>
