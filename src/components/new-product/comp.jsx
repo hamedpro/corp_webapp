@@ -17,6 +17,13 @@ export default function NewProduct() {
 	const [specs, set_specs] = useState([]);
 	const [count, set_count] = useState(0);
 	async function submit_new_product() {
+		var entered_price = document.getElementById("price_input").value;
+		if (isNaN(Number(entered_price))) {
+			alert(
+				"مقداری که به عنوان قیمت محصول وارد کرده اید یا به طور کلی عدد نیست یا شامل اعداد فارسی است"
+			);
+			return;
+		}
 		customAjax({
 			//todo check if required param is not given in all app
 			params: {
@@ -24,7 +31,7 @@ export default function NewProduct() {
 				name: document.getElementById("name_input").value,
 				description: document.getElementById("description_input").value,
 				product_specs: JSON.stringify(specs),
-				price: document.getElementById("price_input").value,
+				price: entered_price,
 			},
 		}).then(
 			(data) => {

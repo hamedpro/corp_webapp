@@ -18,7 +18,7 @@ export function ProductsRow({ products, icon, title, className = "" }) {
 						<h1>محصولات ما</h1>
 						<h1 className="underline">مشاهده همه محصولات</h1>
 					</div>
-					<div className="w-full p-2">
+					<div className="w-full p-2 flex">
 						{products.length == 0 ? (
 							<div className="h-full w-fit">
 								<h1>
@@ -39,9 +39,9 @@ export function ProductsRow({ products, icon, title, className = "" }) {
 												price={product.price}
 												className={
 													"overflow-hidden bg-blue-300 text-black " +
-													(index == 0 ? "rounded-l-xl" : "") +
+													(index == 0 ? "rounded-r-xl" : "") +
 													(index == products.length - 1
-														? "rounded-r-xl"
+														? "rounded-l-xl"
 														: "")
 												}
 												description={product.description}
