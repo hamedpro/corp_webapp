@@ -36,6 +36,7 @@ import AboutUs from "./components/AboutUs/AboutUs.jsx";
 import { ContactUs } from "./components/ContactUs";
 import { NewSupportMessage } from "./components/NewSupportMessage";
 import { SupportMessage } from "./components/SupportMessage";
+import axios from "axios";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;

@@ -76,7 +76,7 @@ export default function NavBar() {
 			},
 			{
 				original: "writings",
-				fa: "نوشته",
+				fa: "نوشته ها",
 			},
 			{
 				original: "writing",

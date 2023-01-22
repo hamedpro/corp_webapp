@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
+import { custom_axios } from "../../api/client";
 import { customAjax } from "../custom_ajax";
 import { WritingRow } from "./root/comp";
 import Section from "./section/comp";
@@ -7,12 +8,16 @@ import Section from "./section/comp";
 export const Writings = () => {
 	var [writings, set_writings] = useState(null);
 	useEffect(() => {
-		customAjax({
-			params: {
-				task_name: "get_table",
-				table_name: "writings",
+		custom_axios({
+			url: "/api-v2",
+			headers: {
+				task: "get_collection",
 			},
-		}).then((data) => set_writings(data.result), console.log);
+			data: {
+				collection_name: "writings",
+				filters: {},
+			},
+		}).then((data) => set_writings(data.data), console.log);
 	}, []);
 	if (writings === null) return "loading writings ...";
 	return (
@@ -20,7 +25,7 @@ export const Writings = () => {
 			<div className="rounded-lg overflow-hidden m-2">
 				{writings.map((writing, index) => {
 					return (
-						<Fragment key={writing.id}>
+						<Fragment key={writing._id}>
 							<WritingRow {...writing} />
 						</Fragment>
 					);

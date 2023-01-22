@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ImageSlider } from "../image_slider/comp";
 import { ProductsRow } from "./products_row";
 import "./styles.css";
 import {
@@ -17,14 +16,15 @@ import {
 import React, { useEffect, useState } from "react";
 import { customAjax } from "../../custom_ajax";
 import { gen_link_to_file, multi_lang_helper as ml, shuffle } from "../../common";
-export function WritingRow({ publish_date, publisher_username, image_filename, id, title }) {
+import { custom_axios } from "../../../api/client";
+export function WritingRow({ publish_date, publisher_username, image_filename, _id, title }) {
 	var nav = useNavigate();
 	return (
 		<div
 			className={`w-full h-1/3 bg-blue-100  text-blue-600 
 				flex-row border-b border-blue-300 flex 
 				cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200 px-6`}
-			onClick={() => nav(`/writings/${id}`)}
+			onClick={() => nav(`/writings/${_id}`)}
 		>
 			<div className="flex items-center">
 				<div className="w-20 h-20 flex justify-center items-center">
@@ -32,9 +32,7 @@ export function WritingRow({ publish_date, publisher_username, image_filename, i
 				</div>
 			</div>
 			<div className="flex flex-col p-2 justify-center">
-				<h1 className="items-start text-2xl">
-					نوشته {id} : {title}
-				</h1>
+				<h1 className="items-start text-2xl">{title}</h1>
 				<p className="text-sm">
 					حدود {Math.round((new Date().getTime() - publish_date) / 3600000)} ساعت پیش |
 					توسط {publisher_username}
@@ -46,6 +44,7 @@ export function WritingRow({ publish_date, publisher_username, image_filename, i
 export function Writings({ writings }) {
 	var nav = useNavigate();
 	var sorted_writings = writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
+	/* todo make sure about this sorting function above  */
 	return (
 		<div className="bg-sky-700 flex p-4 justify-center h-full my-1 overflow-x-auto flex-col">
 			<div className="flex justify-between px-2 text-white mb-2 items-center text-lg">
@@ -60,7 +59,7 @@ export function Writings({ writings }) {
 						<div
 							className="bg-blue-300 cursor-pointer rounded-lg w-full sm:w-1/3 mx-2 flex justify-center items-center relative text-white overflow-hidden"
 							style={{ aspectRatio: 1 }}
-							onClick={() => nav(`/writings/${sorted_writings[0].id}`)}
+							onClick={() => nav(`/writings/${sorted_writings[0]._id}`)}
 						>
 							<img
 								src={window.api_endpoint + "/" + sorted_writings[0].image_filename}
@@ -81,10 +80,6 @@ export function Writings({ writings }) {
 								style={{ background: "rgb(0, 0 ,255,0.6)" }}
 							>
 								<h1 className="text-2xl"> {sorted_writings[0].title}</h1>
-								<p className="text-lg">
-									{sorted_writings[0].text.split("").slice(0, 40).join("") +
-										" ..."}
-								</p>
 							</div>
 						</div>
 					</>
@@ -160,12 +155,14 @@ export default function Root() {
 	useEffect(fetch_data, []);
 	var [writings, set_writings] = useState(null);
 	useEffect(() => {
-		customAjax({
-			params: {
-				task_name: "get_table",
-				table_name: "writings",
+		custom_axios({
+			url: "/api-v2",
+			headers: { task: "get_collection" },
+			data: {
+				collection_name: "writings",
+				filters: {},
 			},
-		}).then((data) => set_writings(data.result), console.log);
+		}).then((data) => set_writings(data.data), console.log);
 	}, []);
 	if (writings === null) return "loading ...";
 	return (
