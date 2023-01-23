@@ -1,15 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-dotenv.config()
-//console.log(process.env);
+import fs from "fs"
+var {api_endpoint,frontend_port} = JSON.parse(fs.readFileSync('env.json','utf8'))
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [react()],
 	define: {
-		API_ENDPOINT: JSON.stringify(process.env.api_endpoint),
+		API_ENDPOINT: JSON.stringify(api_endpoint),
 	},
 	server: {
-		open: `http://localhost:${process.env.frontend_port}`,
+		open: `http://localhost:${frontend_port}`,
 	},
 });

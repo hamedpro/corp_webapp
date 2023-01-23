@@ -1,4 +1,3 @@
-require("dotenv").config();
 var hash_sha_256_hex = require("./common.cjs").hash_sha_256_hex;
 var express = require("express");
 var cors = require("cors");
@@ -15,6 +14,7 @@ var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_query
 var path = require("path");
 var { MongoClient, ObjectId } = require("mongodb");
+var env_vars = JSON.parse(fs.readFileSync('env.json','utf8'))
 async function is_first_setup_done({ con }) {
 	var o = await cq(con, 'select * from paired_data where pair_key = "company_info"');
 	if (o.error) {
@@ -37,14 +37,14 @@ async function is_first_setup_done({ con }) {
 }
 function connect_to_db(pass_database = true) {
 	var conf = {
-		user: process.env.mysql_user,
-		password: process.env.mysql_password,
-		port: Number(process.env.mysql_port),
-		host: process.env.mysql_host,
+		user: env_vars.mysql_user,
+		password: env_vars.mysql_password,
+		port: Number(env_vars.mysql_port),
+		host: env_vars.mysql_host,
 		multipleStatements: true,
 	};
 	if (pass_database) {
-		conf["database"] = process.env.mysql_database;
+		conf["database"] = env_vars.mysql_database;
 	}
 	return mysql.createConnection(conf);
 	//add error handling for mysql createConnection
@@ -65,7 +65,7 @@ async function init() {
 	var dotenv_keys = ["mysql_host", "mysql_user", "mysql_password", "mysql_port"];
 	//todo complete these dotenv keys
 	for (var i = 0; i < dotenv_keys.length; i++) {
-		if (!Object.keys(process.env).includes(dotenv_keys[i])) {
+		if (!Object.keys(env_vars).includes(dotenv_keys[i])) {
 			throw "tried to access one of mysql configurations from .env but it didn't exist";
 		}
 	}
@@ -74,8 +74,8 @@ async function init() {
 	var output = await cq(
 		con,
 		`
-			create database if not exists ${process.env.mysql_database};
-		use ${process.env.mysql_database};
+			create database if not exists ${env_vars.mysql_database};
+		use ${env_vars.mysql_database};
 		create table if not exists users(
 			id int primary key auto_increment,
 			username varchar(50) ,
@@ -198,8 +198,8 @@ async function init() {
 	//todo take care about length of texts and max length of cells
 }
 async function main() {
-	var client = new MongoClient(process.env.mongodb_url);
-	var db = client.db(process.env.mongodb_db_name);
+	var client = new MongoClient(env_vars.mongodb_url);
+	var db = client.db(env_vars.mongodb_db_name);
 
 	app.all("/", async (req, res) => {
 		var rm = new response_manager(res);
@@ -244,7 +244,7 @@ async function main() {
 				}
 				if (output.result.length == 0) {
 					var hashed_password = hash_sha_256_hex(
-						params.password + process.env.PASSWORD_HASHING_SECRET
+						params.password + env_vars.PASSWORD_HASHING_SECRET
 					);
 					var output2 = await cq(
 						con,
@@ -369,7 +369,7 @@ async function main() {
 								rm.send_result(
 									results[0].hashed_password ==
 										hash_sha_256_hex(
-											params.password + process.env.PASSWORD_HASHING_SECRET
+											params.password + env_vars.PASSWORD_HASHING_SECRET
 										)
 								);
 							}
@@ -387,11 +387,11 @@ async function main() {
 							if (
 								result[0].hashed_password ==
 								hash_sha_256_hex(
-									params.password + process.env.PASSWORD_HASHING_SECRET
+									params.password + env_vars.PASSWORD_HASHING_SECRET
 								)
 							) {
 								var hashed_new_password = hash_sha_256_hex(
-									params.new_password + process.env.PASSWORD_HASHING_SECRET
+									params.new_password + env_vars.PASSWORD_HASHING_SECRET
 								);
 								con.query(
 									`update users set hashed_password = "${hashed_new_password}" where username= "${params.username}"`,
@@ -914,7 +914,7 @@ async function main() {
 			case "undo_all":
 				//it returns the app to its first state
 				//todo : may in addition to droping database it be required to do another stuff
-				con.query(`drop database ${process.env.mysql_database};`, (error) => {
+				con.query(`drop database ${env_vars.mysql_database};`, (error) => {
 					if (error) {
 						rm.send_error(error);
 					} else {
@@ -924,7 +924,7 @@ async function main() {
 				});
 				break;
 			case "drop_database":
-				var o = await cq(con, `drop database ${process.env.mysql_database}`);
+				var o = await cq(con, `drop database ${env_vars.mysql_database}`);
 				if (o.error) {
 					rm.send_error(o.error);
 				}
@@ -1327,8 +1327,8 @@ async function main() {
 			res.json("task is not specified");
 		}
 	});
-	var server = app.listen(process.env.api_port, () => {
-		console.log(`server is listening on port ${process.env.api_port}`);
+	var server = app.listen(env_vars.api_port, () => {
+		console.log(`server is listening on port ${env_vars.api_port}`);
 	});
 }
 main();
