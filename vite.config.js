@@ -7,8 +7,5 @@ export default defineConfig({
 	plugins: [react()],
 	define: {
 		API_ENDPOINT: JSON.stringify(api_endpoint),
-	},
-	server: {
-		open: `http://localhost:${frontend_port}`,
-	},
+	}
 });

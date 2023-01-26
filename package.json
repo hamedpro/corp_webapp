@@ -4,8 +4,8 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "node ./dev_script.cjs",
-		"start": "(export $(less .env) && node ./api/server.cjs) & (rm -rf ./dist && npx tailwindcss -c ./tailwind.config.cjs -i ./src/input.css -o ./src/output.css && export $(less .env) && vite build ) && (node frontend_server.js)"
+		"dev": "node ./script_executer.cjs dev",
+		"start": "node ./script_executer.cjs start"
 	},
 	"dependencies": {
 		"@editorjs/attaches": "^1.3.0",

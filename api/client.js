@@ -1,6 +1,6 @@
 import axios from "axios";
 export var custom_axios = axios.create({
-	baseURL: window.API_ENDPOINT,
+	baseURL: window.api_endpoint,
 	method: "post",
 });
 

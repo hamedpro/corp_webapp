@@ -182,7 +182,7 @@ function App() {
 						<Route path="/" element={<Root />} />
 						<Route path="/writings/new" element={<NewWriting />} />
 						<Route path="/writings/:writing_id" element={<Writing />} />
-						<Route path="/writings" element={<Writings />} />
+						<Route path="/writings" element={<Writings/>} />
 						<Route path="/contact-us" element={<ContactUs />} />
 						<Route path="/new-support-message" element={<NewSupportMessage />} />
 						<Route

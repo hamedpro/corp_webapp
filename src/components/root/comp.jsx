@@ -41,9 +41,15 @@ export function WritingRow({ publish_date, publisher_username, image_filename, _
 		</div>
 	);
 }
-export function Writings({ writings }) {
+export function Writings(props) {
 	var nav = useNavigate();
-	var sorted_writings = writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
+	if (props.writings === null) {
+		return <h1>still loading writings ...</h1>
+	} else {
+		console.log(window.API_ENDPOINT)
+	}
+	var sorted_writings = [...props.writings]
+	sorted_writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
 	/* todo make sure about this sorting function above  */
 	return (
 		<div className="bg-sky-700 flex p-4 justify-center h-full my-1 overflow-x-auto flex-col">
@@ -72,7 +78,7 @@ export function Writings({ writings }) {
 										(new Date().getTime() - sorted_writings[0].publish_date) /
 											3600000
 									)}{" "}
-									ساعت پیش | توسط {writings[0].publisher_username}
+									ساعت پیش | توسط {sorted_writings[0].publisher_username}
 								</p>
 							</div>
 							<div
