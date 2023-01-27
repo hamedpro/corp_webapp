@@ -36,11 +36,9 @@ import AboutUs from "./components/AboutUs/AboutUs.jsx";
 import { ContactUs } from "./components/ContactUs";
 import { NewSupportMessage } from "./components/NewSupportMessage";
 import { SupportMessage } from "./components/SupportMessage";
-import axios from "axios";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
-	window.api_endpoint = API_ENDPOINT;
 	var nav = useNavigate();
 
 	function load_company_info() {
@@ -182,7 +180,7 @@ function App() {
 						<Route path="/" element={<Root />} />
 						<Route path="/writings/new" element={<NewWriting />} />
 						<Route path="/writings/:writing_id" element={<Writing />} />
-						<Route path="/writings" element={<Writings/>} />
+						<Route path="/writings" element={<Writings />} />
 						<Route path="/contact-us" element={<ContactUs />} />
 						<Route path="/new-support-message" element={<NewSupportMessage />} />
 						<Route

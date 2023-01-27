@@ -29,10 +29,8 @@ export default function Product() {
 			form.append(i, files[i]);
 		}
 		fetch(
-			new URL(
-				`?task_name=upload_product_images&product_id=` + product_id,
-				window.api_endpoint
-			).href,
+			new URL(`?task_name=upload_product_images&product_id=` + product_id, vite_api_endpoint)
+				.href,
 			{
 				method: "POST",
 				body: form,

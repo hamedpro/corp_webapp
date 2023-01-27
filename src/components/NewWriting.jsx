@@ -23,7 +23,7 @@ export const NewWriting = () => {
 		}
 		var form = new FormData();
 		form.append("file", el_files[0]);
-		var server_response = await fetch(window.api_endpoint, {
+		var server_response = await fetch(vite_api_endpoint, {
 			method: "POST",
 			body: form,
 			headers: {

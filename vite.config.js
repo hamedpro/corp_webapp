@@ -6,6 +6,6 @@ var {api_endpoint,frontend_port} = JSON.parse(fs.readFileSync('env.json','utf8')
 export default defineConfig({
 	plugins: [react()],
 	define: {
-		API_ENDPOINT: JSON.stringify(api_endpoint),
-	}
+		vite_api_endpoint: JSON.stringify(api_endpoint)
+	},
 });

@@ -58,7 +58,7 @@ export function DownloadCenter({ admin_mode = false }) {
 											href={
 												new URL(
 													`/download_center/${item.file_path}`,
-													window.api_endpoint
+													vite_api_endpoint
 												).href
 											}
 											download

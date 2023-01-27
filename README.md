@@ -5,7 +5,7 @@
 step 1: first make sure you have node js and npm installed and use this script below to install required dependencies
 
 ```
-npm install -g http-server nodemon && npm install
+npm install
 ```
 
 then make sure you have a mysql server and a mongo db server installed on your machine. then create a file in project root and name it "env.json". then save a atringified object which contains all of these variables : property names are case sensitive 

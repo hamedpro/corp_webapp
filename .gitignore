@@ -25,7 +25,6 @@ dist-ssr
 *.sln
 *.sw?
 common-codes/.git
-src/output.css
 pg.js
 pg.cjs
 ./.env
@@ -36,3 +35,4 @@ nohup.out
 pink_task_server.cjs
 .VSCodeCounter
 env.json
+pg

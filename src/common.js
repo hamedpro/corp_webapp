@@ -105,5 +105,5 @@ export function gen_link_to_file(relative_file_path) {
 		connect to machine which api is running on using its local or public ip
 	*/
 	// relative_file_path is relative with ./uploaded directory
-	return new URL(relative_file_path, window.api_endpoint).href;
+	return new URL(relative_file_path, vite_api_endpoint).href;
 }

@@ -9,7 +9,7 @@ export async function customAjax({
 	disable_notifications_and_logs = false,
 }) {
 	var method = "POST";
-	var base_path = window.api_endpoint;
+	var base_path = vite_api_endpoint;
 
 	var response;
 	if (files.length !== 0) {

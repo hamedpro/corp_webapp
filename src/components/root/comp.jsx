@@ -44,11 +44,10 @@ export function WritingRow({ publish_date, publisher_username, image_filename, _
 export function Writings(props) {
 	var nav = useNavigate();
 	if (props.writings === null) {
-		return <h1>still loading writings ...</h1>
+		return <h1>still loading writings ...</h1>;
 	} else {
-		console.log(window.API_ENDPOINT)
 	}
-	var sorted_writings = [...props.writings]
+	var sorted_writings = [...props.writings];
 	sorted_writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
 	/* todo make sure about this sorting function above  */
 	return (
@@ -68,7 +67,7 @@ export function Writings(props) {
 							onClick={() => nav(`/writings/${sorted_writings[0]._id}`)}
 						>
 							<img
-								src={window.api_endpoint + "/" + sorted_writings[0].image_filename}
+								src={vite_api_endpoint + "/" + sorted_writings[0].image_filename}
 								className="first_writing_image duration-200 h-full aspect-auto"
 							/>
 							<div className="absolute h-1/2 top-0 w-full p-2">
@@ -162,7 +161,8 @@ export default function Root() {
 	var [writings, set_writings] = useState(null);
 	useEffect(() => {
 		custom_axios({
-			url: "/api-v2",
+			baseURL: vite_api_endpoint,
+			url: "api-v2",
 			headers: { task: "get_collection" },
 			data: {
 				collection_name: "writings",
