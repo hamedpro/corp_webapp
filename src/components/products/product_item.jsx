@@ -31,7 +31,7 @@ export default function ProductItem({ id, name, price, className = undefined, de
 	return (
 		<div
 			className={
-				"w-2/3 sm:w-1/4 p-1 flex flex-col shrink-0 cursor-pointer border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
+				"w-1/2 sm:w-1/4 p-1 flex flex-col shrink-0 cursor-pointer border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
 				(className ? " " + className : "")
 			}
 			onClick={() => nav("/products/" + id)}

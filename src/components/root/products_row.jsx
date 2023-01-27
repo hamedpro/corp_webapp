@@ -13,7 +13,7 @@ export function ProductsRow({ products, icon, title, className = "" }) {
 						<h1>محصولات ما</h1>
 						<h1 className="underline">مشاهده همه محصولات</h1>
 					</div>
-					<div className="w-full p-2 flex  overflow-x-auto">
+					<div className="w-full p-4 flex  overflow-x-auto">
 						{products.length == 0 ? (
 							<div className="h-full w-fit">
 								<h1>

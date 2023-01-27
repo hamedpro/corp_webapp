@@ -77,10 +77,9 @@ export const Writing = () => {
 	return (
 		<Section title={`نوشته ${writing_id}`} className="m-1">
 			<div className="p-2 flex flex-col sm:flex-row">
-				<img
-					className="w-full sm:w-1/2"
-					src={`${window.api_endpoint}/${writing.image_filename}`}
-				/>
+				<div className="w-full sm:w-1/2">
+					<img src={`${window.api_endpoint}/${writing.image_filename}`} />
+				</div>
 				<div className="w-full sm:w-1/2 p-2 flex flex-col">
 					<h1 className="text-3xl">{writing.title}</h1>
 					<p className="text-xs">
