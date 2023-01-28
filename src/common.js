@@ -107,3 +107,11 @@ export function gen_link_to_file(relative_file_path) {
 	// relative_file_path is relative with ./uploaded directory
 	return new URL(relative_file_path, vite_api_endpoint).href;
 }
+export function is_this_valid_json(thing) {
+	try {
+		JSON.parse(thing);
+	} catch (error) {
+		return false;
+	}
+	return true;
+}

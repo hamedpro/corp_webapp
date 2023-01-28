@@ -6,56 +6,46 @@ import UsersReviews from "./user_reviews";
 import AddToShoppingBagBar from "./AddToShoppingBagBar";
 import Section from "../section/comp.jsx";
 import { ImageSlider } from "../image_slider/comp.jsx";
-import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
+import { gen_link_to_file, is_this_valid_json, multi_lang_helper as ml } from "../../common.js";
 import { Loading } from "../loading/comp.jsx";
+import EditorJS from "@editorjs/editorjs";
+import Header from "@editorjs/header";
+import List from "@editorjs/list";
+import Attach from "@editorjs/attaches";
+import Table from "@editorjs/table";
+import ImageTool from "@editorjs/image";
+import Checklist from "@editorjs/checklist";
 export default function Product() {
 	var product_id = useParams().product_id;
-	var translated_loading = ml({
-		en: "loading ...",
-		fa: "در حال بارگذاری",
-	});
-	const [product, set_product] = useState({
-		id: translated_loading,
-		name: translated_loading,
-		description: translated_loading,
-		price: translated_loading,
-		product_specs: "[]",
-	});
-
-	function upload_files() {
-		var files = document.getElementById("files_input").files;
-		var form = new FormData();
-		for (var i = 0; i < files.length; i++) {
-			form.append(i, files[i]);
+	var [editor_js_instance, set_editor_js_instance] = useState(null);
+	var [image_sources, set_image_sources] = useState(null);
+	var [product, set_product] = useState(null);
+	useEffect(() => {
+		if (product === null || image_sources === null) return;
+		if (is_this_valid_json(product.description)) {
+			var conf = {
+				holder: "editor-js-div",
+				readOnly: true,
+				tools: {
+					header: Header,
+					list: List,
+					attach: Attach,
+					table: Table,
+					image: ImageTool,
+					checkList: Checklist,
+				},
+				data: JSON.parse(product.description),
+			};
+			set_editor_js_instance(new EditorJS(conf));
 		}
-		fetch(
-			new URL(`?task_name=upload_product_images&product_id=` + product_id, vite_api_endpoint)
-				.href,
-			{
-				method: "POST",
-				body: form,
-			}
-		);
-	}
-	function fetch_data() {
-		customAjax({
+	}, [product, image_sources]);
+	async function init() {
+		var tmp = await customAjax({
 			params: {
 				task_name: "get_products",
 			},
-		}).then(
-			(data) => {
-				set_product(data.result.filter((i) => i.id == Number(product_id))[0]);
-			},
-			(error) => {
-				console.log(error);
-			}
-		);
-	}
-	useEffect(() => {
-		fetch_data();
-	}, []);
-	var [image_sources, set_image_sources] = useState(null);
-	useEffect(() => {
+		});
+		set_product(tmp.result.filter((i) => i.id == Number(product_id))[0]);
 		customAjax({
 			params: {
 				task_name: "get_paths_of_images_of_a_product",
@@ -66,8 +56,11 @@ export default function Product() {
 				data.result.map((file_name) => gen_link_to_file("./product_images/" + file_name))
 			);
 		});
+	}
+	useEffect(() => {
+		init();
 	}, []);
-
+	if (product === null || image_sources === null) return;
 	return (
 		<>
 			<div className="flex flex-col md:flex-row border border-blue-400 mt-2 p-2 mx-1">
@@ -95,13 +88,6 @@ export default function Product() {
 							#{product.id} : {product.name}
 						</h1>
 					</div>
-					<h1 className="m-2 my-1">
-						{ml({
-							en: "description :",
-							fa: "",
-						})}{" "}
-						{product.description}
-					</h1>
 
 					<AddToShoppingBagBar price={product.price} product_id={product.id} />
 				</div>
@@ -115,7 +101,8 @@ export default function Product() {
 				className="mx-1 mt-2"
 			>
 				<div className="mx-2">
-					<p className="mt-1">{product.description}</p>
+					<div id="editor-js-div"></div>
+					{!is_this_valid_json(product.description) && <h1>{product.description}</h1>}
 				</div>
 			</Section>
 			<Section

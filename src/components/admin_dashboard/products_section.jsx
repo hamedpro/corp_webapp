@@ -225,10 +225,6 @@ export default function ProductsSection() {
 											fa: "نام",
 										}),
 										ml({
-											en: "description",
-											fa: "توضیحات",
-										}),
-										ml({
 											en: "price",
 											fa: "قیمت",
 										}),
@@ -251,17 +247,6 @@ export default function ProductsSection() {
 												onClick: () => {
 													modify_product({
 														task: "name",
-														payload: {
-															product_id: product.id,
-														},
-													});
-												},
-											},
-											{
-												value: product.description,
-												onClick: () => {
-													modify_product({
-														task: "description",
 														payload: {
 															product_id: product.id,
 														},
