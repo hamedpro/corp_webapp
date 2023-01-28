@@ -1,7 +1,7 @@
 import ListItem from "../list_item/comp";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import "./styles.css";
 import {
 	AddBusinessRounded,
@@ -18,6 +18,8 @@ import {
 import Section from "../section/comp";
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
+import { header_options_array } from "./HeaderOptionsArray";
+
 const HeaderMenu = (props) => {
 	//props : "hide_header_menu : function" , "visibility : boolean"
 	var username = window.localStorage.getItem("username");
@@ -60,64 +62,29 @@ const HeaderMenu = (props) => {
 						fa: "مسیر ها",
 					})}
 				>
-					<ListItem
-						items={[ml({ en: "home", fa: "صفحه اصلی" })]}
-						onClick={() => nav_and_hide_header_menu("/")}
-						beforeItems={<HomeRounded sx={{ color: "white" }} />}
-					/>
-					<ListItem
-						items={[ml({ en: "products", fa: "محصولات" })]}
-						onClick={() => nav_and_hide_header_menu("/products")}
-						beforeItems={<StoreRounded sx={{ color: "white" }} />}
-					/>
-
-					<ListItem
-						items={["بخش کنترل اینترنتی"]}
-						onClick={() => {
-							props.hide_header_menu();
-							window.location.assign("http://mpkchiller.com/dimmer");
-						}}
-						beforeItems={<SettingsRemoteRounded sx={{ color: "white" }} />}
-					/>
-
-					<ListItem
-						items={["درباره ما"]}
-						onClick={() => nav_and_hide_header_menu("/about-us")}
-						beforeItems={<InfoRounded sx={{ color: "white" }} />}
-					/>
-
-					<ListItem
-						items={["تماس با ما"]}
-						onClick={() => nav_and_hide_header_menu("/contact-us")}
-						beforeItems={<SupportAgentRounded sx={{ color: "white" }} />}
-					/>
-
-					<ListItem
-						items={["بخش دانلود ها"]}
-						onClick={() => nav_and_hide_header_menu("/download-center")}
-						beforeItems={<Download sx={{ color: "white" }} />}
-					/>
-					{show_admin_routes && (
-						<>
-							<ListItem
-								items={[ml({ en: "add new product", fa: "اضافه کردن محصول جدید" })]}
-								onClick={() => nav_and_hide_header_menu("/new-product")}
-								beforeItems={<AddBusinessRounded sx={{ color: "white" }} />}
-							/>
-
-							<ListItem
-								items={["انتشار نوشته جدید"]}
-								onClick={() => nav_and_hide_header_menu("/writings/new")}
-								beforeItems={<ArticleRounded sx={{ color: "white" }} />}
-							/>
-
-							<ListItem
-								items={[ml({ en: "admin dashboard", fa: "داشبورد مدیر" })]}
-								onClick={() => nav_and_hide_header_menu("/admin-dashboard")}
-								beforeItems={<AdminPanelSettingsRounded sx={{ color: "white" }} />}
-							/>
-						</>
-					)}
+					{header_options_array
+						.filter((option) => {
+							if (option.just_for_admin) {
+								return show_admin_routes;
+							} else {
+								return true;
+							}
+						})
+						.map((option) => {
+							return (
+								<Fragment key={option.url}>
+									<ListItem
+										items={[option.text]}
+										onClick={
+											option.url.startsWith("http")
+												? () => window.location.assign(option.url)
+												: () => nav_and_hide_header_menu(option.url)
+										}
+										beforeItems={<option.icon sx={{ color: "white" }} />}
+									/>
+								</Fragment>
+							);
+						})}
 				</Section>
 			</div>
 		</>

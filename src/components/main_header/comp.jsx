@@ -1,17 +1,32 @@
 import {
+	HomeOutlined,
 	LocalMallRounded,
 	LoginRounded,
 	MenuRounded,
 	PersonRounded,
 	SearchRounded,
 } from "@mui/icons-material";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HeaderMenu from "./header_menu";
 import { useEffect } from "react";
 import SearchModal from "../search_page/comp";
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
+import { SearchRow } from "./SearchRow";
+import { header_options_array } from "./HeaderOptionsArray";
+function LandscapeHeaderOption({ icon, content, url }) {
+	var nav = useNavigate();
+	return (
+		<div
+			className="flex space-x-2 p-2 text-white hover:bg-blue-700 duration-300 cursor-pointer"
+			onClick={url.startsWith("http") ? () => window.location.assign(url) : () => nav(url)}
+		>
+			{icon}
+			<h1>{content}</h1>
+		</div>
+	);
+}
 export default function MainHeader() {
 	var [company_name, set_company_name] = useState("loading...");
 	var nav = useNavigate();
@@ -48,9 +63,9 @@ export default function MainHeader() {
 			},
 			(e) => {
 				if (e.errors[0].code === 1) {
-					console.log('company info is not set yet')
+					console.log("company info is not set yet");
 				} else {
-					console.log(e)
+					console.log(e);
 				}
 			}
 		);
@@ -68,13 +83,13 @@ export default function MainHeader() {
 				visibility={header_menu_visibility}
 			/>
 			<div
-				className={`bg-sky-700 z-30 top-0 h-28 w-full flex items-start pt-2 flex-row p-2 border-b border-gray-300`}
+				className={`bg-sky-700 z-30 top-0 w-full flex items-start pt-2 flex-row p-2 pb-0 border-b border-gray-300`}
 			>
 				<div className="flex flex-col w-full h-full">
 					<div className="w-full flex flex-row items-center justify-between">
 						<div className="flex">
 							<CustomButton
-								className="h-10 w-10 border border-stone-500 rounded-xl p-1 flex justify-center items-center"
+								className="sm:hidden h-10 w-10 border border-stone-500 rounded-xl p-1 flex justify-center items-center"
 								onClick={() => set_header_menu_visibility(!header_menu_visibility)}
 							>
 								<MenuRounded fontSize="large" style={{ color: "lightgray" }} />
@@ -85,6 +100,9 @@ export default function MainHeader() {
 							>
 								{company_name}
 							</h1>
+						</div>
+						<div className="hidden sm:flex w-full items-center">
+							<SearchRow set_is_search_modal_visible={set_is_search_modal_visible} />
 						</div>
 						<div className="flex space-x-2">
 							{username === null ? (
@@ -113,19 +131,21 @@ export default function MainHeader() {
 						</div>
 					</div>
 
-					<div className="flex mt-2 mb-2 w-full">
-						<div
-							className="border border-gray-400 rounded-lg flex items-center h-10 w-full mt-2 px-2 space-x-1"
-							onClick={() => set_is_search_modal_visible(true)}
-						>
-							<SearchRounded sx={{ color: "lightblue" }} />
-							<h1 className="text-gray-100">
-								{ml({
-									en: "type something here",
-									fa: "جستجو در بین کالا ها ...",
-								})}
-							</h1>
-						</div>
+					<div className="flex mt-2 mb-2 w-full sm:hidden">
+						<SearchRow set_is_search_modal_visible={set_is_search_modal_visible} />
+					</div>
+					<div className="mt-4 w-full sm:flex hidden">
+						{header_options_array.map((option) => {
+							return (
+								<Fragment key={option.url}>
+									<LandscapeHeaderOption
+										icon={<option.icon />}
+										content={option.text}
+										url={option.url}
+									/>
+								</Fragment>
+							);
+						})}
 					</div>
 				</div>
 			</div>
