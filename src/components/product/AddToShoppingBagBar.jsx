@@ -69,20 +69,14 @@ export default function AddToShoppingBagBar(props) {
 	}, []);
 
 	return (
-		<div className="mt-3 realative bottom-0 w-full py-2 bg-blue-400 flex items-center px-2">
-			<div className="w-2/5 flex flex-col text-sm">
-				<p className="block">
-					{ml({
-						en: "price:",
-						fa: "قیمت :‌",
-					})}
-				</p>
-				<b className="block">
-					{props.price + " "}{" "}
-					<span className="inline">{ml({ en: "toman", fa: "تومن" })}</span>
+		<div className="mt-3 realative bottom-0 w-full py-2 bg-blue-400 flex items-center px-2 flex-col">
+			<div className="flex text-sm w-full">
+				<p>قیمت :</p>
+				<b>
+					{props.price + " "} <span className="inline">تومان</span>
 				</b>
 			</div>
-			<div className="w-3/5">
+			<div className="w-full mt-2">
 				{this_product_shopping_count === null ? (
 					<h1>{ml({ en: "loading ...", fa: "در حال بارگذاری..." })}</h1>
 				) : (

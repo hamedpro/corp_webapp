@@ -70,8 +70,8 @@ export default function Product() {
 
 	return (
 		<>
-			<div className="flex flex-col md:flex-row mx-auto border border-blue-400 mt-2 p-2 mx-1">
-				<div className="md:w-1/2">
+			<div className="flex flex-col md:flex-row border border-blue-400 mt-2 p-2 mx-1">
+				<div className="md:w-2/3">
 					<Loading is_loading={image_sources === null} />
 					{image_sources !== null && (
 						<>
@@ -89,7 +89,7 @@ export default function Product() {
 					)}
 				</div>
 
-				<div className="flex flex-col md:w-1/2 p-2 space-between">
+				<div className="flex flex-col md:w-1/3 px-2 space-between justify-between">
 					<div className="mx-2 w-full mt-2">
 						<h1>
 							#{product.id} : {product.name}
@@ -102,7 +102,7 @@ export default function Product() {
 						})}{" "}
 						{product.description}
 					</h1>
-					
+
 					<AddToShoppingBagBar price={product.price} product_id={product.id} />
 				</div>
 			</div>
@@ -137,8 +137,6 @@ export default function Product() {
 					})}
 				</div>
 			</Section>
-
-			<UsersReviews product_id={Number(product_id)} />
 		</>
 	);
 }

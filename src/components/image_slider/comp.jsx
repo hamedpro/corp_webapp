@@ -22,45 +22,41 @@ export function ImageSlider({ image_sources, className = "" }) {
 	return (
 		<div className={"relative bg-sky-200 h-44 w-full py-1" + " " + className}>
 			{image_sources.length !== 0 ? (
-				<div className="">
-					<div className="absolute w-24 left-1 bottom-1 flex flex-col bg-blue-200 opacity-50 pt-1 rounded">
-						<div className="flex justify-between px-1">
-							<button onClick={image_back} className="image_change_button">
-								<ArrowForwardIosRoundedIcon fontSize="small" />
-							</button>
-							<button onClick={image_next} className="image_change_button">
-								<ArrowBackIosNewRoundedIcon fontSize="small" />
-							</button>
-						</div>
-						<div
-							className="flex px-2 image_change_dots_container"
-							style={{ direction: "ltr" }}
-						>
-							{image_sources.map((image_src, index) => {
-								return (
-									<span key={index}>
-										{" "}
-										{/* read about react keys in depth becuse may there be a problem when we use index as key */}
-										{index == current_image_index ? (
-											<CircleRounded sx={{ fontSize: 10 }} />
-										) : (
-											<CircleOutlined sx={{ fontSize: 10 }} />
-										)}
-									</span>
-								);
-							})}
+				<>
+					<div className="">
+						<div className="absolute w-16 left-1 bottom-1 flex flex-col bg-blue-200 opacity-50 pt-1 rounded">
+							<div className="flex px-1 justify-between">
+								<button onClick={image_back} className="image_change_button">
+									<ArrowForwardIosRoundedIcon fontSize="small" />
+								</button>
+								<button onClick={image_next} className="image_change_button">
+									<ArrowBackIosNewRoundedIcon fontSize="small" />
+								</button>
+							</div>
+							<div className="flex px-2 justify-between" style={{ direction: "ltr" }}>
+								{image_sources.map((image_src, index) => {
+									return (
+										<span key={index}>
+											{" "}
+											{/* read about react keys in depth becuse may there be a problem when we use index as key */}
+											{index == current_image_index ? (
+												<CircleRounded sx={{ fontSize: 10 }} />
+											) : (
+												<CircleOutlined sx={{ fontSize: 10 }} />
+											)}
+										</span>
+									);
+								})}
+							</div>
 						</div>
 					</div>
-				</div>
-			) : null}
-
-			{image_sources.length !== 0 ? (
-				<img
-					style={{ objectFit: "contain" }}
-					className="h-full mx-auto"
-					src={image_sources[current_image_index]}
-					alt="product image"
-				/>
+					<img
+						style={{ objectFit: "contain" }}
+						className="h-full mx-auto"
+						src={image_sources[current_image_index]}
+						alt="product image"
+					/>
+				</>
 			) : null}
 		</div>
 	);
