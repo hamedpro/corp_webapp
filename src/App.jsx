@@ -149,7 +149,7 @@ function App() {
 							element={<ShoppingCardPage />}
 						/>
 						<Route
-							path="/admin-dashboard"
+							path="/admin-dashboard/*"
 							element={
 								<CheckUserPrivilege level="admin">
 									<AdminDashboard />

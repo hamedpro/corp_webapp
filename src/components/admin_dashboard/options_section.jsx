@@ -3,6 +3,7 @@ import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common.js";
 import { CustomTable } from "../custom_table/comp.jsx";
 import Section from "../section/comp.jsx";
+import { StyledDiv } from "../styled_elements.jsx";
 import { CompanyInfoSection } from "./options_section_sub_components/company_info.jsx";
 import { ManageIconsSection } from "./options_section_sub_components/manage_icons_section.jsx";
 export default function OptionsSection() {
@@ -17,7 +18,7 @@ export default function OptionsSection() {
 		nav("/users/" + window.localStorage.getItem("username"));
 	}
 	function undo_all() {
-		if (!window.confirm(ml({en : "are you sure?",fa : ""}))) {
+		if (!window.confirm(ml({ en: "are you sure?", fa: "" }))) {
 			return;
 		}
 		customAjax({
@@ -48,6 +49,14 @@ export default function OptionsSection() {
 	return (
 		<div className="flex flex-col">
 			<input type="file" id="common_file_input" className="hidden" />
+			<div className="mb-2">
+				<Section title="مورد جدید" innerClassName="px-2">
+					<StyledDiv onClick={() => nav("/new-product")}>اضافه کردن محصول جدید</StyledDiv>
+					<StyledDiv className="mt-2" onClick={() => nav("/writings/new")}>
+						اضافه کردن نوشته جدید
+					</StyledDiv>
+				</Section>
+			</div>
 			<Section
 				title={ml({
 					en: "options:",
@@ -79,7 +88,7 @@ export default function OptionsSection() {
 			</div>
 			<div className="mb-2">
 				<CompanyInfoSection />
-				</div>
+			</div>
 		</div>
 	);
 }

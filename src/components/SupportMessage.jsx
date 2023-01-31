@@ -16,6 +16,7 @@ export const SupportMessage = ({}) => {
 				_id: support_message_id,
 			},
 		});
+		tmp = tmp.data;
 		set_support_message(tmp[0]);
 	}
 	useEffect(() => {

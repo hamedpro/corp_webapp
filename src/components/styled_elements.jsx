@@ -3,7 +3,7 @@ export function StyledDiv({
     children,
     className=""
 }) {
-    var default_className="border border-stone-400 rounded px-1"
+    var default_className = "border border-stone-400 rounded px-1 w-fit";
     return (
         <div onClick={onClick} className={[default_className,className].join(" ")}>{ children}</div>
     )

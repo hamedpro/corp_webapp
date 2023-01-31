@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { get_collection } from "../../../api/client";
 import { SupportMessageRow } from "../ContactUs";
 import Section from "../section/comp";
-import { StyledDiv } from "../styled_elements";
 export const SupportMessagesSection = () => {
 	var [support_messages, set_support_messages] = useState(null);
 	async function get_data() {
 		set_support_messages(
-			await get_collection({
-				collection_name: "support_messages",
-				filters: {},
-			})
+			(
+				await get_collection({
+					collection_name: "support_messages",
+					filters: {},
+				})
+			).data
 		);
 	}
 	useEffect(() => {
@@ -19,7 +20,6 @@ export const SupportMessagesSection = () => {
 	}, []);
 	var nav = useNavigate();
 	if (support_messages === null) return <h1>loading ... </h1>;
-
 	return (
 		<Section title="درخواست های پشتیبانی" innerClassName="px-2" className="w-full mt-2">
 			{support_messages.map((sm, i) => {

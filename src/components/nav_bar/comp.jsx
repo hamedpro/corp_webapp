@@ -102,6 +102,31 @@ export default function NavBar() {
 				original: "support_messages",
 				fa: "درخواست های پشتیبانی",
 			},
+			{
+				original: "manage_products",
+				fa: "مدیریت کالا ها",
+			},
+			{
+				original: "manage_users",
+				fa: "مدیریت کاربران",
+			},
+			{
+				original: "manage_options",
+				fa: "مدیریت گزینه ها",
+			},
+
+			{
+				original: "manage_orders",
+				fa: "مدیریت سفارش ها",
+			},
+			{
+				original: "manage_download_center",
+				fa: "مدیریت بخش دانلود ها",
+			},
+			{
+				original: "support_messages_section",
+				fa: "بخش درخواست های پشتیبانی",
+			},
 		];
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {

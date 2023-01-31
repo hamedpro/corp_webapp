@@ -2,25 +2,38 @@ import OptionsSection from "./options_section";
 import UsersSection from "./users_section";
 import ProductsSection from "./products_section";
 import "./styles.css";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
 	Download,
 	InfoRounded,
 	ListAltRounded,
 	Person,
-	ReviewsRounded,
 	ShoppingBag,
-	SupportAgent,
 	SupportAgentRounded,
 	Tune,
 } from "@mui/icons-material";
 import { OrdersSection } from "./orders_section";
-import { ProductReviews } from "./product_reviews";
 import { Alert } from "../alert/comp";
 import { ManageDownloadCenter } from "./ManageDownloadCenter";
 import { SupportMessagesSection } from "./SupportMessagesSection";
-export default function AdminDashboard() {
-	var [tab, set_tab] = useState("manage_products");
+import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
+function SideBarOption({ icon, text, url }) {
+	var this_option_is_active = useMatch(url);
+	var nav = useNavigate();
+	return (
+		<div
+			className={
+				"p-2 items-center flex space-x-3 text-gray-200 cursor-pointer hover:bg-blue-400" +
+				(this_option_is_active ? " bg-blue-600" : "")
+			}
+			onClick={() => nav(url)}
+		>
+			<div>{icon}</div>
+			<div className="text-white">{text}</div>
+		</div>
+	);
+}
+function SideBar() {
 	var tabs = [
 		{
 			id: "manage_products",
@@ -44,14 +57,6 @@ export default function AdminDashboard() {
 			icon: <ListAltRounded />,
 		},
 		{
-			id: "manage_product_reviews",
-			title: ml({
-				en: "manage product reviews",
-				fa: "مدیریت بررسی های کاربران برای کالا ها",
-			}),
-			icon: <ReviewsRounded />,
-		},
-		{
 			id: "manage_download_center",
 			title: "مدیریت بخش فایل های قابل دانلود",
 			icon: <Download />,
@@ -62,6 +67,17 @@ export default function AdminDashboard() {
 			icon: <SupportAgentRounded />,
 		},
 	];
+	return tabs.map((tab) => (
+		<Fragment key={tab.id}>
+			<SideBarOption
+				icon={tab.icon}
+				url={`/admin-dashboard/${tab.id}`}
+				text={tab.title}
+			></SideBarOption>
+		</Fragment>
+	));
+}
+export default function AdminDashboard() {
 	return (
 		<>
 			<div className="md:hidden">
@@ -77,51 +93,20 @@ export default function AdminDashboard() {
 				className="hidden h-full md:flex mx-1 border border-stone-400 rounded"
 			>
 				<div className="w-3/12 bg-blue-500">
-					{tabs.map((this_tab, index) => {
-						return (
-							<div
-								key={index}
-								className={
-									"p-2 items-center flex space-x-3 text-gray-200 cursor-pointer hover:bg-blue-400" +
-									(this_tab.id === tab ? " bg-blue-600" : "")
-								}
-								onClick={() => set_tab(this_tab.id)}
-							>
-								<div>{this_tab.icon}</div>
-								<div className="text-white">{this_tab.title}</div>
-							</div>
-						);
-					})}
+					<SideBar />
 				</div>
 				<div className="p-1 flex w-9/12 overflow-y-auto px-3">
-					{tab === "manage_products" && (
-						<>
-							<ProductsSection />
-						</>
-					)}
-					{tab === "manage_users" && (
-						<>
-							<UsersSection />
-						</>
-					)}
-					{tab === "manage_options" && (
-						<>
-							<OptionsSection />
-						</>
-					)}
-					{tab === "manage_orders" && (
-						<>
-							<OrdersSection />
-						</>
-					)}
-
-					{tab === "manage_product_reviews" && (
-						<>
-							<ProductReviews />
-						</>
-					)}
-					{tab === "manage_download_center" && <ManageDownloadCenter />}
-					{tab === "support_messages_section" && <SupportMessagesSection />}
+					<Routes>
+						<Route path="manage_products" element={<ProductsSection />} />
+						<Route path="manage_users" element={<UsersSection />} />
+						<Route path="manage_options" element={<OptionsSection />} />
+						<Route path="manage_orders" element={<OrdersSection />} />
+						<Route path="manage_download_center" element={<ManageDownloadCenter />} />
+						<Route
+							path="support_messages_section"
+							element={<SupportMessagesSection />}
+						/>
+					</Routes>
 				</div>
 			</div>
 		</>

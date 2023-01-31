@@ -37,6 +37,7 @@ export const ContactUs = () => {
 				username: localStorage.getItem("username"),
 			},
 		});
+		tmp = tmp.data;
 		set_user_support_messages(tmp);
 	}
 	useEffect(() => {
