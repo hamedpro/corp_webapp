@@ -87,7 +87,7 @@ export const NewWriting = () => {
 		set_editor_js_instance(tmp);
 	}, []);
 	return (
-		<Section title="ثبت نوشته جدید" className="m-1" innerClassName="p-2">
+		<Section title="ثبت نوشته جدید" className="m-1 w-full" innerClassName="p-2">
 			<h1>انتخاب تصویر برای نوشته جدید:</h1>
 			<input id="image_input" type="file" />
 

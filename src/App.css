@@ -13,7 +13,7 @@ table.custom_border td {
 	height: 100%;
 }
 #x-container{
-	min-height: calc(100% - 7rem);
+	min-height: calc(100% - 9rem);
 }
 body,
 html {

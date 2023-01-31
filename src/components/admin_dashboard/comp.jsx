@@ -4,6 +4,8 @@ import ProductsSection from "./products_section";
 import "./styles.css";
 import { Fragment, useState } from "react";
 import {
+	AddBusinessOutlined,
+	ArticleRounded,
 	Download,
 	InfoRounded,
 	ListAltRounded,
@@ -17,6 +19,8 @@ import { Alert } from "../alert/comp";
 import { ManageDownloadCenter } from "./ManageDownloadCenter";
 import { SupportMessagesSection } from "./SupportMessagesSection";
 import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
+import NewProduct from "../new-product/comp.jsx";
+import { NewWriting } from "../NewWriting";
 function SideBarOption({ icon, text, url }) {
 	var this_option_is_active = useMatch(url);
 	var nav = useNavigate();
@@ -35,6 +39,16 @@ function SideBarOption({ icon, text, url }) {
 }
 function SideBar() {
 	var tabs = [
+		{
+			id: "new-product",
+			title: "اضافه کردن کالای جدید",
+			icon: <AddBusinessOutlined />,
+		},
+		{
+			id: "new-writing",
+			title: "اضافه کردن نوشته جدید",
+			icon: <ArticleRounded />,
+		},
 		{
 			id: "manage_products",
 			title: ml({ en: "manage products", fa: "مدیریت محصولات" }),
@@ -90,13 +104,16 @@ export default function AdminDashboard() {
 			</div>
 			<div
 				id="admin-dashboard"
-				className="hidden h-full md:flex mx-1 border border-stone-400 rounded"
+				className="hidden h-full md:flex mx-1 border border-stone-400 rounded overflow-y-auto"
+				style={{ height: "77vh" }}
 			>
 				<div className="w-3/12 bg-blue-500">
 					<SideBar />
 				</div>
 				<div className="p-1 flex w-9/12 overflow-y-auto px-3">
 					<Routes>
+						<Route path="new-product" element={<NewProduct />}></Route>
+						<Route path="new-writing" element={<NewWriting />}></Route>
 						<Route path="manage_products" element={<ProductsSection />} />
 						<Route path="manage_users" element={<UsersSection />} />
 						<Route path="manage_options" element={<OptionsSection />} />

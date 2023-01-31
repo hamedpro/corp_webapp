@@ -127,6 +127,10 @@ export default function NavBar() {
 				original: "support_messages_section",
 				fa: "بخش درخواست های پشتیبانی",
 			},
+			{
+				original: "new-writing",
+				fa: "نوشته جدید",
+			},
 		];
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {

@@ -109,14 +109,13 @@ export default function NewProduct() {
 		set_specs(tmp);
 		set_count((count) => count + 1);
 	}
-	if (editor_js_instance === null) return;
 	return (
 		<Section
 			title={ml({
 				en: "new product page",
 				fa: "بخش تعریف کالای جدید",
 			})}
-			className="mx-1 mt-2"
+			className="mx-1 mt-2 w-full"
 		>
 			<div id="new_product" className="px-2">
 				<p className="text-lg">

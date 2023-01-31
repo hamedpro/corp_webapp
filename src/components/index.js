@@ -17,4 +17,3 @@ export { default as Modal } from "./Modal/Modal";
 export { default as Section } from "./section/comp.jsx";
 export { default as ShoppingCardPage } from "./shopping_card_page/comp";
 export { PG } from "./pg/pg";
-export { NewProductReview } from "./new_product_review/comp";

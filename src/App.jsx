@@ -14,11 +14,9 @@ import {
 	Register,
 	Root,
 	MainFooter,
-	NewProduct,
 	User,
 	NavBar,
 	FirstSetup,
-	NewProductReview,
 } from "./components";
 import ReviewsPage from "./components/product/reviews_page";
 import Orders from "./components/orders/comp";
@@ -29,7 +27,6 @@ import { CheckUserPrivilege } from "./components/CheckUserPrivilege/comp";
 import { PageNotFound } from "./components/PageNotFound/comp";
 import { multi_lang_helper as ml } from "./common";
 import { DownloadCenter } from "./components/DownloadCenter";
-import { NewWriting } from "./components/NewWriting";
 import { Writing } from "./components/Writing";
 import { Writings } from "./components/Writings";
 import AboutUs from "./components/AboutUs/AboutUs.jsx";
@@ -133,14 +130,6 @@ function App() {
 								</div>
 							}
 						/>
-						<Route
-							path="/products/:product_id/new-product-review"
-							element={
-								<CheckUserPrivilege level="loged_in">
-									<NewProductReview />
-								</CheckUserPrivilege>
-							}
-						/>
 						<Route exact path="/users/:username/orders" element={<Orders />} />
 						<Route exact path="/users/:username/orders/:order_id" element={<Order />} />
 						<Route
@@ -168,17 +157,8 @@ function App() {
 						<Route exact path="/users/:username" element={<User />} />
 
 						<Route exact path="/products" element={<Products />} />
-						<Route
-							path="/new-product"
-							element={
-								<CheckUserPrivilege level={"admin"}>
-									<NewProduct />
-								</CheckUserPrivilege>
-							}
-						/>
 						<Route path="/register" element={<Register />} />
 						<Route path="/" element={<Root />} />
-						<Route path="/writings/new" element={<NewWriting />} />
 						<Route path="/writings/:writing_id" element={<Writing />} />
 						<Route path="/writings" element={<Writings />} />
 						<Route path="/contact-us" element={<ContactUs />} />
