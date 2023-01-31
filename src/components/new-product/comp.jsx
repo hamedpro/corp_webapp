@@ -140,15 +140,6 @@ export default function NewProduct() {
 						en: "product specifictions:",
 						fa: "مشخصات محصول :",
 					})}{" "}
-					<button
-						className="text-sm border border-blue-400 rounded inline"
-						onClick={add_spec}
-					>
-						{ml({
-							en: "add new",
-							fa: "مورد جدید",
-						})}
-					</button>
 				</p>
 				<table>
 					<tbody>
@@ -196,6 +187,9 @@ export default function NewProduct() {
 						})}
 					</tbody>
 				</table>
+				<button className="mt-2 px-1 border border-blue-400 rounded " onClick={add_spec}>
+					مورد جدید
+				</button>
 				<p className="mt-2 text-lg">
 					{ml({
 						en: "price:",
