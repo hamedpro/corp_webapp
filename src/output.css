@@ -611,6 +611,10 @@ video {
   z-index: 50;
 }
 
+.z-20 {
+  z-index: 20;
+}
+
 .z-30 {
   z-index: 30;
 }
@@ -798,6 +802,10 @@ video {
   height: 11rem;
 }
 
+.h-32 {
+  height: 8rem;
+}
+
 .h-20 {
   height: 5rem;
 }
@@ -864,6 +872,10 @@ video {
 
 .w-4\/5 {
   width: 80%;
+}
+
+.w-36 {
+  width: 9rem;
 }
 
 .w-10 {

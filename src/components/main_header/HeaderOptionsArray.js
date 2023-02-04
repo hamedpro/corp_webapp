@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 
 export var header_options_array = [
+	{ text: "صفحه اصلی", url: "/", icon: HomeRounded },
 	{ text: "محصولات", url: "/products", icon: StoreRounded },
 	{
 		text: "کنترل اینترنتی",

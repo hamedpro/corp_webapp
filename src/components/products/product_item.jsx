@@ -4,7 +4,14 @@ import { customAjax } from "../../../src/custom_ajax.js";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
 import { gen_link_to_file, multi_lang_helper as ml, trim_text_if_its_long } from "../../common.js";
 import { Category, InfoRounded, MoneyRounded, SellRounded } from "@mui/icons-material";
-export default function ProductItem({ id, name, price, className = undefined, description = "" }) {
+export default function ProductItem({
+	beforeOnClick = () => {},
+	id,
+	name,
+	price,
+	className = undefined,
+	description = "",
+}) {
 	//id stands for product id
 	var nav = useNavigate();
 	var [the_image_src, set_the_image_src] = useState(null);
@@ -34,7 +41,10 @@ export default function ProductItem({ id, name, price, className = undefined, de
 				"w-1/2 sm:w-1/4 p-1 flex flex-col shrink-0 cursor-pointer border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
 				(className ? " " + className : "")
 			}
-			onClick={() => nav("/products/" + id)}
+			onClick={() => {
+				beforeOnClick();
+				nav("/products/" + id);
+			}}
 		>
 			<div className="relative w-full h-1/2 mx-auto flex items-center justify-center">
 				{the_image_src === null ? (

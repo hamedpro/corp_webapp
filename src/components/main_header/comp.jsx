@@ -1,25 +1,66 @@
 import {
-	HomeOutlined,
-	LocalMallRounded,
+	KeyboardArrowDownRounded,
+	KeyboardArrowUpRounded,
 	LoginRounded,
 	MenuRounded,
-	PersonRounded,
-	SearchRounded,
+	Person2Rounded,
 } from "@mui/icons-material";
 import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HeaderMenu from "./header_menu";
 import { useEffect } from "react";
 import SearchModal from "../search_page/comp";
-import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";
 import { SearchRow } from "./SearchRow";
 import { header_options_array } from "./HeaderOptionsArray";
+function MainHeaderLeftDropDown() {
+	var nav = useNavigate();
+	var [is_open, set_is_open] = useState(false);
+	return (
+		<div className="mx-2 w-36 h-10 relative">
+			<div
+				className={`text-white overflow-hidden absolute duration-300 w-36 z-20 bg-blue-500 top-0 left-0 ${
+					is_open ? "h-32" : "h-8"
+				}`}
+				onClick={() => set_is_open((prev) => !prev)}
+			>
+				<div className="hover:bg-blue-600 duration-300 h-8 w-full flex items-center">
+					<Person2Rounded sx={{ color: "white" }} />
+					<h1>{localStorage.getItem("username")}</h1>
+					{is_open ? <KeyboardArrowUpRounded /> : <KeyboardArrowDownRounded />}
+				</div>
+				<div
+					className="hover:bg-blue-600 duration-300 h-8 w-full px-2"
+					onClick={() =>
+						nav(`/users/${window.localStorage.getItem("username")}/shopping-card`)
+					}
+				>
+					سبد خرید من
+				</div>
+				<div
+					className="hover:bg-blue-600 duration-300 h-8 w-full px-2"
+					onClick={() => nav(`/users/${window.localStorage.getItem("username")}`)}
+				>
+					حساب کاربری من
+				</div>
+				<div
+					className="hover:bg-blue-600 duration-300 h-8 w-full px-2"
+					onClick={() => {
+						window.localStorage.removeItem("username");
+						window.location.reload();
+					}}
+				>
+					خروج از حساب کاربری
+				</div>
+			</div>
+		</div>
+	);
+}
 function LandscapeHeaderOption({ icon, content, url }) {
 	var nav = useNavigate();
 	return (
 		<div
-			className="flex space-x-2 p-2 text-white hover:bg-blue-700 duration-300 cursor-pointer"
+			className="shrink-0 flex-wrap flex space-x-2 p-2 text-white hover:bg-blue-700 duration-300 cursor-pointer"
 			onClick={url.startsWith("http") ? () => window.location.assign(url) : () => nav(url)}
 		>
 			{icon}
@@ -104,29 +145,13 @@ export default function MainHeader() {
 						<div className="hidden sm:flex w-full items-center">
 							<SearchRow set_is_search_modal_visible={set_is_search_modal_visible} />
 						</div>
-						<div className="flex space-x-2">
+						<div className="flex space-x-2 items-center">
 							{username === null ? (
-								<CustomButton onClick={() => nav("/login")}>
+								<CustomButton onClick={() => nav("/login")} className="mr-2">
 									<LoginRounded sx={{ color: "white" }} fontSize="large" />
 								</CustomButton>
 							) : (
-								<>
-									<CustomButton
-										onClick={() => nav("/users/" + username + "/shopping-card")}
-										className="mx-2"
-									>
-										<LocalMallRounded
-											sx={{ color: "white" }}
-											fontSize="large"
-										/>
-									</CustomButton>
-									<CustomButton
-										onClick={() => nav("/users/" + username)}
-										className="mx-2"
-									>
-										<PersonRounded sx={{ color: "white" }} fontSize="large" />
-									</CustomButton>
-								</>
+								<MainHeaderLeftDropDown />
 							)}
 						</div>
 					</div>
@@ -134,7 +159,7 @@ export default function MainHeader() {
 					<div className="flex mt-2 mb-2 w-full sm:hidden">
 						<SearchRow set_is_search_modal_visible={set_is_search_modal_visible} />
 					</div>
-					<div className="mt-4 w-full sm:flex hidden">
+					<div className="mt-4 w-full sm:flex hidden overflow-x-auto">
 						{header_options_array.map((option) => {
 							return (
 								<Fragment key={option.url}>

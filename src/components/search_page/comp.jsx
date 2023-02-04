@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Section from "../section/comp";
 import { customAjax } from "../../custom_ajax";
 import { useNavigate } from "react-router-dom";
-import ProductListItem from "../product_list_item/comp";
 import { multi_lang_helper as ml } from "../../common";
 import ProductItem from "../products/product_item";
 import { ArrowTitle } from "../ArrowTitle";
@@ -91,6 +90,7 @@ export default function SearchModal(props) {
 										key={product.id}
 										className="bg-white"
 										description={product.description}
+										beforeOnClick={props.hide_func}
 									/>
 								);
 							})}

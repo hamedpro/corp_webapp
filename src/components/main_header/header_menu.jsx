@@ -1,20 +1,7 @@
 import ListItem from "../list_item/comp";
-import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import { useNavigate } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import "./styles.css";
-import {
-	AddBusinessRounded,
-	AdminPanelSettingsRounded,
-	ArticleRounded,
-	Download,
-	HomeRounded,
-	InfoRounded,
-	PersonAddRounded,
-	SettingsRemoteRounded,
-	StoreRounded,
-	SupportAgentRounded,
-} from "@mui/icons-material";
 import Section from "../section/comp";
 import { multi_lang_helper as ml } from "../../common";
 import { customAjax } from "../../custom_ajax";

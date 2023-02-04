@@ -2,7 +2,9 @@ import React from "react";
 import { Loading } from "../loading/comp";
 import ProductItem from "../products/product_item";
 import { multi_lang_helper as ml } from "../../common";
+import { useNavigate } from "react-router-dom";
 export function ProductsRow({ products, icon, title, className = "" }) {
+	var nav = useNavigate();
 	return (
 		<>
 			{products === null ? (
@@ -11,7 +13,9 @@ export function ProductsRow({ products, icon, title, className = "" }) {
 				<div className={["flex bg-sky-700 text-white flex-col p-2", className].join(" ")}>
 					<div className="flex justify-between text-lg">
 						<h1>محصولات ما</h1>
-						<h1 className="underline">مشاهده همه محصولات</h1>
+						<h1 className="underline cursor-pointer" onClick={() => nav("/products")}>
+							مشاهده همه محصولات
+						</h1>
 					</div>
 					<div className="w-full p-4 flex  overflow-x-auto">
 						{products.length == 0 ? (
