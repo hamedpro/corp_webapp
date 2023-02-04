@@ -43,8 +43,9 @@ export function CheckUserPrivilege({ children, level, specific_username = null }
 			{status === "error" && (
 				<Alert icon={<ReportGmailerrorredRounded />} className="mt-2">
 					{ml({
-						en : `there was an error in the process of checking user privilege, checkout
-						development console for more`,fa: "خطایی در فرآیند بررسی سطح دسترسی کاربر پیش آمد. برای اطلاعات بیشتر کنسول را بررسی کنید"
+						en: `there was an error in the process of checking user privilege, checkout
+						development console for more`,
+						fa: "خطایی در فرآیند بررسی سطح دسترسی کاربر پیش آمد. برای اطلاعات بیشتر کنسول را بررسی کنید",
 					})}
 				</Alert>
 			)}
@@ -54,7 +55,7 @@ export function CheckUserPrivilege({ children, level, specific_username = null }
 				<Alert icon={<ReportGmailerrorredRounded />} className="mt-2">
 					{ml({
 						en: "you are not allowed to access this part, try using another account",
-						fa : ""
+						fa: "شما مجوز دسترسی به این بخش را ندارید",
 					})}
 					{/* todo tell the user if its enough to login with specific username  */}
 				</Alert>

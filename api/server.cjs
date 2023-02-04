@@ -81,8 +81,6 @@ async function init() {
 			username varchar(50) ,
 			hashed_password text , 
 			is_admin varchar(20) default "false",
-			is_subscribed_to_email varchar(20) default "false",
-			is_subscribed_to_sms varchar(20) default "false",
 			email varchar(100),
 			phone_number varchar(15),
 			time varchar(20)
@@ -93,17 +91,6 @@ async function init() {
 			description text(1000),
 			product_specs text(1000),
 			price int(15)
-		);
-		create table if not exists reviews(
-			id int primary key auto_increment,
-			product_id int(5),
-			username varchar(50),
-			rating_from_five int(3),
-			pros text(400),
-			cons text(400),
-			text text(400),
-			time varchar(50),
-			verification_status varchar(20) default "false"
 		);
 		create table if not exists support_tickets(
 			id int primary key auto_increment,
@@ -145,23 +132,6 @@ async function init() {
 			username varchar(20),
 			product_id int,
 			count int(8),
-			time varchar(20)
-		);
-		create table if not exists blog_comments(
-			id int primary key auto_increment,
-			username varchar(20),
-			blog_id int(10),
-			title varchar(100),
-			text text,
-			time varchar(20),
-			verification_status varchar(20),
-			verifier_username varchar(20)
-		);
-		create table if not exists terms (
-			id int primary key auto_increment,
-			publisher_username varchar(30),
-			title varchar(30),
-			text text,
 			time varchar(20)
 		);
 		create table if not exists download_center(

@@ -149,11 +149,6 @@ function App() {
 						<Route path="/login" element={<Login />} />
 
 						<Route exact path="/products/:product_id" element={<Product />} />
-						<Route
-							exact
-							path="/products/:product_id/reviews"
-							element={<ReviewsPage />}
-						/>
 						<Route exact path="/users/:username" element={<User />} />
 
 						<Route exact path="/products" element={<Products />} />
