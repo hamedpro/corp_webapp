@@ -4,7 +4,6 @@ var cors = require("cors");
 var response_manager = require("./express_response_manager.cjs");
 var mysql = require("mysql");
 var formidable = require("formidable");
-var nodemailer = require("nodemailer");
 var fs = require("fs");
 var app = express();
 app.use(cors());

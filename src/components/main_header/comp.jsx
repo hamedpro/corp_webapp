@@ -47,7 +47,7 @@ function MainHeaderLeftDropDown() {
 					className="hover:bg-blue-600 duration-300 h-8 w-full px-2"
 					onClick={() => {
 						window.localStorage.removeItem("username");
-						window.location.reload();
+						window.location.replace("/");
 					}}
 				>
 					خروج از حساب کاربری
