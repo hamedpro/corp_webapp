@@ -1,56 +1,38 @@
 import { useEffect, useState } from "react";
-import { customAjax } from "../../../custom_ajax";
 import Section from "../../section/comp";
-import { CustomTable } from "../../custom_table/comp";
 import { CustomRow } from "../custom_row";
+import { get_collection, update_document } from "../../../../api/client";
 export function CompanyInfoSection() {
 	var [company_info, set_company_info] = useState(null);
-	function fetch_data() {
-		customAjax({
-			params: {
-				task_name: "get_company_info",
+	async function fetch_data() {
+		var tmp = await get_collection({
+			collection_name: "paired_data",
+			filters: {
+				key: "company_info",
 			},
-		}).then(
-			(data) => {
-				var parsed_company_info = JSON.parse(data.result);
-				//console.log(parsed_company_info);
-				set_company_info(parsed_company_info);
-			},
-			(e) => {
-				if (e.errors[0].code === 1) {
-					console.log('company info is not set yet')
-				} else {
-					console.log(e)
-				}
-			}
-		);
+		});
+		set_company_info(tmp.data[0] || {});
 	}
-	useEffect(fetch_data, []);
-	function update_company_info(field_to_change) {
+	useEffect(() => {
+		fetch_data();
+	}, []);
+	async function update_company_info(field_to_change) {
 		var new_value = prompt(
 			ml({
 				en: `enter new value for :`,
 				fa: `مقدار جدید متغیر مقابل را وارد کنید :`,
 			}) + field_to_change
 		);
-		var new_company_info = { ...company_info };
-		new_company_info[field_to_change] = new_value;
-		customAjax({
-			params: {
-				task_name: "set_company_info",
-				company_info: JSON.stringify(new_company_info),
+		var update_set = {};
+		update_set[field_to_change] = new_value;
+		await update_document({
+			collection: "paired_data",
+			update_filter: {
+				key: "company_info",
 			},
-		})
-			.then(
-				(data) => {
-					console.log(data);
-					alert(ml({ en: "done", fa: "انجام شد" }));
-				},
-				(e) => {
-					console.log(e);
-				}
-			)
-			.finally(fetch_data);
+			update_set,
+		});
+		alert("با موفقیت انجام شد");
 	}
 	var fields = [
 		{ value: "name", en: "name", fa: "نام" },
@@ -68,18 +50,20 @@ export function CompanyInfoSection() {
 		<Section title={ml({ en: "company information", fa: "اطلاعات شرکت" })}>
 			<div className="px-2">
 				{company_info && (
-					<CustomRow fields={fields.map(field => {
-						return {
-							value: company_info[field.value] ,
-							key: ml({
-								en: field.en,
-								fa : field.fa
-							}),
-							change_function : () => {
-								update_company_info(field.value);
-							}
-						}
-					})} />
+					<CustomRow
+						fields={fields.map((field) => {
+							return {
+								value: company_info[field.value],
+								key: ml({
+									en: field.en,
+									fa: field.fa,
+								}),
+								change_function: () => {
+									update_company_info(field.value);
+								},
+							};
+						})}
+					/>
 				)}
 			</div>
 		</Section>

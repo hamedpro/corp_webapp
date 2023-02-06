@@ -5,7 +5,7 @@ export function FollowUsRow({ telegram = null, instagram = null, twitter = null,
 			<h1 className="text-xl ml-6">با ما همراه باشید :</h1>
 			<Instagram
 				onClick={() => {
-					if (instagram === null) {
+					if (instagram) {
 						alert(
 							ml({
 								en: "instagram id is not set",
@@ -20,7 +20,7 @@ export function FollowUsRow({ telegram = null, instagram = null, twitter = null,
 			/>
 			<Twitter
 				onClick={() => {
-					if (twitter === null) {
+					if (twitter) {
 						alert(
 							ml({
 								en: "twitter id is not set",
@@ -35,7 +35,7 @@ export function FollowUsRow({ telegram = null, instagram = null, twitter = null,
 			/>
 			<Telegram
 				onClick={() => {
-					if (telegram === null) {
+					if (telegram) {
 						alert(
 							ml({
 								en: "telegram id is not set",

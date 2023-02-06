@@ -10,9 +10,9 @@ import { useNavigate } from "react-router-dom";
 import HeaderMenu from "./header_menu";
 import { useEffect } from "react";
 import SearchModal from "../search_page/comp";
-import { customAjax } from "../../custom_ajax";
 import { SearchRow } from "./SearchRow";
 import { header_options_array } from "./HeaderOptionsArray";
+import { get_collection } from "../../../api/client";
 function MainHeaderLeftDropDown() {
 	var nav = useNavigate();
 	var [is_open, set_is_open] = useState(false);
@@ -88,28 +88,25 @@ export default function MainHeader() {
 			</button>
 		);
 	}
+	async function get_data() {
+		var tmp = await get_collection({
+			collection_name: "paired_data",
+			filters: {
+				key: "company_info",
+			},
+		});
+		set_company_name(
+			tmp.data.length === 1 && Object.keys(tmp.data[0]).includes("name")
+				? tmp.data[0].name
+				: "بدون نام"
+		);
+	}
 	useEffect(() => {
 		setInterval(() => {
 			//todo find a better way to handle this
 			set_username(window.localStorage.getItem("username"));
 		}, 2000);
-		customAjax({
-			params: {
-				task_name: "get_company_info",
-			},
-		}).then(
-			(data) => {
-				set_company_name(JSON.parse(data.result).name);
-				//todo dont let the app to work until there is company data and env vard and ... are there
-			},
-			(e) => {
-				if (e.errors[0].code === 1) {
-					console.log("company info is not set yet");
-				} else {
-					console.log(e);
-				}
-			}
-		);
+		get_data();
 	}, []);
 	//todo auth use using jwt
 	var [is_search_modal_visible, set_is_search_modal_visible] = useState(false);

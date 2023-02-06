@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { customAjax } from "../../../src/custom_ajax.js";
+import { get_collection } from "../../../api/client.js";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
 import LinkLikeP from "../LinkLikeP/comp.jsx";
 import { Loading } from "../loading/comp.jsx";
@@ -7,26 +7,6 @@ import Section from "../section/comp";
 import { StyledDiv } from "../styled_elements.jsx";
 import { CompanyInfo } from "./CompanyInfo.jsx";
 export default function AboutUs() {
-	var [company_info, set_company_info] = useState(null);
-	function get_data() {
-		customAjax({
-			params: {
-				task_name: "get_company_info",
-			},
-		}).then(
-			(data) => {
-				set_company_info(JSON.parse(data.result));
-			},
-			(e) => {
-				if (e.errors[0].code === 1) {
-					console.log("company info is not set yet");
-				} else {
-					console.log(e);
-				}
-			}
-		);
-	}
-	useEffect(get_data, []);
 	return (
 		<>
 			<Section
@@ -37,19 +17,6 @@ export default function AboutUs() {
 				className="m-2"
 			>
 				<CompanyInfo />
-				<Loading is_loading={company_info === null} />
-				{company_info && (
-					<Section
-						title={ml({
-							en: "story of the company",
-							fa: "معرفی شرکت",
-						})}
-						className="mx-2"
-					>
-						<div className="px-2">{company_info.history}</div>
-					</Section>
-				)}
-
 				<Section
 					title={ml({
 						en: "contact the support",

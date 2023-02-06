@@ -14,26 +14,6 @@ var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_que
 var path = require("path");
 var { MongoClient, ObjectId } = require("mongodb");
 var env_vars = JSON.parse(fs.readFileSync('env.json','utf8'))
-async function is_first_setup_done({ con }) {
-	var o = await cq(con, 'select * from paired_data where pair_key = "company_info"');
-	if (o.error) {
-		throw o.error;
-	}
-	if (o.result.length === 0) {
-		return false;
-	}
-	//todo make sure this func considers all stuations
-	var company_media_file_names = fs.readdirSync("./uploaded/company_info");
-	if (
-		company_media_file_names.filter((fn) => {
-			var fnwe = fn.split(".")[0];
-			return fnwe === "rectangle" || fnwe === "square" || fnwe === "favicon";
-		}).length !== 3
-	) {
-		return false;
-	}
-	return true;
-}
 function connect_to_db(pass_database = true) {
 	var conf = {
 		user: env_vars.mysql_user,
@@ -105,11 +85,6 @@ async function init() {
 			support_ticket_id int(10),
 			text text,
 			username varchar(200)
-		);
-		create table if not exists paired_data(
-			id int primary key auto_increment,
-			pair_key varchar(50),
-			pair_value text
 		);
 		create table if not exists blogs(
 			id int primary key auto_increment,
@@ -634,24 +609,7 @@ async function main() {
 					}
 				});
 				break;
-			case "set_company_info":
-				// params.company_info should be a stringified json
-				var o = await cq(con, 'delete from paired_data where pair_key = "company_info"');
-				if (o.error) {
-					rm.send_error(o.error);
-					break;
-				}
-				con.query(
-					`insert into paired_data (pair_key,pair_value) values ("company_info",'${params.company_info}')`,
-					(error) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							rm.send_result(true);
-						}
-					}
-				);
-				break;
+			
 			case "upload_company_media":
 				custom_upload({
 					req,
@@ -668,25 +626,6 @@ async function main() {
 			case "get_company_media":
 				var company_media_icons = fs.readdirSync("./uploaded/company_info");
 				rm.send_result(company_media_icons);
-				break;
-			case "get_company_info":
-				con.query(
-					`select * from paired_data where pair_key = "company_info"`,
-					(error, result) => {
-						if (error) {
-							rm.send_error(error);
-						} else {
-							if (result.length === 0) {
-								rm.send_error({
-									message: "there was not a row with pair_key = company_info",
-									code: 1,
-								});
-							} else {
-								rm.send_result(result[0].pair_value);
-							}
-						}
-					}
-				);
 				break;
 			case "get_paths_of_images_of_a_product":
 				var file_names = fs.readdirSync("./uploaded/product_images");
@@ -1052,13 +991,6 @@ async function main() {
 				break;
 			//todo check for duplicate cases
 			//todo add con to cq itself and take just one arg
-			case "is_first_setup_done":
-				try {
-					rm.send_result(await is_first_setup_done({ con }));
-				} catch (e) {
-					rm.send_error(e.toString());
-				}
-				break;
 			case "upload_icon":
 				var icon_file_name = fs
 					.readdirSync("./uploaded/company_info")

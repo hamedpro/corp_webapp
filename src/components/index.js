@@ -11,7 +11,6 @@ export { default as NewProduct } from "./new-product/comp";
 export { default as User } from "./user/comp.jsx";
 export { default as NavBar } from "./nav_bar/comp";
 export { default as LinkLikeP } from "./LinkLikeP/comp";
-export { default as FirstSetup } from "./first_setup/comp";
 export { default as Users } from "./users/comp";
 export { default as Modal } from "./Modal/Modal";
 export { default as Section } from "./section/comp.jsx";

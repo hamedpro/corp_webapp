@@ -16,9 +16,7 @@ import {
 	MainFooter,
 	User,
 	NavBar,
-	FirstSetup,
 } from "./components";
-import ReviewsPage from "./components/product/reviews_page";
 import Orders from "./components/orders/comp";
 import Order from "./components/order/comp";
 import { ShoppingCardPage } from "./components";
@@ -33,74 +31,35 @@ import AboutUs from "./components/AboutUs/AboutUs.jsx";
 import { ContactUs } from "./components/ContactUs";
 import { NewSupportMessage } from "./components/NewSupportMessage";
 import { SupportMessage } from "./components/SupportMessage";
+import { get_collection } from "../api/client";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
-	var nav = useNavigate();
+	async function get_data() {
+		var company_info =
+			(
+				await get_collection({
+					collection_name: "paired_data",
+					filters: {
+						key: "company_info",
+					},
+				})
+			).data[0] || {};
+		if (Object.keys(company_info).includes("favicon_file_id")) {
+			document.getElementById("favicon").href = company_info.favicon_file_id;
+		}
 
-	function load_company_info() {
-		customAjax({
-			params: {
-				task_name: "get_company_info",
-			},
-		}).then(
-			(data) => {
-				document.title = JSON.parse(data.result).name;
-				//todo dont let the app to work until there is company data and env vard and ... are there
-			},
-			(e) => {
-				if (e.errors[0].code === 1) {
-					console.log("company info is not set yet");
-				} else {
-					console.log(e);
-				}
-			}
-		);
-		customAjax({
-			params: {
-				task_name: "get_company_media",
-			},
-		}).then((data) => {
-			if (data.result.filter((item) => item.split(".")[0] === "favicon").length !== 0) {
-				document
-					.getElementById("favicon")
-					.setAttribute(
-						"href",
-						gen_link_to_file(
-							"./company_info/" +
-								data.result.filter((item) => item.split(".")[0] === "favicon")[0]
-						)
-					);
-			} else {
-				console.log("favicon is not uploaded yet");
-			}
-		});
+		if (Object.keys(company_info).includes("name")) {
+			document.title = company_info.name;
+		}
 	}
-
 	useEffect(() => {
-		customAjax({
-			params: {
-				task_name: "is_first_setup_done",
-			},
-		}).then((data) => {
-			if (data.result === true) {
-				load_company_info();
-			} else {
-				nav("/first-setup");
-			}
-		});
-		//todo first setup system should handle both situations : first_setup is done or not
-		//it should not face any issue when first setup is not done
+		get_data();
 	}, []);
-	var current_lang = "fa";
-
+	if (company_info === undefined) return <h1>loading company info ...</h1>;
 	return (
 		<div className="h-full w-full overflow-x-hidden overflow-y-hidden">
-			<div
-				className={["relative mx-auto w-full h-full overflow-x-hidden", current_lang].join(
-					" "
-				)}
-			>
+			<div className={["relative mx-auto w-full h-full overflow-x-hidden fa"].join(" ")}>
 				<MainHeader />
 				<NavBar />
 				<div id="x-container">
@@ -161,13 +120,6 @@ function App() {
 						<Route
 							path="/support_messages/:support_message_id"
 							element={<SupportMessage />}
-						/>
-						<Route
-							path="/first-setup"
-							element={
-								<FirstSetup />
-								/* todo prevent other to access first setup page  */
-							}
 						/>
 					</Routes>
 				</div>

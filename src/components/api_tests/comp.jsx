@@ -1,7 +1,4 @@
-import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common";
-import { AppContext } from "../../AppContext";
-import { useContext } from "react";
 export default function ApiTestPage() {
 	return (
 		<>
