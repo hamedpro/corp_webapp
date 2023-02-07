@@ -3,7 +3,6 @@ export async function customAjax({
 	files = [], //setting a default value for it
 	route = "/", // route should start with "/" -> example : "/products/2"
 	headers = {},
-	super_admin_access_token = null,
 	jwt = null,
 	verbose = false,
 	disable_notifications_and_logs = false,
@@ -36,11 +35,6 @@ export async function customAjax({
 		if (jwt !== null) {
 			headers["jwt"] = jwt;
 		}
-
-		if (super_admin_access_token !== null) {
-			headers["super_admin_access_token"] = super_admin_access_token;
-		}
-
 		var path = base_path + route;
 		if (verbose) {
 			console.log("this path is going to be fetched " + path);

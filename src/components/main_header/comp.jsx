@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import SearchModal from "../search_page/comp";
 import { SearchRow } from "./SearchRow";
 import { header_options_array } from "./HeaderOptionsArray";
-import { get_collection } from "../../../api/client";
+import { get_collection, get_company_info } from "../../../api/client";
 function MainHeaderLeftDropDown() {
 	var nav = useNavigate();
 	var [is_open, set_is_open] = useState(false);
@@ -89,17 +89,8 @@ export default function MainHeader() {
 		);
 	}
 	async function get_data() {
-		var tmp = await get_collection({
-			collection_name: "paired_data",
-			filters: {
-				key: "company_info",
-			},
-		});
-		set_company_name(
-			tmp.data.length === 1 && Object.keys(tmp.data[0].value).includes("name")
-				? tmp.data[0].value.name
-				: "بدون نام"
-		);
+		var company_info = await get_company_info();
+		set_company_name("name" in company_info ? company_info.name : "بدون نام");
 	}
 	useEffect(() => {
 		setInterval(() => {

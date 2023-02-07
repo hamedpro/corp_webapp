@@ -621,10 +621,6 @@ async function main() {
 					},
 				});
 				break;
-			case "get_company_media":
-				var company_media_icons = fs.readdirSync("./uploaded/company_info");
-				rm.send_result(company_media_icons);
-				break;
 			case "get_paths_of_images_of_a_product":
 				var file_names = fs.readdirSync("./uploaded/product_images");
 				var needed_file_names = [];

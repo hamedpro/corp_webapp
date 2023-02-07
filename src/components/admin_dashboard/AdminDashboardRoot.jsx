@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { get_collection } from "../../../api/client";
+import { get_collection, get_company_info } from "../../../api/client";
 import Section from "../section/comp";
 
 export const AdminDashboardRoot = () => {
 	var [missing_company_info_fields, set_missing_company_info_fields] = useState();
 	async function get_data() {
-		var tmp = await get_collection({
-			collection_name: "paired_data",
-			filters: { key: "company_info" },
-		});
-		var company_info = tmp.data.length === 1 ? tmp.data[0]["value"] : {};
+		var company_info = await get_company_info();
 		var fields = {
 			// these are all possible fields with their translation
 			name: "نام شرکت",

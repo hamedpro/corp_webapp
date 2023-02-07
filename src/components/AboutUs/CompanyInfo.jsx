@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { get_collection } from "../../../api/client.js";
+import { get_collection, get_company_info } from "../../../api/client.js";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
 import { FollowUsRow } from "../follow_us_row.jsx";
@@ -8,34 +8,18 @@ import { Loading } from "../loading/comp.jsx";
 
 export function CompanyInfo() {
 	var [company_info, set_company_info] = useState(null);
-	async function get_data() {
-		var tmp = await get_collection({
-			collection_name: "paired_data",
-			filters: {
-				key: "company_info",
-			},
-		});
-		set_company_info(tmp.data[0] || {});
-	}
-	useEffect(get_data, []);
 	var [rectangle_icon_src, set_rectangle_icon_src] = useState(null);
-	useEffect(() => {
-		customAjax({
-			params: {
-				task_name: "get_company_media",
-			},
-		}).then((data) => {
-			var rectangle_icon_file_name = data.result.find(
-				(item) => item.split(".")[0] === "rectangle"
+	async function get_data() {
+		var tmp = await get_company_info();
+		set_company_info(tmp);
+		if ("company_icon_file_id" in tmp) {
+			set_rectangle_icon_src(
+				new URL(`/files/${tmp.company_icon_file_id}`, vite_api_endpoint).href
 			);
-			if (rectangle_icon_file_name !== undefined) {
-				set_rectangle_icon_src(
-					gen_link_to_file("./company_info/" + rectangle_icon_file_name)
-				);
-			} else {
-				console.log("company rectangle icon is not uploaded yet");
-			}
-		});
+		}
+	}
+	useEffect(() => {
+		get_data();
 	}, []);
 	return (
 		<div className="flex flex-col md:flex-row">

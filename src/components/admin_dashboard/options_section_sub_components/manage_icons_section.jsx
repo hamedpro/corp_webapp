@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
 	custom_axios,
 	get_collection,
+	get_company_info,
 	modify_company_info,
 	new_document,
 	update_document,
@@ -45,20 +46,14 @@ export function ManageIconsSection() {
 	async function del_icon(icon_type) {
 		var icon_property_name =
 			icon_type === "square" ? "company_icon_file_id" : "favicon_file_id";
-		var { data } = await get_collection({
-			collection_name: "paired_data",
-			filters: {
-				key: "company_info",
-			},
-		});
-		var current_company_info_value = data.length === 1 ? data[0].value : {};
+		var current_company_info_value = await get_company_info();
 		if (!(icon_property_name in current_company_info_value)) {
 			alert("this icon you want to delete doesnt even exist");
 			return;
 		}
 
 		await custom_axios({
-			url: `/files/${data[0].value[icon_property_name]}`,
+			url: `/files/${current_company_info_value[icon_property_name]}`,
 			method: "delete",
 		});
 		await modify_company_info(icon_property_name, undefined);

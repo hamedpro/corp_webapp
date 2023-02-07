@@ -65,7 +65,7 @@ export var modify_company_info = async (property_name, new_value) => {
 		});
 	} else {
 		//when there is an existing company_info
-		var update_set = { value: { ...current_company_info_pair.value } };
+		var update_set = { value: current_company_info_pair.value };
 		update_set["value"][property_name] = new_value;
 		await update_document({
 			collection: "paired_data",

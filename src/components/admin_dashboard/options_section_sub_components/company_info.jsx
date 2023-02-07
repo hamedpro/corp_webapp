@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import Section from "../../section/comp";
 import { CustomRow } from "../custom_row";
-import { get_collection, modify_company_info, update_document } from "../../../../api/client";
+import {
+	get_collection,
+	get_company_info,
+	modify_company_info,
+	update_document,
+} from "../../../../api/client";
 export function CompanyInfoSection() {
 	var [company_info, set_company_info] = useState(null);
 	async function fetch_data() {
-		var tmp = await get_collection({
-			collection_name: "paired_data",
-			filters: {
-				key: "company_info",
-			},
-		});
-		set_company_info(tmp.data[0] || {});
+		set_company_info(await get_company_info());
 	}
 	useEffect(() => {
 		fetch_data();
