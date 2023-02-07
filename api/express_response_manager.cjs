@@ -28,9 +28,6 @@ module.exports = class response_manager {
 				logs: this.logs,
 			})
 		);
-		if (this.mysql_connection !== null) {
-			this.mysql_connection.end();
-		}
 	};
 	send_error = (error) => {
 		this.add_error(error);

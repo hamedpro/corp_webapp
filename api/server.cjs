@@ -9,12 +9,13 @@ var app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static("./uploaded/"));
+app.use(express.static("./assests/"));
 var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_query
 var path = require("path");
 var { MongoClient, ObjectId } = require("mongodb");
 var env_vars = JSON.parse(fs.readFileSync("env.json", "utf8"));
-function connect_to_db(pass_database = true) {
+async function connect_to_db() {
 	var conf = {
 		user: env_vars.mysql_user,
 		password: env_vars.mysql_password,
@@ -22,13 +23,15 @@ function connect_to_db(pass_database = true) {
 		host: env_vars.mysql_host,
 		multipleStatements: true,
 	};
-	if (pass_database) {
-		conf["database"] = env_vars.mysql_database;
-	}
-	return mysql.createConnection(conf);
-	//add error handling for mysql createConnection
+	let con = mysql.createConnection(conf);
+	await cq(
+		con,
+		`create database if not exists ${env_vars.mysql_database}; use ${env_vars.mysql_database}`
+	);
+	return con;
+	//todo add error handling for mysql createConnection
 }
-async function init() {
+async function init(con) {
 	[
 		"./uploaded",
 		"./uploaded/profile_images",
@@ -42,20 +45,9 @@ async function init() {
 			fs.mkdirSync(path);
 		}
 	});
-	var dotenv_keys = ["mysql_host", "mysql_user", "mysql_password", "mysql_port"];
-	//todo complete these dotenv keys
-	for (var i = 0; i < dotenv_keys.length; i++) {
-		if (!Object.keys(env_vars).includes(dotenv_keys[i])) {
-			throw "tried to access one of mysql configurations from .env but it didn't exist";
-		}
-	}
-	var con = connect_to_db(false);
-
 	var output = await cq(
 		con,
 		`
-			create database if not exists ${env_vars.mysql_database};
-		use ${env_vars.mysql_database};
 		create table if not exists users(
 			id int primary key auto_increment,
 			username varchar(50) ,
@@ -136,7 +128,6 @@ async function init() {
 	if (output.error) {
 		throw output.error;
 	}
-	con.end();
 	//support_tickets->type can have these values : bug,suggestion,other
 	//product_specs inside products table should contain ->
 	// -> a json stringified array of key values -- also for ex pros and cons fields
@@ -145,16 +136,25 @@ async function init() {
 async function main() {
 	var client = new MongoClient(env_vars.mongodb_url);
 	var db = client.db(env_vars.mongodb_db_name);
-
+	var con = await connect_to_db();
+	var output = await cq(con, "select * from users;");
+	var current_users = output.result;
+	if (current_users.length === 0) {
+		//if there is not any users yet it creates one with username and password both = "root"
+		var hashed_password = hash_sha_256_hex("root" + env_vars.PASSWORD_HASHING_SECRET);
+		await cq(
+			con,
+			`insert into users (username,hashed_password,is_admin) values ('root','${hashed_password}',"true")`
+		);
+	}
 	app.all("/", async (req, res) => {
 		var rm = new response_manager(res);
 		try {
-			await init();
+			await init(con);
 		} catch (e) {
 			rm.send_error(e);
 			throw e;
 		}
-		var con = connect_to_db();
 		rm.add_mysql_con(con);
 		var params = { ...req.body, ...req.query };
 		if (req.headers.task_name === "upload") {

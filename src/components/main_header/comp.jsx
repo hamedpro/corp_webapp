@@ -96,8 +96,8 @@ export default function MainHeader() {
 			},
 		});
 		set_company_name(
-			tmp.data.length === 1 && Object.keys(tmp.data[0]).includes("name")
-				? tmp.data[0].name
+			tmp.data.length === 1 && Object.keys(tmp.data[0].value).includes("name")
+				? tmp.data[0].value.name
 				: "بدون نام"
 		);
 	}

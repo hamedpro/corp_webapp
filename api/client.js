@@ -76,3 +76,17 @@ export var modify_company_info = async (property_name, new_value) => {
 		});
 	}
 };
+
+export async function get_company_info() {
+	var tmp = await get_collection({
+		collection_name: "paired_data",
+		filters: {
+			key: "company_info",
+		},
+	});
+	if (tmp.data.length === 1) {
+		return tmp.data[0].value;
+	} else {
+		return {};
+	}
+}
