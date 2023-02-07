@@ -31,24 +31,19 @@ import AboutUs from "./components/AboutUs/AboutUs.jsx";
 import { ContactUs } from "./components/ContactUs";
 import { NewSupportMessage } from "./components/NewSupportMessage";
 import { SupportMessage } from "./components/SupportMessage";
-import { get_collection } from "../api/client";
+import { get_collection, get_company_info } from "../api/client";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
 	async function get_data() {
-		var company_info =
-			(
-				await get_collection({
-					collection_name: "paired_data",
-					filters: {
-						key: "company_info",
-					},
-				})
-			).data[0] || {};
+		var company_info = await get_company_info();
 		if (Object.keys(company_info).includes("favicon_file_id")) {
-			document.getElementById("favicon").href = company_info.favicon_file_id;
+			var favicon_file_url = new URL(
+				`/files/${company_info.favicon_file_id}`,
+				vite_api_endpoint
+			);
+			document.getElementById("favicon").href = favicon_file_url;
 		}
-
 		if (Object.keys(company_info).includes("name")) {
 			document.title = company_info.name;
 		}

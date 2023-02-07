@@ -2,11 +2,12 @@ import OptionsSection from "./options_section";
 import UsersSection from "./users_section";
 import ProductsSection from "./products_section";
 import "./styles.css";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
 	AddBusinessOutlined,
 	ArticleRounded,
 	Download,
+	HomeRounded,
 	InfoRounded,
 	ListAltRounded,
 	Person,
@@ -21,6 +22,8 @@ import { SupportMessagesSection } from "./SupportMessagesSection";
 import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import NewProduct from "../new-product/comp.jsx";
 import { NewWriting } from "../NewWriting";
+import { get_collection } from "../../../api/client";
+import { AdminDashboardRoot } from "./AdminDashboardRoot";
 function SideBarOption({ icon, text, url }) {
 	var this_option_is_active = useMatch(url);
 	var nav = useNavigate();
@@ -39,6 +42,7 @@ function SideBarOption({ icon, text, url }) {
 }
 function SideBar() {
 	var tabs = [
+		{ id: "", title: "صفحه اصلی داشبورد", icon: <HomeRounded /> },
 		{
 			id: "new-product",
 			title: "اضافه کردن کالای جدید",
@@ -112,8 +116,9 @@ export default function AdminDashboard() {
 				</div>
 				<div className="p-1 flex w-9/12 overflow-y-auto px-3">
 					<Routes>
-						<Route path="new-product" element={<NewProduct />}></Route>
-						<Route path="new-writing" element={<NewWriting />}></Route>
+						<Route path="/" element={<AdminDashboardRoot />} />
+						<Route path="new-product" element={<NewProduct />} />
+						<Route path="new-writing" element={<NewWriting />} />
 						<Route path="manage_products" element={<ProductsSection />} />
 						<Route path="manage_users" element={<UsersSection />} />
 						<Route path="manage_options" element={<OptionsSection />} />
