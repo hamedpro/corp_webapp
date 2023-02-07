@@ -56,7 +56,6 @@ function App() {
 	useEffect(() => {
 		get_data();
 	}, []);
-	if (company_info === undefined) return <h1>loading company info ...</h1>;
 	return (
 		<div className="h-full w-full overflow-x-hidden overflow-y-hidden">
 			<div className={["relative mx-auto w-full h-full overflow-x-hidden fa"].join(" ")}>

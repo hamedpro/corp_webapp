@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../../common.js";
-import { CustomTable } from "../custom_table/comp.jsx";
 import Section from "../section/comp.jsx";
 import { StyledDiv } from "../styled_elements.jsx";
 import { CompanyInfoSection } from "./options_section_sub_components/company_info.jsx";

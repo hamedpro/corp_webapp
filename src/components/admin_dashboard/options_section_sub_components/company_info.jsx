@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Section from "../../section/comp";
 import { CustomRow } from "../custom_row";
-import { get_collection, update_document } from "../../../../api/client";
+import { get_collection, modify_company_info, update_document } from "../../../../api/client";
 export function CompanyInfoSection() {
 	var [company_info, set_company_info] = useState(null);
 	async function fetch_data() {
@@ -23,15 +23,7 @@ export function CompanyInfoSection() {
 				fa: `مقدار جدید متغیر مقابل را وارد کنید :`,
 			}) + field_to_change
 		);
-		var update_set = {};
-		update_set[field_to_change] = new_value;
-		await update_document({
-			collection: "paired_data",
-			update_filter: {
-				key: "company_info",
-			},
-			update_set,
-		});
+		await modify_company_info(field_to_change, new_value);
 		alert("با موفقیت انجام شد");
 	}
 	var fields = [
@@ -41,7 +33,6 @@ export function CompanyInfoSection() {
 		{ value: "mobile_phone_number", en: "mobile_phone_number", fa: "شماره موبایل" },
 		{ value: "address", en: "address", fa: "آدرس" },
 		{ value: "description", en: "description", fa: "توضیحات" },
-		{ value: "history", en: "history", fa: "داستان" },
 		{ value: "instagram", en: "instagram", fa: "اینستاگرام" },
 		{ value: "telegram", en: "telegram", fa: "تلگرام" },
 		{ value: "twitter", en: "twitter", fa: "توییتر" },

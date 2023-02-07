@@ -13,7 +13,7 @@ var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_query
 var path = require("path");
 var { MongoClient, ObjectId } = require("mongodb");
-var env_vars = JSON.parse(fs.readFileSync('env.json','utf8'))
+var env_vars = JSON.parse(fs.readFileSync("env.json", "utf8"));
 function connect_to_db(pass_database = true) {
 	var conf = {
 		user: env_vars.mysql_user,
@@ -36,6 +36,7 @@ async function init() {
 		"./uploaded/company_info",
 		"./uploaded/blog_images",
 		"./uploaded/download_center",
+		"./uploads",
 	].forEach((path) => {
 		if (!fs.existsSync(path)) {
 			fs.mkdirSync(path);
@@ -208,7 +209,6 @@ async function main() {
 				} else {
 					rm.send_error("username is taken by another user");
 				}
-
 				break;
 			case "new_writing":
 				var output = await cq(
@@ -330,9 +330,7 @@ async function main() {
 						} else {
 							if (
 								result[0].hashed_password ==
-								hash_sha_256_hex(
-									params.password + env_vars.PASSWORD_HASHING_SECRET
-								)
+								hash_sha_256_hex(params.password + env_vars.PASSWORD_HASHING_SECRET)
 							) {
 								var hashed_new_password = hash_sha_256_hex(
 									params.new_password + env_vars.PASSWORD_HASHING_SECRET
@@ -609,7 +607,7 @@ async function main() {
 					}
 				});
 				break;
-			
+
 			case "upload_company_media":
 				custom_upload({
 					req,
@@ -1228,7 +1226,44 @@ async function main() {
 			res.json("task is not specified");
 		}
 	});
-	var server = app.listen(env_vars.api_port, () => {
+	app.post("/files", async (request, response) => {
+		var f = formidable({ uploadDir: "./uploads" });
+		await new Promise((resolve, reject) => {
+			f.parse(request, async (error, fields, files) => {
+				var inserted_id = (
+					await db
+						.collection("files")
+						.insertOne({ full_file_name: files.file.originalFilename })
+				).insertedId;
+				fs.renameSync(
+					files.file.filepath,
+					`./uploads/${inserted_id}-${files.file.originalFilename}`
+				);
+				response.json({ inserted_id });
+				resolve();
+			});
+		});
+	});
+	app.get("/files/:file_id", async (request, response) => {
+		var filepath = fs
+			.readdirSync("./uploads")
+			.find((file_name) => file_name.split("-")[0] == request.params.file_id);
+		if (filepath === undefined) {
+			response.status(404).json(`file you are looking for couldn't be found`);
+			return;
+		}
+		response.sendFile(path.resolve("./uploads/", filepath));
+	});
+	app.delete("/files/:file_id", async (request, response) => {
+		//it deletes a file with id = request.params.file_id (if that exists (otherwise does nothing))
+		var filepath = fs
+			.readdirSync("./uploads")
+			.find((file_name) => file_name.split("-")[0] == request.params.file_id);
+		if (filepath !== undefined) fs.unlinkSync(path.resolve("./uploads/", filepath));
+		await db.collection("files").deleteOne({ _id: ObjectId(request.params.file_id) });
+		response.json("ok");
+	});
+	app.listen(env_vars.api_port, () => {
 		console.log(`server is listening on port ${env_vars.api_port}`);
 	});
 }
