@@ -790,6 +790,10 @@ video {
   height: 2rem;
 }
 
+.h-36 {
+  height: 9rem;
+}
+
 .h-1\/2 {
   height: 50%;
 }
@@ -908,6 +912,10 @@ video {
 
 .w-28 {
   width: 7rem;
+}
+
+.w-40 {
+  width: 10rem;
 }
 
 .shrink-0 {

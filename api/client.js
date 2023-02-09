@@ -90,3 +90,36 @@ export async function get_company_info() {
 		return {};
 	}
 }
+
+export async function get_data_pair(key) {
+	//we have a collection called paired_data and its documents are in the following format:
+	// {key : string , value : any}
+	//this function gets a key and returns value (if that key doesnt exist it will return undefined)
+	//*that collection doesnt allow 2 row with same key
+	var tmp = await get_collection({
+		collection_name: "paired_data",
+		filters: {
+			key,
+		},
+	});
+	return tmp.data.length === 1 ? tmp.data[0].value : undefined;
+}
+
+export async function put_pair(key, value) {
+	//searches in paired_data collection. if a pair with (key = given key) was found overwrites its value
+	//otherwise creates a pair with given key and value
+	var tmp = await get_collection({
+		collection_name: "paired_data",
+		filters: {
+			key,
+		},
+	});
+	if (tmp.data.length === 1) {
+		//there is an existing row with that key there in database
+		await delete_document({ collection_name: "paired_data", filters: { key } });
+	}
+	await new_document({
+		collection_name: "paired_data",
+		document: { key, value },
+	});
+}

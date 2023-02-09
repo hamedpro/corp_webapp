@@ -6,6 +6,8 @@ import { Fragment, useEffect, useState } from "react";
 import {
 	AddBusinessOutlined,
 	ArticleRounded,
+	BrowseGallery,
+	Collections,
 	Download,
 	HomeRounded,
 	InfoRounded,
@@ -24,6 +26,7 @@ import NewProduct from "../new-product/comp.jsx";
 import { NewWriting } from "../NewWriting";
 import { get_collection } from "../../../api/client";
 import { AdminDashboardRoot } from "./AdminDashboardRoot";
+import { ManageContentSlider } from "./ManageContentSlider";
 function SideBarOption({ icon, text, url }) {
 	var this_option_is_active = useMatch(url);
 	var nav = useNavigate();
@@ -57,6 +60,11 @@ function SideBar() {
 			id: "manage_products",
 			title: ml({ en: "manage products", fa: "مدیریت محصولات" }),
 			icon: <ShoppingBag />,
+		},
+		{
+			id: "manage_content_slider",
+			title: "مدیریت اسلایدر صفحه اصلی",
+			icon: <Collections />,
 		},
 		{
 			id: "manage_users",
@@ -124,6 +132,7 @@ export default function AdminDashboard() {
 						<Route path="manage_options" element={<OptionsSection />} />
 						<Route path="manage_orders" element={<OrdersSection />} />
 						<Route path="manage_download_center" element={<ManageDownloadCenter />} />
+						<Route path="manage_content_slider" element={<ManageContentSlider />} />
 						<Route
 							path="support_messages_section"
 							element={<SupportMessagesSection />}

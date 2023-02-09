@@ -1,22 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ProductsRow } from "./products_row";
 import "./styles.css";
-import {
-	Article,
-	Business,
-	ContactPage,
-	Discount,
-	Download,
-	InfoRounded,
-	Phone,
-	Settings,
-	SettingsApplications,
-	Stars,
-} from "@mui/icons-material";
+import { Business, Download, Phone, Settings, Stars } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { customAjax } from "../../custom_ajax";
 import { gen_link_to_file, multi_lang_helper as ml, shuffle } from "../../common";
 import { custom_axios } from "../../../api/client";
+import { ContentSlider } from "../AboutUs/ContentSlider";
 export function WritingRow({ publish_date, publisher_username, image_filename, _id, title }) {
 	var nav = useNavigate();
 	return (
@@ -202,7 +192,7 @@ export default function Root() {
 				info={"توضیحات شرکت اینجا نمایش داده خواهد شد"}
 				button_onclick={() => nav("/about-us")}
 			/>
-
+			<ContentSlider />
 			<CustomBlock
 				Icon={Phone}
 				button_text={"برو به تماس با ما"}

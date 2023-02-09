@@ -365,6 +365,7 @@ async function main() {
 				);
 				break;
 			case "new_product":
+				//params :
 				if (isNaN(params.price)) {
 					rm.send_error('given "price" must be number');
 					break;
