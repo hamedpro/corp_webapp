@@ -1260,8 +1260,14 @@ async function main() {
 		await db.collection("files").deleteOne({ _id: ObjectId(request.params.file_id) });
 		response.json("ok");
 	});
+	app.get("/latest_changes", (request, response) => {
+		response.json(
+			JSON.parse(fs.readFileSync(path.resolve(__dirname, "../latest_changes.json"), "utf8"))
+		);
+	});
 	app.listen(env_vars.api_port, () => {
 		console.log(`server is listening on port ${env_vars.api_port}`);
 	});
+	
 }
 main();
