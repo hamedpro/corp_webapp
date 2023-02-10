@@ -32,6 +32,7 @@ import { ContactUs } from "./components/ContactUs";
 import { NewSupportMessage } from "./components/NewSupportMessage";
 import { SupportMessage } from "./components/SupportMessage";
 import { get_collection, get_company_info } from "../api/client";
+import { FullScreenImageSlider } from "./components/product/components/FullScreenImageSlider";
 function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -111,6 +112,10 @@ function App() {
 						<Route path="/writings" element={<Writings />} />
 						<Route path="/contact-us" element={<ContactUs />} />
 						<Route path="/new-support-message" element={<NewSupportMessage />} />
+						<Route
+							path="/products/:product_id/images"
+							element={<FullScreenImageSlider />}
+						/>
 						<Route
 							path="/support_messages/:support_message_id"
 							element={<SupportMessage />}

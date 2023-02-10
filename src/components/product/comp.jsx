@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../../../src/custom_ajax.js";
 import "./styles.css";
-import UsersReviews from "./user_reviews";
 import AddToShoppingBagBar from "./AddToShoppingBagBar";
 import Section from "../section/comp.jsx";
 import { ImageSlider } from "../image_slider/comp.jsx";
 import { gen_link_to_file, is_this_valid_json, multi_lang_helper as ml } from "../../common.js";
-import { Loading } from "../loading/comp.jsx";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
@@ -15,7 +13,10 @@ import Attach from "@editorjs/attaches";
 import Table from "@editorjs/table";
 import ImageTool from "@editorjs/image";
 import Checklist from "@editorjs/checklist";
+import { FullScreenImageSlider } from "./components/FullScreenImageSlider.jsx";
+import { ZoomInRounded } from "@mui/icons-material";
 export default function Product() {
+	var nav = useNavigate();
 	var product_id = useParams().product_id;
 	var [editor_js_instance, set_editor_js_instance] = useState(null);
 	var [image_sources, set_image_sources] = useState(null);
@@ -60,25 +61,29 @@ export default function Product() {
 	useEffect(() => {
 		init();
 	}, []);
+
 	if (product === null || image_sources === null) return;
 	return (
 		<>
 			<div className="flex flex-col md:flex-row border border-blue-400 mt-2 p-2 mx-1">
 				<div className="md:w-2/3">
-					<Loading is_loading={image_sources === null} />
-					{image_sources !== null && (
-						<>
-							{image_sources.length == 0 ? (
-								<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
-									{ml({
-										en: "there is not any product image uploaded for this product",
-										fa: "برای این محصول هیچ تصویری بارگذاری نشده است",
-									})}
-								</div>
-							) : (
-								<ImageSlider image_sources={image_sources} />
-							)}
-						</>
+					{image_sources.length == 0 ? (
+						<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
+							{ml({
+								en: "there is not any product image uploaded for this product",
+								fa: "برای این محصول هیچ تصویری بارگذاری نشده است",
+							})}
+						</div>
+					) : (
+						<div className="relative">
+							<div
+								onClick={() => nav("images")}
+								className="flex justify-center items-center absolute top-0 left-0 h-10 w-10 bg-blue-500 z-20"
+							>
+								<ZoomInRounded />
+							</div>
+							<ImageSlider image_sources={image_sources} />
+						</div>
 					)}
 				</div>
 
