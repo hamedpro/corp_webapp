@@ -131,6 +131,10 @@ export default function NavBar() {
 				original: "new-writing",
 				fa: "نوشته جدید",
 			},
+			{
+				original: "manage_content_slider",
+				fa: "بخش مدیریت اسلایدر صفحه اصلی",
+			},
 		];
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {

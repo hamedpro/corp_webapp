@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import SearchModal from "../search_page/comp";
 import { SearchRow } from "./SearchRow";
 import { header_options_array } from "./HeaderOptionsArray";
-import { get_collection, get_company_info } from "../../../api/client";
+import { get_company_info } from "../../../api/client";
 function MainHeaderLeftDropDown() {
 	var nav = useNavigate();
 	var [is_open, set_is_open] = useState(false);
@@ -20,17 +20,25 @@ function MainHeaderLeftDropDown() {
 		<div className="mx-2 w-36 h-10 relative">
 			<div
 				className={`text-white overflow-hidden absolute duration-300 w-36 z-20 bg-blue-500 top-0 left-0 ${
-					is_open ? "h-32" : "h-8"
+					is_open ? "h-34" : "h-10"
 				}`}
 				onClick={() => set_is_open((prev) => !prev)}
 			>
-				<div className="hover:bg-blue-600 duration-300 h-8 w-full flex items-center">
-					<Person2Rounded sx={{ color: "white" }} />
-					<h1>{localStorage.getItem("username")}</h1>
+				<div
+					className={
+						"hover:bg-blue-600 duration-300 justify-between h-10 w-full flex items-center px-1" +
+						(is_open ? " border-b border-blue-600" : "")
+					}
+				>
+					<div className="flex items-center space-x-3">
+						<Person2Rounded sx={{ color: "white" }} />
+						<h1 className="text-lg">{localStorage.getItem("username")}</h1>
+					</div>
+
 					{is_open ? <KeyboardArrowUpRounded /> : <KeyboardArrowDownRounded />}
 				</div>
 				<div
-					className="hover:bg-blue-600 duration-300 h-8 w-full px-2"
+					className="hover:bg-blue-600 duration-300 h-8 w-full px-2 items-center flex"
 					onClick={() =>
 						nav(`/users/${window.localStorage.getItem("username")}/shopping-card`)
 					}
@@ -38,13 +46,13 @@ function MainHeaderLeftDropDown() {
 					سبد خرید من
 				</div>
 				<div
-					className="hover:bg-blue-600 duration-300 h-8 w-full px-2"
+					className="hover:bg-blue-600 duration-300 h-8 w-full px-2 items-center flex"
 					onClick={() => nav(`/users/${window.localStorage.getItem("username")}`)}
 				>
 					حساب کاربری من
 				</div>
 				<div
-					className="hover:bg-blue-600 duration-300 h-8 w-full px-2"
+					className="hover:bg-blue-600 duration-300 h-8 w-full px-2 items-center flex"
 					onClick={() => {
 						window.localStorage.removeItem("username");
 						window.location.replace("/");

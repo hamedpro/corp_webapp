@@ -35,7 +35,7 @@ export const AdminDashboardRoot = () => {
 		return <h1>loading missing_company_info_fields ...</h1>;
 	return (
 		missing_company_info_fields.length !== 0 && (
-			<Section title="نقص اطلاعات" innerClassName="p-1">
+			<Section title="نقص اطلاعات" innerClassName="p-1" className="w-full">
 				<h1>این موارد زیر هنوز تنظیم نشده اند</h1>
 				{missing_company_info_fields.map((field) => (
 					<p key={field}>-{field}</p>

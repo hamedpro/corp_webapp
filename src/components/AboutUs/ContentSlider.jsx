@@ -60,13 +60,10 @@ export const ContentSlider = ({}) => {
 	}
 	if (items_to_show === undefined) return <h1>loading ...</h1>;
 	return (
-		<>
-			<h1>ContentSlider</h1>
-			<div className="w-full h-36 bg-blue-500 text-white">
-				{items_to_show.length === 0
-					? "there is not any items to show"
-					: "item is : " + JSON.stringify(items_to_show[idk()])}
-			</div>
-		</>
+		<div className="w-full h-36 bg-sky-700 text-white">
+			{items_to_show.length === 0
+				? "there is not any items to show"
+				: "item is : " + JSON.stringify(items_to_show[idk()])}
+		</div>
 	);
 };
