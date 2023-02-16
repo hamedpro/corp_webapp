@@ -14,6 +14,7 @@ export default function ProductItem({
 	className = undefined,
 	description = "",
 }) {
+	useEffect(() => {}, []);
 	//id stands for product id
 	var nav = useNavigate();
 	var [the_image_src, set_the_image_src] = useState(null);

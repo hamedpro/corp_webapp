@@ -1,7 +1,32 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { get_collection, get_data_pair } from "../../../api/client";
+import ProductItem from "../products/product_item";
 import { customAjax } from "../../custom_ajax";
-
+import { WritingSquare } from "../root/comp";
+function Item({ data }) {
+	if (data.type === "image") {
+		return (
+			<img
+				className="h-full"
+				src={new URL(`/files/${data.data.file_id}`, vite_api_endpoint)}
+			/>
+		);
+	}
+	if (data.type === "product") {
+		return (
+			<ProductItem
+				id={data.data.id}
+				name={data.data.name}
+				price={data.data.price}
+				className="overflow-hidden bg-blue-300 text-black rounded-xl"
+				description={data.data.description}
+			/>
+		);
+	}
+	if (data.type === "writing") {
+		return <WritingSquare writing={data.data} />;
+	}
+}
 export const ContentSlider = ({}) => {
 	var [items_to_show, set_items_to_show] = useState();
 	var [counter, set_counter] = useState(0);
@@ -39,7 +64,6 @@ export const ContentSlider = ({}) => {
 		content_slider_content.image_file_ids.forEach((file_id) => {
 			items_to_show.push({ type: "image", data: { file_id } });
 		});
-
 		set_items_to_show(items_to_show);
 	}
 
@@ -47,7 +71,7 @@ export const ContentSlider = ({}) => {
 		get_data();
 		setInterval(() => {
 			set_counter((prev) => prev + 1);
-		}, 3000);
+		}, 5000);
 	}, []);
 	function idk() {
 		// right now i dont know what i should call this function !!!!
@@ -55,15 +79,21 @@ export const ContentSlider = ({}) => {
 		while (!(tmp < items_to_show.length)) {
 			tmp -= items_to_show.length;
 		}
-		//console.log(tmp);
 		return tmp;
 	}
 	if (items_to_show === undefined) return <h1>loading ...</h1>;
 	return (
-		<div className="w-full h-36 bg-sky-700 text-white">
-			{items_to_show.length === 0
-				? "there is not any items to show"
-				: "item is : " + JSON.stringify(items_to_show[idk()])}
+		<div
+			className="w-full py-2 bg-sky-700 text-white flex justify-center"
+			style={{ height: "25vw" }}
+		>
+			{items_to_show.length === 0 ? (
+				<div className="w-full h-full flex items-center justify-center">
+					<h1>هیچ موردی برای نمایش ثبت نشده است </h1>
+				</div>
+			) : (
+				<Item data={items_to_show[idk()]} />
+			)}
 		</div>
 	);
 };

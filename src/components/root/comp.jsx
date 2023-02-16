@@ -7,6 +7,32 @@ import { customAjax } from "../../custom_ajax";
 import { gen_link_to_file, multi_lang_helper as ml, shuffle } from "../../common";
 import { custom_axios } from "../../../api/client";
 import { ContentSlider } from "../AboutUs/ContentSlider";
+export function WritingSquare({ writing }) {
+	return (
+		<div
+			className="bg-blue-300 cursor-pointer rounded-lg w-full sm:w-1/3 mx-2 flex justify-center items-center relative text-white overflow-hidden"
+			style={{ aspectRatio: 1 }}
+			onClick={() => nav(`/writings/${writing._id}`)}
+		>
+			<img
+				src={vite_api_endpoint + "/" + writing.image_filename}
+				className="first_writing_image duration-200 h-full aspect-auto"
+			/>
+			<div className="absolute h-1/2 top-0 w-full p-2">
+				<p className="text-sm">
+					حدود {Math.round((new Date().getTime() - writing.publish_date) / 3600000)} ساعت
+					پیش | توسط {writing.publisher_username}
+				</p>
+			</div>
+			<div
+				className="absolute h-1/3 top-2/3 w-full  p-2"
+				style={{ background: "rgb(0, 0 ,255,0.6)" }}
+			>
+				<h1 className="text-2xl"> {writing.title}</h1>
+			</div>
+		</div>
+	);
+}
 export function WritingRow({ publish_date, publisher_username, image_filename, _id, title }) {
 	var nav = useNavigate();
 	return (
@@ -50,34 +76,7 @@ export function Writings(props) {
 				{sorted_writings.length === 0 ? (
 					`there is not anything to show. (count of all published writings : ${sorted_writings.length})`
 				) : (
-					<>
-						<div
-							className="bg-blue-300 cursor-pointer rounded-lg w-full sm:w-1/3 mx-2 flex justify-center items-center relative text-white overflow-hidden"
-							style={{ aspectRatio: 1 }}
-							onClick={() => nav(`/writings/${sorted_writings[0]._id}`)}
-						>
-							<img
-								src={vite_api_endpoint + "/" + sorted_writings[0].image_filename}
-								className="first_writing_image duration-200 h-full aspect-auto"
-							/>
-							<div className="absolute h-1/2 top-0 w-full p-2">
-								<p className="text-sm">
-									حدود{" "}
-									{Math.round(
-										(new Date().getTime() - sorted_writings[0].publish_date) /
-											3600000
-									)}{" "}
-									ساعت پیش | توسط {sorted_writings[0].publisher_username}
-								</p>
-							</div>
-							<div
-								className="absolute h-1/3 top-2/3 w-full  p-2"
-								style={{ background: "rgb(0, 0 ,255,0.6)" }}
-							>
-								<h1 className="text-2xl"> {sorted_writings[0].title}</h1>
-							</div>
-						</div>
-					</>
+					<WritingSquare writing={sorted_writings[0]} />
 				)}
 				<div className="flex flex-col w-full sm:w-2/3 rounded-lg overflow-hidden mt-6 sm:mt-0">
 					{[1, 2, 3].map((number, index) => {
