@@ -84,11 +84,11 @@ export const ContentSlider = ({}) => {
 	if (items_to_show === undefined) return <h1>loading ...</h1>;
 	return (
 		<div
-			className="w-full py-2 bg-sky-700 text-white flex justify-center"
+			className="w-full py-2 bg-gray-200 text-white flex justify-center"
 			style={{ height: "25vw" }}
 		>
 			{items_to_show.length === 0 ? (
-				<div className="w-full h-full flex items-center justify-center">
+				<div className="w-full h-full flex items-center justify-center text-gray-700">
 					<h1>هیچ موردی برای نمایش ثبت نشده است </h1>
 				</div>
 			) : (

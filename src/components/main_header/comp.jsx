@@ -19,7 +19,7 @@ function MainHeaderLeftDropDown() {
 	return (
 		<div className="mx-2 w-36 h-10 relative">
 			<div
-				className={`text-white overflow-hidden absolute duration-300 w-36 z-20 bg-blue-500 top-0 left-0 ${
+				className={`text-white overflow-hidden absolute rounded-lg duration-300 w-36 z-20 bg-blue-500 top-0 left-0 ${
 					is_open ? "h-34" : "h-10"
 				}`}
 				onClick={() => set_is_open((prev) => !prev)}

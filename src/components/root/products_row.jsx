@@ -10,10 +10,17 @@ export function ProductsRow({ products, icon, title, className = "" }) {
 			{products === null ? (
 				<Loading />
 			) : (
-				<div className={["flex bg-sky-700 text-white flex-col p-2", className].join(" ")}>
+				<div
+					className={["flex bg-gray-200 mt-1  text-white flex-col p-2", className].join(
+						" "
+					)}
+				>
 					<div className="flex justify-between text-lg">
-						<h1>محصولات ما</h1>
-						<h1 className="underline cursor-pointer" onClick={() => nav("/products")}>
+						<h1 className="text-gray-700">محصولات ما</h1>
+						<h1
+							className="underline cursor-pointer text-gray-700"
+							onClick={() => nav("/products")}
+						>
 							مشاهده همه محصولات
 						</h1>
 					</div>

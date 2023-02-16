@@ -33,13 +33,22 @@ export function WritingSquare({ writing }) {
 		</div>
 	);
 }
-export function WritingRow({ publish_date, publisher_username, image_filename, _id, title }) {
+export function WritingRow({
+	className,
+	publish_date,
+	publisher_username,
+	image_filename,
+	_id,
+	title,
+}) {
 	var nav = useNavigate();
 	return (
 		<div
-			className={`w-full h-1/3 bg-blue-100  text-blue-600 
-				flex-row border-b border-blue-300 flex 
-				cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200 px-6`}
+			className={
+				`w-full h-1/3 bg-blue-100  text-blue-600 
+				flex-row border border-blue-300 flex 
+				cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200 px-6 ` + (className ? className : "")
+			}
 			onClick={() => nav(`/writings/${_id}`)}
 		>
 			<div className="flex items-center">
@@ -67,10 +76,12 @@ export function Writings(props) {
 	sorted_writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
 	/* todo make sure about this sorting function above  */
 	return (
-		<div className="bg-sky-700 flex p-4 justify-center h-full my-1 overflow-x-auto flex-col">
+		<div className="bg-gray-200 flex p-4 justify-center h-full my-1 overflow-x-auto flex-col">
 			<div className="flex justify-between px-2 text-white mb-2 items-center text-lg">
-				<h1 className="">آخرین نوشته ها</h1>
-				<Link to="/writings">مشاهده بیشتر</Link>
+				<h1 className="text-gray-700">آخرین نوشته ها</h1>
+				<Link to="/writings" className="text-gray-700">
+					مشاهده بیشتر
+				</Link>
 			</div>
 			<div className="w-full flex h-fit flex-col sm:flex-row items-center sm:items-stretch">
 				{sorted_writings.length === 0 ? (
@@ -78,18 +89,34 @@ export function Writings(props) {
 				) : (
 					<WritingSquare writing={sorted_writings[0]} />
 				)}
-				<div className="flex flex-col w-full sm:w-2/3 rounded-lg overflow-hidden mt-6 sm:mt-0">
+				<div className="flex flex-col w-full sm:w-2/3 overflow-hidden mt-6 sm:mt-0">
 					{[1, 2, 3].map((number, index) => {
 						var writing = sorted_writings[number];
 						if (writing !== undefined) {
-							return <WritingRow {...writing} key={index} />;
+							return (
+								<WritingRow
+									{...writing}
+									key={index}
+									className={
+										(index === 0 ? "rounded-t-lg" : "") +
+										" " +
+										(number === 3 ? "rounded-b-lg" : "")
+									}
+								/>
+							);
 						} else {
 							return (
 								<div
 									key={index}
-									className={`w-full h-1/3 bg-blue-100 flex-col
+									className={
+										`w-full h-1/3 bg-blue-100 flex-col border-x
 										text-blue-600 border-b border-blue-300 flex px-6 justify-center
-										cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200 py-4 sm:py-0`}
+										cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200 py-4 sm:py-0` +
+										" " +
+										(index === 0 ? "rounded-t-lg" : "") +
+										" " +
+										(number === 3 ? "rounded-b-lg" : "")
+									}
 								>
 									<h1 className="text-xl">
 										نوشته شماره {number + 1} برای نمایش وجود ندارد
@@ -109,14 +136,14 @@ export function Writings(props) {
 }
 export function CustomBlock({ title, info, button_text, button_onclick, Icon }) {
 	return (
-		<div className="bg-sky-700 flex p-4 items-center h-full my-1 justify-center sm:justify-start flex-col sm:flex-row">
+		<div className="bg-gray-200 flex p-4 items-center h-full my-1 justify-center sm:justify-start flex-col sm:flex-row">
 			<div
 				className="w-1/4 rounded-lg flex justify-center items-center"
 				style={{ aspectRatio: 1 }}
 			>
-				<Icon sx={{ width: "90%", height: "90%", color: "white" }} />
+				<Icon sx={{ width: "90%", height: "90%", color: "rgb(55,65,81)" }} />
 			</div>
-			<div className="h-full text-white w-3/4 p-2 text-center">
+			<div className="h-full text-gray-700 w-3/4 p-2 text-center">
 				<div>
 					<h1 className="text-4xl mb-2">{title}</h1>
 					<p className="mb-6 text-lg">{info}</p>
@@ -162,8 +189,9 @@ export default function Root() {
 	if (writings === null) return "loading ...";
 	return (
 		<>
+			<ContentSlider />
 			<ProductsRow
-				icon={<Stars sx={{ color: "darkblue" }} />}
+				icon={<Stars sx={{ color: "gray" }} />}
 				title="محصولات ما"
 				products={suggested_products()}
 			/>
@@ -191,7 +219,6 @@ export default function Root() {
 				info={"توضیحات شرکت اینجا نمایش داده خواهد شد"}
 				button_onclick={() => nav("/about-us")}
 			/>
-			<ContentSlider />
 			<CustomBlock
 				Icon={Phone}
 				button_text={"برو به تماس با ما"}
