@@ -4,6 +4,8 @@ import { customAjax } from "../../../src/custom_ajax.js";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
 import { gen_link_to_file, multi_lang_helper as ml, trim_text_if_its_long } from "../../common.js";
 import { Category, InfoRounded, MoneyRounded, SellRounded } from "@mui/icons-material";
+import { custom_axios } from "../../../api/client.js";
+import axios from "axios";
 export default function ProductItem({
 	beforeOnClick = () => {},
 	id,
@@ -23,7 +25,26 @@ export default function ProductItem({
 			},
 		}).then((data) => {
 			if (data.result.length != 0) {
-				set_the_image_src(gen_link_to_file("./product_images/" + data["result"][0]));
+				var low_quality_image = new Image();
+				custom_axios({
+					data: {
+						task_name: "get_low_quality_product_image",
+						image_filename: data["result"][0],
+					},
+					responseType: "blob",
+				})
+					.then((response) => {
+						set_the_image_src(URL.createObjectURL(response.data));
+					})
+					.then(() => {
+						axios({
+							url: gen_link_to_file("./product_images/" + data["result"][0]),
+							method: "get",
+							responseType: "blob",
+						}).then((response) => {
+							set_the_image_src(URL.createObjectURL(response.data));
+						});
+					});
 			} else {
 				set_the_image_src(null);
 			}

@@ -1,3 +1,4 @@
+var sharp = require("sharp");
 var hash_sha_256_hex = require("./common.cjs").hash_sha_256_hex;
 var express = require("express");
 var cors = require("cors");
@@ -1184,6 +1185,23 @@ async function main() {
 				} //todo take care when user input has single quote or ... (validate it also for security reasons)
 				rm.send();
 				break;
+			case "get_low_quality_product_image":
+				//required params = image_filename : in this format : "1-1.jpg" (image 1 of a product with id =1 )
+
+				var original_filepath = path.resolve(
+					`./uploaded/product_images/${params.image_filename}`
+				);
+				var new_image_buffer = await sharp(original_filepath)
+					.toFormat("png")
+					.png({ quality: 0, force: true })
+					.toBuffer();
+				var img = Buffer.from(new_image_buffer, "base64");
+				res.writeHead(200, {
+					"Content-Type": "image/jpeg",
+					"Content-Length": img.length,
+				});
+				res.end(img);
+				break;
 		}
 	});
 	app.all("/api-v2", async (req, res) => {
@@ -1268,6 +1286,5 @@ async function main() {
 	app.listen(env_vars.api_port, () => {
 		console.log(`server is listening on port ${env_vars.api_port}`);
 	});
-	
 }
 main();
