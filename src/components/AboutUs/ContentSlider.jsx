@@ -3,7 +3,8 @@ import { get_collection, get_data_pair } from "../../../api/client";
 import ProductItem from "../products/product_item";
 import { customAjax } from "../../custom_ajax";
 import { WritingSquare } from "../root/comp";
-function Item({ data }) {
+function Item({ data, hidden }) {
+	if (hidden) return;
 	if (data.type === "image") {
 		return (
 			<img
@@ -20,6 +21,7 @@ function Item({ data }) {
 				price={data.data.price}
 				className="overflow-hidden bg-blue-300 text-black rounded-xl"
 				description={data.data.description}
+				just_first_image={true}
 			/>
 		);
 	}
@@ -84,7 +86,7 @@ export const ContentSlider = ({}) => {
 	if (items_to_show === undefined) return <h1>loading ...</h1>;
 	return (
 		<div
-			className="w-full py-2 bg-gray-200 text-white flex justify-center"
+			className="w-full py-2 bg-gray-100 text-white flex justify-center"
 			style={{ height: "25vw" }}
 		>
 			{items_to_show.length === 0 ? (
@@ -92,7 +94,9 @@ export const ContentSlider = ({}) => {
 					<h1>هیچ موردی برای نمایش ثبت نشده است </h1>
 				</div>
 			) : (
-				<Item data={items_to_show[idk()]} />
+				items_to_show.map((item, index) => {
+					return <Item data={item} hidden={index !== idk()} />;
+				})
 			)}
 		</div>
 	);

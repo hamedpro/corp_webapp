@@ -13,8 +13,8 @@ export default function ProductItem({
 	price,
 	className = undefined,
 	description = "",
+	just_first_image = false,
 }) {
-	useEffect(() => {}, []);
 	//id stands for product id
 	var nav = useNavigate();
 	var [the_image_src, set_the_image_src] = useState(null);
@@ -26,7 +26,6 @@ export default function ProductItem({
 			},
 		}).then((data) => {
 			if (data.result.length != 0) {
-				var low_quality_image = new Image();
 				custom_axios({
 					data: {
 						task_name: "get_low_quality_product_image",
@@ -51,11 +50,23 @@ export default function ProductItem({
 			}
 		});
 	}, []);
-	function add_to_shopping_bag(id) {
-		alert(
-			ml({ en: "this feature is not implented yet", fa: "این قابلیت هنوز اضافه نشده است" })
-		);
-		//todo this feature is not implented yet and messages like this
+
+	if (just_first_image) {
+		if (the_image_src === null) {
+			return "there is not any image to show";
+		} else {
+			return (
+				<img
+					className="h-full"
+					style={{ objectFit: "contain" }}
+					src={the_image_src}
+					alt={ml({
+						en: "this product's first image",
+						fa: "",
+					})}
+				/>
+			);
+		}
 	}
 	return (
 		<div

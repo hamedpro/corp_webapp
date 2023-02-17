@@ -11,7 +11,7 @@ export function ProductsRow({ products, icon, title, className = "" }) {
 				<Loading />
 			) : (
 				<div
-					className={["flex bg-gray-200 mt-1  text-white flex-col p-2", className].join(
+					className={["flex bg-gray-100 mt-1  text-white flex-col p-2", className].join(
 						" "
 					)}
 				>

@@ -76,7 +76,7 @@ export function Writings(props) {
 	sorted_writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
 	/* todo make sure about this sorting function above  */
 	return (
-		<div className="bg-gray-200 flex p-4 justify-center h-full my-1 overflow-x-auto flex-col">
+		<div className="bg-gray-100 flex p-4 justify-center h-full my-1 overflow-x-auto flex-col">
 			<div className="flex justify-between px-2 text-white mb-2 items-center text-lg">
 				<h1 className="text-gray-700">آخرین نوشته ها</h1>
 				<Link to="/writings" className="text-gray-700">
@@ -136,7 +136,7 @@ export function Writings(props) {
 }
 export function CustomBlock({ title, info, button_text, button_onclick, Icon }) {
 	return (
-		<div className="bg-gray-200 flex p-4 items-center h-full my-1 justify-center sm:justify-start flex-col sm:flex-row">
+		<div className="bg-gray-100 flex p-4 items-center h-full my-1 justify-center sm:justify-start flex-col sm:flex-row">
 			<div
 				className="w-1/4 rounded-lg flex justify-center items-center"
 				style={{ aspectRatio: 1 }}

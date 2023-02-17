@@ -19,14 +19,14 @@ function MainHeaderLeftDropDown() {
 	return (
 		<div className="mx-2 w-36 h-10 relative">
 			<div
-				className={`text-white overflow-hidden absolute rounded-lg duration-300 w-36 z-20 bg-blue-500 top-0 left-0 ${
+				className={`text-white overflow-hidden absolute rounded-lg duration-300 w-36 z-20 bg-gray-500 top-0 left-0 ${
 					is_open ? "h-34" : "h-10"
 				}`}
 				onClick={() => set_is_open((prev) => !prev)}
 			>
 				<div
 					className={
-						"hover:bg-blue-600 duration-300 justify-between h-10 w-full flex items-center px-1" +
+						"hover:bg-gray-800 duration-300 justify-between h-10 w-full flex items-center px-1" +
 						(is_open ? " border-b border-blue-600" : "")
 					}
 				>
@@ -38,7 +38,7 @@ function MainHeaderLeftDropDown() {
 					{is_open ? <KeyboardArrowUpRounded /> : <KeyboardArrowDownRounded />}
 				</div>
 				<div
-					className="hover:bg-blue-600 duration-300 h-8 w-full px-2 items-center flex"
+					className="hover:bg-gray-800 duration-300 h-8 w-full px-2 items-center flex"
 					onClick={() =>
 						nav(`/users/${window.localStorage.getItem("username")}/shopping-card`)
 					}
@@ -46,13 +46,13 @@ function MainHeaderLeftDropDown() {
 					سبد خرید من
 				</div>
 				<div
-					className="hover:bg-blue-600 duration-300 h-8 w-full px-2 items-center flex"
+					className="hover:bg-gray-800 duration-300 h-8 w-full px-2 items-center flex"
 					onClick={() => nav(`/users/${window.localStorage.getItem("username")}`)}
 				>
 					حساب کاربری من
 				</div>
 				<div
-					className="hover:bg-blue-600 duration-300 h-8 w-full px-2 items-center flex"
+					className="hover:bg-gray-800 duration-300 h-8 w-full px-2 items-center flex"
 					onClick={() => {
 						window.localStorage.removeItem("username");
 						window.location.replace("/");
@@ -68,7 +68,7 @@ function LandscapeHeaderOption({ icon, content, url }) {
 	var nav = useNavigate();
 	return (
 		<div
-			className="shrink-0 flex-wrap flex space-x-2 p-2 text-white hover:bg-blue-700 duration-300 cursor-pointer"
+			className="shrink-0 flex-wrap flex space-x-2 p-2 text-white hover:bg-gray-500 hover:text-white duration-300 cursor-pointer"
 			onClick={url.startsWith("http") ? () => window.location.assign(url) : () => nav(url)}
 		>
 			{icon}
@@ -120,7 +120,7 @@ export default function MainHeader() {
 				visibility={header_menu_visibility}
 			/>
 			<div
-				className={`bg-sky-700 z-30 top-0 w-full flex items-start pt-2 flex-row p-2 pb-0 border-b border-gray-300`}
+				className={`bg-gray-700 z-30 top-0 w-full flex items-start pt-2 flex-row p-2 pb-0 border-b border-gray-300`}
 			>
 				<div className="flex flex-col w-full h-full">
 					<div className="w-full flex flex-row items-center justify-between">
@@ -133,7 +133,7 @@ export default function MainHeader() {
 							</CustomButton>
 							<h1
 								onClick={() => nav("/")}
-								className="cursor-pointer px-2 text-lg p-0 bg-sky-600 pb-1 text-white mx-2 rounded h-10 flex items-center"
+								className="cursor-pointer px-2 text-lg p-0 bg-gray-500 pb-1 text-white mx-2 rounded h-10 flex items-center"
 							>
 								{company_name}
 							</h1>
