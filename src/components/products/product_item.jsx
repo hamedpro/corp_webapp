@@ -5,7 +5,6 @@ import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
 import { gen_link_to_file, multi_lang_helper as ml, trim_text_if_its_long } from "../../common.js";
 import { Category, InfoRounded, MoneyRounded, SellRounded } from "@mui/icons-material";
 import { custom_axios } from "../../../api/client.js";
-import axios from "axios";
 export default function ProductItem({
 	beforeOnClick = () => {},
 	id,
@@ -18,6 +17,7 @@ export default function ProductItem({
 	//id stands for product id
 	var nav = useNavigate();
 	var [the_image_src, set_the_image_src] = useState(null);
+	var [image_is_loading, set_image_is_loading] = useState(true);
 	useEffect(() => {
 		customAjax({
 			params: {
@@ -44,6 +44,7 @@ export default function ProductItem({
 							responseType: "blob",
 						}).then((response) => {
 							set_the_image_src(URL.createObjectURL(response.data));
+							set_image_is_loading(false);
 						});
 					});
 			} else {
@@ -57,22 +58,24 @@ export default function ProductItem({
 			return "there is not any image to show";
 		} else {
 			return (
-				<img
-					className="h-full"
-					style={{ objectFit: "contain" }}
-					src={the_image_src}
-					alt={ml({
-						en: "this product's first image",
-						fa: "",
-					})}
-				/>
+				<div className="relative ">
+					{image_is_loading && (
+						<div
+							style={{ background: "rgba(0,0,100,0.2)" }}
+							className=" text-white rounded p-2 text-center absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 "
+						>
+							در حال بارگذاری
+						</div>
+					)}
+					<img className="h-full" style={{ objectFit: "contain" }} src={the_image_src} />
+				</div>
 			);
 		}
 	}
 	return (
 		<div
 			className={
-				"w-1/2 sm:w-1/4 p-1 flex flex-col shrink-0 cursor-pointer border relative border-stone-400 hover:scale-105 hover:z-10 duration-150" +
+				"w-1/2 sm:w-1/4 p-1 relative flex flex-col shrink-0 cursor-pointer border  border-stone-400 hover:scale-105 hover:z-10 duration-150" +
 				(className ? " " + className : "")
 			}
 			onClick={() => {
@@ -86,7 +89,15 @@ export default function ProductItem({
 						<NoPhotographyRoundedIcon className="text-white" />
 					</div>
 				) : (
-					<div className="h-full rounded-lg bg-blue-400 w-full flex justify-center items-center">
+					<div className="relative h-full rounded-lg bg-blue-400 w-full flex justify-center items-center">
+						{image_is_loading && (
+							<div
+								style={{ background: "rgba(0,0,100,0.2)" }}
+								className=" text-white rounded p-2 text-center absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 "
+							>
+								در حال بارگذاری
+							</div>
+						)}
 						<img
 							className="h-full"
 							style={{ objectFit: "contain" }}
