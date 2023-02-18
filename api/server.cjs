@@ -137,18 +137,19 @@ async function init(con) {
 async function main() {
 	var client = new MongoClient(env_vars.mongodb_url);
 	var db = client.db(env_vars.mongodb_db_name);
-	var con = await connect_to_db();
-	var output = await cq(con, "select * from users;");
-	var current_users = output.result;
-	if (current_users.length === 0) {
-		//if there is not any users yet it creates one with username and password both = "root"
-		var hashed_password = hash_sha_256_hex("root" + env_vars.PASSWORD_HASHING_SECRET);
-		await cq(
-			con,
-			`insert into users (username,hashed_password,is_admin) values ('root','${hashed_password}',"true")`
-		);
-	}
+
 	app.all("/", async (req, res) => {
+		var con = await connect_to_db();
+		var output = await cq(con, "select * from users;");
+		var current_users = output.result;
+		if (current_users.length === 0) {
+			//if there is not any users yet it creates one with username and password both = "root"
+			var hashed_password = hash_sha_256_hex("root" + env_vars.PASSWORD_HASHING_SECRET);
+			await cq(
+				con,
+				`insert into users (username,hashed_password,is_admin) values ('root','${hashed_password}',"true")`
+			);
+		}
 		var rm = new response_manager(res);
 		try {
 			await init(con);

@@ -8,6 +8,7 @@ import { gen_link_to_file, multi_lang_helper as ml, shuffle } from "../../common
 import { custom_axios } from "../../../api/client";
 import { ContentSlider } from "../AboutUs/ContentSlider";
 export function WritingSquare({ writing }) {
+	var nav = useNavigate();
 	return (
 		<div
 			className="bg-blue-300 cursor-pointer rounded-lg w-full sm:w-1/3 mx-2 flex justify-center items-center relative text-white overflow-hidden"
