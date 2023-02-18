@@ -10,6 +10,7 @@ import Attach from "@editorjs/attaches";
 import Table from "@editorjs/table";
 import ImageTool from "@editorjs/image";
 import Checklist from "@editorjs/checklist";
+import { custom_axios } from "../../../api/client";
 function CustomInput({ id }) {
 	return <input id={id} className="border border-green-400 rounded px-2 py-1" />;
 }
@@ -47,47 +48,33 @@ export default function NewProduct() {
 			);
 			return;
 		}
+		var file_ids = [];
+		//first we upload files one by one and store their keys inside file_ids variable
+		for (var file of document.getElementById("images_input").files) {
+			var form = new FormData();
+			form.append("file", file);
+			var { inserted_id } = (
+				await custom_axios({
+					url: "files?type=product_image",
+					method: "post",
+					data: form,
+				})
+			).data;
+			file_ids.push(inserted_id);
+		}
 		var params = {
 			task_name: "new_product",
 			name: document.getElementById("name_input").value,
 			description: JSON.stringify(await editor_js_instance.save()),
 			product_specs: JSON.stringify(specs),
 			price: entered_price,
+			image_file_ids: JSON.stringify(file_ids),
 		};
-		customAjax({
+		await customAjax({
 			//todo check if required param is not given in all app
 			params,
-		}).then(
-			(data) => {
-				var form = new FormData();
-				var files = Object.keys(document.getElementById("images_input").files).map(
-					(key) => {
-						return document.getElementById("images_input").files[key];
-					}
-				);
-				customAjax({
-					params: {
-						task_name: "upload_product_images",
-						product_id: data.result,
-					},
-					files,
-				}).then(
-					(data) => {
-						alert("done successfuly!");
-					},
-					(e) => {
-						alert("something went wrong");
-						console.log(e);
-					}
-				);
-			},
-			(error) => {
-				console.log(error);
-				alert(
-					"something went wrong when uploading text fields of this form \n more details in dev console"
-				);
-			}
-		);
+		});
+		alert("با موفقیت انجام شد");
 	}
 
 	function remove_spec(id) {

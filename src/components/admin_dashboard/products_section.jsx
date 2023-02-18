@@ -1,5 +1,6 @@
 import { AddAPhoto, Delete, InfoRounded } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
+import { custom_axios } from "../../../api/client.js";
 import { customAjax } from "../../../src/custom_ajax.js";
 import { gen_link_to_file, multi_lang_helper as ml } from "../../common.js";
 import { CustomTable } from "../../components/custom_table/comp";
@@ -149,14 +150,26 @@ export default function ProductsSection() {
 				});
 		}
 	};
-	function upload_new_product_image(product_id) {
+	async function upload_new_product_image(product_id) {
 		var file = document.getElementById("new_product_image_input").files[0];
+		var form = new FormData();
+		form.append("file", file);
+		var { inserted_id } = (
+			await custom_axios({
+				url: `/files?type=product_image`,
+				method: "post",
+				data: form,
+			})
+		).data;
+		var product = products.find((product) => product.id === Number(product_id));
 		customAjax({
 			params: {
-				task_name: "new_product_image",
-				product_id,
+				task_name: "update_product_data",
+				image_file_ids: JSON.stringify(
+					JSON.parse(product.image_file_ids).concat(inserted_id)
+				),
+				product_id: product.id,
 			},
-			files: [file],
 		}).then(
 			(data) => {
 				alert("done successfuly!");
@@ -173,12 +186,16 @@ export default function ProductsSection() {
 		el.onchange = () => upload_new_product_image(product_id);
 		el.click();
 	}
-	function del_product_image(image_file_name) {
+	function del_product_image(current_product, image_file_id) {
 		if (!confirm("are you sure that you want to delete this picture?")) return;
+		//todo delete all images also from disk
 		customAjax({
 			params: {
-				task_name: "del_product_image",
-				image_file_name,
+				task_name: "update_product_data",
+				image_file_ids: JSON.stringify(
+					JSON.parse(current_product.image_file_ids).filter((i) => i !== image_file_id)
+				),
+				product_id: current_product.id,
 			},
 		}).then(
 			(data) => {
@@ -282,25 +299,33 @@ export default function ProductsSection() {
 										(برای حذف کردن عکس روی آن کلیک کنید)
 									</h1>
 									<div className="flex space-x-2">
-										{product.images_path_names.map((image_path_name, index) => {
-											return (
-												<div
-													key={index}
-													className="h-16 w-16 shrink-0 flex justify-center items-center"
-												>
-													<img
-														style={{ objectFit: "contain" }}
-														className="w-full"
-														onClick={() =>
-															del_product_image(image_path_name)
-														}
-														src={gen_link_to_file(
-															"./product_images/" + image_path_name
-														)}
-													/>
-												</div>
-											);
-										})}
+										{JSON.parse(product.image_file_ids).map(
+											(image_file_id, index) => {
+												return (
+													<div
+														key={index}
+														className="h-16 w-16 shrink-0 flex justify-center items-center"
+													>
+														<img
+															style={{ objectFit: "contain" }}
+															className="w-full"
+															onClick={() =>
+																del_product_image(
+																	product,
+																	image_file_id
+																)
+															}
+															src={
+																new URL(
+																	`/files/${image_file_id}`,
+																	vite_api_endpoint
+																).href
+															}
+														/>
+													</div>
+												);
+											}
+										)}
 										<div
 											className="h-16 w-16 shrink-0 flex justify-center items-center bg-blue-400 rounded-lg "
 											onClick={() => start_upload_progress(product.id)}

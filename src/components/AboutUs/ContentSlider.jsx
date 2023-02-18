@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { get_collection, get_data_pair } from "../../../api/client";
 import ProductItem from "../products/product_item";
 import { customAjax } from "../../custom_ajax";
@@ -9,7 +9,7 @@ function Item({ data, hidden }) {
 		return (
 			<img
 				className="h-full"
-				src={new URL(`/files/${data.data.file_id}`, vite_api_endpoint)}
+				src={new URL(`/files/${data.data.file_id}`, vite_api_endpoint).href}
 			/>
 		);
 	}
@@ -95,7 +95,11 @@ export const ContentSlider = ({}) => {
 				</div>
 			) : (
 				items_to_show.map((item, index) => {
-					return <Item data={item} hidden={index !== idk()} />;
+					return (
+						<Fragment key={index}>
+							<Item data={item} hidden={index !== idk()} />
+						</Fragment>
+					);
 				})
 			)}
 		</div>

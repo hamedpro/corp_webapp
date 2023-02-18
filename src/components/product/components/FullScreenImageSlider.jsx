@@ -13,14 +13,16 @@ export const FullScreenImageSlider = () => {
 	async function get_data() {
 		customAjax({
 			params: {
-				task_name: "get_paths_of_images_of_a_product",
-				product_id,
+				task_name: "get_products",
 			},
 		}).then((data) => {
 			set_image_sources(
-				data.result.map((file_name) => gen_link_to_file("./product_images/" + file_name))
+				JSON.parse(
+					data.result.find((product) => product.id === Number(product_id)).image_file_ids
+				).map((image_file_id) => new URL(`/files/${image_file_id}`, vite_api_endpoint).href)
 			);
 		});
+		
 	}
 	useEffect(() => {
 		get_data();

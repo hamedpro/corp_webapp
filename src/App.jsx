@@ -43,7 +43,7 @@ function App() {
 			var favicon_file_url = new URL(
 				`/files/${company_info.favicon_file_id}`,
 				vite_api_endpoint
-			);
+			).href;
 			document.getElementById("favicon").href = favicon_file_url;
 		}
 		if (Object.keys(company_info).includes("name")) {

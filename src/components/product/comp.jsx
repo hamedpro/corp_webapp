@@ -46,17 +46,13 @@ export default function Product() {
 				task_name: "get_products",
 			},
 		});
-		set_product(tmp.result.filter((i) => i.id == Number(product_id))[0]);
-		customAjax({
-			params: {
-				task_name: "get_paths_of_images_of_a_product",
-				product_id,
-			},
-		}).then((data) => {
-			set_image_sources(
-				data.result.map((file_name) => gen_link_to_file("./product_images/" + file_name))
-			);
-		});
+		let product = tmp.result.filter((i) => i.id == Number(product_id))[0];
+		set_product(product);
+		set_image_sources(
+			JSON.parse(product.image_file_ids).map(
+				(image_file_id) => new URL(`/files/${image_file_id}`, vite_api_endpoint).href
+			)
+		);
 	}
 	useEffect(() => {
 		init();

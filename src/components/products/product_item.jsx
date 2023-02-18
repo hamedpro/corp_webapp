@@ -21,24 +21,25 @@ export default function ProductItem({
 	useEffect(() => {
 		customAjax({
 			params: {
-				task_name: "get_paths_of_images_of_a_product",
-				product_id: id,
+				task_name: "get_products",
 			},
 		}).then((data) => {
-			if (data.result.length != 0) {
+			var product = data.result.find((product) => product.id === Number(id));
+			if (JSON.parse(product.image_file_ids).length !== 0) {
 				custom_axios({
 					data: {
 						task_name: "get_low_quality_product_image",
-						image_filename: data["result"][0],
+						image_file_id: JSON.parse(product.image_file_ids)[0],
 					},
 					responseType: "blob",
 				})
 					.then((response) => {
-						set_the_image_src(URL.createObjectURL(response.data));
+						var tmp = URL.createObjectURL(response.data);
+						set_the_image_src(tmp);
 					})
 					.then(() => {
-						axios({
-							url: gen_link_to_file("./product_images/" + data["result"][0]),
+						custom_axios({
+							url: `/files/${JSON.parse(product.image_file_ids)[0]}`,
 							method: "get",
 							responseType: "blob",
 						}).then((response) => {

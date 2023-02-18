@@ -222,14 +222,6 @@ async function main() {
 					rm.send();
 				}
 				break;
-			case "get_table":
-				var output = await cq(con, `select * from ${params.table_name}`);
-				if (output.error) {
-					rm.send_error(output.error);
-				} else {
-					rm.send_result(output.result);
-				}
-				break;
 			case "get_users":
 				//todo add his shopping card as a prop
 				//todo add his orders here
@@ -373,9 +365,11 @@ async function main() {
 				}
 				con.query(
 					`insert into products 
-					(name,description,product_specs,price) 
+					(name,description,product_specs,price,image_file_ids) 
 					values
-					('${params.name}','${params.description}','${params.product_specs}',${Number(params.price)})`,
+					('${params.name}','${params.description}','${params.product_specs}',${Number(params.price)},'${
+						params.image_file_ids
+					}')`,
 					(error) => {
 						if (error) {
 							rm.send_error(error);
@@ -415,14 +409,19 @@ async function main() {
 										? params["product_specs"]
 										: old_data["product_specs"],
 								price: "price" in params ? params["price"] : old_data["price"],
+								image_file_ids:
+									"image_file_ids" in params
+										? params["image_file_ids"]
+										: old_data["image_file_ids"],
 							};
 							con.query(
 								`
 							update products 
-							set name="${new_data.name}",
-							description="${new_data.description}",
-							product_specs="${new_data.product_specs}",
-							price="${new_data.price}" 
+							set name='${new_data.name}',
+							description='${new_data.description}',
+							product_specs='${new_data.product_specs}',
+							price='${new_data.price}',
+							image_file_ids='${new_data.image_file_ids}'
 							where id= ${params.product_id}`,
 								(err) => {
 									if (err) {
@@ -435,55 +434,6 @@ async function main() {
 						}
 					}
 				);
-				break;
-			case "upload_product_images":
-				var product_images_dir = "./uploaded/product_images";
-				if (!fs.existsSync(product_images_dir)) {
-					fs.mkdirSync(product_images_dir);
-				}
-
-				form = formidable({ uploadDir: "./uploaded/product_images" });
-				form.parse(req, (err, fields, files) => {
-					/* if (err) {
-						next(err);
-						return;
-					} */
-					Object.keys(files).forEach((file_name) => {
-						var images_count_of_this_product = 0;
-						var dir_files_names = fs.readdirSync("./uploaded/product_images/");
-						dir_files_names.forEach((filenamei) => {
-							if (
-								filenamei
-									.split("/")
-									[filenamei.split("/").length - 1].split("-")[0] ==
-								params.product_id
-							) {
-								images_count_of_this_product += 1;
-							}
-						});
-						var filepath = files[file_name]["filepath"];
-						var dest = filepath.split("/");
-						dest.pop();
-						var file_extension =
-							files[file_name]["originalFilename"].split(".")[
-								files[file_name]["originalFilename"].split(".").length - 1
-							];
-						dest.push(
-							`${params.product_id}-${
-								images_count_of_this_product + 1
-							}.${file_extension}`
-						);
-						dest = dest.join("/");
-						try {
-							fs.renameSync(filepath, dest);
-						} catch (e) {
-							rm.add_error(e);
-						}
-
-						// todo : make sure to undo uncompleted task if its required when it is terminated during its work (in all application)
-					});
-					rm.send();
-				});
 				break;
 			case "new_user_profile_image":
 				var dir = "./uploaded/profile_images";
@@ -508,17 +458,6 @@ async function main() {
 						rm.send_error("there was an error inside node js custom upload function");
 					},
 				});
-				break;
-			case "get_product_images_count":
-				//todo take care to re assigning numbers when modifying photos
-				var file_names = fs.readdirSync("./uploaded/product_images");
-				var count = 0;
-				file_names.forEach((file_name) => {
-					if (file_name.split("-")[0] == params.product_id) {
-						count += 1;
-					}
-				});
-				rm.send_result(count);
 				break;
 			case "new_product_user_review":
 				con.query(
@@ -590,22 +529,7 @@ async function main() {
 					if (error) {
 						rm.send_error(error);
 					} else {
-						var modified_results = result;
-						modified_results.map((o) => {
-							var oo = o;
-
-							var file_names = fs.readdirSync("./uploaded/product_images");
-							var needed_file_names = [];
-							file_names.forEach((file_name) => {
-								if (file_name.split("-")[0] == o.id) {
-									needed_file_names.push(file_name);
-								} //todo we have a case "get image path names of a product" also so we are
-								//breaking the single source of truth rule , also check all app for this rule
-							});
-							oo.images_path_names = needed_file_names;
-							return oo;
-						});
-						rm.send_result(modified_results);
+						rm.send_result(result);
 					}
 				});
 				break;
@@ -623,23 +547,10 @@ async function main() {
 					},
 				});
 				break;
-			case "get_paths_of_images_of_a_product":
-				var file_names = fs.readdirSync("./uploaded/product_images");
-				var needed_file_names = [];
-				file_names.forEach((file_name) => {
-					if (file_name.split("-")[0] == params.product_id) {
-						needed_file_names.push(file_name);
-					}
-				});
-				rm.send_result(needed_file_names);
-				break;
 			case "delete_product":
 				var file_names = fs.readdirSync("./uploaded/product_images");
-				file_names.forEach((file_name) => {
-					if (file_name.split("-")[0] == params.product_id) {
-						fs.unlinkSync("./uploaded/product_images/" + file_name);
-					}
-				});
+				//todo also delete original and low_quality files according to
+				//new file management specs
 				con.query(
 					`delete from products where id = ${Number(params.product_id)}`,
 					(error, result) => {
@@ -1016,28 +927,7 @@ async function main() {
 				}
 				rm.send();
 				break;
-			case "new_product_image":
-				var this_product_images_count = fs
-					.readdirSync("./uploaded/product_images")
-					.filter((i) => i.split("-")[0] == params.product_id).length;
-				custom_upload({
-					req,
-					uploadDir: "./uploaded/product_images",
-					files_names: [params.product_id + "-" + (this_product_images_count + 1)],
-					onSuccess: () => {
-						rm.send();
-					},
-					onReject: (e) => {
-						rm.send_error(e);
-					},
-				});
-				break;
-			case "del_product_image":
-				fs.rmSync(path.join("./uploaded/product_images", params.image_file_name), {
-					force: true,
-				});
-				rm.send();
-				break;
+
 			case "delete_user_profile_image":
 				var path_of_that_image = fs
 					.readdirSync("./uploaded/profile_images")
@@ -1186,21 +1076,14 @@ async function main() {
 				rm.send();
 				break;
 			case "get_low_quality_product_image":
-				//required params = image_filename : in this format : "1-1.jpg" (image 1 of a product with id =1 )
-
-				var original_filepath = path.resolve(
-					`./uploaded/product_images/${params.image_filename}`
+				//required params = image_file_id
+				var tmp = path.resolve(
+					"./uploads",
+					fs
+						.readdirSync("./uploads")
+						.find((i) => i.startsWith(`low_quality-${params.image_file_id}`))
 				);
-				var new_image_buffer = await sharp(original_filepath)
-					.toFormat("png")
-					.png({ quality: 0, force: true })
-					.toBuffer();
-				var img = Buffer.from(new_image_buffer, "base64");
-				res.writeHead(200, {
-					"Content-Type": "image/jpeg",
-					"Content-Length": img.length,
-				});
-				res.end(img);
+				res.sendFile(tmp);
 				break;
 		}
 	});
@@ -1242,6 +1125,10 @@ async function main() {
 		}
 	});
 	app.post("/files", async (request, response) => {
+		//request should be a multipart form with a single file inside it with name = "file"
+		//encoded with "multipart/form-data"
+
+		//response is json stringified of {inserted_id : string }
 		var f = formidable({ uploadDir: "./uploads" });
 		await new Promise((resolve, reject) => {
 			f.parse(request, async (error, fields, files) => {
@@ -1254,6 +1141,14 @@ async function main() {
 					files.file.filepath,
 					`./uploads/${inserted_id}-${files.file.originalFilename}`
 				);
+				if (request.query.type === "product_image") {
+					await sharp(`./uploads/${inserted_id}-${files.file.originalFilename}`)
+						.toFormat("png")
+						.png({ quality: 0, force: true })
+						.toFile(
+							`./uploads/low_quality-${inserted_id}-${files.file.originalFilename}`
+						);
+				}
 				response.json({ inserted_id });
 				resolve();
 			});
@@ -1264,7 +1159,7 @@ async function main() {
 			.readdirSync("./uploads")
 			.find((file_name) => file_name.split("-")[0] == request.params.file_id);
 		if (filepath === undefined) {
-			response.status(404).json(`file you are looking for couldn't be found`);
+			response.status(404).json(`the file you are looking for couldn't be found`);
 			return;
 		}
 		response.sendFile(path.resolve("./uploads/", filepath));
