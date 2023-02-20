@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { customAjax } from "../../../src/custom_ajax.js";
+import { customAjax } from "../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../common.js";
 import { Section } from "./Section.jsx";
 import { StyledDiv } from "./StyledElements";
 import { CompanyInfoSection } from "./CompanyInfoSection";
 import { ManageIconsSection } from "./ManageIconsSection";
-export function OptionsSection() {
+export function AdminDashboardOptionsSection() {
 	var nav = useNavigate();
 	function change_my_own_password() {
 		alert(

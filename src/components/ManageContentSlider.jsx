@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { custom_axios, get_collection, get_data_pair, put_pair } from "../../api/client";
 import { customAjax } from "../custom_ajax";
+import { ProgressBarModal } from "./ProgressBarModal";
 import { Section } from "./Section";
 import { StyledDiv } from "./StyledElements";
 export const ManageContentSlider = () => {
 	var [all_products, set_all_products] = useState();
 	var [all_writings, set_all_writings] = useState();
-
+	var [upload_state, set_upload_state] = useState({
+		is_uploading: false,
+		percent: undefined,
+	});
 	var [content_slider_content, set_content_slider_content] = useState();
 
 	async function upload_new_image() {
@@ -22,8 +26,19 @@ export const ManageContentSlider = () => {
 			await custom_axios({
 				data: f,
 				url: "/files",
+				onUploadProgress: (progressEvent) => {
+					set_upload_state({
+						percent: Math.round((progressEvent.loaded * 100) / progressEvent.total),
+						is_uploading: true,
+					});
+				},
 			})
 		).data;
+		set_upload_state({
+			is_uploading: false,
+			percent: undefined,
+		});
+		alert("با موفقیت انجام شد ");
 		var new_content_slider_content = JSON.parse(JSON.stringify(content_slider_content));
 		new_content_slider_content.image_file_ids.push(inserted_id);
 		await put_pair("content_slider_content", new_content_slider_content);
@@ -89,75 +104,90 @@ export const ManageContentSlider = () => {
 	if ([all_products, all_writings, content_slider_content].some((i) => i === undefined))
 		return <h1>loading ... </h1>;
 	return (
-		<div className="flex flex-col w-full ">
-			<Section title="بخش مدیریت اسلایدر صفحه اصلی" className="w-full" innerClassName="p-2">
-				<h1 className="text-lg">کالا های انتخاب شده: </h1>
-				<p className="text-sm mb-2">کالا های مورد نظر خود را علامت بزنید</p>
-				<Select
-					isMulti
-					isSearchable
-					options={all_products.map((product, index) => {
-						return {
-							value: product.id,
-							label: product.name,
-						};
-					})}
-					value={all_products
-						.filter((product) =>
-							content_slider_content.product_ids.includes(product.id)
-						)
-						.map((i) => {
-							return { value: i.id, label: i.name };
-						})}
-					onChange={products_select_onchange}
+		<>
+			{upload_state.is_uploading && (
+				<ProgressBarModal
+					title="بارگذاری عکس"
+					info="در حال بارگذاری عکس در اسلایدر صفحه اصلی"
+					percentage={upload_state.percent}
 				/>
-				<h1 className="text-lg mt-2">نوشته های انتخاب شده:</h1>
-				<p className="text-sm mb-2">
-					نوشته های مورد نظر خود را از بین همه موارد ثبت شده زیر انتخاب کنید:{" "}
-				</p>
-				<Select
-					isMulti
-					isSearchable
-					options={all_writings.map((writing, index) => {
-						return {
-							value: writing._id,
-							label: writing.title,
-						};
-					})}
-					onChange={writings_select_onchange}
-					value={all_writings
-						.filter((w) => content_slider_content.writing_ids.includes(w._id))
-						.map((w) => {
-							return { value: w._id, label: w.title };
+			)}
+			<div className="flex flex-col w-full ">
+				<Section
+					title="بخش مدیریت اسلایدر صفحه اصلی"
+					className="w-full"
+					innerClassName="p-2"
+				>
+					<h1 className="text-lg">کالا های انتخاب شده: </h1>
+					<p className="text-sm mb-2">کالا های مورد نظر خود را علامت بزنید</p>
+					<Select
+						isMulti
+						isSearchable
+						options={all_products.map((product, index) => {
+							return {
+								value: product.id,
+								label: product.name,
+							};
 						})}
-				/>
-			</Section>
-			<Section title="عکس های فعلی" className="mt-2" innerClassName="p-2 flex space-x-2">
-				{content_slider_content.image_file_ids.map((image_file_id) => {
-					return (
-						<div
-							key={image_file_id}
-							className="border border-blue-400 rounded w-40 aspect-auto mx-1"
-						>
-							<h1 className="text-center">#{image_file_id}</h1>
-							<img src={new URL(`/files/${image_file_id}`, vite_api_endpoint).href} />
-							<button
-								onClick={() => delete_image(image_file_id)}
-								className="text-center w-full h-6 bg-red-500 text-white duration-300 hover:bg-red-600 rounded-b"
+						value={all_products
+							.filter((product) =>
+								content_slider_content.product_ids.includes(product.id)
+							)
+							.map((i) => {
+								return { value: i.id, label: i.name };
+							})}
+						onChange={products_select_onchange}
+					/>
+					<h1 className="text-lg mt-2">نوشته های انتخاب شده:</h1>
+					<p className="text-sm mb-2">
+						نوشته های مورد نظر خود را از بین همه موارد ثبت شده زیر انتخاب کنید:{" "}
+					</p>
+					<Select
+						isMulti
+						isSearchable
+						options={all_writings.map((writing, index) => {
+							return {
+								value: writing._id,
+								label: writing.title,
+							};
+						})}
+						onChange={writings_select_onchange}
+						value={all_writings
+							.filter((w) => content_slider_content.writing_ids.includes(w._id))
+							.map((w) => {
+								return { value: w._id, label: w.title };
+							})}
+					/>
+				</Section>
+				<Section title="عکس های فعلی" className="mt-2" innerClassName="p-2 flex space-x-2">
+					{content_slider_content.image_file_ids.map((image_file_id) => {
+						return (
+							<div
+								key={image_file_id}
+								className="border border-blue-400 rounded w-40 aspect-auto mx-1"
 							>
-								حذف کردن این عکس
-							</button>
-						</div>
-					);
-				})}
-			</Section>
-			<Section title="اپلود عکس جدید" className="mt-2" innerClassName="p-2">
-				<input id="new_image_input" type="file" />
-				<br />
-				<StyledDiv onClick={upload_new_image} className="mt-2">
-					اپلود این عکس
-				</StyledDiv>
-			</Section>
-		</div>
+								<h1 className="text-center">#{image_file_id}</h1>
+								<img
+									src={new URL(`/files/${image_file_id}`, vite_api_endpoint).href}
+								/>
+								<button
+									onClick={() => delete_image(image_file_id)}
+									className="text-center w-full h-6 bg-red-500 text-white duration-300 hover:bg-red-600 rounded-b"
+								>
+									حذف کردن این عکس
+								</button>
+							</div>
+						);
+					})}
+				</Section>
+				<Section title="اپلود عکس جدید" className="mt-2" innerClassName="p-2">
+					<input id="new_image_input" type="file" />
+					<br />
+					<StyledDiv onClick={upload_new_image} className="mt-2">
+						اپلود این عکس
+					</StyledDiv>
+				</Section>
+			</div>
+		</>
 	);
 };

@@ -7,8 +7,13 @@ import { CustomTable } from "./CustomTable";
 import { Alert } from "./Alert.jsx";
 import { Loading } from "./Loading.jsx";
 import { StyledDiv } from "./StyledElements";
+import { ProgressBarModal } from "./ProgressBarModal.jsx";
 export function ProductsSection() {
 	const [products, set_products] = useState(null);
+	var [upload_state, set_upload_state] = useState({
+		is_uploading: false,
+		percent: undefined,
+	});
 	function delete_product(product_id) {
 		customAjax({
 			params: {
@@ -159,8 +164,18 @@ export function ProductsSection() {
 				url: `/files?type=product_image`,
 				method: "post",
 				data: form,
+				onUploadProgress: (e) => {
+					set_upload_state({
+						percent: Math.round((e.loaded * 100) / e.total),
+						is_uploading: true,
+					});
+				},
 			})
 		).data;
+		set_upload_state({
+			is_uploading: false,
+			percent: undefined,
+		});
 		var product = products.find((product) => product.id === Number(product_id));
 		customAjax({
 			params: {
@@ -209,142 +224,151 @@ export function ProductsSection() {
 		);
 	}
 	return (
-		<div className="flex flex-col">
-			<input id="new_product_image_input" type="file" className="hidden" />
-			{ml({
-				en: "products:",
-				fa: "محصولات",
-			})}
-			<Loading is_loading={products === null} />
-			{products !== null && (
-				<>
-					{products.length === 0 && (
-						<Alert icon={<InfoRounded />} className="mt-2">
-							{ml({
-								en: "there is not any product",
-								fa: "اینجا هیچ محصولی وجود ندارد",
-							})}
-						</Alert>
-					)}
-					{products.map((product, index) => {
-						return (
-							<React.Fragment key={index}>
-								<CustomTable
-									className={"mt-2"}
-									headerItems={[
-										ml({
-											en: "id",
-											fa: "شناسه",
-										}),
-										,
-										ml({
-											en: "name",
-											fa: "نام",
-										}),
-										ml({
-											en: "price",
-											fa: "قیمت",
-										}),
-									]}
-									rows={[
-										[
-											{
-												value: product.id,
-												onClick: () => {
-													alert(
-														ml({
-															en: `product id can't be changed`,
-															fa: "شناسه کالا قابل تغییر نیست",
-														})
-													);
-												},
-											},
-											{
-												value: product.name,
-												onClick: () => {
-													modify_product({
-														task: "name",
-														payload: {
-															product_id: product.id,
-														},
-													});
-												},
-											},
-											{
-												value: product.price,
-												onClick: () => {
-													modify_product({
-														task: "price",
-														payload: {
-															product_id: product.id,
-														},
-													});
-												},
-											},
-										],
-									]}
-								>
-									<h1>
-										{ml({
-											en: "product specifications :",
-											fa: "مشخصات فنی محصول",
-										})}
-									</h1>
-
-									<h1>
-										{ml({
-											en: "photos :",
-											fa: "عکس های محصول :",
-										})}{" "}
-										(برای حذف کردن عکس روی آن کلیک کنید)
-									</h1>
-									<div className="flex space-x-2">
-										{JSON.parse(product.image_file_ids).map(
-											(image_file_id, index) => {
-												return (
-													<div
-														key={index}
-														className="h-16 w-16 shrink-0 flex justify-center items-center"
-													>
-														<img
-															style={{ objectFit: "contain" }}
-															className="w-full"
-															onClick={() =>
-																del_product_image(
-																	product,
-																	image_file_id
-																)
-															}
-															src={
-																new URL(
-																	`/files/${image_file_id}`,
-																	vite_api_endpoint
-																).href
-															}
-														/>
-													</div>
-												);
-											}
-										)}
-										<div
-											className="h-16 w-16 shrink-0 flex justify-center items-center bg-blue-400 rounded-lg "
-											onClick={() => start_upload_progress(product.id)}
-										>
-											<AddAPhoto />
-										</div>
-									</div>
-									<StyledDiv
-										onClick={() => delete_product(product.id)}
-										className="mt-2"
-									>
-										حذف کردن این کالا
-									</StyledDiv>
-								</CustomTable>
-							</React.Fragment>
-						);
-					})}
-				</>
+		<>
+			{upload_state.is_uploading && (
+				<ProgressBarModal
+					title="بارگذاری عکس جدید"
+					info="عکس جدید این محصول در حال بارگذاری است ..."
+					percentage={upload_state.percent}
+				/>
 			)}
-		</div>
+			<div className="flex flex-col">
+				<input id="new_product_image_input" type="file" className="hidden" />
+				{ml({
+					en: "products:",
+					fa: "محصولات",
+				})}
+				<Loading is_loading={products === null} />
+				{products !== null && (
+					<>
+						{products.length === 0 && (
+							<Alert icon={<InfoRounded />} className="mt-2">
+								{ml({
+									en: "there is not any product",
+									fa: "اینجا هیچ محصولی وجود ندارد",
+								})}
+							</Alert>
+						)}
+						{products.map((product, index) => {
+							return (
+								<React.Fragment key={index}>
+									<CustomTable
+										className={"mt-2"}
+										headerItems={[
+											ml({
+												en: "id",
+												fa: "شناسه",
+											}),
+											,
+											ml({
+												en: "name",
+												fa: "نام",
+											}),
+											ml({
+												en: "price",
+												fa: "قیمت",
+											}),
+										]}
+										rows={[
+											[
+												{
+													value: product.id,
+													onClick: () => {
+														alert(
+															ml({
+																en: `product id can't be changed`,
+																fa: "شناسه کالا قابل تغییر نیست",
+															})
+														);
+													},
+												},
+												{
+													value: product.name,
+													onClick: () => {
+														modify_product({
+															task: "name",
+															payload: {
+																product_id: product.id,
+															},
+														});
+													},
+												},
+												{
+													value: product.price,
+													onClick: () => {
+														modify_product({
+															task: "price",
+															payload: {
+																product_id: product.id,
+															},
+														});
+													},
+												},
+											],
+										]}
+									>
+										<h1>
+											{ml({
+												en: "product specifications :",
+												fa: "مشخصات فنی محصول",
+											})}
+										</h1>
+
+										<h1>
+											{ml({
+												en: "photos :",
+												fa: "عکس های محصول :",
+											})}{" "}
+											(برای حذف کردن عکس روی آن کلیک کنید)
+										</h1>
+										<div className="flex space-x-2">
+											{JSON.parse(product.image_file_ids).map(
+												(image_file_id, index) => {
+													return (
+														<div
+															key={index}
+															className="h-16 w-16 shrink-0 flex justify-center items-center"
+														>
+															<img
+																style={{ objectFit: "contain" }}
+																className="w-full"
+																onClick={() =>
+																	del_product_image(
+																		product,
+																		image_file_id
+																	)
+																}
+																src={
+																	new URL(
+																		`/files/${image_file_id}`,
+																		vite_api_endpoint
+																	).href
+																}
+															/>
+														</div>
+													);
+												}
+											)}
+											<div
+												className="h-16 w-16 shrink-0 flex justify-center items-center bg-blue-400 rounded-lg "
+												onClick={() => start_upload_progress(product.id)}
+											>
+												<AddAPhoto />
+											</div>
+										</div>
+										<StyledDiv
+											onClick={() => delete_product(product.id)}
+											className="mt-2"
+										>
+											حذف کردن این کالا
+										</StyledDiv>
+									</CustomTable>
+								</React.Fragment>
+							);
+						})}
+					</>
+				)}
+			</div>
+		</>
 	);
 }

@@ -1,11 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { custom_axios, get_company_info, modify_company_info } from "../../api/client";
+import { ProgressBarModal } from "./ProgressBarModal";
 import { Section } from "./Section";
 import { StyledDiv } from "./StyledElements";
 export function ManageIconsSection() {
 	function fetch_data() {}
 	useEffect(fetch_data, []);
-
+	var [upload_state, set_upload_state] = useState({
+		is_uploading: false,
+		percent: undefined,
+	});
 	function config_and_open_input(icon_type) {
 		var common_input = document.getElementById("common_input");
 		common_input.onchange = () => upload_icon(icon_type);
@@ -25,8 +29,18 @@ export function ManageIconsSection() {
 				method: "post",
 				data: f,
 				url: "/files",
+				onUploadProgress: (e) => {
+					set_upload_state({
+						is_uploading: true,
+						percent: Math.round((e.loaded * 100) / e.total),
+					});
+				},
 			})
 		).data;
+		set_upload_state({
+			is_uploading: false,
+			percent: undefined,
+		});
 		await modify_company_info(
 			icon_type === "favicon" ? "favicon_file_id" : "company_icon_file_id",
 			inserted_id
@@ -53,6 +67,13 @@ export function ManageIconsSection() {
 	}
 	return (
 		<>
+			{upload_state.is_uploading && (
+				<ProgressBarModal
+					title="بارگذاری آیکون"
+					info="فایل آیکون جدید در حال بارگذاری است ..."
+					percentage={upload_state.percent}
+				/>
+			)}
 			<input id="common_input" type="file" className="hidden" />
 			<Section title="manage icons">
 				<div className="flex flex-col items-start px-2">

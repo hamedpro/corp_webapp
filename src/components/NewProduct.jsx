@@ -10,6 +10,7 @@ import Table from "@editorjs/table";
 import ImageTool from "@editorjs/image";
 import Checklist from "@editorjs/checklist";
 import { custom_axios } from "../../api/client";
+import { ProgressBarModal } from "./ProgressBarModal.jsx";
 function CustomInput({ id }) {
 	return <input id={id} className="border border-green-400 rounded px-2 py-1" />;
 }
@@ -23,6 +24,10 @@ function cloned_array(arr) {
 export function NewProduct() {
 	const [specs, set_specs] = useState([]);
 	const [count, set_count] = useState(0);
+	var [upload_status, set_upload_status] = useState({
+		is_uploading: false,
+		upload_percentage: undefined,
+	});
 	var [editor_js_instance, set_editor_js_instance] = useState(null);
 	useEffect(() => {
 		var editor_js_conf = {
@@ -57,8 +62,20 @@ export function NewProduct() {
 					url: "files?type=product_image",
 					method: "post",
 					data: form,
+					onUploadProgress: (progressEvent) => {
+						set_upload_status({
+							is_uploading: true,
+							upload_percentage: Math.round(
+								(progressEvent.loaded * 100) / progressEvent.total
+							),
+						});
+					},
 				})
 			).data;
+			set_upload_status({
+				is_uploading: false,
+				upload_percentage: undefined,
+			});
 			file_ids.push(inserted_id);
 		}
 		var params = {
@@ -96,110 +113,122 @@ export function NewProduct() {
 		set_count((count) => count + 1);
 	}
 	return (
-		<Section
-			title={ml({
-				en: "new product page",
-				fa: "بخش تعریف کالای جدید",
-			})}
-			className="mx-1 mt-2 w-full"
-		>
-			<div id="new_product" className="px-2">
-				<p className="text-lg">
-					{ml({
-						en: "name:",
-						fa: "نام کالا :",
-					})}
-				</p>
-				<CustomInput id="name_input" />
-
-				<p className="mt-2 text-lg">
-					{ml({
-						en: "description:",
-						fa: "متن معرفی کالا:",
-					})}
-				</p>
-
-				<div id="editor-js-div"></div>
-				<p className="mt-2 text-lg">
-					{ml({
-						en: "product specifictions:",
-						fa: "مشخصات محصول :",
-					})}{" "}
-				</p>
-				<table>
-					<tbody>
-						<tr>
-							<th>
-								{ml({
-									en: "id",
-									fa: "شناسه",
-								})}
-							</th>
-
-							<th>
-								{ml({
-									en: "key",
-									fa: "نام مشخصه",
-								})}
-							</th>
-							<th>
-								{ml({
-									en: "value",
-									fa: "مقدار مشخصه",
-								})}
-							</th>
-							<th>
-								{ml({
-									en: "options",
-									fa: "گزینه ها",
-								})}
-							</th>
-						</tr>
-						{specs.map((spec) => {
-							return (
-								<tr key={spec.id}>
-									<td>{spec.id}</td>
-									<td>{spec.key}</td>
-									<td>{spec.value}</td>
-									<td onClick={() => remove_spec(spec.id)}>
-										{ml({
-											en: "remove",
-											fa: "حذف این مورد",
-										})}
-									</td>
-								</tr>
-							);
+		<>
+			{upload_status.is_uploading && (
+				<ProgressBarModal
+					title={"بارگذاری عکس محصول"}
+					info="یکی از عکس های این محصول در حال آپلود است."
+					percentage={upload_status.upload_percentage}
+				/>
+			)}
+			<Section
+				title={ml({
+					en: "new product page",
+					fa: "بخش تعریف کالای جدید",
+				})}
+				className="mx-1 mt-2 w-full"
+			>
+				<div id="new_product" className="px-2">
+					<p className="text-lg">
+						{ml({
+							en: "name:",
+							fa: "نام کالا :",
 						})}
-					</tbody>
-				</table>
-				<button className="mt-2 px-1 border border-blue-400 rounded " onClick={add_spec}>
-					مورد جدید
-				</button>
-				<p className="mt-2 text-lg">
-					{ml({
-						en: "price:",
-						fa: "قیمت (تومان):",
-					})}
-				</p>
-				<CustomInput id="price_input" />
-				<p className="mt-2 text-lg">
-					{ml({
-						en: "images : ",
-						fa: "عکس ها:",
-					})}
-				</p>
-				<input id="images_input" type="file" multiple />
-				<button
-					onClick={submit_new_product}
-					className="block border text-lg border-blue-400 rounded mt-4 hover:text-white hover:bg-blue-600 px-2 py-1"
-				>
-					{ml({
-						en: "add new product as ",
-						fa: "اضافه کردن کالای جدید به عنوان ",
-					})}{" "}
-					@{window.localStorage.getItem("username")}
-				</button>
-			</div>
-		</Section>
+					</p>
+					<CustomInput id="name_input" />
+
+					<p className="mt-2 text-lg">
+						{ml({
+							en: "description:",
+							fa: "متن معرفی کالا:",
+						})}
+					</p>
+
+					<div id="editor-js-div"></div>
+					<p className="mt-2 text-lg">
+						{ml({
+							en: "product specifictions:",
+							fa: "مشخصات محصول :",
+						})}{" "}
+					</p>
+					<table>
+						<tbody>
+							<tr>
+								<th>
+									{ml({
+										en: "id",
+										fa: "شناسه",
+									})}
+								</th>
+
+								<th>
+									{ml({
+										en: "key",
+										fa: "نام مشخصه",
+									})}
+								</th>
+								<th>
+									{ml({
+										en: "value",
+										fa: "مقدار مشخصه",
+									})}
+								</th>
+								<th>
+									{ml({
+										en: "options",
+										fa: "گزینه ها",
+									})}
+								</th>
+							</tr>
+							{specs.map((spec) => {
+								return (
+									<tr key={spec.id}>
+										<td>{spec.id}</td>
+										<td>{spec.key}</td>
+										<td>{spec.value}</td>
+										<td onClick={() => remove_spec(spec.id)}>
+											{ml({
+												en: "remove",
+												fa: "حذف این مورد",
+											})}
+										</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+					<button
+						className="mt-2 px-1 border border-blue-400 rounded "
+						onClick={add_spec}
+					>
+						مورد جدید
+					</button>
+					<p className="mt-2 text-lg">
+						{ml({
+							en: "price:",
+							fa: "قیمت (تومان):",
+						})}
+					</p>
+					<CustomInput id="price_input" />
+					<p className="mt-2 text-lg">
+						{ml({
+							en: "images : ",
+							fa: "عکس ها:",
+						})}
+					</p>
+					<input id="images_input" type="file" multiple />
+					<button
+						onClick={submit_new_product}
+						className="block border text-lg border-blue-400 rounded mt-4 hover:text-white hover:bg-blue-600 px-2 py-1"
+					>
+						{ml({
+							en: "add new product as ",
+							fa: "اضافه کردن کالای جدید به عنوان ",
+						})}{" "}
+						@{window.localStorage.getItem("username")}
+					</button>
+				</div>
+			</Section>
+		</>
 	);
 }

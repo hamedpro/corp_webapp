@@ -1,4 +1,4 @@
-import { OptionsSection } from "./OptionsSection";
+import { AdminDashboardOptionsSection } from "./AdminDashboardOptionsSection";
 import { UsersSection } from "./UsersSection";
 import { ProductsSection } from "./ProductsSection";
 import { Fragment } from "react";
@@ -126,7 +126,7 @@ export function AdminDashboard() {
 						<Route path="new-writing" element={<NewWriting />} />
 						<Route path="manage_products" element={<ProductsSection />} />
 						<Route path="manage_users" element={<UsersSection />} />
-						<Route path="manage_options" element={<OptionsSection />} />
+						<Route path="manage_options" element={<AdminDashboardOptionsSection />} />
 						<Route path="manage_orders" element={<OrdersSection />} />
 						<Route path="manage_download_center" element={<ManageDownloadCenter />} />
 						<Route path="manage_content_slider" element={<ManageContentSlider />} />
