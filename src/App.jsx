@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import { customAjax } from "../src/custom_ajax.js";
 import { AdminDashboard } from "./components/AdminDashboard";
 import { Root } from "./components/Root";
-import {Orders} from "./components/orders";
+import { Orders } from "./components/Orders";
 import {Order} from "./components/Order";
 import { ShoppingCardPage } from "./components/ShoppingCardPage";
 import { CheckUserPrivilege } from "./components/CheckUserPrivilege";
