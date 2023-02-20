@@ -6,13 +6,13 @@ import { multi_lang_helper as ml } from "../common";
 import { customAjax } from "../custom_ajax";
 import { header_options_array } from "./HeaderOptionsArray";
 
-export const HeaderMenu = (props) => {
+export const HeaderMenu = ({ hide_header_menu, visibility }) => {
 	//props : "hide_header_menu : function" , "visibility : boolean"
 	var username = window.localStorage.getItem("username");
 
 	var nav = useNavigate();
 	var nav_and_hide_header_menu = (path) => {
-		props.hide_header_menu();
+		hide_header_menu();
 		nav(path);
 	};
 	var [show_admin_routes, set_show_admin_routes] = useState(false);
@@ -28,8 +28,8 @@ export const HeaderMenu = (props) => {
 			},
 			(error) => {}
 		);
-	}, [props.visibility]);
-	if (!props.visibility) {
+	}, [visibility]);
+	if (!visibility) {
 		return null;
 	}
 	return (
@@ -37,7 +37,7 @@ export const HeaderMenu = (props) => {
 			{/* <div
 				className="fixed bg-gray-300 h-full w-full z-40"
 				style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-				onClick={() => props.hide_header_menu()}
+				onClick={() => hide_header_menu()}
 			></div> */}
 			<div className="bg-white absolute w-full p-0 m-0 z-40 overflow-y-auto top-28 header_menu overflow-x-hidden px-1 pt-1">
 				<Section

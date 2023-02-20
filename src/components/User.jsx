@@ -10,18 +10,18 @@ import { gen_link_to_file, multi_lang_helper as ml } from "../common.js";
 import { CheckUserPrivilege } from "./CheckUserPrivilege.jsx";
 import { Loading } from "./Loading.jsx";
 import { Alert } from "./Alert.jsx";
-function Item(props) {
+function Item({ primary, onClick, children }) {
 	return (
 		<div
 			className={
 				"flex justify-center items-center rounded-xl px-2 py-1 text-xs cursor-pointer duration-400" +
-				(props.primary
+				(primary
 					? " bg-blue-600 text-white hover:bg-blue-800 "
 					: " bg-white text-blue-800 border border-blue-300 hover:border-blue-800 ")
 			}
-			onClick={props.onClick}
+			onClick={onClick}
 		>
-			{props.children}
+			{children}
 		</div>
 	);
 }

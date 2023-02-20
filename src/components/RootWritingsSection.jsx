@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import React from "react";
 import { WritingSquare } from "./WritingSquare";
 import { WritingRow } from "./WritingRow";
-export function RootWritingsSection(props) {
-	if (props.writings === null) {
+export function RootWritingsSection({ writings }) {
+	if (writings === null) {
 		return <h1>still loading writings ...</h1>;
 	} else {
 	}
-	var sorted_writings = [...props.writings];
+	var sorted_writings = [...writings];
 	sorted_writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
 	/* todo make sure about this sorting function above  */
 	return (

@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { multi_lang_helper as ml } from "../common";
 import { ProductItem } from "./ProductItem";
 import { ArrowTitle } from "./ArrowTitle";
-export function SearchModal(props) {
+export function SearchModal({ visibility, hide_func }) {
 	var nav = useNavigate();
 	var [search_results, set_search_results] = useState(null);
-	if (props.visibility !== true) {
+	if (visibility !== true) {
 		return null;
 	}
 	function handle_input_change() {
@@ -40,7 +40,7 @@ export function SearchModal(props) {
 	}
 	return (
 		<div className="h-full w-full fixed bg-sky-800 top-0 left-0 z-50 flex flex-col">
-			<ArrowTitle title="جستجو در محصولات" onClick={props.hide_func} />
+			<ArrowTitle title="جستجو در محصولات" onClick={hide_func} />
 			<div className="flex mx-2 my-2 h-10">
 				<input
 					type="text"
@@ -89,7 +89,7 @@ export function SearchModal(props) {
 										key={product.id}
 										className="bg-white"
 										description={product.description}
-										beforeOnClick={props.hide_func}
+										beforeOnClick={hide_func}
 									/>
 								);
 							})}

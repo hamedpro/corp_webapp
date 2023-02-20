@@ -81,18 +81,18 @@ export function MainHeader() {
 	var nav = useNavigate();
 	var [header_menu_visibility, set_header_menu_visibility] = useState(false);
 	var [username, set_username] = useState(window.localStorage.getItem("username"));
-	function CustomButton(props) {
+	function CustomButton({ children, className, onClick }) {
 		//todo add hover effect
 		return (
 			<button
-				onClick={props.onClick}
+				onClick={onClick}
 				className={
 					"border border-sky-600 rounded-lg flex items-center justify-center h-10 w-10 p-1" +
 					" " +
-					(typeof props.className == "undefined" ? "" : props.className)
+					(typeof className == "undefined" ? "" : className)
 				}
 			>
-				{props.children}
+				{children}
 			</button>
 		);
 	}

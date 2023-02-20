@@ -6,7 +6,7 @@ import { ReviewItem } from "./ReviewItem";
 import { useNavigate } from "react-router-dom";
 import { Section } from "./Section";
 import { multi_lang_helper as ml } from "../common.js";
-export const UserReviews = (props) => {
+export const UserReviews = ({ product_id }) => {
 	var [product, set_product] = useState({});
 	var [reviews, set_reviews] = useState([]);
 	var verified_reviews = () => reviews.filter((review) => review.verification_status === "true");
@@ -17,12 +17,12 @@ export const UserReviews = (props) => {
 				task_name: "get_products",
 			},
 		}).then((data) => {
-			set_product(data.result.filter((product) => (product.id = props.product_id))[0]);
+			set_product(data.result.filter((product) => (product.id = product_id))[0]);
 		});
 		customAjax({
 			params: {
 				task_name: "get_all_product_reviews",
-				product_id: Number(props.product_id),
+				product_id: Number(product_id),
 			},
 		}).then((data) => {
 			set_reviews(data.result);
@@ -60,7 +60,7 @@ export const UserReviews = (props) => {
 							size="small"
 							sx={{ minWidth: 0, mx: "auto", mt: 1 }}
 							className="w-2/3"
-							onClick={() => nav("/products/" + props.product_id + "/reviews")}
+							onClick={() => nav("/products/" + product_id + "/reviews")}
 						>
 							{ml({
 								en: "submit the first review",
@@ -105,7 +105,7 @@ export const UserReviews = (props) => {
 									sx={{ color: "white", borderColor: "gray" }}
 									variant="outlined"
 									size="small"
-									onClick={() => nav(`/products/${props.product_id}/reviews`)}
+									onClick={() => nav(`/products/${product_id}/reviews`)}
 								>
 									{" "}
 									{/* todo improve quality of translations  */}
@@ -133,9 +133,7 @@ export const UserReviews = (props) => {
 								sx={{ color: "white", borderColor: "gray" }}
 								variant="outlined"
 								size="small"
-								onClick={() =>
-									nav(`/products/${props.product_id}/new-product-review`)
-								}
+								onClick={() => nav(`/products/${product_id}/new-product-review`)}
 							>
 								{ml({
 									en: "add a new review",

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { multi_lang_helper as ml } from "../common";
-export function ReviewItem(props) {
+export function ReviewItem({ review, className }) {
 	var [passed_time_as_text, set_passed_time_as_text] = useState(
 		ml({ en: "loading...", fa: "در حال بارگذاری..." })
 	);
 	useEffect(() => {
 		var d = new Date();
 		var now = d.getTime();
-		var passed_time = now / 1000 - Number(props.review.time) / 1000;
+		var passed_time = now / 1000 - Number(review.time) / 1000;
 		if (passed_time < 3600) {
 			set_passed_time_as_text(ml({ en: "less than an hour ago", fa: "کمتر از یک ساعت پیش" }));
 		}
@@ -30,16 +30,16 @@ export function ReviewItem(props) {
 	}, []);
 
 	return (
-		<div className={"border border-blue-400 p-2" + " " + props.className}>
-			<b>{props.review.text}</b>
+		<div className={"border border-blue-400 p-2" + " " + className}>
+			<b>{review.text}</b>
 			<p>
-				{ml({ en: "cons", fa: "معایب" })} : {JSON.parse(props.review.cons).join(",")}
+				{ml({ en: "cons", fa: "معایب" })} : {JSON.parse(review.cons).join(",")}
 			</p>
 			<p>
-				{ml({ en: "pros", fa: "مزایا" })} : {JSON.parse(props.review.pros).join(",")}
+				{ml({ en: "pros", fa: "مزایا" })} : {JSON.parse(review.pros).join(",")}
 			</p>
 			<p className="text-xs mt-2">
-				@{props.review.username} . {passed_time_as_text}
+				@{review.username} . {passed_time_as_text}
 			</p>
 		</div>
 	);

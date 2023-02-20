@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { multi_lang_helper as ml } from "../common";
 import { Alert } from "./Alert";
 import { Section } from "./Section";
-export function TotalRating(props) {
+export function TotalRating({ reviews }) {
 	var [avg_rating, set_avg_rating] = useState(ml({ en: "loading", fa: "در حال بارگذاری..." }));
 	function calc_rating_percentage(stars_count) {
-		var reviews_count = props.reviews.length;
-		var count_of_reviews_with_this_stars_count = props.reviews.filter(
+		var reviews_count = reviews.length;
+		var count_of_reviews_with_this_stars_count = reviews.filter(
 			(i) => i.rating_from_five == stars_count
 		).length;
 		return (count_of_reviews_with_this_stars_count / reviews_count) * 100;
@@ -19,11 +19,9 @@ export function TotalRating(props) {
 			numbers.forEach((number) => (total += number));
 			return total / numbers.length;
 		};
-		var tmp = Math.round(
-			average(props.reviews.map((review) => Number(review.rating_from_five)))
-		);
+		var tmp = Math.round(average(reviews.map((review) => Number(review.rating_from_five))));
 		set_avg_rating(isNaN(tmp) ? "?" : tmp);
-	}, [props.reviews]);
+	}, [reviews]);
 	return (
 		<Section
 			title={ml({
@@ -35,7 +33,7 @@ export function TotalRating(props) {
 			<div className="w-full">
 				<div className="px-2 flex flex-col md:flex-row">
 					<div className="md:w-1/2 flex justify-center items-center">
-						{props.reviews.length === 0 && (
+						{reviews.length === 0 && (
 							<Alert icon={<InfoRounded />}>
 								{ml({
 									en: `there is not any review for this product, total rating section below

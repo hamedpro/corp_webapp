@@ -1,26 +1,30 @@
 import { ArrowCircleLeftRounded } from "@mui/icons-material";
 import React from "react";
-export function ListItem(props) {
+export function ListItem({
+	className,
+	vertical,
+	onClick,
+	beforeItems,
+	image_src,
+	items,
+	remove_arrow,
+}) {
 	return (
 		<div
 			className={
 				"hamedpro8977_list_item mb-1 flex relative border border-stone-400 rounded-lg mx-2 px-2 py-1 pr-3 bg-blue-500 duration-300 hover:bg-blue-700" +
-				(typeof props.className == "undefined" ? "" : ` ${props.className}`) +
-				(typeof props.vertical == "undefined" ? "" : props.vertical ? " flex-col" : "") +
-				(typeof props.onClick !== "undefined" ? " cursor-pointer" : " cursor-default")
+				(typeof className == "undefined" ? "" : ` ${className}`) +
+				(typeof vertical == "undefined" ? "" : vertical ? " flex-col" : "") +
+				(typeof onClick !== "undefined" ? " cursor-pointer" : " cursor-default")
 			}
-			onClick={typeof props.onClick == "undefined" ? () => {} : props.onClick}
+			onClick={typeof onClick == "undefined" ? () => {} : onClick}
 		>
-			{typeof props.beforeItems == "undefined" ? (
-				<></>
-			) : (
-				<div className="mr-2">{props.beforeItems}</div>
+			{typeof beforeItems == "undefined" ? <></> : <div className="mr-2">{beforeItems}</div>}
+			{typeof image_src == "undefined" || image_src === null ? null : (
+				<img src={image_src} className="w-1/3 mr-2" />
 			)}
-			{typeof props.image_src == "undefined" || props.image_src === null ? null : (
-				<img src={props.image_src} className="w-1/3 mr-2" />
-			)}
-			{props.items.map((item, index) => {
-				if (props.vertical === true) {
+			{items.map((item, index) => {
+				if (vertical === true) {
 					return (
 						<React.Fragment key={index}>
 							<h1 className={"mr-1 text-white "}>{item}</h1>
@@ -36,7 +40,7 @@ export function ListItem(props) {
 					</React.Fragment>
 				);
 			})}
-			{props.remove_arrow !== true ? (
+			{remove_arrow !== true ? (
 				<div className="hamedpro8977_icon flex justify-content-center items-center">
 					<ArrowCircleLeftRounded sx={{ color: "white" }} />
 				</div>

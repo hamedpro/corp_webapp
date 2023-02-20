@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { multi_lang_helper as ml } from "../common";
 import { customAjax } from "../custom_ajax";
 
-export function AddToShoppingBagBar(props) {
+export function AddToShoppingBagBar({ price }) {
 	var username = window.localStorage.getItem("username");
 	var product_id = useParams().product_id;
 	var [this_product_shopping_count, set_this_product_shopping_count] = useState(null);
@@ -72,7 +72,7 @@ export function AddToShoppingBagBar(props) {
 			<div className="flex text-sm w-full">
 				<p>قیمت :</p>
 				<b>
-					{props.price + " "} <span className="inline">تومان</span>
+					{price + " "} <span className="inline">تومان</span>
 				</b>
 			</div>
 			<div className="w-full mt-2">
