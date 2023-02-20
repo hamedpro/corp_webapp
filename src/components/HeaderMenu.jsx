@@ -39,8 +39,6 @@ export const HeaderMenu = (props) => {
 				style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
 				onClick={() => props.hide_header_menu()}
 			></div> */}
-			{/* todo export the above fixed div as a background component for pop ups and modals and 
-			update every where which use this or something like this */}
 			<div className="bg-white absolute w-full p-0 m-0 z-40 overflow-y-auto top-28 header_menu overflow-x-hidden px-1 pt-1">
 				<Section
 					title={ml({

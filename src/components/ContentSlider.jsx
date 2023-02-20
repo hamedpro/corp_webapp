@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { get_collection, get_data_pair } from "../../api/client";
 import { ProductItem } from "./ProductItem";
 import { customAjax } from "../custom_ajax";
-import { WritingSquare } from "./Root";
+import { WritingSquare } from "./WritingSquare";
 function Item({ data, hidden }) {
 	if (hidden) return;
 	if (data.type === "image") {

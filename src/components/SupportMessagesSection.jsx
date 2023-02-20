@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { get_collection } from "../../api/client";
-import { SupportMessageRow } from "./ContactUs";
+import { SupportMessageRow } from "./SupportMessageRow";
 import { Section } from "./Section";
 export const SupportMessagesSection = () => {
 	var [support_messages, set_support_messages] = useState(null);

@@ -6,134 +6,9 @@ import { customAjax } from "../custom_ajax";
 import { gen_link_to_file, shuffle } from "../common";
 import { custom_axios } from "../../api/client";
 import { ContentSlider } from "./ContentSlider";
-export function WritingSquare({ writing }) {
-	var nav = useNavigate();
-	return (
-		<div
-			className="bg-blue-300 cursor-pointer rounded-lg w-full sm:w-1/3 mx-2 flex justify-center items-center relative text-white overflow-hidden"
-			style={{ aspectRatio: 1 }}
-			onClick={() => nav(`/writings/${writing._id}`)}
-		>
-			<img
-				src={vite_api_endpoint + "/" + writing.image_filename}
-				className="first_writing_image duration-200 h-full aspect-auto"
-			/>
-			<div className="absolute h-1/2 top-0 w-full p-2">
-				<p className="text-sm">
-					حدود {Math.round((new Date().getTime() - writing.publish_date) / 3600000)} ساعت
-					پیش | توسط {writing.publisher_username}
-				</p>
-			</div>
-			<div
-				className="absolute h-1/3 top-2/3 w-full  p-2"
-				style={{ background: "rgb(0, 0 ,255,0.6)" }}
-			>
-				<h1 className="text-2xl"> {writing.title}</h1>
-			</div>
-		</div>
-	);
-}
-export function WritingRow({
-	className,
-	publish_date,
-	publisher_username,
-	image_filename,
-	_id,
-	title,
-}) {
-	var nav = useNavigate();
-	return (
-		<div
-			className={
-				`w-full h-1/3 bg-blue-100  text-blue-600 
-				flex-row border border-blue-300 flex 
-				cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200 px-6 ` + (className ? className : "")
-			}
-			onClick={() => nav(`/writings/${_id}`)}
-		>
-			<div className="flex items-center">
-				<div className="w-20 h-20 flex justify-center items-center">
-					<img src={gen_link_to_file(image_filename)} className="rounded" />
-				</div>
-			</div>
-			<div className="flex flex-col p-2 justify-center">
-				<h1 className="items-start text-2xl">{title}</h1>
-				<p className="text-sm">
-					حدود {Math.round((new Date().getTime() - publish_date) / 3600000)} ساعت پیش |
-					توسط {publisher_username}
-				</p>
-			</div>
-		</div>
-	);
-}
-export function Writings(props) {
-	var nav = useNavigate();
-	if (props.writings === null) {
-		return <h1>still loading writings ...</h1>;
-	} else {
-	}
-	var sorted_writings = [...props.writings];
-	sorted_writings.sort((i1, i2) => i1.publish_date < i2.publish_date);
-	/* todo make sure about this sorting function above  */
-	return (
-		<div className="bg-gray-100 flex p-4 justify-center h-full my-1 overflow-x-auto flex-col">
-			<div className="flex justify-between px-2 text-white mb-2 items-center text-lg">
-				<h1 className="text-gray-700">آخرین نوشته ها</h1>
-				<Link to="/writings" className="text-gray-700">
-					مشاهده بیشتر
-				</Link>
-			</div>
-			<div className="w-full flex h-fit flex-col sm:flex-row items-center sm:items-stretch">
-				{sorted_writings.length === 0 ? (
-					`there is not anything to show. (count of all published writings : ${sorted_writings.length})`
-				) : (
-					<WritingSquare writing={sorted_writings[0]} />
-				)}
-				<div className="flex flex-col w-full sm:w-2/3 overflow-hidden mt-6 sm:mt-0">
-					{[1, 2, 3].map((number, index) => {
-						var writing = sorted_writings[number];
-						if (writing !== undefined) {
-							return (
-								<WritingRow
-									{...writing}
-									key={index}
-									className={
-										(index === 0 ? "rounded-t-lg" : "") +
-										" " +
-										(number === 3 ? "rounded-b-lg" : "")
-									}
-								/>
-							);
-						} else {
-							return (
-								<div
-									key={index}
-									className={
-										`w-full h-1/3 bg-blue-100 flex-col border-x
-										text-blue-600 border-b border-blue-300 flex px-6 justify-center
-										cursor-pointer duration-200 hover:scale-105 hover:bg-blue-200 py-4 sm:py-0` +
-										" " +
-										(index === 0 ? "rounded-t-lg" : "") +
-										" " +
-										(number === 3 ? "rounded-b-lg" : "")
-									}
-								>
-									<h1 className="text-xl">
-										نوشته شماره {number + 1} برای نمایش وجود ندارد
-									</h1>
-									<p className="text-sm">
-										{" "}
-										(در مجموع {sorted_writings.length} نوشته منتشر شده است)
-									</p>
-								</div>
-							);
-						}
-					})}
-				</div>
-			</div>
-		</div>
-	);
-}
+import { RootWritingsSection } from "./RootWritingsSection";
+import { WritingRow } from "./WritingRow";
+import { WritingSquare } from "./WritingSquare";
 export function CustomBlock({ title, info, button_text, button_onclick, Icon }) {
 	return (
 		<div className="bg-gray-100 flex p-4 items-center h-full my-1 justify-center sm:justify-start flex-col sm:flex-row">
@@ -211,7 +86,7 @@ export function Root() {
 				button_onclick={() => nav("/download-center")}
 			/>
 
-			<Writings writings={writings} />
+			<RootWritingsSection writings={writings} />
 			<CustomBlock
 				Icon={Business}
 				button_text={"برو به درباره ما"}

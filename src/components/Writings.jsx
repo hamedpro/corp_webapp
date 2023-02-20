@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
 import { custom_axios } from "../../api/client";
-import { WritingRow } from "./root";
+import { WritingRow } from "./WritingRow";
 import { Section } from "./Section";
 
 export const Writings = () => {
