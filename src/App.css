@@ -56,3 +56,37 @@ html {
 	transform: translateY(-50%);
 	position: absolute;
 }
+.cutsom_table_cell:hover .after_text{
+    opacity: 1;
+}
+.cutsom_table_cell:hover{
+    border : 1px solid blue;
+}
+.image_change_button {
+	background-color: lightskyblue;
+	border-radius: 4px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2px;
+	transition: 300ms;
+}
+.image_change_button:hover{
+	background-color: blue;
+	color : white ;
+}
+#new_product table {
+	border: 1px solid black;
+}
+#new_product table td {
+	border: 1px solid black;
+}
+div:hover > .first_writing_image{
+    transform: scale(110%);
+}
+.header_menu {
+	height: calc(100% - 7rem);
+}
+#admin-dashboard table.custom_border b {
+	cursor: pointer;
+}

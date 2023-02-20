@@ -1,5 +1,5 @@
 import { React } from "react";
-import Section from "./section/comp";
+import { Section } from "./Section";
 export const SupportMessageInfo = ({ support_message }) => {
 	return (
 		<Section title="اطلاعات درخواست پشتیبانی" innerClassName="px-2" className="m-2">

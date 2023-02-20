@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { get_collection } from "../../api/client";
-import { CheckUserPrivilege } from "./CheckUserPrivilege/comp";
-import Section from "./section/comp";
+import { CheckUserPrivilege } from "./CheckUserPrivilege";
 import { SupportMessageInfo } from "./SupportMessageInfo";
 import { SupportMessageManagement } from "./SupportMessageManagement";
 

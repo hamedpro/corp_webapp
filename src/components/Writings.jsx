@@ -1,9 +1,8 @@
 import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
 import { custom_axios } from "../../api/client";
-import { customAjax } from "../custom_ajax";
-import { WritingRow } from "./root/comp";
-import Section from "./section/comp";
+import { WritingRow } from "./root";
+import { Section } from "./Section";
 
 export const Writings = () => {
 	var [writings, set_writings] = useState(null);

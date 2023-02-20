@@ -1,4 +1,4 @@
-import { ArrowBackIosRounded, ArrowForwardIosRounded } from "@mui/icons-material";
+import { ArrowForwardIosRounded } from "@mui/icons-material";
 
 export function ArrowTitle({ onClick, title }) {
 	return (

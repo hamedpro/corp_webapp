@@ -1,13 +1,12 @@
-import { HistoryEduRounded, Support } from "@mui/icons-material";
+import { HistoryEduRounded } from "@mui/icons-material";
 import React, { Fragment } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { get_collection } from "../../api/client";
-import { customAjax } from "../custom_ajax";
-import { CompanyInfo } from "./AboutUs/CompanyInfo";
-import Section from "./section/comp";
-import { StyledDiv } from "./styled_elements";
+import { CompanyInfo } from "./CompanyInfo";
+import { Section } from "./Section";
+import { StyledDiv } from "./StyledElements";
 export function SupportMessageRow({ support_message }) {
 	var sm = support_message;
 	var nav = useNavigate();

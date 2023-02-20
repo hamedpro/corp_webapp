@@ -1,40 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import "./output.css";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { customAjax } from "../src/custom_ajax.js";
-import { gen_link_to_file } from "./common";
-import {
-	ApiTestPage,
-	AdminDashboard,
-	Login,
-	MainHeader,
-	Product,
-	Products,
-	Register,
-	Root,
-	MainFooter,
-	User,
-	NavBar,
-} from "./components";
-import Orders from "./components/orders/comp";
-import Order from "./components/order/comp";
-import { ShoppingCardPage } from "./components";
-import { PG } from "./components/pg/pg";
-import { CheckUserPrivilege } from "./components/CheckUserPrivilege/comp";
-import { PageNotFound } from "./components/PageNotFound/comp";
+import { AdminDashboard } from "./components/AdminDashboard";
+import { Root } from "./components/Root";
+import {Orders} from "./components/orders";
+import {Order} from "./components/Order";
+import { ShoppingCardPage } from "./components/ShoppingCardPage";
+import { CheckUserPrivilege } from "./components/CheckUserPrivilege";
+import { PageNotFound } from "./components/PageNotFound";
 import { multi_lang_helper as ml } from "./common";
 import { DownloadCenter } from "./components/DownloadCenter";
 import { Writing } from "./components/Writing";
 import { Writings } from "./components/Writings";
-import AboutUs from "./components/AboutUs/AboutUs.jsx";
+import { AboutUs } from "./components/AboutUs.jsx";
 import { ContactUs } from "./components/ContactUs";
 import { NewSupportMessage } from "./components/NewSupportMessage";
 import { SupportMessage } from "./components/SupportMessage";
-import { get_collection, get_company_info } from "../api/client";
-import { FullScreenImageSlider } from "./components/product/components/FullScreenImageSlider";
+import { get_company_info } from "../api/client";
+import { FullScreenImageSlider } from "./components/FullScreenImageSlider";
 import { LatestChangesModal } from "./components/LatestChangesModal";
-function App() {
+import { MainHeader } from "./components/MainHeader";
+import { NavBar } from "./components/NavBar";
+import { Login } from "./components/Login";
+import { Product } from "./components/Product";
+import { User } from "./components/User";
+import { Products } from "./components/Products";
+import { Register } from "./components/Register";
+import { MainFooter } from "./components/MainFooter";
+export function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
 	async function get_data() {
@@ -63,22 +58,6 @@ function App() {
 					<div id="x-container">
 						<Routes>
 							<Route path="*" element={<PageNotFound />} />
-							<Route
-								path="/api_test_page"
-								element={
-									<CheckUserPrivilege level="admin">
-										<ApiTestPage />
-									</CheckUserPrivilege>
-								}
-							/>
-							<Route
-								path="/pg"
-								element={
-									<CheckUserPrivilege level="admin">
-										<PG />
-									</CheckUserPrivilege>
-								}
-							/>
 							<Route
 								path="/download-center"
 								element={
@@ -135,5 +114,3 @@ function App() {
 		</>
 	);
 }
-
-export default App;

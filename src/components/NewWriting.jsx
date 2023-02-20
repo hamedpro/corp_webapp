@@ -6,14 +6,13 @@ import Table from "@editorjs/table";
 import ImageTool from "@editorjs/image";
 import Checklist from "@editorjs/checklist";
 import React from "react";
-import { customAjax } from "../custom_ajax";
-import Section from "./section/comp";
-import { StyledDiv, StyledInput } from "./styled_elements";
+import {Section} from "./Section";
+import { StyledDiv, StyledInput } from "./StyledElements";
 import { useEffect } from "react";
 import { useState } from "react";
 import { new_document } from "../../api/client";
 
-export const NewWriting = () => {
+export function NewWriting() {
 	var [editor_js_instance, set_editor_js_instance] = useState(null);
 	async function submit_new_writing() {
 		var el_files = document.getElementById("image_input").files;

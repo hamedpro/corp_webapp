@@ -1,7 +1,7 @@
 import React from "react";
 import { new_document } from "../../api/client";
-import Section from "./section/comp";
-import { StyledDiv, StyledInput } from "./styled_elements";
+import { Section } from "./Section";
+import { StyledDiv, StyledInput } from "./StyledElements";
 
 export const NewSupportMessage = () => {
 	async function submit_support_message() {

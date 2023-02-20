@@ -2,10 +2,9 @@ import { Download, Info } from "@mui/icons-material";
 import { useEffect } from "react";
 import { useState } from "react";
 import { customAjax } from "../custom_ajax";
-import { CustomRow } from "./admin_dashboard/custom_row";
-import { Alert } from "./alert/comp";
-import { Loading } from "./loading/comp";
-import Section from "./section/comp";
+import { Alert } from "./Alert";
+import { Loading } from "./Loading";
+import { Section } from "./Section";
 export function DownloadCenter({ admin_mode = false }) {
 	var [download_center_items, set_download_center_items] = useState(null);
 	function fetch_data() {

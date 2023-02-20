@@ -1,8 +1,8 @@
 import { React } from "react";
-import Section from "./section/comp";
+import { Section } from "./Section";
 import { update_document } from "../../api/client";
-import { StyledDiv, StyledInput } from "../components/styled_elements";
-import { Alert } from "./alert/comp";
+import { StyledDiv, StyledInput } from "./StyledElements";
+import { Alert } from "./Alert";
 import { useNavigate } from "react-router-dom";
 export const SupportMessageManagement = ({ support_message, get_data }) => {
 	async function submit_response() {

@@ -1,7 +1,7 @@
 import { Info } from "@mui/icons-material";
 import { useState } from "react";
-import { Alert } from "./alert/comp";
-import Section from "./section/comp";
+import { Alert } from "./Alert";
+import { Section } from "./Section";
 
 export function Logs() {
 	var [logs, set_logs] = useState([]);

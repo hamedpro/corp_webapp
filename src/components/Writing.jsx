@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { custom_axios } from "../../api/client";
-import { customAjax } from "../custom_ajax";
-import Section from "./section/comp";
+import { Section } from "./Section";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
