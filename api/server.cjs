@@ -1187,7 +1187,9 @@ async function main() {
 			.map((i) => {
 				return i.replaceAll("\n", "");
 			});
-
+		fs.rmSync("./commit_messages.txt", {
+			force: true,
+		});
 		response.json({
 			latest_changes,
 			hash: hash_sha_256_hex(latest_changes.join("")),

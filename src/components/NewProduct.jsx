@@ -9,7 +9,7 @@ import Attach from "@editorjs/attaches";
 import Table from "@editorjs/table";
 import ImageTool from "@editorjs/image";
 import Checklist from "@editorjs/checklist";
-import { custom_axios } from "../../api/client";
+import { custom_axios, get_data_pair, put_pair, update_document } from "../../api/client";
 import { ProgressBarModal } from "./ProgressBarModal.jsx";
 function CustomInput({ id }) {
 	return <input id={id} className="border border-green-400 rounded px-2 py-1" />;
@@ -86,10 +86,23 @@ export function NewProduct() {
 			price: entered_price,
 			image_file_ids: JSON.stringify(file_ids),
 		};
-		await customAjax({
+		var response = await customAjax({
 			//todo check if required param is not given in all app
 			params,
 		});
+
+		//also updating main content slider :
+		let content_slider_content = (await get_data_pair("content_slider_content")) || {
+			product_ids: [],
+			writing_ids: [],
+			image_file_ids: [],
+		};
+		var new_content_slider_content = JSON.parse(JSON.stringify(content_slider_content));
+		new_content_slider_content.product_ids.push(
+			response.result /* id of new inserted product */
+		);
+		await put_pair("content_slider_content", new_content_slider_content);
+
 		alert("با موفقیت انجام شد");
 	}
 
