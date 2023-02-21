@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { useState } from "react";
 import { custom_axios } from "../../api/client";
+import { DownloadCenterItemsContext } from "../DownloadCenterItemsContext";
 import { DownloadCenter } from "./DownloadCenter";
 import { ProgressBarModal } from "./ProgressBarModal";
 import { Section } from "./Section";
 import { StyledDiv, StyledInput } from "./StyledElements";
 
 export function ManageDownloadCenter() {
-	var [counter, set_counter] = useState(1);
+	var { DownloadCenterItemsContextState, update_download_center_items_context_state } =
+		useContext(DownloadCenterItemsContext);
 	var [upload_state, set_upload_state] = useState({
 		is_uploading: false,
 		percent: undefined,
@@ -37,7 +40,7 @@ export function ManageDownloadCenter() {
 			percent: undefined,
 		});
 		alert("با موفقیت انجام شد");
-		set_counter((prev) => prev + 1);
+		update_download_center_items_context_state();
 	}
 	return (
 		<>

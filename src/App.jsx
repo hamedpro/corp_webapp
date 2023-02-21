@@ -29,6 +29,7 @@ import { User } from "./components/User";
 import { Products } from "./components/Products";
 import { Register } from "./components/Register";
 import { MainFooter } from "./components/MainFooter";
+import { DownloadCenterItemsContextProvider } from "./components/DownloadCenterItemsContextProvider";
 export function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -51,66 +52,75 @@ export function App() {
 	return (
 		<>
 			<LatestChangesModal />
-			<div className="h-full w-full overflow-x-hidden overflow-y-hidden">
-				<div className={["relative mx-auto w-full h-full overflow-x-hidden fa"].join(" ")}>
-					<MainHeader />
-					<NavBar />
-					<div id="x-container">
-						<Routes>
-							<Route path="*" element={<PageNotFound />} />
-							<Route
-								path="/download-center"
-								element={
-									<div className="mx-1">
-										<DownloadCenter />
-									</div>
-								}
-							/>
-							<Route exact path="/users/:username/orders" element={<Orders />} />
-							<Route
-								exact
-								path="/users/:username/orders/:order_id"
-								element={<Order />}
-							/>
-							<Route
-								exact
-								path="/users/:username/shopping-card"
-								element={<ShoppingCardPage />}
-							/>
-							<Route
-								path="/admin-dashboard/*"
-								element={
-									<CheckUserPrivilege level="admin">
-										<AdminDashboard />
-									</CheckUserPrivilege>
-								}
-							/>
-							<Route path="/about-us" element={<AboutUs />} />
-							<Route path="/login" element={<Login />} />
+			<DownloadCenterItemsContextProvider>
+				<div className="h-full w-full overflow-x-hidden overflow-y-hidden">
+					<div
+						className={["relative mx-auto w-full h-full overflow-x-hidden fa"].join(
+							" "
+						)}
+					>
+						<MainHeader />
+						<NavBar />
+						<div id="x-container">
+							<Routes>
+								<Route path="*" element={<PageNotFound />} />
+								<Route
+									path="/download-center"
+									element={
+										<div className="mx-1">
+											<DownloadCenter />
+										</div>
+									}
+								/>
+								<Route exact path="/users/:username/orders" element={<Orders />} />
+								<Route
+									exact
+									path="/users/:username/orders/:order_id"
+									element={<Order />}
+								/>
+								<Route
+									exact
+									path="/users/:username/shopping-card"
+									element={<ShoppingCardPage />}
+								/>
+								<Route
+									path="/admin-dashboard/*"
+									element={
+										<CheckUserPrivilege level="admin">
+											<AdminDashboard />
+										</CheckUserPrivilege>
+									}
+								/>
+								<Route path="/about-us" element={<AboutUs />} />
+								<Route path="/login" element={<Login />} />
 
-							<Route exact path="/products/:product_id" element={<Product />} />
-							<Route exact path="/users/:username" element={<User />} />
+								<Route exact path="/products/:product_id" element={<Product />} />
+								<Route exact path="/users/:username" element={<User />} />
 
-							<Route exact path="/products" element={<Products />} />
-							<Route path="/register" element={<Register />} />
-							<Route path="/" element={<Root />} />
-							<Route path="/writings/:writing_id" element={<Writing />} />
-							<Route path="/writings" element={<Writings />} />
-							<Route path="/contact-us" element={<ContactUs />} />
-							<Route path="/new-support-message" element={<NewSupportMessage />} />
-							<Route
-								path="/products/:product_id/images"
-								element={<FullScreenImageSlider />}
-							/>
-							<Route
-								path="/support_messages/:support_message_id"
-								element={<SupportMessage />}
-							/>
-						</Routes>
+								<Route exact path="/products" element={<Products />} />
+								<Route path="/register" element={<Register />} />
+								<Route path="/" element={<Root />} />
+								<Route path="/writings/:writing_id" element={<Writing />} />
+								<Route path="/writings" element={<Writings />} />
+								<Route path="/contact-us" element={<ContactUs />} />
+								<Route
+									path="/new-support-message"
+									element={<NewSupportMessage />}
+								/>
+								<Route
+									path="/products/:product_id/images"
+									element={<FullScreenImageSlider />}
+								/>
+								<Route
+									path="/support_messages/:support_message_id"
+									element={<SupportMessage />}
+								/>
+							</Routes>
+						</div>
+						<MainFooter />
 					</div>
-					<MainFooter />
 				</div>
-			</div>
+			</DownloadCenterItemsContextProvider>
 		</>
 	);
 }

@@ -1,42 +1,35 @@
 import { Download, Info } from "@mui/icons-material";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { customAjax } from "../custom_ajax";
+import { DownloadCenterItemsContext } from "../DownloadCenterItemsContext";
 import { Alert } from "./Alert";
 import { Loading } from "./Loading";
 import { Section } from "./Section";
 export function DownloadCenter({ admin_mode = false }) {
-	var [download_center_items, set_download_center_items] = useState(null);
-	function fetch_data() {
+	var { DownloadCenterItemsContextState, update_download_center_context_state } = useContext(
+		DownloadCenterItemsContext
+	);
+
+	function delete_download_center_item(title) {
 		customAjax({
 			params: {
-				task_name: "get_download_center_items",
+				task_name: "remove_download_center_item",
+				title,
 			},
-		}).then(
-			(data) => {
-				set_download_center_items(data.result);
-			},
-			(e) => {
-				alert("something went wrong while requesting data from server");
-				console.log(e);
-			}
-		);
+		})
+			.then(
+				(data) => alert("done!"),
+				(e) => {
+					alert("something went wrong");
+					console.log(e);
+				}
+			)
+			.finally(update_download_center_context_state);
 	}
-	useEffect(fetch_data, []);
-    function delete_download_center_item(title) {
-        customAjax({
-            params: {
-                task_name: "remove_download_center_item",
-                title
-            }
-        }).then(data => alert('done!'), e => {
-            alert('something went wrong')
-            console.log(e)
-        }).finally(fetch_data)
-    }
 	return (
 		<>
-			{download_center_items === null ? (
+			{DownloadCenterItemsContextState === null ? (
 				<Loading />
 			) : (
 				<Section title="فایل های قابل دانلود" className="mt-1">
@@ -45,7 +38,7 @@ export function DownloadCenter({ admin_mode = false }) {
 							برای دانلود هر مورد روی آن مورد کلیک کنید و این گزینه را انتخاب کنید :‌
 							"save link as ..."
 						</Alert>
-						{download_center_items.map((item, index) => {
+						{DownloadCenterItemsContextState.map((item, index) => {
 							return (
 								<div
 									key={index}
