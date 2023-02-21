@@ -15,6 +15,7 @@ var custom_upload = require("./nodejs_custom_upload.cjs").custom_upload;
 var cq = require("./custom_query.cjs").custom_query; // cq stands for custom_query
 var path = require("path");
 var { MongoClient, ObjectId } = require("mongodb");
+var { execSync } = require("child_process");
 var env_vars = JSON.parse(fs.readFileSync("env.json", "utf8"));
 async function connect_to_db() {
 	var conf = {
@@ -1175,9 +1176,22 @@ async function main() {
 		response.json("ok");
 	});
 	app.get("/latest_changes", (request, response) => {
-		response.json(
-			JSON.parse(fs.readFileSync(path.resolve(__dirname, "../latest_changes.json"), "utf8"))
+		//response of this route is {latest_changes : array,hash : hash of that array joined by ""}
+		execSync(
+			`rm -rf ./commit_messages.txt ; git log --pretty="%sdelimiter" | cat >> commit_messages.txt`
 		);
+		var tmp = fs.readFileSync("./commit_messages.txt", "utf-8").split("delimiter");
+		var latest_changes = tmp
+			.slice(0, tmp.length - 1)
+			.reverse()
+			.map((i) => {
+				return i.replaceAll("\n", "");
+			});
+
+		response.json({
+			latest_changes,
+			hash: hash_sha_256_hex(latest_changes.join("")),
+		});
 	});
 	app.listen(env_vars.api_port, () => {
 		console.log(`server is listening on port ${env_vars.api_port}`);

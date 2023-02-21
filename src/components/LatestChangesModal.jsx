@@ -17,17 +17,21 @@ export const LatestChangesModal = () => {
 			})
 		).result.find((i) => i.username === username);
 		if (user.is_admin !== "true") return;
-		let latest_changes = (
+
+		var response = (
 			await custom_axios({
 				method: "get",
 				url: "/latest_changes",
 			})
 		).data;
-		set_latest_changes(latest_changes);
-		var tmp = window.localStorage.getItem("latest_changes_count");
-		if (tmp === null || latest_changes.length !== Number(tmp)) {
+		set_latest_changes(response.latest_changes);
+
+		if (
+			window.localStorage.getItem("latest_changes_hash") === null ||
+			response.hash !== window.localStorage.getItem("latest_changes_hash")
+		) {
 			set_modal_is_visible(true);
-			window.localStorage.setItem("latest_changes_count", latest_changes.length);
+			window.localStorage.setItem("latest_changes_hash", response.hash);
 		}
 	}
 	useEffect(() => {
@@ -42,7 +46,7 @@ export const LatestChangesModal = () => {
 			></div>
 			<div
 				style={{ direction: "rtl" }}
-				className="rtl z-50 bg-blue-800 text-white fixed top-1/2 left-1/2 h-4/5 w-4/5 -translate-x-1/2 -translate-y-1/2"
+				className="overflow-y-auto rtl z-50 bg-blue-800 text-white fixed top-1/2 left-1/2 h-4/5 w-4/5 -translate-x-1/2 -translate-y-1/2"
 			>
 				<ArrowTitle title="بستن اعلان" onClick={() => set_modal_is_visible(false)} />
 				<h1 className="px-2 text-lg bg-white text-blue-800 w-fit ">آخرین تغییرات فنی</h1>
