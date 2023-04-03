@@ -64,7 +64,8 @@ async function init(con) {
 			name varchar(200) , 
 			description text(1000),
 			product_specs text(1000),
-			price int(15)
+			price int(15),
+			image_file_ids text 
 		);
 		create table if not exists support_tickets(
 			id int primary key auto_increment,
