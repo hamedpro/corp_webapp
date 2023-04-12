@@ -1,7 +1,7 @@
 import { SupportMessageRow } from "./SupportMessageRow";
 import { CompanyInfo } from "./CompanyInfo";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { get_collection } from "../../api/client";
 import { Section } from "./Section";
 import { StyledDiv } from "./StyledElements";
