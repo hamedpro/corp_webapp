@@ -7,7 +7,7 @@ export const SearchRow = ({ set_is_search_modal_visible }) => {
 			onClick={() => set_is_search_modal_visible(true)}
 		>
 			<SearchRounded sx={{ color: "gray" }} />
-			<h1 className="text-gray-700">جستجو در بین کالا ها ...</h1>
+			<h1 className="text-gray-200 px-2">جستجو ...</h1>
 		</div>
 	);
 };

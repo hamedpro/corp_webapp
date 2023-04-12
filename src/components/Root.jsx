@@ -7,8 +7,6 @@ import { gen_link_to_file, shuffle } from "../common";
 import { custom_axios } from "../../api/client";
 import { ContentSlider } from "./ContentSlider";
 import { RootWritingsSection } from "./RootWritingsSection";
-import { WritingRow } from "./WritingRow";
-import { WritingSquare } from "./WritingSquare";
 export function CustomBlock({ title, info, button_text, button_onclick, Icon }) {
 	return (
 		<div className="bg-gray-100 flex p-4 items-center h-full my-1 justify-center sm:justify-start flex-col sm:flex-row">
@@ -65,11 +63,12 @@ export function Root() {
 	return (
 		<>
 			<ContentSlider />
-			<ProductsRow
+			<br />
+			{/* <ProductsRow
 				icon={<Stars sx={{ color: "gray" }} />}
 				title="محصولات ما"
 				products={suggested_products()}
-			/>
+			/> */}
 			<CustomBlock
 				Icon={Settings}
 				button_text={"برو به کنترل اینترنتی"}

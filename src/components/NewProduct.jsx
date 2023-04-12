@@ -45,6 +45,10 @@ export function NewProduct() {
 		set_editor_js_instance(new EditorJS(editor_js_conf));
 	}, []);
 	async function submit_new_product() {
+		if (document.getElementById("images_input").files.length === 0) {
+			alert("حداقل یک تصویر برای این کالا باید انتخاب کنید");
+			return;
+		}
 		var entered_price = document.getElementById("price_input").value;
 		if (isNaN(Number(entered_price))) {
 			alert(

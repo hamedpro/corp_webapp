@@ -26,6 +26,7 @@ export function ProductItem({
 		}).then((data) => {
 			var product = data.result.find((product) => product.id === Number(id));
 			if (JSON.parse(product.image_file_ids).length !== 0) {
+				console.log();
 				custom_axios({
 					data: {
 						task_name: "get_low_quality_product_image",
