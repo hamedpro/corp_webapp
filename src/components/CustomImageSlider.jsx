@@ -16,14 +16,13 @@ export function CustomImageSlider({ images_sources }) {
 				<Fragment key={i}>
 					<swiper-slide
 						style={{ height: "55vh" }}
-						class="flex justify-center items-center w-full h-full"
+						class="flex justify-center items-center w-full h-full bg-white "
 					>
 						<img
-							className="w-full lg:w-3/4"
+							className="h-full "
 							key={i}
 							src={i}
 							style={{
-								maxHeight: "50vh",
 								display: "flex",
 								justifyContent: "center",
 								alignItems: "center",
