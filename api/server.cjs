@@ -24,8 +24,9 @@ async function connect_to_db() {
 		port: Number(env_vars.mysql_port),
 		host: env_vars.mysql_host,
 		multipleStatements: true,
+		connectionLimit: 10,
 	};
-	let con = mysql.createConnection(conf);
+	let con = mysql.createPool(conf);
 	await cq(
 		con,
 		`create database if not exists ${env_vars.mysql_database}; use ${env_vars.mysql_database}`
