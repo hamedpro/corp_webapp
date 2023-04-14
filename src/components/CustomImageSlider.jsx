@@ -19,7 +19,7 @@ export function CustomImageSlider({ images_sources }) {
 						class="flex justify-center items-center w-full h-full bg-white "
 					>
 						<img
-							className="h-full "
+							className="h-full lg:scale-x-150 duration-300"
 							key={i}
 							src={i}
 							style={{
