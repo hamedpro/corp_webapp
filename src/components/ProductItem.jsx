@@ -5,6 +5,7 @@ import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
 import { multi_lang_helper as ml, trim_text_if_its_long } from "../common.js";
 import { InfoRounded, SellRounded } from "@mui/icons-material";
 import { custom_axios } from "../../api/client.js";
+import { custom_editorjs_to_jsx } from "../../jsx_helpers";
 export function ProductItem({
 	beforeOnClick = () => {},
 	id,
@@ -16,6 +17,7 @@ export function ProductItem({
 }) {
 	//id stands for product id
 	var nav = useNavigate();
+	var [jsx_parsed_description, set_jsx_parsed_description] = useState();
 	var [the_image_src, set_the_image_src] = useState(null);
 	var [image_is_loading, set_image_is_loading] = useState(true);
 	useEffect(() => {
@@ -53,7 +55,13 @@ export function ProductItem({
 			}
 		});
 	}, []);
-
+	useEffect(() => {
+		var async_tmp = async () => {
+			console.log(JSON.parse(description));
+			set_jsx_parsed_description(await custom_editorjs_to_jsx(JSON.parse(description)));
+		};
+		async_tmp();
+	}, []);
 	if (just_first_image) {
 		if (the_image_src === null) {
 			return "there is not any image to show";
@@ -116,7 +124,7 @@ export function ProductItem({
 				<div className="flex space-x-1 mt-3">
 					<InfoRounded sx={{ color: "darkblue" }} className="pt-1" />{" "}
 					<span className="text-lg break-all">
-						{trim_text_if_its_long(description, 50)}
+						{jsx_parsed_description || "در حال بارگذاری اطلاعات ..."}
 					</span>
 				</div>
 			</div>

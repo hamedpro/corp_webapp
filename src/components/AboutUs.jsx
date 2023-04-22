@@ -4,7 +4,10 @@ import { LinkLikeP } from "./LinkLikeP";
 import { Section } from "./Section";
 import { StyledDiv } from "./StyledElements.jsx";
 import { CompanyInfo } from "./CompanyInfo.jsx";
+import { InfoOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 export function AboutUs() {
+	var nav = useNavigate();
 	return (
 		<>
 			<Section
@@ -14,33 +17,29 @@ export function AboutUs() {
 				})}
 				className="m-2"
 			>
-				<CompanyInfo />
-				<Section
-					title={ml({
-						en: "contact the support",
-						fa: "ارتباط با پشتیبانی",
-					})}
-					className="px-2 mt-2"
-				>
-					<div className="p-2">
-						<h1>
-							{ml({
-								en: `if you have any issue about using our website or there is any question
-								about our company you can either call one of the given phone numbers or
-								simply open a new support ticket :`,
-								fa: "اگر هر مساله یا سوالی در مورد سایت ما دارید یا با یکی از شماره تلفن های داده شده تماس بگیرید یا به راحتی یک درخواست پشتیبانی جدید باز کنید :",
-							})}
-						</h1>
-						<StyledDiv className="w-fit mt-2">
-							<LinkLikeP link="/new-support-ticket">
-								{ml({
-									en: "opening a new support ticket",
-									fa: "باز کردن یک درخواست پشتیبانی جدید",
-								})}
-							</LinkLikeP>
-						</StyledDiv>
-					</div>
-				</Section>
+				<CompanyInfo type="about_us" />
+				<div className="relative">
+					<Section title="ارتباط با ما" className="px-2 mt-2">
+						<div className="p-2">
+							<h1>برای ارتباط با ما میتوانید از این طرق ذکر شده استفاده کنید :</h1>
+							<ul className="list-disc">
+								<li className="mx-6">ارسال تیکت پشتیبانی</li>
+								<li className="mx-6">ارتباط تلفنی</li>
+								<li className="mx-6">ارسال پست الکترونیک</li>
+								<li className="mx-6">بازدید حضوری</li>
+							</ul>
+							<span>برای مشاهده اطلاعات بیشتر از </span>
+							<button
+								onClick={() => nav("/contact-us")}
+								className="border border-gray-200 px-1 rounded mx-1 text-white bg-blue-500  hover:bg-blue-700 duration-150"
+							>
+								<InfoOutlined sx={{ fontSize: "17px" }} />{" "}
+								<span>صفحه تماس با ما</span>
+							</button>
+							<span>استفاده کنید </span>
+						</div>
+					</Section>
+				</div>
 			</Section>
 		</>
 	);

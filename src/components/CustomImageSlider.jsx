@@ -9,13 +9,14 @@ export function CustomImageSlider({ images_sources }) {
 			speed="1500"
 			loop="true"
 			effect="fade"
-			autoplay-delay="5000"
+			autoplay-delay="3000"
 			class="w-full h-full flex items-center justify-center"
+			autoplay-disable-on-interaction="false"
 		>
 			{images_sources.map((i) => (
 				<Fragment key={i}>
 					<swiper-slide
-						style={{ height: "55vh" }}
+						style={{ height: "100%" }}
 						class="flex justify-center items-center w-full h-full bg-white "
 					>
 						<img

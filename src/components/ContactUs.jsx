@@ -32,7 +32,7 @@ export const ContactUs = () => {
 						درخواست های پشتیبانی من{" "}
 					</h1>
 					<StyledDiv
-						className="text-lg"
+						className="text-lg mt-2"
 						onClick={() => {
 							nav("/new-support-message");
 						}}

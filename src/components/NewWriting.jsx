@@ -74,18 +74,12 @@ export function NewWriting() {
 					class: List,
 					inlineToolbar: true,
 				},
-				attach: {
-					class: Attach,
-					inlineToolbar: true,
-				},
+
 				table: {
 					class: Table,
 					inlineToolbar: true,
 				},
-				image: {
-					class: ImageTool,
-					inlineToolbar: true,
-				},
+
 				checklist: {
 					class: Checklist,
 					inlineToolbar: true,

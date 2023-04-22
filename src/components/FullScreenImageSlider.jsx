@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { customAjax } from "../custom_ajax";
 import { ArrowTitle } from "./ArrowTitle";
 import { ImageSlider } from "./ImageSlider";
+import { CustomImageSlider } from "./CustomImageSlider";
 
 export const FullScreenImageSlider = () => {
 	var nav = useNavigate();
@@ -32,13 +33,15 @@ export const FullScreenImageSlider = () => {
 				title="بازگشت به صفحه کالا"
 				onClick={() => nav(`/products/${product_id}`)}
 			/>
-			{image_sources.length == 0 ? (
-				<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
-					برای این محصول هیچ تصویری بارگذاری نشده است
+			<div className="flex justify-center items-center h-full w-full">
+				<div className="w-full h-1/2 bg-blue-400 text-white flex justify-center items-center">
+					{image_sources.length === 0 ? (
+						"برای این محصول هیچ تصویری بارگذاری نشده است"
+					) : (
+						<CustomImageSlider images_sources={image_sources} />
+					)}
 				</div>
-			) : (
-				<ImageSlider image_sources={image_sources} />
-			)}
+			</div>
 		</div>
 	);
 };

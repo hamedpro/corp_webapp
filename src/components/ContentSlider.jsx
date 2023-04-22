@@ -41,8 +41,8 @@ export const ContentSlider = ({}) => {
 	if (images_sources === undefined) return <h1>loading ...</h1>;
 	return (
 		<div
-			className="w-full py-2 bg-gray-100 text-white"
-			style={{ width: "100vw", maxHeight: "55vh" }}
+			className="w-full py-2 bg-gray-100 text-white relative"
+			style={{ width: "100vw", height: "55vh" }}
 		>
 			{images_sources.length === 0 ? (
 				<div className="w-full h-full flex items-center justify-center text-gray-700">

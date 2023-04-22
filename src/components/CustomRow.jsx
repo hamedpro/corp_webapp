@@ -16,45 +16,53 @@ export function CustomRow({fields, extra = null }) {
         info_area : "hover:bg-blue-500 rounded hover:text-white px-1 cursor-default"
     }
     return (
-        <div className="border border-stone-400 p-1 rounded">
-            {fields.map((field,index) => {
-                if (field.type === "option") {
-                    return (
-						<div key={index} className="flex items-center space-x-1">
-							<span className={styles.info_area}>{field.key}</span>
-							<span> | </span>
-							<span className={styles.action_area} onClick={field.onClick}>
-								<Done />
-								تایید
-							</span>
-						</div>
+		<div className="border border-stone-400 p-1 rounded">
+			{fields.map((field, index, array) => {
+				if (field.type === "option") {
+					return (
+						<>
+							<div key={index} className="flex items-center space-x-1">
+								<span className={styles.info_area}>{field.key}</span>
+								<span> | </span>
+								<span className={styles.action_area} onClick={field.onClick}>
+									<Done />
+									تایید
+								</span>
+							</div>
+							{index !== array.length - 1 && <hr />}
+						</>
 					);
-                } else {
-                    return (
-						<div key={index} className="flex items-center space-x-1">
-							<span className={styles.info_area}>نام مشخصه : {field.key}</span>
-							<span> | </span>
-							<span className={styles.info_area}>
-								مقدار مشخصه : {String(field.value)}
-							</span>
-							<span> | </span>
-							<span
-								className={styles.action_area}
-								onClick={
-									field.change_function
-										? field.change_function
-										: () => {
-												alert(`"${field.key}" : این مشخصه قابل تغییر نیست`);
-										  }
-								}
-							>
-								<Edit /> ویرایش
-							</span>
-						</div>
+				} else {
+					return (
+						<>
+							<div key={index} className="flex items-center space-x-1 flex-wrap">
+								<span className={styles.info_area}>نام مشخصه : {field.key}</span>
+								<span> | </span>
+								<span className={styles.info_area}>
+									مقدار مشخصه : {field.value ? String(field.value) : "بدون مقدار"}
+								</span>
+								<span> | </span>
+								<span
+									className={styles.action_area}
+									onClick={
+										field.change_function
+											? field.change_function
+											: () => {
+													alert(
+														`"${field.key}" : این مشخصه قابل تغییر نیست`
+													);
+											  }
+									}
+								>
+									<Edit /> ویرایش
+								</span>
+							</div>
+							{index !== array.length - 1 && <hr />}
+						</>
 					);
-                }
-            })}
-            {extra}
-        </div>
-    )
+				}
+			})}
+			{extra}
+		</div>
+	);
 }

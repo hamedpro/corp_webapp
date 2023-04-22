@@ -5,39 +5,17 @@ import { AddToShoppingBagBar } from "./AddToShoppingBagBar";
 import { Section } from "./Section.jsx";
 import { ImageSlider } from "./ImageSlider.jsx";
 import { is_this_valid_json, multi_lang_helper as ml } from "../common.js";
-import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
-import List from "@editorjs/list";
-import Attach from "@editorjs/attaches";
-import Table from "@editorjs/table";
-import ImageTool from "@editorjs/image";
-import Checklist from "@editorjs/checklist";
+import parse from "html-react-parser";
+import editor_js_to_html from "editorjs-html";
 import { ZoomInRounded } from "@mui/icons-material";
+import { CustomImageSlider } from "./CustomImageSlider.jsx";
+
 export function Product() {
 	var nav = useNavigate();
 	var product_id = useParams().product_id;
-	var [editor_js_instance, set_editor_js_instance] = useState(null);
 	var [image_sources, set_image_sources] = useState(null);
 	var [product, set_product] = useState(null);
-	useEffect(() => {
-		if (product === null || image_sources === null) return;
-		if (is_this_valid_json(product.description)) {
-			var conf = {
-				holder: "editor-js-div",
-				readOnly: true,
-				tools: {
-					header: Header,
-					list: List,
-					attach: Attach,
-					table: Table,
-					image: ImageTool,
-					checkList: Checklist,
-				},
-				data: JSON.parse(product.description),
-			};
-			set_editor_js_instance(new EditorJS(conf));
-		}
-	}, [product, image_sources]);
+
 	async function init() {
 		var tmp = await customAjax({
 			params: {
@@ -57,10 +35,60 @@ export function Product() {
 	}, []);
 
 	if (product === null || image_sources === null) return;
+
+	var editor_js_to_html_parser = editor_js_to_html({
+		table: (block) => {
+			if (block.data.content.length === 0) return <b>[empty table]</b>;
+			return renderToString(
+				<table>
+					<thead>
+						<tr>
+							{block.withHeadings &&
+								block.data.content[0].map((i, index) => <th key={index}>{i}</th>)}
+						</tr>
+						<tr>
+							{!block.withHeadings &&
+								block.data.content[0].map((i, index) => <td key={index}>{i}</td>)}
+						</tr>
+					</thead>
+					<tbody>
+						{block.data.content.slice(1, block.data.content.length).map((i, index1) => (
+							<tr key={index1}>
+								{i.map((i, index2) => (
+									<td key={index2}>{i}</td>
+								))}
+							</tr>
+						))}
+					</tbody>
+				</table>
+			);
+		},
+		checklist: (block) => {
+			return renderToString(
+				<>
+					{block.data.items.map((i, index) => (
+						<Fragment key={index}>
+							<i className={i.checked ? "bi-toggle-on" : "bi-toggle-off"} />
+							{i.text}
+							<br />
+						</Fragment>
+					))}
+				</>
+			);
+		},
+	});
+
+	if (is_this_valid_json(product.description)) {
+		var parsed_description = parse(
+			editor_js_to_html_parser.parse(JSON.parse(product.description)).join("")
+		);
+	} else {
+		var parsed_description = <h1>{product.description}</h1>;
+	}
 	return (
 		<>
-			<div className="flex flex-col md:flex-row border border-blue-400 mt-2 p-2 mx-1">
-				<div className="md:w-2/3">
+			<div className="flex flex-col md:flex-row border border-blue-400 mt-2 p-2 mx-1 justify-end">
+				<div className="md:w-5/12">
 					{image_sources.length == 0 ? (
 						<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
 							{ml({
@@ -76,20 +104,21 @@ export function Product() {
 							>
 								<ZoomInRounded />
 							</div>
-							<ImageSlider image_sources={image_sources} />
+							<div className="h-60">
+								<CustomImageSlider images_sources={image_sources} />
+							</div>
 						</div>
 					)}
 				</div>
 
 				<div className="flex flex-col md:w-1/3 px-2 space-between justify-between">
 					<div className="mx-2 w-full mt-2">
-						<h1>
-							#{product.id} : {product.name}
-						</h1>
+						<h1 className="text-2xl">نام کالا : {product.name}</h1>
 					</div>
 
 					<AddToShoppingBagBar price={product.price} product_id={product.id} />
 				</div>
+				<div className="w-1/3"></div>
 			</div>
 			{/* todo add a div h full w full into Section comp and inject styles into that */}
 			<Section
@@ -99,10 +128,7 @@ export function Product() {
 				})}
 				className="mx-1 mt-2"
 			>
-				<div className="mx-2">
-					<div id="editor-js-div"></div>
-					{!is_this_valid_json(product.description) && <h1>{product.description}</h1>}
-				</div>
+				<div className="mx-2">{parsed_description}</div>
 			</Section>
 			<Section
 				title={ml({

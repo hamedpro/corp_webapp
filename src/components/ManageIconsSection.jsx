@@ -75,7 +75,7 @@ export function ManageIconsSection() {
 				/>
 			)}
 			<input id="common_input" type="file" className="hidden" />
-			<Section title="manage icons">
+			<Section title="مدیریت آیکون ها">
 				<div className="flex flex-col items-start px-2">
 					<StyledDiv className="mb-2" onClick={() => config_and_open_input("square")}>
 						{ml({ en: "upload new square icon", fa: "بارگزاری آیکون مربع جدید" })}

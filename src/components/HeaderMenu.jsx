@@ -7,7 +7,7 @@ import { customAjax } from "../custom_ajax";
 import { header_options_array } from "./HeaderOptionsArray";
 
 export const HeaderMenu = ({ hide_header_menu, visibility }) => {
-	//props : "hide_header_menu : function" , "visibility : boolean"
+	//props : hide_header_menu : function , visibility : boolean
 	var username = window.localStorage.getItem("username");
 
 	var nav = useNavigate();

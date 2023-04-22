@@ -2,16 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { custom_axios } from "../../api/client";
 import { Section } from "./Section";
-import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
-import List from "@editorjs/list";
-import Attach from "@editorjs/attaches";
-import Table from "@editorjs/table";
-import ImageTool from "@editorjs/image";
-import Checklist from "@editorjs/checklist";
-export const Writing = () => {
-	var [editor_js_instance, set_editor_js_instance] = useState(null);
+import parse from "html-react-parser";
+import editor_js_to_html from "editorjs-html";
 
+export const Writing = () => {
 	var { writing_id } = useParams();
 	var [writing, set_writing] = useState(null);
 	async function init_component() {
@@ -33,47 +27,51 @@ export const Writing = () => {
 	useEffect(() => {
 		init_component();
 	}, []);
-	useEffect(() => {
-		if (writing !== null) {
-			var tmp = new EditorJS({
-				readOnly: true,
-				holder: "editor-js-div",
-				data: writing["data"],
-				tools: {
-					header: {
-						class: Header,
-						inlineToolbar: true,
-					},
-					list: {
-						class: List,
-						inlineToolbar: true,
-					},
-					attach: {
-						class: Attach,
-						inlineToolbar: true,
-					},
-					table: {
-						class: Table,
-						inlineToolbar: true,
-					},
-					image: {
-						class: ImageTool,
-						inlineToolbar: true,
-					},
-					checklist: {
-						class: Checklist,
-						inlineToolbar: true,
-					},
-				},
-				defaultBlock: "header",
-				autofocus: true,
-				placeholder: "start typing you note here...",
-			});
-			set_editor_js_instance(tmp);
-		}
-	}, [writing]);
+
 	if (writing === null) return "loading writing ...";
-	console.log(writing);
+
+	var editor_js_to_html_parser = editor_js_to_html({
+		table: (block) => {
+			if (block.data.content.length === 0) return <b>[empty table]</b>;
+			return renderToString(
+				<table>
+					<thead>
+						<tr>
+							{block.withHeadings &&
+								block.data.content[0].map((i, index) => <th key={index}>{i}</th>)}
+						</tr>
+						<tr>
+							{!block.withHeadings &&
+								block.data.content[0].map((i, index) => <td key={index}>{i}</td>)}
+						</tr>
+					</thead>
+					<tbody>
+						{block.data.content.slice(1, block.data.content.length).map((i, index1) => (
+							<tr key={index1}>
+								{i.map((i, index2) => (
+									<td key={index2}>{i}</td>
+								))}
+							</tr>
+						))}
+					</tbody>
+				</table>
+			);
+		},
+		checklist: (block) => {
+			return renderToString(
+				<>
+					{block.data.items.map((i, index) => (
+						<Fragment key={index}>
+							<i className={i.checked ? "bi-toggle-on" : "bi-toggle-off"} />
+							{i.text}
+							<br />
+						</Fragment>
+					))}
+				</>
+			);
+		},
+	});
+
 	return (
 		<Section title={`نوشته ${writing_id}`} className="m-1">
 			<div className="p-2 flex flex-col sm:flex-row">
@@ -86,7 +84,7 @@ export const Writing = () => {
 						حدود {Math.round((new Date().getTime() - writing.publish_date) / 3600000)}{" "}
 						ساعت پیش | توسط {writing.publisher_username}
 					</p>
-					<div id="editor-js-div"></div>
+					<div>{parse(editor_js_to_html_parser.parse(writing.data).join(""))}</div>
 				</div>
 			</div>
 		</Section>

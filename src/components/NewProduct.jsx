@@ -35,9 +35,7 @@ export function NewProduct() {
 			tools: {
 				header: Header,
 				list: List,
-				attach: Attach,
 				table: Table,
-				image: ImageTool,
 				checkList: Checklist,
 			},
 			placeholder: "محصول خود را معرفی کنید ",

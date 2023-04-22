@@ -19,6 +19,7 @@ export const AdminDashboardRoot = () => {
 			telegram: "آدرس حساب تلگرام شرکت",
 			favicon_file_id: "ریز آیکون",
 			company_icon_file_id: "آیکون اصلی شرکت",
+			company_introduction: "متن معرفی شرکت",
 		};
 		let missing_company_info_fields = [];
 		Object.keys(fields).forEach((field) => {

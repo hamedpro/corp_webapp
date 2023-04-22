@@ -117,7 +117,6 @@ export function App() {
 								/>
 							</Routes>
 						</div>
-						<MainFooter />
 					</div>
 				</div>
 			</DownloadCenterItemsContextProvider>

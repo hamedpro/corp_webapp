@@ -19,6 +19,7 @@ export function CompanyInfoSection() {
 		);
 		await modify_company_info(field_to_change, new_value);
 		alert("با موفقیت انجام شد");
+		await fetch_data();
 	}
 	var fields = [
 		{ value: "name", en: "name", fa: "نام" },
@@ -30,6 +31,7 @@ export function CompanyInfoSection() {
 		{ value: "instagram", en: "instagram", fa: "اینستاگرام" },
 		{ value: "telegram", en: "telegram", fa: "تلگرام" },
 		{ value: "twitter", en: "twitter", fa: "توییتر" },
+		{ value: "company_introduction", en: "company introduction", fa: "معرفی شرکت" },
 	];
 	return (
 		<Section title={ml({ en: "company information", fa: "اطلاعات شرکت" })}>

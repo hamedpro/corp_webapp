@@ -69,37 +69,6 @@ export function Root() {
 				title="محصولات ما"
 				products={suggested_products()}
 			/> */}
-			<CustomBlock
-				Icon={Settings}
-				button_text={"برو به کنترل اینترنتی"}
-				title="کنترل اینترنتی"
-				info={"برای تغییر مسیر به صفحه کنترل اینترنتی کلیک کنید"}
-				button_onclick={() => window.location.assign("http://mpkchiller.com/dimmer")}
-			/>
-
-			<CustomBlock
-				Icon={Download}
-				button_text={"برو به بخش دانلود ها"}
-				title="بخش دانلود ها"
-				info={"فایل های قابل بارگیری را از اینجا بارگیری کنید"}
-				button_onclick={() => nav("/download-center")}
-			/>
-
-			<RootWritingsSection writings={writings} />
-			<CustomBlock
-				Icon={Business}
-				button_text={"برو به درباره ما"}
-				title="درباره ما"
-				info={"توضیحات شرکت اینجا نمایش داده خواهد شد"}
-				button_onclick={() => nav("/about-us")}
-			/>
-			<CustomBlock
-				Icon={Phone}
-				button_text={"برو به تماس با ما"}
-				title="تماس با ما"
-				info={"پل های ارتباطی ما را مشاهده کنید"}
-				button_onclick={() => nav("/contact-us")}
-			/>
 		</>
 	);
 }
