@@ -330,8 +330,7 @@ export function ProductsSection() {
 															className="h-16 w-16 shrink-0 flex justify-center items-center"
 														>
 															<img
-																style={{ objectFit: "contain" }}
-																className="w-full"
+																className="h-full"
 																onClick={() =>
 																	del_product_image(
 																		product,
