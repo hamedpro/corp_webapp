@@ -1,11 +1,11 @@
 import { Instagram, Telegram, Twitter } from "@mui/icons-material"
 export function FollowUsRow({ telegram = null, instagram = null, twitter = null,className="" }) {
-    return (
+	return (
 		<div className={["flex h-8 w-full items-center space-x-3 my-2 px-2", className].join(" ")}>
 			<h1 className="text-xl ml-6">با ما همراه باشید :</h1>
 			<Instagram
 				onClick={() => {
-					if (instagram) {
+					if (!instagram) {
 						alert(
 							ml({
 								en: "instagram id is not set",
@@ -20,7 +20,7 @@ export function FollowUsRow({ telegram = null, instagram = null, twitter = null,
 			/>
 			<Twitter
 				onClick={() => {
-					if (twitter) {
+					if (!twitter) {
 						alert(
 							ml({
 								en: "twitter id is not set",
@@ -35,7 +35,7 @@ export function FollowUsRow({ telegram = null, instagram = null, twitter = null,
 			/>
 			<Telegram
 				onClick={() => {
-					if (telegram) {
+					if (!telegram) {
 						alert(
 							ml({
 								en: "telegram id is not set",

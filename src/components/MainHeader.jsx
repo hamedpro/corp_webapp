@@ -133,7 +133,8 @@ export function MainHeader() {
 							</CustomButton>
 							<h1
 								onClick={() => nav("/")}
-								className="cursor-pointer px-2 text-lg p-0 bg-gray-500 pb-1 text-white mx-2 rounded h-10 flex items-center"
+								className="cursor-pointer px-4 text-lg p-0 bg-gray-500 pb-1 text-white mx-2 rounded h-10 flex items-center"
+								style={{ width: "max-content" }}
 							>
 								{company_name}
 							</h1>

@@ -11,6 +11,7 @@ export function CompanyInfo({ type }) {
 	//the left side will be different according to that value
 
 	var [company_info, set_company_info] = useState(null);
+
 	var [rectangle_icon_src, set_rectangle_icon_src] = useState(null);
 	async function get_data() {
 		var tmp = await get_company_info();

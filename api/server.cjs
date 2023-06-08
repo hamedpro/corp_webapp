@@ -1042,11 +1042,14 @@ async function main() {
 					con,
 					`
 					insert into download_center
-					(publisher_username,file_name,description,time)
+					(publisher_username,file_name,description,time, category_id)
 					values 
-					("${params.publisher_username}","${file_name}","${params.description}","${new Date().getTime()}");
+					("${params.publisher_username}","${file_name}","${
+						params.description
+					}","${new Date().getTime()}" , "${params.category_id}");
 				`
 				);
+				console.log(o);
 				//todo a name should be possible to be used with several extensions but now this is not possible
 				//and also look for related problems in "remove_download_center_item" and ... cases
 				custom_upload({

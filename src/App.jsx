@@ -120,6 +120,7 @@ export function App() {
 					</div>
 				</div>
 			</DownloadCenterItemsContextProvider>
+			<MainFooter />
 		</>
 	);
 }

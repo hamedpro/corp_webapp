@@ -1,28 +1,31 @@
 import { useEffect, useState } from "react";
 import { DownloadCenterItemsContext } from "../DownloadCenterItemsContext";
 import { customAjax } from "../custom_ajax";
+import { get_collection } from "../../api/client";
 export function DownloadCenterItemsContextProvider({ children }) {
 	var [DownloadCenterItemsContextState, setDownloadCenterItemsContextState] = useState(null);
-	function update_download_center_items_context_state() {
+	async function update_download_center_items_context_state() {
 		//this function gets data from server and updates the state
 		//so you have not to handle data fetching and use setDownloadCenterItemsContextState manually
-		customAjax({
-			params: {
-				task_name: "get_download_center_items",
-			},
-		}).then(
-			(data) => {
-				setDownloadCenterItemsContextState(data.result);
-			},
-			(e) => {
-				alert(
-					"در هنگام درخواست اطلاعات از سرور خطایی رخ داد. جزئیات خطا را در کنسول مرورگر مشاهده کنید."
-				);
-				console.log(e);
-			}
-		);
+		var download_center_items = (
+			await customAjax({
+				params: {
+					task_name: "get_download_center_items",
+				},
+			})
+		).result;
+
+		var download_center_categories = (
+			await get_collection({
+				collection_name: "download_center_categories",
+				filters: {},
+			})
+		).data;
+		setDownloadCenterItemsContextState({ download_center_categories, download_center_items });
 	}
-	useEffect(update_download_center_items_context_state, []);
+	useEffect(() => {
+		update_download_center_items_context_state();
+	}, []);
 	return (
 		<DownloadCenterItemsContext.Provider
 			value={{
