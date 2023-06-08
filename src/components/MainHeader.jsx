@@ -13,6 +13,8 @@ import { SearchModal } from "./SearchModal";
 import { SearchRow } from "./SearchRow";
 import { header_options_array } from "./HeaderOptionsArray";
 import { get_company_info } from "../../api/client";
+import { InternetControlModal } from "./InternetControlModal";
+import { Modal } from "@mui/material";
 function MainHeaderLeftDropDown() {
 	var nav = useNavigate();
 	var [is_open, set_is_open] = useState(false);
@@ -66,14 +68,26 @@ function MainHeaderLeftDropDown() {
 }
 function LandscapeHeaderOption({ icon, content, url }) {
 	var nav = useNavigate();
+	var [is_open, set_is_open] = useState(false);
+
 	return (
-		<div
-			className="shrink-0 flex-wrap flex space-x-2 p-2 text-white hover:bg-gray-500 hover:text-white duration-300 cursor-pointer"
-			onClick={url.startsWith("http") ? () => window.location.assign(url) : () => nav(url)}
-		>
-			{icon}
-			<h1>{content}</h1>
-		</div>
+		<>
+			{!url && <InternetControlModal open={is_open} onClose={() => set_is_open(false)} />}
+
+			<div
+				className="shrink-0 flex-wrap flex space-x-2 p-2 text-white hover:bg-gray-500 hover:text-white duration-300 cursor-pointer"
+				onClick={
+					url
+						? url.startsWith("http")
+							? () => window.location.assign(url)
+							: () => nav(url)
+						: () => set_is_open(true)
+				}
+			>
+				{icon}
+				<h1>{content}</h1>
+			</div>
+		</>
 	);
 }
 export function MainHeader() {
@@ -159,7 +173,7 @@ export function MainHeader() {
 					<div className="mt-4 w-full sm:flex hidden overflow-x-auto">
 						{header_options_array.map((option) => {
 							return (
-								<Fragment key={option.url}>
+								<Fragment key={Math.random() * 10000}>
 									<LandscapeHeaderOption
 										icon={<option.icon />}
 										content={option.text}

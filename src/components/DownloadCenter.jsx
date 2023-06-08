@@ -1,4 +1,4 @@
-import { Download, Info } from "@mui/icons-material";
+import { Delete, Download, Info } from "@mui/icons-material";
 import { Fragment, useContext } from "react";
 import { customAjax } from "../custom_ajax";
 import { DownloadCenterItemsContext } from "../DownloadCenterItemsContext";
@@ -7,36 +7,52 @@ import { Loading } from "./Loading";
 import { Section } from "./Section";
 
 export function DownloadCenter({ admin_mode = false }) {
-	function Item({ item }) {
+	function Items({ items }) {
 		return (
-			<div
-				key={Math.round(Math.random() * 10000)}
-				className=" border rounded border-stone-400 p-1 mb-1 "
-			>
-				<div className="flex space-x-1">
-					<a
-						key={Math.random() * 10000}
-						href={new URL(`/download_center/${item.file_path}`, vite_api_endpoint).href}
-						download
-						className="px-1 block bg-blue-100 hover:bg-blue-500 w-fit hover:text-white rounded"
-					>
-						<Download />
-						{item.file_path}
-					</a>
-					{admin_mode && (
-						<>
-							<span>|</span>
-							<span
-								className="h-full bg-red-100 hover:text-white hover:bg-red-500 rounded px-1"
-								onClick={() => delete_download_center_item(item.file_name)}
-							>
-								delete
-							</span>
-						</>
-					)}
-				</div>
-				<span className="block text-stone-700 mt-1">توضیحات : {item.description}</span>
-			</div>
+			<table className="border border-blue-400 w-full mb-4 p-3 rounded">
+				<thead className="p-3">
+					<tr className="text-right">
+						<th className="px-2 w-1/3">نام</th>
+						<th className="px-2">توضیحات</th>
+						<th>گزینه ها</th>
+					</tr>
+				</thead>
+				<tbody className="p-3">
+					{items.map((item) => (
+						<tr className="py-2 border-b border-blue-400" key={Math.random() * 100000}>
+							<td className="px-2 py-2">{item.file_path}</td>
+							<td className="px-2 py-2">{item.description}</td>
+							<td>
+								{admin_mode && (
+									<span
+										key={Math.random() * 10000}
+										onClick={() => delete_download_center_item(item.file_name)}
+										className="px-1 block bg-blue-100 hover:bg-blue-500 w-fit hover:text-white rounded"
+									>
+										<Delete />
+										حذف کردن
+									</span>
+								)}
+
+								<a
+									key={Math.random() * 10000}
+									href={
+										new URL(
+											`/download_center/${item.file_path}`,
+											vite_api_endpoint
+										).href
+									}
+									download
+									className="px-1 block bg-blue-100 hover:bg-blue-500 w-fit hover:text-white rounded my-1"
+								>
+									<Download />
+									دانلود
+								</a>
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
 		);
 	}
 	var { DownloadCenterItemsContextState, update_download_center_context_state } = useContext(
@@ -77,12 +93,21 @@ export function DownloadCenter({ admin_mode = false }) {
 					].map((category, index) => {
 						return (
 							<Fragment key={category._id}>
-								<h1>{category.title}</h1>
-								{DownloadCenterItemsContextState.download_center_items
-									.filter((i) => i.category_id === category._id)
-									.map((item, index2) => {
-										return <Item item={item} key={Math.random() * 10000} />;
-									})}
+								{DownloadCenterItemsContextState.download_center_items.filter(
+									(i) => i.category_id === category._id
+								).length !== 0 && (
+									<Fragment key={category._id}>
+										<h1 className="text-3xl mb-1 text-center rounded bg-blue-500 text-white">
+											{category.title}
+										</h1>
+
+										<Items
+											items={DownloadCenterItemsContextState.download_center_items.filter(
+												(i) => i.category_id === category._id
+											)}
+										/>
+									</Fragment>
+								)}
 							</Fragment>
 						);
 					})}

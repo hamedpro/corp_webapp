@@ -44,8 +44,8 @@ export function CompanyInfo({ type }) {
 				{company_info !== null &&
 					(type === "about_us" ? (
 						<>
-							<h1 className="text-2xl">متن معرفی شرکت :</h1>
-							<span>{company_info.company_introduction}</span>
+							<br />
+							<span className="mt-3">{company_info.company_introduction}</span>
 						</>
 					) : (
 						<div className="flex-col relative pb-10 px-2">
@@ -55,27 +55,20 @@ export function CompanyInfo({ type }) {
 									key: "name",
 								},
 								{
-									label: ml({
-										en: "company description",
-										fa: "توضیحات شرکت",
-									}),
-									key: "description",
-								},
-								{
-									label: ml({ en: "email address", fa: "آدرس ایمیل شرکت" }),
+									label: ml({ en: "email address", fa: "ایمیل" }),
 									key: "email_address",
 								},
 								{
 									label: ml({
 										en: "landline phone number",
-										fa: "شماره تلفن ثابت شرکت",
+										fa: "تلفن",
 									}),
 									key: "landline_phone_number",
 								},
 								{
 									label: ml({
 										en: "mobile phone number",
-										fa: "شماره موبایل شرکت ",
+										fa: "موبایل",
 									}),
 									key: "mobile_phone_number",
 								},

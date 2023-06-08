@@ -74,14 +74,15 @@ export function ManageDownloadCenter() {
 					percentage={upload_state.percent}
 				/>
 			)}
-			<div className="flex flex-col">
+			<div className="flex flex-col w-full">
 				<DownloadCenter admin_mode />
 				<Section title="بارگذاری فایل جدید" className="mt-2" innerClassName="px-2">
 					<input id="file_input" type={"file"} className="mt-1" />
 					<p>نام فایل جدید را وارد کنید :‌</p>
 					<StyledInput id="file_title" className="block" />
-					<button onClick={new_download_center_category}>دسته بندی فایل جدید</button>
+
 					<Select
+						className="w-full mt-3"
 						options={DownloadCenterItemsContextState.download_center_categories.map(
 							(i) => ({
 								value: i._id,
@@ -91,6 +92,18 @@ export function ManageDownloadCenter() {
 						value={selected_download_center_category}
 						onChange={set_selected_download_center_category}
 					/>
+					<div>
+						<span className="pl-2">
+							در صورتی که دسته بندی مورد نظر موجود نیست از اینجا بسازید.
+						</span>
+						<button
+							className="border border-blue-400 my-2 px-2 rounded"
+							onClick={new_download_center_category}
+						>
+							دسته بندی فایل جدید
+						</button>
+					</div>
+
 					<p>توضیحی برای فایل جدید وارد کنید :‌</p>
 					<StyledInput id="file_description" className="block" />
 					<StyledDiv onClick={upload_files} className="w-fit mt-4 text-lg">

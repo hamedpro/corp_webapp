@@ -13,7 +13,7 @@ export var header_options_array = [
 	{ text: "محصولات", url: "/products", icon: StoreRounded },
 	{
 		text: "کنترل اینترنتی",
-		url: "/internet-control",
+
 		icon: SettingsRemoteRounded,
 	},
 	{ text: "درباره ما", url: "/about-us", icon: InfoRounded },

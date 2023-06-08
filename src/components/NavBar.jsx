@@ -18,10 +18,6 @@ export function NavBar() {
 		});
 		var translated_names = [
 			{
-				original: "internet-control",
-				fa: "کنترل اینترنتی",
-			},
-			{
 				original: "register",
 				fa: "ثبت نام کاربر جدید",
 			},
