@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { get_company_info } from "../../api/client";
 import { multi_lang_helper as ml } from "../common";
 import { LocationOn, Phone } from "@mui/icons-material";
+import github_icon from "../../github-icon.png";
 export function MainFooter() {
 	var [company_info, set_company_info] = useState(null);
 	async function fetch_data() {
@@ -19,7 +20,7 @@ export function MainFooter() {
 			<div className="bg-sky-700 text-white flex items-end flex-col p-2">
 				<div className="flex justify-center items-center w-full">
 					<img
-						src="../../github-icon.png"
+						src={github_icon}
 						className=" w-3/4 h-32 rounded-lg flex items-center justify-center bg-white"
 					/>
 				</div>
