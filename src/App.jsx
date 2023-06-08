@@ -30,6 +30,7 @@ import { Products } from "./components/Products";
 import { Register } from "./components/Register";
 import { MainFooter } from "./components/MainFooter";
 import { DownloadCenterItemsContextProvider } from "./components/DownloadCenterItemsContextProvider";
+import { InternetControl } from "./components/InternetControl";
 export function App() {
 	window.ml = ml;
 	window.customAjax = customAjax;
@@ -73,6 +74,11 @@ export function App() {
 									}
 								/>
 								<Route exact path="/users/:username/orders" element={<Orders />} />
+								<Route
+									exact
+									path="/internet-control"
+									element={<InternetControl />}
+								/>
 								<Route
 									exact
 									path="/users/:username/orders/:order_id"
