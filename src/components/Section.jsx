@@ -1,6 +1,11 @@
 export function Section({ className, top_line_style, secondary, title, children, innerClassName }) {
 	return (
-		<div className={"section" + (typeof className == "undefined" ? "" : " " + className)}>
+		<div
+			className={
+				" overflow-y-hidden section" +
+				(typeof className == "undefined" ? "" : " " + className)
+			}
+		>
 			<div className={["border border-blue-400 rounded pb-2"].join(" ")}>
 				<div
 					className={["w-full h-8 rounded-t relative bg-blue-400 mb-4"].join(" ")}

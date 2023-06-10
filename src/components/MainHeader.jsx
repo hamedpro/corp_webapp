@@ -4,6 +4,7 @@ import {
 	LoginRounded,
 	MenuRounded,
 	Person2Rounded,
+	SettingsRemoteRounded,
 } from "@mui/icons-material";
 import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,56 +15,36 @@ import { SearchRow } from "./SearchRow";
 import { header_options_array } from "./HeaderOptionsArray";
 import { get_company_info } from "../../api/client";
 import { InternetControlModal } from "./InternetControlModal";
-import { Modal } from "@mui/material";
+import { CustomDropDown } from "../components/CustomDropDown";
+import { Link } from "@mui/material";
 function MainHeaderLeftDropDown() {
 	var nav = useNavigate();
-	var [is_open, set_is_open] = useState(false);
 	return (
-		<div className="mx-2 w-36 h-10 relative">
-			<div
-				className={`text-white cursor-pointer overflow-hidden absolute rounded-lg duration-300 w-36 z-20 bg-gray-500 top-0 left-0 ${
-					is_open ? "h-34" : "h-10"
-				}`}
-				onClick={() => set_is_open((prev) => !prev)}
-			>
-				<div
-					className={
-						"hover:bg-gray-800 duration-300 justify-between h-10 w-full flex items-center px-1" +
-						(is_open ? " border-b border-blue-600" : "")
-					}
-				>
-					<div className="flex items-center space-x-3">
-						<Person2Rounded sx={{ color: "white" }} />
-						<h1 className="text-lg">{localStorage.getItem("username")}</h1>
-					</div>
-
-					{is_open ? <KeyboardArrowUpRounded /> : <KeyboardArrowDownRounded />}
-				</div>
-				<div
-					className="hover:bg-gray-800 duration-300 h-8 w-full px-2 items-center flex"
-					onClick={() =>
-						nav(`/users/${window.localStorage.getItem("username")}/shopping-card`)
-					}
-				>
-					سبد خرید من
-				</div>
-				<div
-					className="hover:bg-gray-800 duration-300 h-8 w-full px-2 items-center flex"
-					onClick={() => nav(`/users/${window.localStorage.getItem("username")}`)}
-				>
-					حساب کاربری من
-				</div>
-				<div
-					className="hover:bg-gray-800 duration-300 h-8 w-full px-2 items-center flex"
-					onClick={() => {
+		<CustomDropDown
+			optionsClassName="bg-gray-500 hover:bg-gray-700 hover:border border-gray-500"
+			options={[
+				{
+					text: localStorage.getItem("username"),
+					icon: () => <Person2Rounded sx={{ color: "white" }} />,
+				},
+				{
+					onClick: () =>
+						nav(`/users/${window.localStorage.getItem("username")}/shopping-card`),
+					text: "سبد خرید من",
+				},
+				{
+					onClick: () => nav(`/users/${window.localStorage.getItem("username")}`),
+					text: "حساب کاربری من",
+				},
+				{
+					onClick: () => {
 						window.localStorage.removeItem("username");
 						window.location.replace("/");
-					}}
-				>
-					خروج از حساب کاربری
-				</div>
-			</div>
-		</div>
+					},
+					text: "خروج از حساب کاربری",
+				},
+			]}
+		/>
 	);
 }
 function LandscapeHeaderOption({ icon, content, url }) {
@@ -170,15 +151,64 @@ export function MainHeader() {
 					<div className="flex mt-2 mb-2 w-full sm:hidden">
 						<SearchRow set_is_search_modal_visible={set_is_search_modal_visible} />
 					</div>
-					<div className="mt-4 w-full sm:flex hidden overflow-x-auto">
+					<div className="mt-4 w-full sm:flex hidden">
 						{header_options_array.map((option) => {
 							return (
 								<Fragment key={Math.random() * 10000}>
-									<LandscapeHeaderOption
-										icon={<option.icon />}
-										content={option.text}
-										url={option.url}
-									/>
+									{option.x ? (
+										<CustomDropDown
+											optionsClassName="bg-gray-700 hover:bg-gray-500 hover:border border-gray-500"
+											options={[
+												{
+													text: "کنترل اینترنتی",
+													icon: SettingsRemoteRounded,
+												},
+												{
+													text: "چیلر",
+													icon: Link,
+													onClick: () =>
+														location.assign(
+															"http://vatankhah.pishro-control.ir/multi_systems"
+														),
+												},
+												{
+													text: "داکت اسپلیت",
+													icon: Link,
+													onClick: () =>
+														location.assign(
+															"https://mpkchiller.com/duct"
+														),
+												},
+												{
+													text: "فن کوئل",
+													icon: Link,
+													onClick: () =>
+														location.assign(
+															"https://mpkchiller.com/dimmer"
+														),
+												},
+												{
+													text: "کولر آبی",
+													icon: Link,
+													onClick: () => {},
+												},
+												{
+													text: "پریز هوشمند",
+													icon: Link,
+													onClick: () =>
+														location.assign(
+															"https://mpkchiller.com/power"
+														),
+												},
+											]}
+										/>
+									) : (
+										<LandscapeHeaderOption
+											icon={<option.icon />}
+											content={option.text}
+											url={option.url}
+										/>
+									)}
 								</Fragment>
 							);
 						})}

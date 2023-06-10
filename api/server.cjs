@@ -3,7 +3,7 @@ var hash_sha_256_hex = require("./common.cjs").hash_sha_256_hex;
 var express = require("express");
 var cors = require("cors");
 var response_manager = require("./express_response_manager.cjs");
-var mysql = require("mysql");
+var mysql = require("mysql2");
 var formidable = require("formidable");
 var fs = require("fs");
 var app = express();
@@ -17,6 +17,21 @@ var path = require("path");
 var { MongoClient, ObjectId } = require("mongodb");
 var { execSync } = require("child_process");
 var env_vars = JSON.parse(fs.readFileSync("env.json", "utf8"));
+async function try_mysql_con_end(con) {
+	try {
+		await new Promise((resolve, reject) => {
+			con.end((err) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve();
+				}
+			});
+		});
+	} catch (error) {
+		//most probably the connection had been ended when it tried
+	}
+}
 async function connect_to_db() {
 	var conf = {
 		user: env_vars.mysql_user,
@@ -142,6 +157,9 @@ async function main() {
 
 	app.all("/", async (req, res) => {
 		var con = await connect_to_db();
+		setTimeout(() => {
+			try_mysql_con_end(con);
+		}, 90 * 1000);
 		var output = await cq(con, "select * from users;");
 		var current_users = output.result;
 		if (current_users.length === 0) {

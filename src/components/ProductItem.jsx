@@ -57,7 +57,6 @@ export function ProductItem({
 	}, []);
 	useEffect(() => {
 		var async_tmp = async () => {
-			console.log(JSON.parse(description));
 			set_jsx_parsed_description(await custom_editorjs_to_jsx(JSON.parse(description)));
 		};
 		async_tmp();
@@ -87,6 +86,7 @@ export function ProductItem({
 				"w-1/2 sm:w-1/4 p-1 relative flex flex-col shrink-0 cursor-pointer border  border-stone-400 hover:scale-105 hover:z-10 duration-150" +
 				(className ? " " + className : "")
 			}
+			style={{ height: "50vh" }}
 			onClick={() => {
 				beforeOnClick();
 				nav("/products/" + id);

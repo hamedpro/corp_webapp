@@ -8,7 +8,6 @@ import { SortingModal } from "./SortingModal";
 import { FilteringModal } from "./FilteringModal";
 import { multi_lang_helper as ml } from "../common.js";
 export function Products() {
-	var nav = useNavigate();
 	const [products_to_show, set_products_to_show] = useState([]);
 	var [is_sorting_modal_visible, set_is_sorting_modal_visible] = useState(false);
 	var [is_filtering_modal_visible, set_is_filtering_modal_visible] = useState(false);

@@ -53,12 +53,8 @@ export function App() {
 		<>
 			<LatestChangesModal />
 			<DownloadCenterItemsContextProvider>
-				<div className="h-full w-full overflow-x-hidden overflow-y-hidden">
-					<div
-						className={["relative mx-auto w-full h-full overflow-x-hidden fa"].join(
-							" "
-						)}
-					>
+				<div className="w-full overflow-x-hidden">
+					<div className={["relative mx-auto w-full overflow-x-hidden fa"].join(" ")}>
 						<MainHeader />
 						<NavBar />
 						<div id="x-container">

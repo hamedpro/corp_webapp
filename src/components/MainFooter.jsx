@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { get_company_info } from "../../api/client";
-import { multi_lang_helper as ml } from "../common";
 import { LocationOn, Phone } from "@mui/icons-material";
 import github_icon from "../../github-icon.png";
 export function MainFooter() {
@@ -17,23 +16,26 @@ export function MainFooter() {
 	}
 	return (
 		<>
-			<div className="bg-sky-700 text-white flex items-end flex-col p-2">
-				<div className="flex justify-center items-center w-full">
+			<div className="bg-sky-700 text-white flex sm:justify-start sm:items-center flex-col sm:flex-row-reverse p-2 sm:space-x-4">
+				<div className="flex justify-center items-center w-full sm:w-fit">
 					<img
 						src={github_icon}
-						className=" w-3/4 h-32 rounded-lg flex items-center justify-center bg-white"
+						className=" h-20 rounded-lg flex items-center justify-center"
 					/>
 				</div>
-				<h1 className="text-3xl mt-4 mb-1">اطلاعات تماس</h1>
-				<hr className="bg-white  w-full mb-2" />
-				<h1 dir="rtl" className="mb-2 text-xl">
-					<LocationOn />
-					آدرس : {company_info.address || "بدون آدرس"}
-				</h1>
-				<h1 dir="rtl" className="text-xl">
-					<Phone />
-					تلفن: {company_info.landline_phone_number || "بدون شماره تلفن ثابت"}
-				</h1>
+				<div className="px-5">
+					<h1 dir="rtl" className="mb-2 text-3xl px-2">
+						{company_info.name || "بدون نام"}
+					</h1>
+					<h1 dir="rtl" className="mb-2 text-xl">
+						<LocationOn />
+						آدرس : {company_info.address || "بدون آدرس"}
+					</h1>
+					<h1 dir="rtl" className="text-xl">
+						<Phone />
+						تلفن: {company_info.landline_phone_number || "بدون شماره تلفن ثابت"}
+					</h1>
+				</div>
 			</div>
 		</>
 	);
