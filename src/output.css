@@ -814,8 +814,8 @@ video {
   height: 80%;
 }
 
-.h-28 {
-  height: 7rem;
+.h-20 {
+  height: 5rem;
 }
 
 .h-10 {
@@ -824,10 +824,6 @@ video {
 
 .h-6 {
   height: 1.5rem;
-}
-
-.h-20 {
-  height: 5rem;
 }
 
 .h-60 {
@@ -852,8 +848,8 @@ video {
   height: fit-content;
 }
 
-.h-24 {
-  height: 6rem;
+.h-28 {
+  height: 7rem;
 }
 
 .w-full {

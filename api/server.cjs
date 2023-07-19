@@ -2,6 +2,7 @@ var sharp = require("sharp");
 var hash_sha_256_hex = require("./common.cjs").hash_sha_256_hex;
 var express = require("express");
 var cors = require("cors");
+var http = require("http");
 var response_manager = require("./express_response_manager.cjs");
 var mysql = require("mysql2");
 var formidable = require("formidable");
@@ -17,6 +18,7 @@ var path = require("path");
 var { MongoClient, ObjectId } = require("mongodb");
 var { execSync } = require("child_process");
 var env_vars = JSON.parse(fs.readFileSync("env.json", "utf8"));
+var https = require("https");
 async function try_mysql_con_end(con) {
 	try {
 		await new Promise((resolve, reject) => {
@@ -1217,8 +1219,12 @@ async function main() {
 			hash: hash_sha_256_hex(latest_changes.join("")),
 		});
 	});
-	app.listen(env_vars.api_port, () => {
-		console.log(`server is listening on port ${env_vars.api_port}`);
-	});
+	var { https_key, https_cert } = env_vars;
+	if (https_key && https_cert) {
+		https.createServer({ key: https_key, cert: https_cert }, app).listen(env_vars.api_port);
+	} else {
+		http.createServer({}, app).listen(env_vars.api_port);
+	}
+	
 }
 main();
