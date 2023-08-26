@@ -168,7 +168,7 @@ export function MainHeader() {
 													icon: Link,
 													onClick: () =>
 														location.assign(
-															"http://vatankhah.pishro-control.ir:4443/multi_systems"
+															"https://vatankhah.pishro-control.ir:4443/multi_systems"
 														),
 												},
 												{
