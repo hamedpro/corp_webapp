@@ -19,7 +19,7 @@ export const InternetControlModal = ({ open, onClose }) => {
 				className="bg-white h-1/2 w-1/2 absolute flex flex-col"
 				style={{ top: "50%", left: "50%", transform: "translate(-50%,-50%)" }}
 			>
-				<CustomButton url="https://vatankhah.pishro-control.ir/multi_systems">
+				<CustomButton url="https://vatankhah.pishro-control.ir:4443/multi_systems">
 					چیلر
 				</CustomButton>
 				<CustomButton url="https://mpkchiller.com/duct">داکت اسپلیت</CustomButton>
