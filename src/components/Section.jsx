@@ -6,7 +6,7 @@ export function Section({ className, top_line_style, secondary, title, children,
 					className={["w-full h-8 rounded-t relative bg-blue-400 mb-4"].join(" ")}
 					style={top_line_style ? top_line_style : {}}
 				>
-					<h1 className="mx-2 top-6 -translate-y-1/2 bg-white border border-blue-600 rounded-lg absolute text-lg px-2">
+					<h1 className="text-blue-800 mx-2 top-6 -translate-y-1/2 bg-white border border-blue-600 rounded-lg absolute text-lg px-2">
 						{title}
 					</h1>
 					{secondary ? (

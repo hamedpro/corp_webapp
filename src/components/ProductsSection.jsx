@@ -1,6 +1,6 @@
 import { AddAPhoto, InfoRounded } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
-import { custom_axios } from "../../api/client.js";
+
 import { customAjax } from "../../src/custom_ajax.js";
 import { multi_lang_helper as ml } from "../common.js";
 import { CustomTable } from "./CustomTable";
@@ -233,7 +233,11 @@ export function ProductsSection() {
 				/>
 			)}
 			<div className="flex flex-col">
-				<input id="new_product_image_input" type="file" className="hidden" />
+				<input
+					id="new_product_image_input"
+					type="file"
+					className="hidden"
+				/>
 				{ml({
 					en: "products:",
 					fa: "محصولات",
@@ -242,7 +246,10 @@ export function ProductsSection() {
 				{products !== null && (
 					<>
 						{products.length === 0 && (
-							<Alert icon={<InfoRounded />} className="mt-2">
+							<Alert
+								icon={<InfoRounded />}
+								className="mt-2"
+							>
 								{ml({
 									en: "there is not any product",
 									fa: "اینجا هیچ محصولی وجود ندارد",

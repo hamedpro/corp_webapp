@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { customAjax } from "../custom_ajax";
 import { gen_link_to_file, trim_text_if_its_long } from "../common";
 import { DeleteRounded } from "@mui/icons-material";
 import { multi_lang_helper as ml } from "../common";

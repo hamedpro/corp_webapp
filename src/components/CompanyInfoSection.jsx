@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Section } from "./Section";
 import { CustomRow } from "./CustomRow";
-import { get_company_info, modify_company_info } from "../../api/client";
+
 export function CompanyInfoSection() {
 	var [company_info, set_company_info] = useState(null);
 	async function fetch_data() {

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { customAjax } from "../custom_ajax";
-import {ListItem} from "./ListItem";
-import {Section} from "./Section";
+import { ListItem } from "./ListItem";
+import { Section } from "./Section";
 import { multi_lang_helper as ml } from "../common";
 import { CheckUserPrivilege } from "./CheckUserPrivilege";
 import { Loading } from "./Loading";
@@ -28,7 +27,10 @@ export function Order() {
 	useEffect(fetch_data, []);
 	//todo : use user_id instead of username in whole app becuse username can be changed
 	return (
-		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
+		<CheckUserPrivilege
+			level="specific_user_or_admin"
+			specific_username={username}
+		>
 			<Loading is_loading={order === null} />
 			{order !== null && (
 				<Section title={ml({ en: "order details", fa: "جزییات سفارش ها" })}>

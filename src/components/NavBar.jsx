@@ -1,7 +1,125 @@
-import { Place } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+var translated_names = [
+	{
+		original: "register",
+		fa: "ثبت نام کاربر جدید",
+	},
+	{
+		original: "api_test_page",
+		fa: "صفحه تست api",
+	},
+	{
+		original: "download-center",
+		fa: "بخش فایل های قابل دانلود",
+	},
+	{
+		original: "products",
+		fa: "محصولات",
+	},
+	{
+		original: "new-product-review",
+		fa: "بررسی جدید برای محصول",
+	},
+	{
+		original: "orders",
+		fa: "سفارش ها",
+	},
+	{
+		original: "users",
+		fa: "کاربران",
+	},
+	{
+		original: "shopping-card",
+		fa: "سبد خرید",
+	},
+	{
+		original: "admin-dashboard",
+		fa: "پنل مدیریت مدیران",
+	},
 
+	{
+		original: "company-info",
+		fa: "اطلاعات شرکت",
+	},
+	{
+		original: "login",
+		fa: "ورود به حساب کاربری",
+	},
+	{
+		original: "reviews",
+		fa: "بررسی ها",
+	},
+	{
+		original: "new-product",
+		fa: "محصول جدید",
+	},
+	{
+		original: "first-setup",
+		fa: "راه اندازی اولیه",
+	},
+	{
+		original: "writings",
+		fa: "نوشته ها",
+	},
+	{
+		original: "writing",
+		fa: "نوشته",
+	},
+	{
+		original: "about-us",
+		fa: "درباره ما",
+	},
+	{
+		original: "contact-us",
+		fa: "تماس با ما",
+	},
+	{
+		original: "new",
+		fa: "جدید",
+	},
+	{
+		original: "new-support-message",
+		fa: "درخواست پشتیبانی جدید",
+	},
+	{
+		original: "support_messages",
+		fa: "درخواست های پشتیبانی",
+	},
+	{
+		original: "manage_products",
+		fa: "مدیریت کالا ها",
+	},
+	{
+		original: "manage_users",
+		fa: "مدیریت کاربران",
+	},
+	{
+		original: "manage_options",
+		fa: "مدیریت گزینه ها",
+	},
+
+	{
+		original: "manage_orders",
+		fa: "مدیریت سفارش ها",
+	},
+	{
+		original: "manage_download_center",
+		fa: "مدیریت بخش دانلود ها",
+	},
+	{
+		original: "support_messages_section",
+		fa: "بخش درخواست های پشتیبانی",
+	},
+	{
+		original: "new-writing",
+		fa: "نوشته جدید",
+	},
+	{
+		original: "manage_content_slider",
+		fa: "بخش مدیریت اسلایدر صفحه اصلی",
+	},
+];
 export function NavBar() {
 	var nav = useNavigate();
 	const [paths, set_paths] = useState([]);
@@ -10,132 +128,10 @@ export function NavBar() {
 	useEffect(() => {
 		var tmp = [];
 		tmp.push({
-			name: ml({
-				en: "main page",
-				fa: "صفحه اصلی",
-			}),
+			name: "صفحه اصلی",
 			link: "/",
 		});
-		var translated_names = [
-			{
-				original: "register",
-				fa: "ثبت نام کاربر جدید",
-			},
-			{
-				original: "api_test_page",
-				fa: "صفحه تست api",
-			},
-			{
-				original: "download-center",
-				fa: "بخش فایل های قابل دانلود",
-			},
-			{
-				original: "products",
-				fa: "محصولات",
-			},
-			{
-				original: "new-product-review",
-				fa: "بررسی جدید برای محصول",
-			},
-			{
-				original: "orders",
-				fa: "سفارش ها",
-			},
-			{
-				original: "users",
-				fa: "کاربران",
-			},
-			{
-				original: "shopping-card",
-				fa: "سبد خرید",
-			},
-			{
-				original: "admin-dashboard",
-				fa: "پنل مدیریت مدیران",
-			},
 
-			{
-				original: "company-info",
-				fa: "اطلاعات شرکت",
-			},
-			{
-				original: "login",
-				fa: "ورود به حساب کاربری",
-			},
-			{
-				original: "reviews",
-				fa: "بررسی ها",
-			},
-			{
-				original: "new-product",
-				fa: "محصول جدید",
-			},
-			{
-				original: "first-setup",
-				fa: "راه اندازی اولیه",
-			},
-			{
-				original: "writings",
-				fa: "نوشته ها",
-			},
-			{
-				original: "writing",
-				fa: "نوشته",
-			},
-			{
-				original: "about-us",
-				fa: "درباره ما",
-			},
-			{
-				original: "contact-us",
-				fa: "تماس با ما",
-			},
-			{
-				original: "new",
-				fa: "جدید",
-			},
-			{
-				original: "new-support-message",
-				fa: "درخواست پشتیبانی جدید",
-			},
-			{
-				original: "support_messages",
-				fa: "درخواست های پشتیبانی",
-			},
-			{
-				original: "manage_products",
-				fa: "مدیریت کالا ها",
-			},
-			{
-				original: "manage_users",
-				fa: "مدیریت کاربران",
-			},
-			{
-				original: "manage_options",
-				fa: "مدیریت گزینه ها",
-			},
-
-			{
-				original: "manage_orders",
-				fa: "مدیریت سفارش ها",
-			},
-			{
-				original: "manage_download_center",
-				fa: "مدیریت بخش دانلود ها",
-			},
-			{
-				original: "support_messages_section",
-				fa: "بخش درخواست های پشتیبانی",
-			},
-			{
-				original: "new-writing",
-				fa: "نوشته جدید",
-			},
-			{
-				original: "manage_content_slider",
-				fa: "بخش مدیریت اسلایدر صفحه اصلی",
-			},
-		];
 		window.location.pathname.split("/").forEach((sp, index) => {
 			if (index == 0) {
 				return;
@@ -157,7 +153,7 @@ export function NavBar() {
 			!(window.location.pathname == "" || window.location.pathname == "/")
 		);
 	}, [loc]);
-	//todo add link style to options below
+
 	return (
 		<div
 			className={
@@ -165,23 +161,20 @@ export function NavBar() {
 				(is_nav_bar_visible ? " " : " hidden")
 			}
 		>
-			<Place fontSize="small" color="primary" className="mr-1" />
+			<i className="bi bi-geo-fill" />
 			{paths.map((path, index) => {
 				return (
-					<React.Fragment key={index}>
-						<p
-							className="mx-1 cursor-pointer text-sm text-stone-600"
+					<div key={index}>
+						<span
+							className="mx-1 cursor-pointer text-sm text-stone-400"
 							onClick={() => nav(path.link)}
 						>
 							{path.name}
-						</p>
-						<p
-							className="text-sm text-stone-400"
-							style={{ display: index == paths.length - 1 ? "none" : "block" }}
-						>
-							/
-						</p>
-					</React.Fragment>
+						</span>
+						{index !== paths.length - 1 && (
+							<span className="text-sm text-stone-600">/</span>
+						)}
+					</div>
 				);
 			})}
 		</div>

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { customAjax } from "../custom_ajax";
 import { Section } from "./Section";
 import { InfoRounded } from "@mui/icons-material";
 import { ShoppingCardItem } from "./ShoppingCardItem";
@@ -65,7 +64,10 @@ export function ShoppingCardPage() {
 	}
 
 	return (
-		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
+		<CheckUserPrivilege
+			level="specific_user_or_admin"
+			specific_username={username}
+		>
 			<div className="flex flex-col">
 				<Section
 					title={ml({ en: "my shopping card", fa: "سبد خرید من" })}

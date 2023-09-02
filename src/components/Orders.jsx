@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { customAjax } from "../custom_ajax";
 import { Section } from "./Section";
 import React from "react";
 import { OrdersPageOrder } from "./OrdersPageOrder";
@@ -36,7 +35,10 @@ export function Orders() {
 	//todo add discout system
 	//add system to alert user when product comes available
 	return (
-		<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
+		<CheckUserPrivilege
+			level="specific_user_or_admin"
+			specific_username={username}
+		>
 			<Section
 				title={ml({ en: "my orders list", fa: "لیست سفارش های من" })}
 				className="mx-1 mt-1"

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { get_collection } from "../../api/client";
+
 import { SupportMessageRow } from "./SupportMessageRow";
 import { Section } from "./Section";
 export const SupportMessagesSection = () => {
@@ -21,7 +21,11 @@ export const SupportMessagesSection = () => {
 	var nav = useNavigate();
 	if (support_messages === null) return <h1>loading ... </h1>;
 	return (
-		<Section title="درخواست های پشتیبانی" innerClassName="px-2" className="w-full mt-2">
+		<Section
+			title="درخواست های پشتیبانی"
+			innerClassName="px-2"
+			className="w-full mt-2"
+		>
 			{support_messages.map((sm, i) => {
 				return (
 					<Fragment key={i}>

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { custom_axios, get_collection, get_data_pair, put_pair } from "../../api/client";
-import { customAjax } from "../custom_ajax";
 import { ProgressBarModal } from "./ProgressBarModal";
 import { Section } from "./Section";
 import { StyledDiv } from "./StyledElements";
@@ -159,7 +157,11 @@ export const ManageContentSlider = () => {
 							})}
 					/>
 				</Section>
-				<Section title="عکس های فعلی" className="mt-2" innerClassName="p-2 flex space-x-2">
+				<Section
+					title="عکس های فعلی"
+					className="mt-2"
+					innerClassName="p-2 flex space-x-2"
+				>
 					{content_slider_content.image_file_ids.map((image_file_id) => {
 						return (
 							<div
@@ -180,10 +182,20 @@ export const ManageContentSlider = () => {
 						);
 					})}
 				</Section>
-				<Section title="اپلود عکس جدید" className="mt-2" innerClassName="p-2">
-					<input id="new_image_input" type="file" />
+				<Section
+					title="اپلود عکس جدید"
+					className="mt-2"
+					innerClassName="p-2"
+				>
+					<input
+						id="new_image_input"
+						type="file"
+					/>
 					<br />
-					<StyledDiv onClick={upload_new_image} className="mt-2">
+					<StyledDiv
+						onClick={upload_new_image}
+						className="mt-2"
+					>
 						اپلود این عکس
 					</StyledDiv>
 				</Section>

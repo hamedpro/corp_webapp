@@ -1,5 +1,0 @@
-take care about which license this app should have 
-every time you are just showing verified product reviews tell this to the users (also this is true about comments of blog posts)
-seperate auth needed routes from others and auth user by either its admin profile or with super admin access token 
-use --no-dotfiles when using http-server becuse super admin token and ... are stored in .env
-system of preparing git log commits may not work properly on windows (because of line breaks)

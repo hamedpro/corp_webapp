@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { get_collection } from "../../api/client";
+
 import { CheckUserPrivilege } from "./CheckUserPrivilege";
 import { SupportMessageInfo } from "./SupportMessageInfo";
 import { SupportMessageManagement } from "./SupportMessageManagement";
@@ -26,7 +26,10 @@ export const SupportMessage = ({}) => {
 		<div className="m-2">
 			<SupportMessageInfo support_message={support_message} />
 			<CheckUserPrivilege level="admin">
-				<SupportMessageManagement support_message={support_message} get_data={get_data} />
+				<SupportMessageManagement
+					support_message={support_message}
+					get_data={get_data}
+				/>
 			</CheckUserPrivilege>
 		</div>
 	);

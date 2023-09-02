@@ -2,9 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { ProductsRow } from "./ProductsRow";
 import { Business, Download, Phone, Settings, Stars } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { customAjax } from "../custom_ajax";
 import { gen_link_to_file, shuffle } from "../common";
-import { custom_axios } from "../../api/client";
+
 import { ContentSlider } from "./ContentSlider";
 import { RootWritingsSection } from "./RootWritingsSection";
 export function CustomBlock({ title, info, button_text, button_onclick, Icon }) {
@@ -21,7 +20,10 @@ export function CustomBlock({ title, info, button_text, button_onclick, Icon }) 
 					<h1 className="text-4xl mb-2">{title}</h1>
 					<p className="mb-6 text-lg">{info}</p>
 				</div>
-				<button className="border rounded px-2 my-2 text-2xl" onClick={button_onclick}>
+				<button
+					className="border rounded px-2 my-2 text-2xl"
+					onClick={button_onclick}
+				>
 					{button_text}
 				</button>
 			</div>

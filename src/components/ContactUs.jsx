@@ -2,7 +2,7 @@ import { SupportMessageRow } from "./SupportMessageRow";
 import { CompanyInfo } from "./CompanyInfo";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { get_collection } from "../../api/client";
+
 import { Section } from "./Section";
 import { StyledDiv } from "./StyledElements";
 import { Fragment } from "react";
@@ -24,7 +24,10 @@ export const ContactUs = () => {
 	}, []);
 	if (user_support_messages === null) return "loading ... ";
 	return (
-		<Section title="ارتباط با ما" className="m-2">
+		<Section
+			title="ارتباط با ما"
+			className="m-2"
+		>
 			<CompanyInfo />
 			<div className="p-2 m-2">
 				<div className="flex justify-between mt-8">

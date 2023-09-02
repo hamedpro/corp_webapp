@@ -10,7 +10,7 @@ import { Section } from "./Section";
 import { StyledDiv, StyledInput } from "./StyledElements";
 import { useEffect } from "react";
 import { useState } from "react";
-import { custom_axios, new_document } from "../../api/client";
+
 import { ProgressBarModal } from "./ProgressBarModal";
 
 export function NewWriting() {
@@ -101,15 +101,28 @@ export function NewWriting() {
 					percentage={upload_state.percent}
 				/>
 			)}
-			<Section title="ثبت نوشته جدید" className="m-1 w-full" innerClassName="p-2">
+			<Section
+				title="ثبت نوشته جدید"
+				className="m-1 w-full"
+				innerClassName="p-2"
+			>
 				<h1>انتخاب تصویر برای نوشته جدید:</h1>
-				<input id="image_input" type="file" />
+				<input
+					id="image_input"
+					type="file"
+				/>
 
 				<h1>یک عنوان برای این نوشته وارد کنید:</h1>
 				<StyledInput id="title_input" />
 				<h1>متن این نوشته را اینجا وارد کنید :</h1>
-				<div id="editor-js-div" className="border border-stone-600 rounded px-1"></div>
-				<StyledDiv onClick={submit_new_writing} className="w-fit mt-2">
+				<div
+					id="editor-js-div"
+					className="border border-stone-600 rounded px-1"
+				></div>
+				<StyledDiv
+					onClick={submit_new_writing}
+					className="w-fit mt-2"
+				>
 					انتشار این نوشته{" "}
 				</StyledDiv>
 			</Section>

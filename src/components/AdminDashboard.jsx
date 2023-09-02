@@ -1,6 +1,3 @@
-import { AdminDashboardOptionsSection } from "./AdminDashboardOptionsSection";
-import { UsersSection } from "./UsersSection";
-import { ProductsSection } from "./ProductsSection";
 import { Fragment } from "react";
 import {
 	AddBusinessOutlined,
@@ -15,15 +12,10 @@ import {
 	SupportAgentRounded,
 	Tune,
 } from "@mui/icons-material";
-import { OrdersSection } from "./OrdersSection";
 import { Alert } from "./Alert";
-import { ManageDownloadCenter } from "./ManageDownloadCenter";
-import { SupportMessagesSection } from "./SupportMessagesSection";
 import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
-import { NewProduct } from "./NewProduct.jsx";
-import { NewWriting } from "./NewWriting";
 import { AdminDashboardRoot } from "./AdminDashboardRoot";
-import { ManageContentSlider } from "./ManageContentSlider";
+import { ManageDownloadCenter } from "./ManageDownloadCenter";
 function SideBarOption({ icon, text, url }) {
 	var this_option_is_active = useMatch(url);
 	var nav = useNavigate();
@@ -55,7 +47,7 @@ function SideBar() {
 		},
 		{
 			id: "manage_products",
-			title: ml({ en: "manage products", fa: "مدیریت محصولات" }),
+			title: "مدیریت محصولات",
 			icon: <ShoppingBag />,
 		},
 		{
@@ -65,18 +57,18 @@ function SideBar() {
 		},
 		{
 			id: "manage_users",
-			title: ml({ en: "manage users", fa: "مدیریت کاربران" }),
+			title: "مدیریت کاربران",
 			icon: <Person />,
 		},
 
 		{
 			id: "manage_options",
-			title: ml({ en: "manage options", fa: "مدیریت گزینه ها" }),
+			title: "مدیریت گزینه ها",
 			icon: <Tune />,
 		},
 		{
 			id: "manage_orders",
-			title: ml({ en: "manage orders", fa: "مدیریت سفارش ها" }),
+			title: "مدیریت سفارش ها",
 			icon: <ListAltRounded />,
 		},
 		{
@@ -104,16 +96,17 @@ export function AdminDashboard() {
 	return (
 		<>
 			<div className="md:hidden">
-				<Alert icon={<InfoRounded />} className="mx-1 mt-2">
-					{ml({
-						en: "to view this page you should use a bigger monitor",
-						fa: "برای استفاده از امکانات این صفحه باید از کامپیوتر (مانیتوری بزرگتر) استفاده کنید",
-					})}
+				<Alert
+					icon={<InfoRounded />}
+					className="mx-1 mt-2"
+				>
+					"برای استفاده از امکانات این صفحه باید از کامپیوتر (مانیتوری بزرگتر) استفاده
+					کنید"
 				</Alert>
 			</div>
 			<div
 				id="admin-dashboard"
-				className="hidden h-full md:flex mx-1 border border-stone-400 rounded overflow-y-auto"
+				className="hidden h-full md:flex mx-1 border border-stone-400 rounded overflow-y-auto my-2"
 				style={{ height: "77vh" }}
 			>
 				<div className="w-3/12 bg-blue-500">
@@ -121,19 +114,47 @@ export function AdminDashboard() {
 				</div>
 				<div className="p-1 flex w-9/12 overflow-y-auto px-3">
 					<Routes>
-						<Route path="/" element={<AdminDashboardRoot />} />
-						<Route path="new-product" element={<NewProduct />} />
-						<Route path="new-writing" element={<NewWriting />} />
-						<Route path="manage_products" element={<ProductsSection />} />
-						<Route path="manage_users" element={<UsersSection />} />
-						<Route path="manage_options" element={<AdminDashboardOptionsSection />} />
-						<Route path="manage_orders" element={<OrdersSection />} />
-						<Route path="manage_download_center" element={<ManageDownloadCenter />} />
-						<Route path="manage_content_slider" element={<ManageContentSlider />} />
+						<Route
+							path="/"
+							element={<AdminDashboardRoot />}
+						/>
+						<Route
+							path="manage_download_center"
+							element={<ManageDownloadCenter />}
+						/>
+						{/* <Route
+							path="new-product"
+							element={<NewProduct />}
+						/>
+						<Route
+							path="new-writing"
+							element={<NewWriting />}
+						/>
+						<Route
+							path="manage_products"
+							element={<ProductsSection />}
+						/>
+						<Route
+							path="manage_users"
+							element={<UsersSection />}
+						/>
+						<Route
+							path="manage_options"
+							element={<AdminDashboardOptionsSection />}
+						/>
+						<Route
+							path="manage_orders"
+							element={<OrdersSection />}
+						/>
+						
+						<Route
+							path="manage_content_slider"
+							element={<ManageContentSlider />}
+						/>
 						<Route
 							path="support_messages_section"
 							element={<SupportMessagesSection />}
-						/>
+						/> */}
 					</Routes>
 				</div>
 			</div>

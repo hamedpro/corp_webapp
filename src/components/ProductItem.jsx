@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { customAjax } from "../custom_ajax";
 import NoPhotographyRoundedIcon from "@mui/icons-material/NoPhotographyRounded";
-import { multi_lang_helper as ml, trim_text_if_its_long } from "../common.js";
 import { InfoRounded, SellRounded } from "@mui/icons-material";
-import { custom_axios } from "../../api/client.js";
-import { custom_editorjs_to_jsx } from "../../jsx_helpers";
+import { custom_editorjs_to_jsx } from "../jsx_helpers";
 export function ProductItem({
 	beforeOnClick = () => {},
 	id,
@@ -75,7 +72,11 @@ export function ProductItem({
 							در حال بارگذاری
 						</div>
 					)}
-					<img className="h-full" style={{ objectFit: "contain" }} src={the_image_src} />
+					<img
+						className="h-full"
+						style={{ objectFit: "contain" }}
+						src={the_image_src}
+					/>
 				</div>
 			);
 		}
@@ -111,10 +112,7 @@ export function ProductItem({
 							className="h-full"
 							style={{ objectFit: "contain" }}
 							src={the_image_src}
-							alt={ml({
-								en: "this product's first image",
-								fa: "",
-							})}
+							alt={"اولین عکس این محصول"}
 						/>
 					</div>
 				)}
@@ -122,7 +120,10 @@ export function ProductItem({
 			<div className=" mt-1">
 				<h1 className="text-3xl">{name}</h1>
 				<div className="flex space-x-1 mt-3">
-					<InfoRounded sx={{ color: "darkblue" }} className="pt-1" />{" "}
+					<InfoRounded
+						sx={{ color: "darkblue" }}
+						className="pt-1"
+					/>{" "}
 					<span className="text-lg break-all">
 						{jsx_parsed_description || "در حال بارگذاری اطلاعات ..."}
 					</span>
@@ -130,7 +131,10 @@ export function ProductItem({
 			</div>
 			<div className=" mt-1">
 				<div className="flex space-x-1 mt-3">
-					<SellRounded sx={{ color: "darkblue" }} className="pt-1" />{" "}
+					<SellRounded
+						sx={{ color: "darkblue" }}
+						className="pt-1"
+					/>{" "}
 					<span className="text-lg break-all">{price} تومن</span>
 				</div>
 			</div>

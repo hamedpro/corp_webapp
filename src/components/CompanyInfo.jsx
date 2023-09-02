@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { get_company_info } from "../../api/client.js";
+
 import { multi_lang_helper as ml } from "../common.js";
 import { FollowUsRow } from "./FollowUsRow.jsx";
 import { ImageSlider } from "./ImageSlider.jsx";

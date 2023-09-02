@@ -10,7 +10,7 @@ import { gen_link_to_file, multi_lang_helper as ml } from "../common.js";
 import { CheckUserPrivilege } from "./CheckUserPrivilege.jsx";
 import { Loading } from "./Loading.jsx";
 import { Alert } from "./Alert.jsx";
-import { custom_axios } from "../../api/client.js";
+
 import { ProgressBarModal } from "./ProgressBarModal.jsx";
 function Item({ primary, onClick, children }) {
 	return (
@@ -125,7 +125,10 @@ export function User() {
 					percentage={upload_state.percent}
 				/>
 			)}
-			<CheckUserPrivilege level="specific_user_or_admin" specific_username={username}>
+			<CheckUserPrivilege
+				level="specific_user_or_admin"
+				specific_username={username}
+			>
 				<>
 					<input
 						onChange={upload_the_photo}
@@ -137,7 +140,7 @@ export function User() {
 						<div className="cover_image rounded-t bg-blue-400 h-20 w-full mb-6"></div>
 						<div
 							style={{ left: Math.round((1 / 8) * 100) + "%" }}
-							className="bg-blue-500 flex flex-col justify-center items-center profile_photo_frame absolute -translate-y-4 rounded-full border-2 border-blue-300 overflow-hidden top-0 h-28 w-28"
+							className="bg-blue-500 flex flex-col justify-center items-center profile_photo_frame absolute -translate-y-4 rounded-full border-2 border-blue-300 overflow-hidden top-0 h-28"
 						>
 							{!user.has_profile_image ? (
 								<>
@@ -190,7 +193,11 @@ export function User() {
 							<Item>...</Item>
 						</div>
 						<OptionsSection after_options={fetch_data} />
-						<Section title={"۵ سفارش آخر"} className="mt-2 mx-1" innerClassName="px-2">
+						<Section
+							title={"۵ سفارش آخر"}
+							className="mt-2 mx-1"
+							innerClassName="px-2"
+						>
 							<Loading is_loading={orders_to_show === null} />
 							{orders_to_show !== null && orders_to_show.length === 0 && (
 								<Alert icon={<InfoRounded />}>

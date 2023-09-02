@@ -1,6 +1,6 @@
 import { React } from "react";
 import { Section } from "./Section";
-import { update_document } from "../../api/client";
+
 import { StyledDiv, StyledInput } from "./StyledElements";
 import { Alert } from "./Alert";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,11 @@ export const SupportMessageManagement = ({ support_message, get_data }) => {
 	var nav = useNavigate();
 	return (
 		<>
-			<Section title="متن پاسخ به این درخواست پشتیبانی" className="p-2" innerClassName="px-2">
+			<Section
+				title="متن پاسخ به این درخواست پشتیبانی"
+				className="p-2"
+				innerClassName="px-2"
+			>
 				{support_message.response ? (
 					<>
 						<p>{support_message.response}</p>
@@ -44,8 +48,15 @@ export const SupportMessageManagement = ({ support_message, get_data }) => {
 				innerClassName="px-2"
 			>
 				<h1>متن پاسخ خود را در این بخش تایپ کنید</h1>
-				<StyledInput id="response_input" textarea_mode={true} className="w-1/3" />
-				<StyledDiv className="w-fit" onClick={submit_response}>
+				<StyledInput
+					id="response_input"
+					textarea_mode={true}
+					className="w-1/3"
+				/>
+				<StyledDiv
+					className="w-fit"
+					onClick={submit_response}
+				>
 					ارسال پاسخ
 				</StyledDiv>
 			</Section>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { get_data_pair } from "../../api/client";
-import { customAjax } from "../custom_ajax";
+
 import { CustomImageSlider } from "./CustomImageSlider";
 export const ContentSlider = ({}) => {
 	var [images_sources, set_images_sources] = useState();

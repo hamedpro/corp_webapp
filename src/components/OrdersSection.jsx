@@ -1,6 +1,5 @@
 import { InfoRounded } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { customAjax } from "../custom_ajax";
 import { Alert } from "./Alert";
 import { CustomTable } from "./CustomTable";
 import { Loading } from "./Loading";

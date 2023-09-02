@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { DownloadCenterItemsContext } from "../DownloadCenterItemsContext";
-import { customAjax } from "../custom_ajax";
-import { get_collection } from "../../api/client";
+
 export function DownloadCenterItemsContextProvider({ children }) {
 	var [DownloadCenterItemsContextState, setDownloadCenterItemsContextState] = useState(null);
 	async function update_download_center_items_context_state() {

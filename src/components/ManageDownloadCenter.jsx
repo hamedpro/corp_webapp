@@ -1,25 +1,27 @@
-import { useContext, useEffect } from "react";
-import { useState } from "react";
-import { custom_axios, get_collection, new_document } from "../../api/client";
-import { DownloadCenterItemsContext } from "../DownloadCenterItemsContext";
-import { DownloadCenter } from "./DownloadCenter";
+import { useContext, useState } from "react";
 import { ProgressBarModal } from "./ProgressBarModal";
 import { Section } from "./Section";
 import { StyledDiv, StyledInput } from "./StyledElements";
 import Select from "react-select";
-import { Loading } from "./Loading";
+import { context } from "freeflow-react";
+import { find_active_profile } from "freeflow-core/dist/utils";
 export function ManageDownloadCenter() {
 	var [selected_download_center_category, set_selected_download_center_category] = useState();
-	var { DownloadCenterItemsContextState, update_download_center_items_context_state } =
-		useContext(DownloadCenterItemsContext);
+	var { cache, unresolved_cache, rest_endpoint, request_new_thing, profiles, configured_axios } =
+		useContext(context);
+	var current_profile = find_active_profile(profiles);
+
 	async function new_download_center_category() {
-		await new_document({
-			collection_name: "download_center_categories",
-			document: {
-				title: window.prompt("نام دسته بندی جدید را وارد کنید."),
+		await request_new_thing({
+			value: {
+				type: "download_center_category",
+				value: { title: window.prompt("عنوان دسته بندی جدید را وارد کنید") },
 			},
+			unresolved_cache,
+			current_profile,
+			restful_api_endpoint: rest_endpoint,
+			thing_privileges: { read: "*", write: [-1] },
 		});
-		update_download_center_items_context_state();
 	}
 
 	var [upload_state, set_upload_state] = useState({
@@ -31,40 +33,56 @@ export function ManageDownloadCenter() {
 			alert("باید یک دسته بندی برای این فایل انتخاب کنید");
 			return;
 		}
-		var input_files = document.getElementById("file_input").files;
-		var form = new FormData();
-		Object.keys(input_files).forEach((key) => {
-			form.append(key, input_files[key]);
-		});
+		var [file] = document.getElementById("file_input").files;
+		if (file === undefined) {
+			alert("هیچ فایلی انتخاب نشده است");
+			return;
+		}
 
-		await custom_axios({
-			url: `/?task_name=new_download_center_item&upload_dir=./uploaded/download_center&publisher_username=${window.localStorage.getItem(
-				"username"
-			)}&title=${document.getElementById("file_title").value}&description=${
-				document.getElementById("file_description").value
-			}&category_id=${selected_download_center_category.value}`,
-			data: form,
-			onUploadProgress: (e) => {
-				set_upload_state({
-					is_uploading: true,
-					percent: Math.round((e.loaded * 100) / e.total),
-				});
-			},
-		});
+		var form = new FormData();
+		form.append(
+			"file_privileges",
+			JSON.stringify({
+				read: "*",
+			})
+		);
+		form.append("file", file);
+		var { new_file_id } = (
+			await configured_axios({
+				method: "post",
+				url: "/files",
+				data: form,
+				onUploadProgress: (e) => {
+					set_upload_state({
+						is_uploading: true,
+						percent: Math.round((e.loaded * 100) / e.total),
+					});
+				},
+			})
+		).data;
 		set_upload_state({
 			is_uploading: false,
 			percent: undefined,
 		});
+		var result = await request_new_thing({
+			value: {
+				type: "download_center_item",
+				value: {
+					title: document.getElementById("file_title").value,
+					description: document.getElementById("file_description").value,
+					category_id: selected_download_center_category.value,
+					file_id: new_file_id,
+				},
+			},
+			thing_privileges: { read: "*", write: [current_profile.user_id] },
+			unresolved_cache,
+			current_profile,
+			restful_api_endpoint: rest_endpoint,
+		});
+		console.log(result);
 		alert("با موفقیت انجام شد");
-		update_download_center_items_context_state();
 	}
 
-	if (
-		DownloadCenterItemsContextState === null ||
-		DownloadCenterItemsContextState.download_center_categories === undefined
-	) {
-		return <Loading />;
-	}
 	return (
 		<>
 			{upload_state.is_uploading && (
@@ -75,20 +93,30 @@ export function ManageDownloadCenter() {
 				/>
 			)}
 			<div className="flex flex-col w-full">
-				<DownloadCenter admin_mode />
-				<Section title="بارگذاری فایل جدید" className="mt-2" innerClassName="px-2">
-					<input id="file_input" type={"file"} className="mt-1" />
+				<Section
+					title="بارگذاری فایل جدید"
+					className="mt-2"
+					innerClassName="px-2"
+				>
+					<input
+						id="file_input"
+						type={"file"}
+						className="mt-1"
+					/>
 					<p>نام فایل جدید را وارد کنید :‌</p>
-					<StyledInput id="file_title" className="block" />
-
+					<StyledInput
+						id="file_title"
+						className="block"
+					/>
+					<p className="mt-3">دسته بندی این فایل را انتخاب کنید:</p>
 					<Select
-						className="w-full mt-3"
-						options={DownloadCenterItemsContextState.download_center_categories.map(
-							(i) => ({
-								value: i._id,
-								label: i.title,
-							})
-						)}
+						className="w-full text-black"
+						options={cache
+							.filter((ci) => ci.thing.type === "download_center_category")
+							.map((i) => ({
+								value: i.thing_id,
+								label: i.thing.value.title,
+							}))}
 						value={selected_download_center_category}
 						onChange={set_selected_download_center_category}
 					/>
@@ -105,8 +133,14 @@ export function ManageDownloadCenter() {
 					</div>
 
 					<p>توضیحی برای فایل جدید وارد کنید :‌</p>
-					<StyledInput id="file_description" className="block" />
-					<StyledDiv onClick={upload_files} className="w-fit mt-4 text-lg">
+					<StyledInput
+						id="file_description"
+						className="block w-1/2"
+					/>
+					<StyledDiv
+						onClick={upload_files}
+						className="w-fit mt-4 text-lg"
+					>
 						بارگذاری این فایل
 					</StyledDiv>
 				</Section>

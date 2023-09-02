@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { customAjax } from "../custom_ajax.js";
+import { useState, useEffect } from "react";
 import { Section } from "./Section";
-import { multi_lang_helper as ml } from "../common";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
-import Attach from "@editorjs/attaches";
 import Table from "@editorjs/table";
-import ImageTool from "@editorjs/image";
 import Checklist from "@editorjs/checklist";
-import { custom_axios, get_data_pair, put_pair, update_document } from "../../api/client";
+
 import { ProgressBarModal } from "./ProgressBarModal.jsx";
 function CustomInput({ id }) {
-	return <input id={id} className="border border-green-400 rounded px-2 py-1" />;
+	return (
+		<input
+			id={id}
+			className="border border-green-400 rounded px-2 py-1"
+		/>
+	);
 }
 function cloned_array(arr) {
 	var tmp = [];
@@ -143,7 +144,10 @@ export function NewProduct() {
 				})}
 				className="mx-1 mt-2 w-full"
 			>
-				<div id="new_product" className="px-2">
+				<div
+					id="new_product"
+					className="px-2"
+				>
 					<p className="text-lg">
 						{ml({
 							en: "name:",
@@ -231,7 +235,11 @@ export function NewProduct() {
 							fa: "عکس ها:",
 						})}
 					</p>
-					<input id="images_input" type="file" multiple />
+					<input
+						id="images_input"
+						type="file"
+						multiple
+					/>
 					<button
 						onClick={submit_new_product}
 						className="block border text-lg border-blue-400 rounded mt-4 hover:text-white hover:bg-blue-600 px-2 py-1"

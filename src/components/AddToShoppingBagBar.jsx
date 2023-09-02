@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { multi_lang_helper as ml } from "../common";
-import { customAjax } from "../custom_ajax";
 
 export function AddToShoppingBagBar({ price }) {
 	var username = window.localStorage.getItem("username");

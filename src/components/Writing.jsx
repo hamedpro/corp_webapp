@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { custom_axios } from "../../api/client";
+
 import { Section } from "./Section";
 import parse from "html-react-parser";
 import editor_js_to_html from "editorjs-html";
@@ -73,7 +73,10 @@ export const Writing = () => {
 	});
 
 	return (
-		<Section title={`نوشته ${writing_id}`} className="m-1">
+		<Section
+			title={`نوشته ${writing_id}`}
+			className="m-1"
+		>
 			<div className="p-2 flex flex-col sm:flex-row">
 				<div className="w-full sm:w-1/2">
 					<img src={`${vite_api_endpoint}/${writing.image_filename}`} />

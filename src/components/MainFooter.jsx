@@ -1,42 +1,49 @@
-import { useEffect, useState } from "react";
-import { get_company_info } from "../../api/client";
-import { LocationOn, Phone } from "@mui/icons-material";
-import github_icon from "../../github-icon.png";
+import { useContext } from "react";
+import { context } from "freeflow-react";
 export function MainFooter() {
-	var [company_info, set_company_info] = useState(null);
-	async function fetch_data() {
-		set_company_info(await get_company_info());
-	}
-	useEffect(() => {
-		fetch_data();
-	}, []);
+	var { cache, rest_endpoint } = useContext(context);
+	var company_info = cache.find((ci) => ci.thing.type === "company_info") || {
+		name: "بدون نام",
+		address: "هنوز آدرس شرکت تنظیم نشده است",
+		landline_phone_number: "هنوز شماره تلفن ثابت تنظیم نشده است.",
+		company_photo_file_id: undefined,
+	};
 
-	if (company_info === null) {
-		return "در حال بارگذاری اطلاعات شرکت ...";
-	}
 	return (
-		<>
-			<div className="bg-sky-700 text-white flex sm:justify-start sm:items-center flex-col sm:flex-row-reverse p-2 sm:space-x-4">
-				<div className="flex justify-center items-center w-full sm:w-fit">
+		<div
+			style={{ boxSizing: "border-box" }}
+			className="bg-sky-700 text-white flex sm:justify-start sm:items-center flex-col sm:flex-row p-2 sm:space-x-4 h-32"
+		>
+			<div className="flex justify-center items-center w-full sm:w-fit">
+				{company_info.company_photo_file_id !== undefined && (
 					<img
-						src={github_icon}
+						src={new URL(`/files/${company_info.company_photo_file_id}`, rest_endpoint)}
 						className=" h-20 rounded-lg flex items-center justify-center"
 					/>
-				</div>
-				<div className="px-5">
-					<h1 dir="rtl" className="mb-2 text-3xl px-2">
-						{company_info.name || "بدون نام"}
-					</h1>
-					<h1 dir="rtl" className="mb-2 text-xl">
-						<LocationOn />
-						آدرس : {company_info.address || "بدون آدرس"}
-					</h1>
-					<h1 dir="rtl" className="text-xl">
-						<Phone />
-						تلفن: {company_info.landline_phone_number || "بدون شماره تلفن ثابت"}
-					</h1>
-				</div>
+				)}
 			</div>
-		</>
+			<div className="px-5">
+				<h1
+					dir="rtl"
+					className="mb-2 text-3xl px-2"
+				>
+					{company_info.name || "بدون نام"}
+				</h1>
+				<h1
+					dir="rtl"
+					className="mb-2 text-xl"
+				>
+					<i className="bi bi-geo-alt"></i>
+					آدرس : {company_info.address || "بدون آدرس"}
+				</h1>
+				<h1
+					dir="rtl"
+					className="text-xl"
+				>
+					<i className="bi bi-telephone" />
+					تلفن: {company_info.landline_phone_number || "بدون شماره تلفن ثابت"}
+				</h1>
+			</div>
+		</div>
 	);
 }

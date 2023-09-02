@@ -21,7 +21,10 @@ export function ListItem({
 		>
 			{typeof beforeItems == "undefined" ? <></> : <div className="mr-2">{beforeItems}</div>}
 			{typeof image_src == "undefined" || image_src === null ? null : (
-				<img src={image_src} className="w-1/3 mr-2" />
+				<img
+					src={image_src}
+					className="w-1/3 mr-2"
+				/>
 			)}
 			{items.map((item, index) => {
 				if (vertical === true) {
@@ -40,11 +43,11 @@ export function ListItem({
 					</React.Fragment>
 				);
 			})}
-			{remove_arrow !== true ? (
+			{remove_arrow !== true && (
 				<div className="hamedpro8977_icon flex justify-content-center items-center">
-					<ArrowCircleLeftRounded sx={{ color: "white" }} />
+					<i className="bi-arrow-left-short text-xl" />
 				</div>
-			) : null}
+			)}
 		</div>
 	);
 }

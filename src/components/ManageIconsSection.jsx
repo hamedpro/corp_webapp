@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { custom_axios, get_company_info, modify_company_info } from "../../api/client";
+
 import { ProgressBarModal } from "./ProgressBarModal";
 import { Section } from "./Section";
 import { StyledDiv } from "./StyledElements";
@@ -74,20 +74,36 @@ export function ManageIconsSection() {
 					percentage={upload_state.percent}
 				/>
 			)}
-			<input id="common_input" type="file" className="hidden" />
+			<input
+				id="common_input"
+				type="file"
+				className="hidden"
+			/>
 			<Section title="مدیریت آیکون ها">
 				<div className="flex flex-col items-start px-2">
-					<StyledDiv className="mb-2" onClick={() => config_and_open_input("square")}>
+					<StyledDiv
+						className="mb-2"
+						onClick={() => config_and_open_input("square")}
+					>
 						{ml({ en: "upload new square icon", fa: "بارگزاری آیکون مربع جدید" })}
 					</StyledDiv>
 
-					<StyledDiv className="mb-2" onClick={() => config_and_open_input("favicon")}>
+					<StyledDiv
+						className="mb-2"
+						onClick={() => config_and_open_input("favicon")}
+					>
 						{ml({ en: "upload new favicon", fa: "ریز آیکون جدید" })}
 					</StyledDiv>
-					<StyledDiv className="mb-2" onClick={() => del_icon("square")}>
+					<StyledDiv
+						className="mb-2"
+						onClick={() => del_icon("square")}
+					>
 						{ml({ en: "delete square icon", fa: "حذف کردن آیکون مربع" })}
 					</StyledDiv>
-					<StyledDiv className="mb-2" onClick={() => del_icon("favicon")}>
+					<StyledDiv
+						className="mb-2"
+						onClick={() => del_icon("favicon")}
+					>
 						{ml({ en: "delete favicon", fa: "حذف کردن ریز آیکون" })}
 					</StyledDiv>
 				</div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { custom_axios } from "../../api/client";
-import { customAjax } from "../custom_ajax";
+
 import { ArrowTitle } from "./ArrowTitle";
 
 export const LatestChangesModal = () => {
@@ -48,13 +47,19 @@ export const LatestChangesModal = () => {
 				style={{ direction: "rtl" }}
 				className="overflow-y-auto rtl z-50 bg-blue-800 text-white fixed top-1/2 left-1/2 h-4/5 w-4/5 -translate-x-1/2 -translate-y-1/2"
 			>
-				<ArrowTitle title="بستن اعلان" onClick={() => set_modal_is_visible(false)} />
+				<ArrowTitle
+					title="بستن اعلان"
+					onClick={() => set_modal_is_visible(false)}
+				/>
 				<h1 className="px-2 text-lg bg-white text-blue-800 w-fit ">آخرین تغییرات فنی</h1>
 				<div className="p-2">
 					{latest_changes === undefined
 						? "در حال بارگذاری..."
 						: latest_changes.reverse().map((change, index, array) => (
-								<div key={index} className="border-b border-blue-500 py-2">
+								<div
+									key={index}
+									className="border-b border-blue-500 py-2"
+								>
 									<h1>تغییر شماره {array.length - index}</h1>
 									<p>{change}</p>
 								</div>
