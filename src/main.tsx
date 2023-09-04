@@ -6,7 +6,10 @@ import { FreeFlowReact } from "freeflow-react";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<FreeFlowReact>
+	<FreeFlowReact
+		ws_endpoint={import.meta.env.VITE_WS_ENDPOINT}
+		rest_endpoint={import.meta.env.VITE_REST_ENDPOINT}
+	>
 		<BrowserRouter>
 			<App />
 		</BrowserRouter>
