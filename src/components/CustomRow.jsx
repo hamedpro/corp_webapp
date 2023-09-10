@@ -1,41 +1,46 @@
-import { Done, Edit } from "@mui/icons-material"
+import { Done, Edit } from "@mui/icons-material";
+import { Fragment } from "react";
 
-export function CustomRow({fields, extra = null }) {
-    /* 
+export function CustomRow({ fields, extra = null }) {
+	/* 
         fields should only contain simple string or number
         as their value and key props
     */
-    /*
+	/*
         fields should be an array which it's items should be either
         in one of these forms : 
         type1: {key : string|number, value : string|number, change_function : undefined | function}
         type2: {type : "option", key : string|number, onClick : function}
     */
-    var styles = {
-        action_area: "inline-flex items-center w-fit hover:bg-blue-700 rounded hover:text-white px-1 cursor-pointer",
-        info_area : "hover:bg-blue-500 rounded hover:text-white px-1 cursor-default"
-    }
-    return (
+	var styles = {
+		action_area:
+			"inline-flex items-center w-fit hover:bg-blue-700 rounded hover:text-white px-1 cursor-pointer",
+		info_area: "hover:bg-blue-500 rounded hover:text-white px-1 cursor-default",
+	};
+	return (
 		<div className="border border-stone-400 p-1 rounded">
 			{fields.map((field, index, array) => {
 				if (field.type === "option") {
 					return (
-						<>
-							<div key={index} className="flex items-center space-x-1">
+						<Fragment key={index}>
+							<div className="flex items-center space-x-1">
 								<span className={styles.info_area}>{field.key}</span>
 								<span> | </span>
-								<span className={styles.action_area} onClick={field.onClick}>
+								<span
+									className={styles.action_area}
+									onClick={field.onClick}
+								>
 									<Done />
 									تایید
 								</span>
 							</div>
 							{index !== array.length - 1 && <hr />}
-						</>
+						</Fragment>
 					);
 				} else {
 					return (
-						<>
-							<div key={index} className="flex items-center space-x-1 flex-wrap">
+						<Fragment key={index}>
+							<div className="flex items-center space-x-1 flex-wrap">
 								<span className={styles.info_area}>نام مشخصه : {field.key}</span>
 								<span> | </span>
 								<span className={styles.info_area}>
@@ -58,7 +63,7 @@ export function CustomRow({fields, extra = null }) {
 								</span>
 							</div>
 							{index !== array.length - 1 && <hr />}
-						</>
+						</Fragment>
 					);
 				}
 			})}

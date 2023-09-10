@@ -1,26 +1,43 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Section } from "./Section";
 import { CustomRow } from "./CustomRow";
+import { context } from "freeflow-react";
+import { find_active_profile_seed } from "freeflow-core/dist/utils";
 
 export function CompanyInfoSection() {
-	var [company_info, set_company_info] = useState(null);
-	async function fetch_data() {
-		set_company_info(await get_company_info());
+	var { cache, request_new_thing, profiles_seed, request_new_transaction } = useContext(context);
+
+	var current_company_info = cache.find((ci) => ci.thing.type === "company_info");
+	async function update_company_info(field) {
+		var current_profile_seed = find_active_profile_seed(profiles_seed);
+		if (current_profile_seed === undefined) {
+			alert("ابتدا وارد حساب کاربری خود شوید.");
+			return;
+		}
+		if (current_company_info === undefined) {
+			await request_new_thing({
+				thing: {
+					type: "company_info",
+					value: {
+						[field]: window.prompt("مقدار جدید را برای این متغیر وارد کنید‌: " + field),
+					},
+				},
+				thing_privileges: { read: "*", write: [-1] },
+			});
+		} else {
+			await request_new_transaction({
+				new_thing_creator: (prev) => ({
+					...prev,
+					value: {
+						...prev.value,
+						[field]: window.prompt("مقدار جدید را برای این متغیر وارد کنید‌: " + field),
+					},
+				}),
+				thing_id: current_company_info.thing_id,
+			});
+		}
 	}
-	useEffect(() => {
-		fetch_data();
-	}, []);
-	async function update_company_info(field_to_change) {
-		var new_value = prompt(
-			ml({
-				en: `enter new value for :`,
-				fa: `مقدار جدید متغیر مقابل را وارد کنید :`,
-			}) + field_to_change
-		);
-		await modify_company_info(field_to_change, new_value);
-		alert("با موفقیت انجام شد");
-		await fetch_data();
-	}
+
 	var fields = [
 		{ value: "name", en: "name", fa: "نام" },
 		{ value: "email_address", en: "email_address", fa: "آدرس ایمیل" },
@@ -34,24 +51,19 @@ export function CompanyInfoSection() {
 		{ value: "company_introduction", en: "company introduction", fa: "معرفی شرکت" },
 	];
 	return (
-		<Section title={ml({ en: "company information", fa: "اطلاعات شرکت" })}>
+		<Section title={"اطلاعات شرکت"}>
 			<div className="px-2">
-				{company_info && (
-					<CustomRow
-						fields={fields.map((field) => {
-							return {
-								value: company_info[field.value],
-								key: ml({
-									en: field.en,
-									fa: field.fa,
-								}),
-								change_function: () => {
-									update_company_info(field.value);
-								},
-							};
-						})}
-					/>
-				)}
+				<CustomRow
+					fields={fields.map((field) => {
+						return {
+							value: current_company_info?.thing?.value[field.value] || "",
+							key: field.fa,
+							change_function: () => {
+								update_company_info(field.value);
+							},
+						};
+					})}
+				/>
 			</div>
 		</Section>
 	);

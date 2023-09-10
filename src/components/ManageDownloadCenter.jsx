@@ -13,13 +13,10 @@ export function ManageDownloadCenter() {
 
 	async function new_download_center_category() {
 		await request_new_thing({
-			value: {
+			thing: {
 				type: "download_center_category",
 				value: { title: window.prompt("عنوان دسته بندی جدید را وارد کنید") },
 			},
-			unresolved_cache,
-			current_profile,
-			restful_api_endpoint: rest_endpoint,
 			thing_privileges: { read: "*", write: [-1] },
 		});
 	}
@@ -65,7 +62,7 @@ export function ManageDownloadCenter() {
 			percent: undefined,
 		});
 		var result = await request_new_thing({
-			value: {
+			thing: {
 				type: "download_center_item",
 				value: {
 					title: document.getElementById("file_title").value,
@@ -75,9 +72,6 @@ export function ManageDownloadCenter() {
 				},
 			},
 			thing_privileges: { read: "*", write: [current_profile.user_id] },
-			unresolved_cache,
-			current_profile,
-			restful_api_endpoint: rest_endpoint,
 		});
 		console.log(result);
 		alert("با موفقیت انجام شد");

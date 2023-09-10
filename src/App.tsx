@@ -32,18 +32,21 @@ import { FreeFlowReact, context } from "freeflow-react";
 import { useContext, useEffect } from "react";
 export default function () {
 	var { set_state, profiles, profiles_seed } = useContext(context);
+
 	useEffect(() => {
-		set_state((prev) => ({
-			...prev,
-			profiles_seed: [
-				...prev.profiles_seed,
-				{
-					user_id: -1,
-					jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjotMSwiZXhwIjoxNjk0Mjc2MzkxLCJpYXQiOjE2OTM2NzE1OTB9.zpH0ONCZb47fZd7jXwGlYZ7KeswQ7vGqvc11Is28oH0",
-					is_active: true,
-				},
-			],
-		}));
+		set_state((prev) => {
+			return {
+				...prev,
+				profiles_seed: [
+					...prev.profiles_seed,
+					{
+						user_id: -1,
+						jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjotMSwiaWF0IjoxNjk0MzY0MDg1fQ.wx1FsvuwfEB8MHg43EZm02HJ6KdAbhoTQOfP_ladx7E",
+						is_active: true,
+					},
+				],
+			};
+		});
 	}, []);
 
 	return (

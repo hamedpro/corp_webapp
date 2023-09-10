@@ -6,11 +6,27 @@ import { Section } from "./Section";
 import { context } from "freeflow-react";
 import JsFileDownloader from "js-file-downloader";
 import { current_user, current_user_id, find_active_profile_seed } from "freeflow-core/dist/utils";
-
+import Select from "react-select";
 export function DownloadCenter({}) {
-	var { cache, rest_endpoint, profiles_seed } = useContext(context);
+	var { cache, rest_endpoint, profiles_seed, request_new_transaction } = useContext(context);
 	var current_user = current_user_id(profiles_seed);
 	var admin_mode = current_user === -1;
+	async function change_category(downloadable_item_id, new_category_id) {
+		await request_new_transaction({
+			new_thing_creator: (prev) => ({
+				...prev,
+				value: { ...prev.value, category_id: new_category_id },
+			}),
+			thing_id: downloadable_item_id,
+		});
+		alert("با موفقیت انجام شد.");
+	}
+	var download_center_category_options = cache
+		.filter((ci2) => ci2.thing.type === "download_center_category")
+		.map((ci2) => ({
+			label: ci2.thing.value.title,
+			value: ci2.thing_id,
+		}));
 	function Items({ cache_items }) {
 		return (
 			<table className="border border-blue-400 w-full mb-4 p-3 rounded">
@@ -30,16 +46,6 @@ export function DownloadCenter({}) {
 							<td className="px-2 py-2 text-white">{ci.thing.value.title}</td>
 							<td className="px-2 py-2 text-white">{ci.thing.value.description}</td>
 							<td>
-								{admin_mode && (
-									<span
-										onClick={() => delete_download_center_item(ci.thing_id)}
-										className="px-1 block text-black cursor-pointer bg-blue-100 hover:bg-blue-500 w-fit hover:text-white rounded"
-									>
-										<Delete />
-										حذف کردن
-									</span>
-								)}
-
 								<button
 									onClick={() => {
 										var { originalFilename } = cache.find(
@@ -62,6 +68,27 @@ export function DownloadCenter({}) {
 									<Download />
 									دانلود
 								</button>
+							</td>
+							<td>
+								{admin_mode && (
+									<span
+										onClick={() => delete_download_center_item(ci.thing_id)}
+										className="px-1 block text-black cursor-pointer bg-blue-100 hover:bg-blue-500 w-fit hover:text-white rounded"
+									>
+										<Delete />
+										حذف کردن
+									</span>
+								)}
+							</td>
+							<td>
+								<Select
+									className="text-black"
+									options={download_center_category_options}
+									onChange={(e) => change_category(ci.thing_id, e.value)}
+									value={download_center_category_options.find(
+										(opt) => opt.value === ci.thing.value.category_id
+									)}
+								/>
 							</td>
 						</tr>
 					))}

@@ -16,6 +16,7 @@ import { Alert } from "./Alert";
 import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import { AdminDashboardRoot } from "./AdminDashboardRoot";
 import { ManageDownloadCenter } from "./ManageDownloadCenter";
+import { AdminDashboardOptionsSection } from "./AdminDashboardOptionsSection";
 function SideBarOption({ icon, text, url }) {
 	var this_option_is_active = useMatch(url);
 	var nav = useNavigate();
@@ -122,6 +123,10 @@ export function AdminDashboard() {
 							path="manage_download_center"
 							element={<ManageDownloadCenter />}
 						/>
+						<Route
+							path="manage_options"
+							element={<AdminDashboardOptionsSection />}
+						/>
 						{/* <Route
 							path="new-product"
 							element={<NewProduct />}
@@ -138,10 +143,7 @@ export function AdminDashboard() {
 							path="manage_users"
 							element={<UsersSection />}
 						/>
-						<Route
-							path="manage_options"
-							element={<AdminDashboardOptionsSection />}
-						/>
+						
 						<Route
 							path="manage_orders"
 							element={<OrdersSection />}

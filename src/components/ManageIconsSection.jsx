@@ -1,11 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 import { ProgressBarModal } from "./ProgressBarModal";
 import { Section } from "./Section";
 import { StyledDiv } from "./StyledElements";
+import { context } from "freeflow-react";
+import { find_active_profile_seed } from "freeflow-core/dist/utils";
 export function ManageIconsSection() {
-	function fetch_data() {}
-	useEffect(fetch_data, []);
+	var {
+		configured_axios,
+		request_new_transaction,
+		request_new_thing,
+		cache,
+
+		profiles_seed,
+	} = useContext(context);
 	var [upload_state, set_upload_state] = useState({
 		is_uploading: false,
 		percent: undefined,
@@ -14,6 +22,44 @@ export function ManageIconsSection() {
 		var common_input = document.getElementById("common_input");
 		common_input.onchange = () => upload_icon(icon_type);
 		common_input.click();
+	}
+	async function update_company_info(field, new_value) {
+		var active_profile_seed = find_active_profile_seed(profiles_seed);
+		if (active_profile_seed === undefined) {
+			alert("ابتدا باید وارد حساب کاربری خود شوید.");
+			return;
+		}
+		var current_company_info = cache.find((ci) => ci.thing.type === "company_info");
+		if (current_company_info !== undefined) {
+			await request_new_transaction({
+				new_thing_creator: (prev) => {
+					var tmp = {
+						...prev,
+						value: {
+							...prev.value,
+							[field]: new_value,
+						},
+					};
+
+					return tmp;
+				},
+
+				thing_id: current_company_info.thing_id,
+			});
+		} else {
+			await request_new_thing({
+				thing: {
+					type: "company_info",
+					value: {
+						[field]: new_value,
+					},
+				},
+				thing_privileges: {
+					read: "*",
+					write: [-1],
+				},
+			});
+		}
 	}
 	async function upload_icon(icon_type) {
 		var common_input = document.getElementById("common_input");
@@ -24,8 +70,8 @@ export function ManageIconsSection() {
 		var f = new FormData();
 		f.append("file", common_input.files[0]);
 
-		var { inserted_id } = (
-			await custom_axios({
+		var { new_file_id } = (
+			await configured_axios({
 				method: "post",
 				data: f,
 				url: "/files",
@@ -37,34 +83,15 @@ export function ManageIconsSection() {
 				},
 			})
 		).data;
+
 		set_upload_state({
 			is_uploading: false,
 			percent: undefined,
 		});
-		await modify_company_info(
-			icon_type === "favicon" ? "favicon_file_id" : "company_icon_file_id",
-			inserted_id
-		);
-		//this lines below updates company info (if that's not created yet it creates it first )
-
+		await update_company_info(icon_type, new_file_id);
 		alert("با موفقیت انجام شد");
 	}
-	async function del_icon(icon_type) {
-		var icon_property_name =
-			icon_type === "square" ? "company_icon_file_id" : "favicon_file_id";
-		var current_company_info_value = await get_company_info();
-		if (!(icon_property_name in current_company_info_value)) {
-			alert("this icon you want to delete doesnt even exist");
-			return;
-		}
 
-		await custom_axios({
-			url: `/files/${current_company_info_value[icon_property_name]}`,
-			method: "delete",
-		});
-		await modify_company_info(icon_property_name, undefined);
-		alert("با موفقیت انجام شد");
-	}
 	return (
 		<>
 			{upload_state.is_uploading && (
@@ -83,28 +110,28 @@ export function ManageIconsSection() {
 				<div className="flex flex-col items-start px-2">
 					<StyledDiv
 						className="mb-2"
-						onClick={() => config_and_open_input("square")}
+						onClick={() => config_and_open_input("square_icon_file_id")}
 					>
-						{ml({ en: "upload new square icon", fa: "بارگزاری آیکون مربع جدید" })}
+						{"بارگزاری آیکون مربع جدید"}
 					</StyledDiv>
 
 					<StyledDiv
 						className="mb-2"
-						onClick={() => config_and_open_input("favicon")}
+						onClick={() => config_and_open_input("favicon_file_id")}
 					>
-						{ml({ en: "upload new favicon", fa: "ریز آیکون جدید" })}
+						{"ریز آیکون جدید"}
 					</StyledDiv>
 					<StyledDiv
 						className="mb-2"
-						onClick={() => del_icon("square")}
+						onClick={() => update_company_info("square_icon_file_id", undefined)}
 					>
-						{ml({ en: "delete square icon", fa: "حذف کردن آیکون مربع" })}
+						{"حذف کردن آیکون مربع"}
 					</StyledDiv>
 					<StyledDiv
 						className="mb-2"
-						onClick={() => del_icon("favicon")}
+						onClick={() => update_company_info("favicon_file_id", undefined)}
 					>
-						{ml({ en: "delete favicon", fa: "حذف کردن ریز آیکون" })}
+						{"حذف کردن ریز آیکون"}
 					</StyledDiv>
 				</div>
 			</Section>
