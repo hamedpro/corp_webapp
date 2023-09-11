@@ -30,15 +30,15 @@ import { Register } from "./components/Register";
 import { MainFooter } from "./components/MainFooter";
 import { FreeFlowReact, context } from "freeflow-react";
 import { useContext, useEffect } from "react";
+import { calc_file_url } from "freeflow-core/dist/utils";
 export default function () {
-	var { set_state, profiles, profiles_seed } = useContext(context);
+	var { set_state, profiles, profiles_seed, cache, rest_endpoint } = useContext(context);
 
 	useEffect(() => {
 		set_state((prev) => {
 			return {
 				...prev,
 				profiles_seed: [
-					...prev.profiles_seed,
 					{
 						user_id: -1,
 						jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjotMSwiaWF0IjoxNjk0MzY0MDg1fQ.wx1FsvuwfEB8MHg43EZm02HJ6KdAbhoTQOfP_ladx7E",
@@ -48,9 +48,25 @@ export default function () {
 			};
 		});
 	}, []);
+	var company_info = cache.find((ci) => ci.thing.type === "company_info");
+
+	var favicon_url;
+	if (company_info?.thing.value.favicon_file_id) {
+		favicon_url = calc_file_url(
+			profiles_seed,
+			rest_endpoint,
+			company_info?.thing.value.favicon_file_id
+		);
+	}
 
 	return (
 		<>
+			{favicon_url && (
+				<link
+					rel="icon"
+					href={favicon_url}
+				></link>
+			)}
 			<MainHeader />
 			<NavBar />
 			<div style={{ minHeight: "calc(100vh - 15rem)", width: "100vw" }}>
@@ -75,6 +91,20 @@ export default function () {
 							</CheckUserPrivilege>
 						}
 					/>
+					<Route
+						path="/"
+						element={<Root />}
+					/>
+
+					<Route
+						path="/about-us"
+						element={<AboutUs />}
+					/>
+
+					<Route
+						path="/contact-us"
+						element={<ContactUs />}
+					/>
 					{/* 	<Route
     path="/users/:username/orders"
     element={<Orders />}
@@ -89,10 +119,6 @@ export default function () {
     element={<ShoppingCardPage />}
 />
 
-<Route
-    path="/about-us"
-    element={<AboutUs />}
-/>
 <Route
     path="/login"
     element={<Login />}
@@ -115,10 +141,7 @@ export default function () {
     path="/register"
     element={<Register />}
 />
-<Route
-    path="/"
-    element={<Root />}
-/>
+
 <Route
     path="/writings/:writing_id"
     element={<Writing />}
@@ -126,10 +149,6 @@ export default function () {
 <Route
     path="/writings"
     element={<Writings />}
-/>
-<Route
-    path="/contact-us"
-    element={<ContactUs />}
 />
 <Route
     path="/new-support-message"

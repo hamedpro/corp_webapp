@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import { ProgressBarModal } from "./ProgressBarModal";
 import { Section } from "./Section";
 import { StyledDiv } from "./StyledElements";
+import { context } from "freeflow-react";
+import { calc_file_url } from "freeflow-core/dist/utils";
 export const ManageContentSlider = () => {
-	var [all_products, set_all_products] = useState();
-	var [all_writings, set_all_writings] = useState();
+	var {
+		cache,
+		profiles_seed,
+		rest_endpoint,
+		configured_axios,
+		request_new_transaction,
+		request_new_thing,
+	} = useContext(context);
 	var [upload_state, set_upload_state] = useState({
 		is_uploading: false,
 		percent: undefined,
 	});
-	var [content_slider_content, set_content_slider_content] = useState();
+	var content_slider_content = cache.find((ci) => ci.thing.type === "content_slider_content");
 
 	async function upload_new_image() {
 		var file = document.getElementById("new_image_input").files[0];
@@ -20,10 +28,11 @@ export const ManageContentSlider = () => {
 		}
 		var f = new FormData();
 		f.append("file", file);
-		var { inserted_id } = (
-			await custom_axios({
+		var { new_file_id } = (
+			await configured_axios({
 				data: f,
 				url: "/files",
+				method: "post",
 				onUploadProgress: (progressEvent) => {
 					set_upload_state({
 						percent: Math.round((progressEvent.loaded * 100) / progressEvent.total),
@@ -36,71 +45,37 @@ export const ManageContentSlider = () => {
 			is_uploading: false,
 			percent: undefined,
 		});
+
 		alert("با موفقیت انجام شد ");
-		var new_content_slider_content = JSON.parse(JSON.stringify(content_slider_content));
-		new_content_slider_content.image_file_ids.push(inserted_id);
-		await put_pair("content_slider_content", new_content_slider_content);
-		await get_data();
+		if (content_slider_content === undefined) {
+			await request_new_thing({
+				thing: {
+					type: "content_slider_content",
+					value: [new_file_id],
+				},
+				thing_privileges: { read: "*", write: [-1] },
+			});
+		} else {
+			await request_new_transaction({
+				thing_id: content_slider_content.thing_id,
+				new_thing_creator: (prev) => ({
+					...prev,
+					value: prev.value.concat([new_file_id]),
+				}),
+			});
+		}
 	}
 	async function delete_image(file_id) {
-		//gets a file_id and deletes it from files collection and disk and also
-		// from image_file_ids prop of content_slider_content
 		if (window.confirm("ایا اطمینان دارید میخواهید این عکس را حذف کنید ؟؟") !== true) return;
-		var new_content_slider_content = JSON.parse(JSON.stringify(content_slider_content));
-		new_content_slider_content.image_file_ids.splice(
-			new_content_slider_content.image_file_ids.indexOf(file_id),
-			1
-		);
-		await put_pair("content_slider_content", new_content_slider_content);
-		await custom_axios({
-			method: "delete",
-			url: `/files/${file_id}`,
+		await request_new_transaction({
+			new_thing_creator: (prev) => ({
+				...prev,
+				value: prev.value.filter((image_file_id) => image_file_id !== file_id),
+			}),
+			thing_id: content_slider_content.thing_id,
 		});
-		await get_data();
 		alert("با موفقیت انجام شد");
 	}
-	async function products_select_onchange(new_value) {
-		var new_content_slider_content = JSON.parse(JSON.stringify(content_slider_content));
-		new_content_slider_content.product_ids = new_value.map((i) => i.value);
-		await put_pair("content_slider_content", new_content_slider_content);
-		await get_data();
-	}
-	async function writings_select_onchange(new_value) {
-		var new_content_slider_content = JSON.parse(JSON.stringify(content_slider_content));
-		new_content_slider_content.writing_ids = new_value.map((i) => i.value);
-		await put_pair("content_slider_content", new_content_slider_content);
-		await get_data();
-	}
-	async function get_data() {
-		let content_slider_content = (await get_data_pair("content_slider_content")) || {
-			product_ids: [],
-			writing_ids: [],
-			image_file_ids: [],
-		};
-		set_content_slider_content(content_slider_content);
-		set_all_products(
-			(
-				await customAjax({
-					params: {
-						task_name: "get_products",
-					},
-				})
-			).result
-		);
-		set_all_writings(
-			(
-				await get_collection({
-					collection_name: "writings",
-					filters: {},
-				})
-			).data
-		);
-	}
-	useEffect(() => {
-		get_data();
-	}, []);
-	if ([all_products, all_writings, content_slider_content].some((i) => i === undefined))
-		return <h1>loading ... </h1>;
 	return (
 		<>
 			{upload_state.is_uploading && (
@@ -112,57 +87,11 @@ export const ManageContentSlider = () => {
 			)}
 			<div className="flex flex-col w-full ">
 				<Section
-					title="بخش مدیریت اسلایدر صفحه اصلی"
-					className="w-full"
-					innerClassName="p-2"
-				>
-					<h1 className="text-lg">کالا های انتخاب شده: </h1>
-					<p className="text-sm mb-2">کالا های مورد نظر خود را علامت بزنید</p>
-					<Select
-						isMulti
-						isSearchable
-						options={all_products.map((product, index) => {
-							return {
-								value: product.id,
-								label: product.name,
-							};
-						})}
-						value={all_products
-							.filter((product) =>
-								content_slider_content.product_ids.includes(product.id)
-							)
-							.map((i) => {
-								return { value: i.id, label: i.name };
-							})}
-						onChange={products_select_onchange}
-					/>
-					<h1 className="text-lg mt-2">نوشته های انتخاب شده:</h1>
-					<p className="text-sm mb-2">
-						نوشته های مورد نظر خود را از بین همه موارد ثبت شده زیر انتخاب کنید:{" "}
-					</p>
-					<Select
-						isMulti
-						isSearchable
-						options={all_writings.map((writing, index) => {
-							return {
-								value: writing._id,
-								label: writing.title,
-							};
-						})}
-						onChange={writings_select_onchange}
-						value={all_writings
-							.filter((w) => content_slider_content.writing_ids.includes(w._id))
-							.map((w) => {
-								return { value: w._id, label: w.title };
-							})}
-					/>
-				</Section>
-				<Section
 					title="عکس های فعلی"
 					className="mt-2"
 					innerClassName="p-2 flex space-x-2"
 				>
-					{content_slider_content.image_file_ids.map((image_file_id) => {
+					{(content_slider_content?.thing.value || []).map((image_file_id) => {
 						return (
 							<div
 								key={image_file_id}
@@ -170,7 +99,7 @@ export const ManageContentSlider = () => {
 							>
 								<h1 className="text-center">#{image_file_id}</h1>
 								<img
-									src={new URL(`/files/${image_file_id}`, vite_api_endpoint).href}
+									src={calc_file_url(profiles_seed, rest_endpoint, image_file_id)}
 								/>
 								<button
 									onClick={() => delete_image(image_file_id)}

@@ -96,7 +96,7 @@ var translated_names = [
 	},
 	{
 		original: "manage_options",
-		fa: "مدیریت گزینه ها",
+		fa: "تکمیل اطلاعات",
 	},
 
 	{

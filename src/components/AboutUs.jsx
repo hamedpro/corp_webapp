@@ -1,8 +1,4 @@
-import React from "react";
-import { multi_lang_helper as ml } from "../common.js";
-import { LinkLikeP } from "./LinkLikeP";
 import { Section } from "./Section";
-import { StyledDiv } from "./StyledElements.jsx";
 import { CompanyInfo } from "./CompanyInfo.jsx";
 import { InfoOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -11,15 +7,15 @@ export function AboutUs() {
 	return (
 		<>
 			<Section
-				title={ml({
-					en: "introducing the company ",
-					fa: "اطلاعات شرکت",
-				})}
+				title={"اطلاعات شرکت"}
 				className="m-2"
 			>
 				<CompanyInfo type="about_us" />
 				<div className="relative">
-					<Section title="ارتباط با ما" className="px-2 mt-2">
+					<Section
+						title="ارتباط با ما"
+						className="px-2 mt-2"
+					>
 						<div className="p-2">
 							<h1>برای ارتباط با ما میتوانید از این طرق ذکر شده استفاده کنید :</h1>
 							<ul className="list-disc">

@@ -93,8 +93,7 @@ export function MainHeader() {
 	var email_address = cache.find((ci) => ci.thing_id === user_id)?.thing.value.email_address;
 
 	var company_name =
-		cache.find((ci) => ci.thing.type === "company_info")?.thing.value.company_name ||
-		"بدون نام";
+		cache.find((ci) => ci.thing.type === "company_info")?.thing.value.name || "بدون نام";
 	var nav = useNavigate();
 	var [header_menu_visibility, set_header_menu_visibility] = useState(false);
 	var [is_search_modal_visible, set_is_search_modal_visible] = useState(false);

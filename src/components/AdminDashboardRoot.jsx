@@ -35,10 +35,13 @@ export const AdminDashboardRoot = () => {
 			{missing_company_info_fields.length !== 0 && (
 				<Section
 					title="نقص اطلاعات"
-					innerClassName="p-1"
+					innerClassName="p-2"
 					className="w-full"
 				>
-					<h1>این موارد زیر هنوز تنظیم نشده اند</h1>
+					<h1>
+						این موارد هنوز تنظیم نشده اند. برای تنظیم اطلاعات به بخش تکمیل اطلاعات
+						مراجعه کنید.
+					</h1>
 					{missing_company_info_fields.map((field) => (
 						<p key={field}>-{field}</p>
 					))}

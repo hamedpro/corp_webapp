@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { context } from "freeflow-react";
 export function MainFooter() {
 	var { cache, rest_endpoint } = useContext(context);
-	var company_info = cache.find((ci) => ci.thing.type === "company_info") || {
+	var company_info = cache.find((ci) => ci.thing.type === "company_info")?.thing.value || {
 		name: "بدون نام",
 		address: "هنوز آدرس شرکت تنظیم نشده است",
 		landline_phone_number: "هنوز شماره تلفن ثابت تنظیم نشده است.",

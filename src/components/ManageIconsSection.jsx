@@ -110,28 +110,28 @@ export function ManageIconsSection() {
 				<div className="flex flex-col items-start px-2">
 					<StyledDiv
 						className="mb-2"
-						onClick={() => config_and_open_input("square_icon_file_id")}
+						onClick={() => config_and_open_input("company_icon_file_id")}
 					>
-						{"بارگزاری آیکون مربع جدید"}
+						بارگذاری آيکون شرکت
 					</StyledDiv>
 
 					<StyledDiv
 						className="mb-2"
 						onClick={() => config_and_open_input("favicon_file_id")}
 					>
-						{"ریز آیکون جدید"}
+						بارگذاری favicon جدید
 					</StyledDiv>
 					<StyledDiv
 						className="mb-2"
-						onClick={() => update_company_info("square_icon_file_id", undefined)}
+						onClick={() => update_company_info("company_icon_file_id", undefined)}
 					>
-						{"حذف کردن آیکون مربع"}
+						حذف آیکون شرکت
 					</StyledDiv>
 					<StyledDiv
 						className="mb-2"
 						onClick={() => update_company_info("favicon_file_id", undefined)}
 					>
-						{"حذف کردن ریز آیکون"}
+						حذف favicon فعلی
 					</StyledDiv>
 				</div>
 			</Section>

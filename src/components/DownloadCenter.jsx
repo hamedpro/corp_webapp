@@ -45,7 +45,7 @@ export function DownloadCenter({}) {
 						>
 							<td className="px-2 py-2 text-white">{ci.thing.value.title}</td>
 							<td className="px-2 py-2 text-white">{ci.thing.value.description}</td>
-							<td>
+							<td className="flex flex-col md:flex-row gap-x-3">
 								<button
 									onClick={() => {
 										var { originalFilename } = cache.find(
@@ -63,26 +63,22 @@ export function DownloadCenter({}) {
 											filename: originalFilename,
 										});
 									}}
-									className="px-1 block bg-blue-100 text-black hover:bg-blue-500 w-fit hover:text-white rounded my-1 duration-200"
+									className="p-1 block bg-blue-100 text-black hover:bg-blue-500 hover:text-white rounded my-1 duration-200 w-24"
 								>
 									<Download />
 									دانلود
 								</button>
-							</td>
-							<td>
 								{admin_mode && (
 									<span
 										onClick={() => delete_download_center_item(ci.thing_id)}
-										className="px-1 block text-black cursor-pointer bg-blue-100 hover:bg-blue-500 w-fit hover:text-white rounded"
+										className="p-1 block text-black cursor-pointer bg-blue-100 hover:bg-blue-500  hover:text-white rounded my-1 w-24"
 									>
 										<Delete />
 										حذف کردن
 									</span>
 								)}
-							</td>
-							<td>
 								<Select
-									className="text-black"
+									className="text-black ml-1 my-1"
 									options={download_center_category_options}
 									onChange={(e) => change_category(ci.thing_id, e.value)}
 									value={download_center_category_options.find(

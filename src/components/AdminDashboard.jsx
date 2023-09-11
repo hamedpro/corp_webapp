@@ -17,6 +17,7 @@ import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import { AdminDashboardRoot } from "./AdminDashboardRoot";
 import { ManageDownloadCenter } from "./ManageDownloadCenter";
 import { AdminDashboardOptionsSection } from "./AdminDashboardOptionsSection";
+import { ManageContentSlider } from "./ManageContentSlider";
 function SideBarOption({ icon, text, url }) {
 	var this_option_is_active = useMatch(url);
 	var nav = useNavigate();
@@ -64,7 +65,7 @@ function SideBar() {
 
 		{
 			id: "manage_options",
-			title: "مدیریت گزینه ها",
+			title: "تکمیل اطلاعات",
 			icon: <Tune />,
 		},
 		{
@@ -113,7 +114,7 @@ export function AdminDashboard() {
 				<div className="w-3/12 bg-blue-500">
 					<SideBar />
 				</div>
-				<div className="p-1 flex w-9/12 overflow-y-auto px-3">
+				<div className="p-1 flex w-9/12 overflow-y-auto px-3 py-2">
 					<Routes>
 						<Route
 							path="/"
@@ -126,6 +127,10 @@ export function AdminDashboard() {
 						<Route
 							path="manage_options"
 							element={<AdminDashboardOptionsSection />}
+						/>
+						<Route
+							path="manage_content_slider"
+							element={<ManageContentSlider />}
 						/>
 						{/* <Route
 							path="new-product"
@@ -149,10 +154,7 @@ export function AdminDashboard() {
 							element={<OrdersSection />}
 						/>
 						
-						<Route
-							path="manage_content_slider"
-							element={<ManageContentSlider />}
-						/>
+						
 						<Route
 							path="support_messages_section"
 							element={<SupportMessagesSection />}

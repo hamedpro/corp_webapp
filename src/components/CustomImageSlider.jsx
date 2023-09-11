@@ -1,4 +1,6 @@
-import { Fragment } from "react";
+import { calc_file_url } from "freeflow-core/dist/utils";
+import { context } from "freeflow-react";
+import { Fragment, useContext } from "react";
 import { register } from "swiper/element/bundle";
 import "swiper/swiper-bundle.css";
 register();
@@ -17,7 +19,7 @@ export function CustomImageSlider({ images_sources }) {
 				<Fragment key={i}>
 					<swiper-slide
 						style={{ height: "100%" }}
-						class="flex justify-center items-center w-full h-full bg-white "
+						class="flex justify-center items-center w-full h-full bg-stone-800 py-2"
 					>
 						<img
 							className="h-full lg:scale-x-150 duration-300"
