@@ -28,26 +28,14 @@ import { User } from "./components/User";
 import { Products } from "./components/Products";
 import { Register } from "./components/Register";
 import { MainFooter } from "./components/MainFooter";
-import { FreeFlowReact, context } from "freeflow-react";
+import { FreeFlowReact, context, context_value } from "freeflow-react";
 import { useContext, useEffect } from "react";
 import { calc_file_url } from "freeflow-core/dist/utils";
 export default function () {
-	var { set_state, profiles, profiles_seed, cache, rest_endpoint } = useContext(context);
+	var { set_state, profiles, profiles_seed, cache, rest_endpoint } = useContext<context_value>(
+		context as any
+	);
 
-	useEffect(() => {
-		set_state((prev) => {
-			return {
-				...prev,
-				profiles_seed: [
-					{
-						user_id: -1,
-						jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjotMSwiaWF0IjoxNjk0MzY0MDg1fQ.wx1FsvuwfEB8MHg43EZm02HJ6KdAbhoTQOfP_ladx7E",
-						is_active: true,
-					},
-				],
-			};
-		});
-	}, []);
 	var company_info = cache.find((ci) => ci.thing.type === "company_info");
 
 	var favicon_url;
@@ -105,6 +93,10 @@ export default function () {
 						path="/contact-us"
 						element={<ContactUs />}
 					/>
+					<Route
+						path="/login"
+						element={<Login />}
+					/>
 					{/* 	<Route
     path="/users/:username/orders"
     element={<Orders />}
@@ -119,10 +111,7 @@ export default function () {
     element={<ShoppingCardPage />}
 />
 
-<Route
-    path="/login"
-    element={<Login />}
-/>
+
 
 <Route
     path="/products/:product_id"
@@ -137,10 +126,7 @@ export default function () {
     path="/products"
     element={<Products />}
 />
-<Route
-    path="/register"
-    element={<Register />}
-/>
+
 
 <Route
     path="/writings/:writing_id"

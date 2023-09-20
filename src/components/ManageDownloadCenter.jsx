@@ -100,7 +100,7 @@ export function ManageDownloadCenter() {
 					<p>نام فایل جدید را وارد کنید :‌</p>
 					<StyledInput
 						id="file_title"
-						className="block"
+						className="block text-black"
 					/>
 					<p className="mt-3">دسته بندی این فایل را انتخاب کنید:</p>
 					<Select
@@ -129,7 +129,7 @@ export function ManageDownloadCenter() {
 					<p>توضیحی برای فایل جدید وارد کنید :‌</p>
 					<StyledInput
 						id="file_description"
-						className="block w-1/2"
+						className="block w-1/2 text-black"
 					/>
 					<StyledDiv
 						onClick={upload_files}

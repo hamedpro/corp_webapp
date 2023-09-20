@@ -10,7 +10,7 @@ export function CustomDropDown({ options, optionsClassName = "" }) {
 			style={{ height: "40px", minWidth: "170px", flexShrink: 1 }}
 		>
 			<div
-				className={`text-white cursor-pointer overflow-hidden absolute rounded-lg duration-200 z-20  top-0 left-0 `}
+				className={`text-white cursor-pointer overflow-hidden absolute rounded-lg duration-200 z-20  top-0 left-0`}
 				style={{
 					width: "100%",
 					height: is_open ? 40 * options.length + "px" : "40px",
@@ -22,7 +22,7 @@ export function CustomDropDown({ options, optionsClassName = "" }) {
 					<div
 						key={Math.random()}
 						className={
-							`duration-200 w-full flex space-x-4 items-center px-1` +
+							`duration-200 w-full flex space-x-4 items-center px-2` +
 							` ${optionsClassName}`
 						}
 						style={{ height: "40px" }}

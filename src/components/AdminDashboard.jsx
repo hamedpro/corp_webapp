@@ -1,15 +1,11 @@
 import { Fragment } from "react";
 import {
 	AddBusinessOutlined,
-	ArticleRounded,
 	Collections,
 	Download,
 	HomeRounded,
 	InfoRounded,
-	ListAltRounded,
-	Person,
 	ShoppingBag,
-	SupportAgentRounded,
 	Tune,
 } from "@mui/icons-material";
 import { Alert } from "./Alert";
@@ -42,11 +38,7 @@ function SideBar() {
 			title: "اضافه کردن کالای جدید",
 			icon: <AddBusinessOutlined />,
 		},
-		{
-			id: "new-writing",
-			title: "اضافه کردن نوشته جدید",
-			icon: <ArticleRounded />,
-		},
+
 		{
 			id: "manage_products",
 			title: "مدیریت محصولات",
@@ -57,11 +49,6 @@ function SideBar() {
 			title: "مدیریت اسلایدر صفحه اصلی",
 			icon: <Collections />,
 		},
-		{
-			id: "manage_users",
-			title: "مدیریت کاربران",
-			icon: <Person />,
-		},
 
 		{
 			id: "manage_options",
@@ -69,19 +56,9 @@ function SideBar() {
 			icon: <Tune />,
 		},
 		{
-			id: "manage_orders",
-			title: "مدیریت سفارش ها",
-			icon: <ListAltRounded />,
-		},
-		{
 			id: "manage_download_center",
 			title: "مدیریت بخش فایل های قابل دانلود",
 			icon: <Download />,
-		},
-		{
-			id: "support_messages_section",
-			title: "رسیدگی به درخواست های پشتیبانی",
-			icon: <SupportAgentRounded />,
 		},
 	];
 	return tabs.map((tab) => (
@@ -144,21 +121,12 @@ export function AdminDashboard() {
 							path="manage_products"
 							element={<ProductsSection />}
 						/>
-						<Route
-							path="manage_users"
-							element={<UsersSection />}
-						/>
-						
-						<Route
-							path="manage_orders"
-							element={<OrdersSection />}
-						/>
 						
 						
-						<Route
-							path="support_messages_section"
-							element={<SupportMessagesSection />}
-						/> */}
+					
+						
+						
+						 */}
 					</Routes>
 				</div>
 			</div>

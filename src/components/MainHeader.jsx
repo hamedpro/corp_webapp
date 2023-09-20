@@ -19,13 +19,8 @@ function MainHeaderLeftDropDown() {
 			optionsClassName="bg-gray-500 hover:bg-gray-700 hover:border border-gray-500"
 			options={[
 				{
-					onClick: () => nav(`/users/${user_id}/shopping-card`),
-					text: "سبد خرید من",
-					icon: () => <i className="bi bi-card-checklist flex items-center" />,
-				},
-				{
 					onClick: () => nav(`/users/${user_id}`),
-					text: "حساب کاربری من",
+					text: "حساب کاربری",
 					icon: () => <i className="bi bi-box-arrow-right flex items-center" />,
 				},
 				{
@@ -131,7 +126,7 @@ export function MainHeader() {
 					</div>
 
 					<div className="flex items-center">
-						{user_id === undefined || user_id < 1 ? (
+						{user_id === 0 || user_id === undefined ? (
 							<CustomButton
 								className=" h-10 w-fit border border-gray-400 rounded-lg p-1 flex space-x-2 justify-center items-center"
 								onClick={() => nav("/login")}

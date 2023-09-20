@@ -129,6 +129,14 @@ export function DownloadCenter({}) {
 
 					{cache
 						.filter((ci) => ci.thing.type === "download_center_category")
+						.filter(
+							(category) =>
+								cache.filter(
+									(ci) =>
+										ci.thing.type === "download_center_item" &&
+										ci.thing.value.category_id === category.thing_id
+								).length !== 0
+						)
 						.map((category, index) => {
 							return (
 								<Fragment key={category.thing_id}>
