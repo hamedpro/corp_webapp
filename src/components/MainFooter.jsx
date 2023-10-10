@@ -29,20 +29,30 @@ export function MainFooter() {
 				>
 					{company_info.name || "بدون نام"}
 				</h1>
-				<h1
-					dir="rtl"
-					className="mb-2 text-xl"
+				<div
+					style={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "space-between",
+						alignItems: "center",
+						columnGap: "10px",
+					}}
 				>
-					<i className="bi bi-geo-alt"></i>
-					آدرس : {company_info.address || "بدون آدرس"}
-				</h1>
-				<h1
-					dir="rtl"
-					className="text-xl"
-				>
-					<i className="bi bi-telephone" />
-					تلفن: {company_info.landline_phone_number || "بدون شماره تلفن ثابت"}
-				</h1>
+					<span
+						dir="rtl"
+						className="mb-2 text-xl"
+					>
+						<i className="bi bi-geo-alt ml-1"></i>
+						آدرس : {company_info.address || "بدون آدرس"}
+					</span>
+					<span
+						dir="rtl"
+						className="text-xl"
+					>
+						<i className="bi bi-telephone ml-1" />
+						تلفن: {company_info.landline_phone_number || "بدون شماره تلفن ثابت"}
+					</span>
+				</div>
 			</div>
 		</div>
 	);
