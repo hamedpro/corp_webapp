@@ -77,14 +77,16 @@ export function DownloadCenter({}) {
 										حذف کردن
 									</span>
 								)}
-								<Select
-									className="text-black ml-1 my-1"
-									options={download_center_category_options}
-									onChange={(e) => change_category(ci.thing_id, e.value)}
-									value={download_center_category_options.find(
-										(opt) => opt.value === ci.thing.value.category_id
-									)}
-								/>
+								{admin_mode && (
+									<Select
+										className="text-black ml-1 my-1"
+										options={download_center_category_options}
+										onChange={(e) => change_category(ci.thing_id, e.value)}
+										value={download_center_category_options.find(
+											(opt) => opt.value === ci.thing.value.category_id
+										)}
+									/>
+								)}
 							</td>
 						</tr>
 					))}
