@@ -15,7 +15,7 @@ export function Login() {
 					url: "login",
 					data: {
 						value: password,
-						identifier,
+						identifier: identifier === "root" ? "-1" : identifier,
 					},
 					method: "post",
 				})
