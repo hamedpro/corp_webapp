@@ -97,35 +97,23 @@ export default function () {
 						path="/login"
 						element={<Login />}
 					/>
-					{/* 	<Route
-    path="/users/:username/orders"
-    element={<Orders />}
-/>
 
-<Route
-    path="/users/:username/orders/:order_id"
-    element={<Order />}
-/>
+					<Route
+						path="/products"
+						element={<Products />}
+					/>
+					<Route
+						path="/products/:product_id/*"
+						element={<Product />}
+					/>
+
+					{/* 
 <Route
     path="/users/:username/shopping-card"
     element={<ShoppingCardPage />}
 />
 
 
-
-<Route
-    path="/products/:product_id"
-    element={<Product />}
-/>
-<Route
-    path="/users/:username"
-    element={<User />}
-/>
-
-<Route
-    path="/products"
-    element={<Products />}
-/>
 
 
 <Route
@@ -140,10 +128,7 @@ export default function () {
     path="/new-support-message"
     element={<NewSupportMessage />}
 />
-<Route
-    path="/products/:product_id/images"
-    element={<FullScreenImageSlider />}
-/>
+
 <Route
     path="/support_messages/:support_message_id"
     element={<SupportMessage />}

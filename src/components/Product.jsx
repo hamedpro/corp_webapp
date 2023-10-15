@@ -1,40 +1,32 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { customAjax } from "../custom_ajax.js";
-import { AddToShoppingBagBar } from "./AddToShoppingBagBar";
+import { useState, useEffect, useContext } from "react";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { Section } from "./Section.jsx";
-import { ImageSlider } from "./ImageSlider.jsx";
-import { is_this_valid_json, multi_lang_helper as ml } from "../common.js";
 import parse from "html-react-parser";
 import editor_js_to_html from "editorjs-html";
 import { ZoomInRounded } from "@mui/icons-material";
 import { CustomImageSlider } from "./CustomImageSlider.jsx";
+import { context } from "freeflow-react";
+import { calc_file_url } from "freeflow-core/dist/utils.js";
+import { FullScreenImageSlider } from "./FullScreenImageSlider.jsx";
 
 export function Product() {
+	var { cache, profiles_seed, rest_endpoint } = useContext(context);
 	var nav = useNavigate();
-	var product_id = useParams().product_id;
-	var [image_sources, set_image_sources] = useState(null);
-	var [product, set_product] = useState(null);
-
-	async function init() {
-		var tmp = await customAjax({
-			params: {
-				task_name: "get_products",
-			},
-		});
-		let product = tmp.result.filter((i) => i.id == Number(product_id))[0];
-		set_product(product);
-		set_image_sources(
-			JSON.parse(product.image_file_ids).map(
-				(image_file_id) => new URL(`/files/${image_file_id}`, vite_api_endpoint).href
-			)
-		);
-	}
+	var product_id = Number(useParams().product_id);
+	var product = cache.find((ci) => ci.thing_id === product_id);
+	var [parsed_description, set_parsed_description] = useState("");
 	useEffect(() => {
-		init();
-	}, []);
-
-	if (product === null || image_sources === null) return;
+		if (product?.thing.value.description !== undefined) {
+			set_parsed_description(
+				editor_js_to_html_parser.parse(JSON.parse(product.thing.value.description)).join("")
+			);
+		}
+	});
+	useEffect(() => {
+		console.log(typeof parsed_description);
+	});
+	if (isNaN(product_id) === true) return "Invalid Product Id";
+	if (product === undefined) return `Couldn't find a product with id = ${product_id}`;
 
 	var editor_js_to_html_parser = editor_js_to_html({
 		table: (block) => {
@@ -77,24 +69,27 @@ export function Product() {
 			);
 		},
 	});
-
-	if (is_this_valid_json(product.description)) {
-		var parsed_description = parse(
-			editor_js_to_html_parser.parse(JSON.parse(product.description)).join("")
-		);
-	} else {
-		var parsed_description = <h1>{product.description}</h1>;
-	}
 	return (
 		<>
+			<Routes>
+				<Route
+					path="images"
+					element={
+						<FullScreenImageSlider
+							product_id={product.thing_id}
+							image_urls={product.thing.value.image_file_ids.map((image_file_id) =>
+								calc_file_url(profiles_seed, rest_endpoint, image_file_id)
+							)}
+						/>
+					}
+				/>
+			</Routes>
+
 			<div className="flex flex-col md:flex-row border border-blue-400 mt-2 p-2 mx-1 justify-end">
 				<div className="md:w-5/12">
-					{image_sources.length == 0 ? (
+					{product.thing.value.image_file_ids.length == 0 ? (
 						<div className="w-full h-20 bg-blue-400 text-white flex justify-center items-center">
-							{ml({
-								en: "there is not any product image uploaded for this product",
-								fa: "برای این محصول هیچ تصویری بارگذاری نشده است",
-							})}
+							{"برای این محصول هیچ تصویری بارگذاری نشده است"}
 						</div>
 					) : (
 						<div className="relative">
@@ -105,7 +100,16 @@ export function Product() {
 								<ZoomInRounded />
 							</div>
 							<div className="h-60">
-								<CustomImageSlider images_sources={image_sources} />
+								<CustomImageSlider
+									images_sources={product.thing.value.image_file_ids.map(
+										(image_file_id) =>
+											calc_file_url(
+												profiles_seed,
+												rest_endpoint,
+												image_file_id
+											)
+									)}
+								/>
 							</div>
 						</div>
 					)}
@@ -113,35 +117,30 @@ export function Product() {
 
 				<div className="flex flex-col md:w-1/3 px-2 space-between justify-between">
 					<div className="mx-2 w-full mt-2">
-						<h1 className="text-2xl">نام کالا : {product.name}</h1>
+						<h1 className="text-2xl">نام کالا : {product.thing.value.name}</h1>
 					</div>
-
-					<AddToShoppingBagBar price={product.price} product_id={product.id} />
 				</div>
 				<div className="w-1/3"></div>
 			</div>
 			{/* todo add a div h full w full into Section comp and inject styles into that */}
 			<Section
-				title={ml({
-					en: "description",
-					fa: "معرفی محصول :",
-				})}
+				title={"معرفی محصول :"}
 				className="mx-1 mt-2"
 			>
-				<div className="mx-2">{parsed_description}</div>
+				<div className="mx-2">{parse(parsed_description || "")}</div>
 			</Section>
 			<Section
-				title={ml({
-					en: "product specifications:",
-					fa: "مشخصات محصول :",
-				})}
+				title={"مشخصات محصول :"}
 				className="mx-1 mt-2"
 			>
 				<div className="mx-2">
 					{/*todo add option for report data incorrect which opens pop up to open a new support ticket */}
-					{JSON.parse(product.product_specs).map((spec) => {
+					{product.thing.value.product_specs.map((spec) => {
 						return (
-							<div className="flex" key={spec.id}>
+							<div
+								className="flex"
+								key={spec.id}
+							>
 								<p className="text-stone-600 mr-1">{spec.key}</p>:
 								<p className="ml-1">{spec.value}</p>
 							</div>

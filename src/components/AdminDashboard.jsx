@@ -14,6 +14,7 @@ import { AdminDashboardRoot } from "./AdminDashboardRoot";
 import { ManageDownloadCenter } from "./ManageDownloadCenter";
 import { AdminDashboardOptionsSection } from "./AdminDashboardOptionsSection";
 import { ManageContentSlider } from "./ManageContentSlider";
+import { NewProduct } from "./NewProduct";
 function SideBarOption({ icon, text, url }) {
 	var this_option_is_active = useMatch(url);
 	var nav = useNavigate();
@@ -109,24 +110,15 @@ export function AdminDashboard() {
 							path="manage_content_slider"
 							element={<ManageContentSlider />}
 						/>
-						{/* <Route
+						<Route
 							path="new-product"
 							element={<NewProduct />}
 						/>
-						<Route
-							path="new-writing"
-							element={<NewWriting />}
-						/>
-						<Route
+
+						{/* <Route
 							path="manage_products"
 							element={<ProductsSection />}
-						/>
-						
-						
-					
-						
-						
-						 */}
+						/> */}
 					</Routes>
 				</div>
 			</div>

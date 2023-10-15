@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { customAjax } from "../custom_ajax.js";
-import {ProductItem} from "./ProductItem";
-import {Section} from "./Section";
+import { useContext, useEffect, useState } from "react";
+import { ProductItem } from "./ProductItem";
+import { Section } from "./Section";
 import { FilterAltRounded, SortRounded } from "@mui/icons-material";
 import { SortingModal } from "./SortingModal";
 import { FilteringModal } from "./FilteringModal";
-import { multi_lang_helper as ml } from "../common.js";
+import { context } from "freeflow-react";
 export function Products() {
-	const [products_to_show, set_products_to_show] = useState([]);
+	var { cache } = useContext(context);
+	var products = cache.filter((ci) => ci.thing.type === "product");
 	var [is_sorting_modal_visible, set_is_sorting_modal_visible] = useState(false);
 	var [is_filtering_modal_visible, set_is_filtering_modal_visible] = useState(false);
 	var default_filter_options = {
@@ -22,48 +21,35 @@ export function Products() {
 		var tmp = products;
 
 		if (filter_options.minimumPrice !== null) {
-			tmp = tmp.filter((product) => product.price >= filter_options.minimumPrice);
+			tmp = tmp.filter((product) => product.thing.value.price >= filter_options.minimumPrice);
 		}
 		if (filter_options.maximumPrice !== null) {
-			tmp = tmp.filter((product) => product.price <= filter_options.maximumPrice);
+			tmp = tmp.filter((product) => product.thing.value.price <= filter_options.maximumPrice);
 		}
 		if (filter_options.just_with_image) {
-			tmp = tmp.filter((product) => product.images_path_names.length !== 0);
+			tmp = tmp.filter((product) => product.thing.value.image_file_ids.length !== 0);
 		}
 		return tmp;
 	}
 	function sorted_products(products) {
-		var cloned_products = products.map((i) => i);
+		var cloned_products = [...products];
 		switch (sort_type) {
 			case "default":
 				return products;
 				break;
 			case "expensive_to_cheap":
-				cloned_products.sort((i1, i2) => i2.price - i1.price);
+				cloned_products.sort((i1, i2) => i2.thing.value.price - i1.thing.value.price);
 				return cloned_products;
 				break;
 			case "cheap_to_expensive":
-				cloned_products.sort((i1, i2) => i1.price - i2.price);
+				cloned_products.sort((i1, i2) => i1.thing.value.price - i2.thing.value.price);
 				return cloned_products;
 				break;
 		}
 		return products;
 	}
-	function fetch_data() {
-		customAjax({
-			params: {
-				task_name: "get_products",
-			},
-		}).then(
-			(data) => {
-				set_products_to_show(sorted_products(filtered_products(data.result)));
-			},
-			(error) => {
-				console.log(error);
-			}
-		);
-	}
-	useEffect(fetch_data, [filter_options, sort_type]);
+	var products_to_show = sorted_products(filtered_products(products));
+
 	return (
 		<>
 			<SortingModal
@@ -79,17 +65,17 @@ export function Products() {
 				setFilterOptions={set_filter_options}
 				default_filter_options={default_filter_options}
 			/>
-			<Section title={ml({ en: "products", fa: "محصولات" })} className="mx-1 mt-1">
+			<Section
+				title={"محصولات"}
+				className="mx-1 mt-1"
+			>
 				<div className="flex mx-2 space-x-2">
 					<button
 						className="flex hover:bg-blue-400 rounded px-1"
 						onClick={() => set_is_sorting_modal_visible(true)}
 					>
 						<SortRounded />
-						{ml({
-							en: "sort products",
-							fa: "ترتیب نمایش",
-						})}
+						{"ترتیب نمایش"}
 					</button>
 
 					<button
@@ -97,37 +83,22 @@ export function Products() {
 						onClick={() => set_is_filtering_modal_visible(true)}
 					>
 						<FilterAltRounded />
-						{ml({
-							en: "filter product",
-							fa: "فیلتر کردن نتایج",
-						})}
+						{"فیلتر کردن نتایج"}
 					</button>
 				</div>
 				<div className="flex justify-between mx-2 mt-4 mb-2 text-sm border-b border-stone-400 ">
+					<p className="text-stone-500">{"محصولات فیلتر شده"}</p>
 					<p className="text-stone-500">
-						{ml({
-							en: "filtered products",
-							fa: "محصولات فیلتر شده",
-						})}
-					</p>
-					<p className="text-stone-500">
-						{products_to_show.length}{" "}
-						{ml({
-							en: "product",
-							fa: "محصول",
-						})}
+						{products_to_show.length} {"محصول"}
 					</p>
 				</div>
 				<div className="flex flex-wrap justify-start mx-2">
 					{products_to_show.map((product) => {
 						return (
 							<ProductItem
-								id={product.id}
-								name={product.name}
-								price={product.price}
-								key={product.id}
+								product={product}
+								key={product.thing_id}
 								className="bg-white"
-								description={product.description}
 							/>
 						);
 					})}

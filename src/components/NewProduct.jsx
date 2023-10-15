@@ -1,28 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Section } from "./Section";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Table from "@editorjs/table";
 import Checklist from "@editorjs/checklist";
-
 import { ProgressBarModal } from "./ProgressBarModal.jsx";
+import { context } from "freeflow-react";
 function CustomInput({ id }) {
 	return (
 		<input
 			id={id}
-			className="border border-green-400 rounded px-2 py-1"
+			className="border border-green-400 rounded px-2 py-1 text-black"
 		/>
 	);
 }
-function cloned_array(arr) {
-	var tmp = [];
-	arr.forEach((item) => {
-		tmp.push(item);
-	});
-	return tmp;
-}
+const cloned_array = (arr) => [...arr];
 export function NewProduct() {
+	var { cache, configured_axios, request_new_thing } = useContext(context);
 	const [specs, set_specs] = useState([]);
 	const [count, set_count] = useState(0);
 	var [upload_status, set_upload_status] = useState({
@@ -60,9 +55,10 @@ export function NewProduct() {
 		for (var file of document.getElementById("images_input").files) {
 			var form = new FormData();
 			form.append("file", file);
-			var { inserted_id } = (
-				await custom_axios({
-					url: "files?type=product_image",
+			form.append("file_privileges", JSON.stringify({ read: "*", write: [-1] }));
+			var { new_file_id } = (
+				await configured_axios({
+					url: "/files",
 					method: "post",
 					data: form,
 					onUploadProgress: (progressEvent) => {
@@ -79,38 +75,28 @@ export function NewProduct() {
 				is_uploading: false,
 				upload_percentage: undefined,
 			});
-			file_ids.push(inserted_id);
+			file_ids.push(new_file_id);
 		}
-		var params = {
-			task_name: "new_product",
+		var value = {
 			name: document.getElementById("name_input").value,
 			description: JSON.stringify(await editor_js_instance.save()),
-			product_specs: JSON.stringify(specs),
+			product_specs: specs,
 			price: entered_price,
-			image_file_ids: JSON.stringify(file_ids),
+			image_file_ids: file_ids,
 		};
-		var response = await customAjax({
-			//todo check if required param is not given in all app
-			params,
+		await request_new_thing({
+			thing: {
+				type: "product",
+				value,
+			},
+			thing_privileges: { read: "*", write: [-1] },
 		});
-
-		//also updating main content slider :
-		let content_slider_content = (await get_data_pair("content_slider_content")) || {
-			product_ids: [],
-			writing_ids: [],
-			image_file_ids: [],
-		};
-		var new_content_slider_content = JSON.parse(JSON.stringify(content_slider_content));
-		new_content_slider_content.product_ids.push(
-			response.result /* id of new inserted product */
-		);
-		await put_pair("content_slider_content", new_content_slider_content);
 
 		alert("با موفقیت انجام شد");
 	}
 
 	function remove_spec(id) {
-		if (!window.confirm(ml({ en: "are you sure ?", fa: "آیا اطمینان دارید ؟" }))) {
+		if (!window.confirm("آیا اطمینان دارید ؟")) {
 			return;
 		}
 		var tmp = cloned_array(specs);
@@ -120,10 +106,8 @@ export function NewProduct() {
 		var tmp = cloned_array(specs);
 		tmp.push({
 			id: count,
-			key: window.prompt(
-				ml({ en: "enter specification key :", fa: "نام مشخصه را وارد کنید: " })
-			),
-			value: window.prompt(ml({ en: "enter its value:", fa: "مقدار مشخصه را وارد کنید: " })),
+			key: window.prompt("نام مشخصه را وارد کنید: "),
+			value: window.prompt("مقدار مشخصه را وارد کنید: "),
 		});
 		set_specs(tmp);
 		set_count((count) => count + 1);
@@ -138,66 +122,28 @@ export function NewProduct() {
 				/>
 			)}
 			<Section
-				title={ml({
-					en: "new product page",
-					fa: "بخش تعریف کالای جدید",
-				})}
+				title={"بخش تعریف کالای جدید"}
 				className="mx-1 mt-2 w-full"
 			>
 				<div
 					id="new_product"
 					className="px-2"
 				>
-					<p className="text-lg">
-						{ml({
-							en: "name:",
-							fa: "نام کالا :",
-						})}
-					</p>
+					<p className="text-lg ">{"نام کالا :"}</p>
 					<CustomInput id="name_input" />
 
-					<p className="mt-2 text-lg">
-						{ml({
-							en: "description:",
-							fa: "متن معرفی کالا:",
-						})}
-					</p>
+					<p className="mt-2 text-lg">{"متن معرفی کالا:"}</p>
 
 					<div id="editor-js-div"></div>
-					<p className="mt-2 text-lg">
-						{ml({
-							en: "product specifictions:",
-							fa: "مشخصات محصول :",
-						})}{" "}
-					</p>
+					<p className="mt-2 text-lg">{"مشخصات محصول :"} </p>
 					<table>
 						<tbody>
 							<tr>
-								<th>
-									{ml({
-										en: "id",
-										fa: "شناسه",
-									})}
-								</th>
+								<th>{"شناسه"}</th>
 
-								<th>
-									{ml({
-										en: "key",
-										fa: "نام مشخصه",
-									})}
-								</th>
-								<th>
-									{ml({
-										en: "value",
-										fa: "مقدار مشخصه",
-									})}
-								</th>
-								<th>
-									{ml({
-										en: "options",
-										fa: "گزینه ها",
-									})}
-								</th>
+								<th>{"نام مشخصه"}</th>
+								<th>{"مقدار مشخصه"}</th>
+								<th>{"گزینه ها"}</th>
 							</tr>
 							{specs.map((spec) => {
 								return (
@@ -206,10 +152,7 @@ export function NewProduct() {
 										<td>{spec.key}</td>
 										<td>{spec.value}</td>
 										<td onClick={() => remove_spec(spec.id)}>
-											{ml({
-												en: "remove",
-												fa: "حذف این مورد",
-											})}
+											{"حذف این مورد"}
 										</td>
 									</tr>
 								);
@@ -222,19 +165,9 @@ export function NewProduct() {
 					>
 						مورد جدید
 					</button>
-					<p className="mt-2 text-lg">
-						{ml({
-							en: "price:",
-							fa: "قیمت (تومان):",
-						})}
-					</p>
+					<p className="mt-2 text-lg">{"قیمت (تومان):"}</p>
 					<CustomInput id="price_input" />
-					<p className="mt-2 text-lg">
-						{ml({
-							en: "images : ",
-							fa: "عکس ها:",
-						})}
-					</p>
+					<p className="mt-2 text-lg">{"عکس ها:"}</p>
 					<input
 						id="images_input"
 						type="file"
@@ -244,11 +177,8 @@ export function NewProduct() {
 						onClick={submit_new_product}
 						className="block border text-lg border-blue-400 rounded mt-4 hover:text-white hover:bg-blue-600 px-2 py-1"
 					>
-						{ml({
-							en: "add new product as ",
-							fa: "اضافه کردن کالای جدید به عنوان ",
-						})}{" "}
-						@{window.localStorage.getItem("username")}
+						{"اضافه کردن کالای جدید به عنوان "} @
+						{window.localStorage.getItem("username")}
 					</button>
 				</div>
 			</Section>
