@@ -53,6 +53,14 @@ export const ContentSlider = () => {
 						.map((image_id) => calc_file_url(profiles_seed, rest_endpoint, image_id))}
 				/>
 			</div>
+			<div className="hidden 2xl:block">
+				<CustomImageSlider
+					images_sources={(content_slider_content?.thing.value["2xl"] || [])
+
+						.reverse()
+						.map((image_id) => calc_file_url(profiles_seed, rest_endpoint, image_id))}
+				/>
+			</div>
 		</div>
 	);
 };

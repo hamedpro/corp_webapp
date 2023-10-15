@@ -1705,6 +1705,10 @@ video {
 }
 
 @media (min-width: 1536px) {
+  .\32xl\:block {
+    display: block;
+  }
+
   .\32xl\:hidden {
     display: none;
   }
