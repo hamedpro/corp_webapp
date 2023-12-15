@@ -160,7 +160,7 @@ export function MainHeader() {
 													icon: () => <i className="bi bi-link" />,
 													onClick: () =>
 														location.assign(
-															"https://vatankhah.pishro-control.ir:4443/multi_systems"
+															"https://pishro-control.ir/chiller"
 														),
 												},
 												{
@@ -189,7 +189,7 @@ export function MainHeader() {
 													icon: () => <i className="bi bi-link" />,
 													onClick: () =>
 														location.assign(
-															"https://mpkchiller.com/power"
+															"https://pishro-control.ir/power2"
 														),
 												},
 											]}
