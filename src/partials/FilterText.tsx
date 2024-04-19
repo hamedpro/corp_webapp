@@ -1,6 +1,6 @@
 import React from "react";
 
-export const FilterText = () => {
+export const FilterText = ({ label, count }: { label: string; count: string }) => {
 	return (
 		<li className="mb-2">
 			<a
@@ -8,9 +8,9 @@ export const FilterText = () => {
 				href="#"
 			>
 				<span>
-					<i className="ri-arrow-right-s-line align-bottom ms-n1"></i> {/* {label} */}
+					<i className="ri-arrow-right-s-line align-bottom ms-n1"></i> {label}
 				</span>{" "}
-				{/* {count && <span className="text-muted ms-4">({count})</span>} */}
+				{count && <span className="text-muted ms-4">({count})</span>}
 			</a>
 		</li>
 	);

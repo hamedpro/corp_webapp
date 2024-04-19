@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
+
 export const BannerSaleExtended: React.FC = () => {
 	return (
 		<>
 			<div className="position-absolute text-white z-index-50 top-0 end-0 start-0">
+				<img src="/svg-divider-top-lr" />
 				{/* {> svg/svg-divider-top-lr } */}
 			</div>
 
@@ -22,30 +25,31 @@ export const BannerSaleExtended: React.FC = () => {
 							data-aos="fade-up"
 							data-aos-delay="250"
 						>
-							<a
-								href="/category.html"
+							<Link
+								to={"/category"}
 								className="btn btn-orange btn-orange-chunky text-white my-1"
 							>
 								<span>Shop Menswear</span>
-							</a>
-							<a
-								href="/category.html"
+							</Link>
+
+							<Link
+								to="/category"
 								className="btn btn-orange btn-orange-chunky text-white my-1"
 							>
 								<span>Shop Womenswear</span>
-							</a>
-							<a
-								href="/category.html"
+							</Link>
+							<Link
+								to="/category"
 								className="btn btn-orange btn-orange-chunky text-white my-1"
 							>
 								<span>Shop Kidswear</span>
-							</a>
-							<a
-								href="/category.html"
+							</Link>
+							<Link
+								to="/category"
 								className="btn btn-orange btn-orange-chunky text-white my-1"
 							>
 								<span>Shop Accessories</span>
-							</a>
+							</Link>
 						</div>
 						<div
 							className="col-12 col-lg-4 text-center text-lg-end"
@@ -68,6 +72,7 @@ export const BannerSaleExtended: React.FC = () => {
 			</div>
 
 			<div className="position-absolute z-index-50 text-white bottom-0 start-0 end-0">
+				<img src="/svg-divider-bottom-rl.svg" />
 				{/* {> svg/svg-divider-bottom-rl colorclassName="text-white" positionclassName="bottom-0 start-0 end-0" } */}
 			</div>
 		</>

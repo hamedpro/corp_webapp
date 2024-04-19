@@ -1,3 +1,5 @@
+import { ReviewsCustomers } from "./ReviewsCustomers";
+
 export const TabsOne = () => {
 	return (
 		<>
@@ -111,7 +113,7 @@ export const TabsOne = () => {
 					role="tabpanel"
 					aria-labelledby="reviews-tab"
 				>
-					{/* {{} > reviews / reviews - customers}} */}
+					<ReviewsCustomers />
 				</div>
 
 				<div

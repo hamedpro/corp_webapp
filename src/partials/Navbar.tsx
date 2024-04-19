@@ -1,13 +1,24 @@
-export const Navbar = () => {
+import { LogoFull } from "./LogoFull";
+import { Menu } from "./Menu";
+
+export const Navbar = ({
+	configClassList,
+	classList,
+}: {
+	configClassList: any;
+	classList: any;
+}) => {
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom mx-0 p-0 flex-column {{ configClassList }} {{ classList }}">
+		<nav
+			className={`navbar navbar-expand-lg navbar-light bg-white border-bottom mx-0 p-0 flex-column ${configClassList} ${classList}`}
+		>
 			<div className="w-100 pb-lg-0 pt-lg-0 pt-4 pb-3">
 				<div className="container-fluid d-flex justify-content-between align-items-center flex-wrap">
 					<a
 						className="navbar-brand fw-bold fs-3 m-0 p-0 flex-shrink-0"
 						href="/index.html"
 					>
-						{/* {{> logo/logo-full }} */}
+						<LogoFull />
 					</a>
 
 					<div
@@ -25,7 +36,7 @@ export const Navbar = () => {
 							<i className="ri-close-circle-line ri-2x"></i>
 						</button>
 
-						{/*  {{> menus/menu }} */}
+						<Menu />
 					</div>
 
 					<ul className="list-unstyled mb-0 d-flex align-items-center">

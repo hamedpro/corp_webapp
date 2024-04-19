@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import config from "../data/config.json";
 export const OffcanvasCart = () => {
 	return (
@@ -46,7 +47,7 @@ export const OffcanvasCart = () => {
 									<img
 										className="img-fluid"
 										src="/assets/images/products/product-1.jpg"
-										alt="{{config.defaultImgAlt}}"
+										alt={config.defaultImgAlt}
 									/>
 								</picture>
 							</div>
@@ -95,18 +96,18 @@ export const OffcanvasCart = () => {
 							<p className="m-0 fw-bolder">Subtotal</p>
 							<p className="m-0 fw-bolder">$233.33</p>
 						</div>
-						<a
-							href="/checkout.html"
+						<Link
+							to="/checkout"
 							className="btn btn-orange btn-orange-chunky mt-5 mb-2 d-block text-center"
 						>
 							Checkout
-						</a>
-						<a
-							href="/cart.html"
+						</Link>
+						<Link
+							to="/cart"
 							className="btn btn-dark fw-bolder d-block text-center transition-all opacity-50-hover"
 						>
 							View Cart
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

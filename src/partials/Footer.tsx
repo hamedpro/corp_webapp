@@ -1,8 +1,17 @@
 import React from "react";
 import config from "../data/config.json";
-export const Footer = () => {
+import { InstagramPhotos } from "./InstagramPhotos";
+import { InfoBoxes } from "./InfoBoxes";
+import { Link } from "react-router-dom";
+export const Footer = ({
+	configClassList,
+	classList,
+}: {
+	configClassList: any;
+	classList: any;
+}) => {
 	return (
-		<footer className="bg-dark mt-10 {{configClassList}} {{classList}}">
+		<footer className={`bg-dark mt-10 ${configClassList} ${classList}`}>
 			<div className="bg-light py-4">
 				<div className="container d-flex justify-content-center align-items-center py-2">
 					<p className="lead fw-bolder mb-0 lh-1">Find us online</p>
@@ -44,7 +53,8 @@ export const Footer = () => {
 			</div>
 
 			<div className="container pt-8">
-				{/* {{> instagram/instagram-photos }} */}
+				<InstagramPhotos />
+
 				<div className="d-flex justify-content-between align-items-center mt-3">
 					<p className="text-muted m-0">
 						Follow us on Instragram{" "}
@@ -59,7 +69,9 @@ export const Footer = () => {
 				</div>
 			</div>
 
-			<div className="container mt-7">{/*  {{> info-boxes/info-boxes }} */}</div>
+			<div className="container mt-7">
+				<InfoBoxes />
+			</div>
 
 			<div className="border-top-white-opacity py-7 mt-7 text-white">
 				<div
@@ -71,36 +83,36 @@ export const Footer = () => {
 							<h6 className="mb-4 fw-bolder fs-6">Shop</h6>
 							<ul className="list-unstyled">
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="/category.html"
+										to="/category"
 									>
 										Menswear
-									</a>
+									</Link>
 								</li>
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="/category.html"
+										to="/category"
 									>
 										Womenswear
-									</a>
+									</Link>
 								</li>
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="/category.html"
+										to="/category"
 									>
 										Kidswear
-									</a>
+									</Link>
 								</li>
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="/category.html"
+										to="/category"
 									>
 										New Arrivals
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</nav>

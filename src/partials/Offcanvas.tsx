@@ -1,10 +1,13 @@
+import { OffcanvasCart } from "./OffcanvasCart";
+import { OffcanvasFilters } from "./OffcanvasFilters";
+import { OffcanvasReview } from "./OffcanvasReview";
+
 export const Offcanvas = () => {
-	return null;
-	/* {{> offcanvas/offcanvas-cart }}
-
-
-{{> offcanvas/offcanvas-filters }}
-
-
-{{> offcanvas/offcanvas-review }} */
+	return (
+		<>
+			<OffcanvasCart />
+			<OffcanvasFilters />
+			<OffcanvasReview />
+		</>
+	);
 };

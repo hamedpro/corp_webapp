@@ -1,3 +1,6 @@
+import { ReviewStarsSmall } from "./ReviewStarsSmall";
+import config from "../data/config.json";
+import { Link } from "react-router-dom";
 export const ListingCard = ({
 	discountPercentage,
 	img_hover,
@@ -6,14 +9,20 @@ export const ListingCard = ({
 	sale_price,
 	currency,
 	price,
+	review_width,
+	img,
+	options,
 }: {
-	discountPercentage: any;
-	img_hover: any;
+	discountPercentage?: any;
+	img_hover?: any;
 	review_count: any;
 	title: any;
-	sale_price: any;
+	sale_price?: any;
 	currency: any;
 	price: any;
+	review_width: any;
+	img: any;
+	options?: any;
 }) => {
 	return (
 		<div className="card position-relative h-100 card-listing hover-trigger">
@@ -26,8 +35,8 @@ export const ListingCard = ({
 					<img
 						className="w-100 img-fluid position-relative z-index-10"
 						title=""
-						src="{{ img }}"
-						alt="{{config.defaultImgAlt}}"
+						src={img}
+						alt={config.defaultImgAlt}
 					/>
 				</picture>
 				{img_hover && (
@@ -35,8 +44,8 @@ export const ListingCard = ({
 						<img
 							className="w-100 img-fluid"
 							title=""
-							src="{{ img-hover }}"
-							alt="{{config.defaultImgAlt}}"
+							src={img_hover}
+							alt={config.defaultImgAlt}
 						/>
 					</picture>
 				)}
@@ -54,15 +63,15 @@ export const ListingCard = ({
 			</div>
 			<div className="card-body px-0 text-center">
 				<div className="d-flex justify-content-center align-items-center mx-auto mb-1">
-					{/* {{> reviews/review-stars-small width=review-width }} */}{" "}
+					<ReviewStarsSmall width={review_width} />{" "}
 					<span className="small fw-bolder ms-2 text-muted"> {review_count}</span>
 				</div>
-				<a
+				<Link
 					className="mb-0 mx-2 mx-md-4 fs-p link-cover text-decoration-none d-block text-center"
-					href="/product.html"
+					to="/product"
 				>
 					{title}
-				</a>
+				</Link>
 				{sale_price ? (
 					<div className="d-flex justify-content-center align-items-center mt-2">
 						<p className="mb-0 me-2 text-danger fw-bolder">

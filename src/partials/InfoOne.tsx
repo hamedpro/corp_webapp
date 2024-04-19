@@ -1,3 +1,6 @@
+import { ReviewStarsSmall } from "./ReviewStarsSmall";
+import { Share } from "./Share";
+
 export const InfoOne = () => {
 	return (
 		<div className="pb-3">
@@ -6,6 +9,7 @@ export const InfoOne = () => {
 					Billabong
 				</p>
 				<div className="d-flex justify-content-start align-items-center">
+					<ReviewStarsSmall />
 					{/* {{> reviews/review-stars-small }} */}
 					<small className="text-muted d-inline-block ms-2 fs-bolder">(1288)</small>
 				</div>
@@ -69,7 +73,7 @@ export const InfoOne = () => {
 								id="option-colour-3"
 								name="option-colour"
 								value="Crimson Blue"
-								checked
+								defaultChecked
 							/>
 							<label
 								className="form-check-label"
@@ -120,7 +124,10 @@ export const InfoOne = () => {
 				</button>
 			</div>
 
-			<div className="my-4">{/* {{> socials/share }} */}</div>
+			<div className="my-4">
+				<Share />
+				{/* {{> socials/share }} */}
+			</div>
 
 			<div className="bg-light rounded py-2 px-3">
 				<ul className="list-group list-group-flush">

@@ -1,3 +1,5 @@
+import { ListingCard } from "./ListingCard";
+
 export const SearchOverlay = () => {
 	return (
 		<section className="search-overlay">
@@ -23,26 +25,24 @@ export const SearchOverlay = () => {
 						</p>
 						<div className="row">
 							<div className="col-12 col-md-6 col-lg-3 mb-3 mb-lg-0">
-								{/*  {{> 
-                            listing-cards/listing-card
-                            img="/assets/images/products/product-1.jpg" 
-                            title="Mens Pennie II Waterproof Jacket"
-                            currency="$"
-                            price="325.66"
-                            review-width="80%"
-                            review-count="4.2 (123)"
-                        }} */}
+								<ListingCard
+									img="/assets/images/products/product-1.jpg"
+									title="Mens Pennie II Waterproof Jacket"
+									currency="$"
+									price="325.66"
+									review_width="80%"
+									review_count="4.2 (123)"
+								/>
 							</div>
 							<div className="col-12 col-md-6 col-lg-3">
-								{/*  {{> 
-                            listing-cards/listing-card
-                            img="/assets/images/products/product-2.jpg" 
-                            title="Mens Storm Waterproof Jacket"
-                            currency="$"
-                            price="499.99"
-                            review-width="70%"
-                            review-count="4.5 (1289)"
-                        }} */}
+								<ListingCard
+									img="/assets/images/products/product-2.jpg"
+									title="Mens Storm Waterproof Jacket"
+									currency="$"
+									price="499.99"
+									review_width="70%"
+									review_count="4.5 (1289)"
+								/>
 							</div>
 						</div>
 					</div>

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const CartSummary = () => {
 	return (
 		<>
@@ -53,20 +55,20 @@ export const CartSummary = () => {
 					</div>
 				</div>
 
-				<a
-					href="/checkout.html"
+				<Link
+					to="/checkout"
 					className="btn btn-white w-100 text-center mt-3"
 					role="button"
 				>
 					<i className="ri-secure-payment-line align-bottom"></i> Proceed to checkout
-				</a>
-				<a
-					href="/checkout.html"
+				</Link>
+				<Link
+					to="/checkout"
 					className="btn btn-orange w-100 text-center mt-3"
 					role="button"
 				>
 					<i className="ri-paypal-line align-bottom"></i> Checkout with PayPal
-				</a>
+				</Link>
 			</div>
 			<ul className="list-unstyled d-flex justify-content-center mt-3">
 				<li className="mx-1 border d-flex align-items-center p-2">

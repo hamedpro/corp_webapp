@@ -5,8 +5,11 @@ export const CheckoutSummary = () => {
 		<div className="bg-light p-4 sticky-md-top top-5">
 			<div className="border-bottom pb-3">
 				{cart_items.entries.map(
-					({ qty, title, options, "line-total": lineTotal, currency, img }) => (
-						<div className="d-none d-md-flex justify-content-between align-items-start py-2">
+					({ qty, title, options, "line-total": lineTotal, currency, img }, index) => (
+						<div
+							className="d-none d-md-flex justify-content-between align-items-start py-2"
+							key={index}
+						>
 							<div className="d-flex flex-grow-1 justify-content-start align-items-start">
 								<div className="position-relative f-w-20 border p-2 me-4">
 									<span className="checkout-item-qty">{qty}</span>

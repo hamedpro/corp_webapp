@@ -1,5 +1,6 @@
 import React from "react";
 import cart_items from "../data/cart-items.json";
+import config from "../data/config.json";
 export const CartItems: React.FC = () => {
 	return (
 		<table className="table">
@@ -13,15 +14,18 @@ export const CartItems: React.FC = () => {
 			</thead>
 			<tbody>
 				{cart_items.entries.map(
-					({ title, options, currency, price, qty, "line-total": lineTotal }) => (
-						<tr>
+					(
+						{ title, options, currency, price, qty, "line-total": lineTotal, img },
+						index
+					) => (
+						<tr key={index}>
 							{/* image */}
 							<td className="d-none d-sm-table-cell">
 								<picture className="d-block bg-light p-3 f-w-20">
 									<img
 										className="img-fluid"
-										src="{ img }"
-										alt="{config.defaultImgAlt}"
+										src={img}
+										alt={config.defaultImgAlt}
 									/>
 								</picture>
 							</td>

@@ -1,3 +1,5 @@
+import { ReviewStarsSmall } from "./ReviewStarsSmall";
+
 export const ReviewsCustomers = () => {
 	return (
 		<section className="reviews">
@@ -9,26 +11,26 @@ export const ReviewsCustomers = () => {
 					</small>
 				</h2>
 				<div className="d-flex justify-content-center">
-					{/* {{> reviews/review-stars-medium }} */}
+					<ReviewStarsSmall />
 				</div>
 
 				<div className="bg-light rounded py-3 px-4 mt-3 col-12 col-md-6 col-lg-5 mx-auto">
 					<ul className="list-group list-group-flush">
 						<li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 bg-transparent">
 							<span className="fw-bolder">Fit</span>
-							{/* {{> reviews/review-stars-small width="25%" }} */}
+							<ReviewStarsSmall width={"25%"} />
 						</li>
 						<li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 bg-transparent">
 							<span className="fw-bolder">Value for money</span>
-							{/* {{> reviews/review-stars-small width="75%" }} */}
+							<ReviewStarsSmall width={"75%"} />
 						</li>
 						<li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 bg-transparent">
 							<span className="fw-bolder">Build quality</span>
-							{/* {{> reviews/review-stars-small width="65%" }} */}
+							<ReviewStarsSmall width={"65%"} />
 						</li>
 						<li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 bg-transparent">
 							<span className="fw-bolder">Style</span>
-							{/* {{> reviews/review-stars-small width="90%" }} */}
+							<ReviewStarsSmall width={"90%"} />
 						</li>
 					</ul>
 				</div>
@@ -54,7 +56,7 @@ export const ReviewsCustomers = () => {
 						</span>
 					</div>
 					<div className="col-12 col-md-8 mt-4 mt-md-0">
-						{/* {{> reviews/review-stars-small width="80%" }} */}
+						<ReviewStarsSmall width={"80%"} />
 						<p className="fw-bolder mt-4">Happy with this considering the price</p>
 						<p>
 							Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sequi,
@@ -106,7 +108,7 @@ export const ReviewsCustomers = () => {
 						</span>
 					</div>
 					<div className="col-12 col-md-8 mt-4 mt-md-0">
-						{/* {{> reviews/review-stars-small width="80%" }} */}
+						<ReviewStarsSmall width={"80%"} />
 						<p className="fw-bolder mt-4">Very happy with my purchase so far...</p>
 						<p>
 							Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sequi,
@@ -158,7 +160,7 @@ export const ReviewsCustomers = () => {
 						</span>
 					</div>
 					<div className="col-12 col-md-8 mt-4 mt-md-0">
-						{/*  {{> reviews/review-stars-small width="80%" }} */}
+						<ReviewStarsSmall width={"80%"} />
 						<p className="fw-bolder mt-4">
 							I wish it was a little cheaper - otherwise love this!
 						</p>

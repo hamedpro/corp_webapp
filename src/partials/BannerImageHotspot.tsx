@@ -1,8 +1,12 @@
 import config from "../data/config.json";
+import svg_divider_top_lr from "../assets/svg-divider-top-lr.svg";
+import { ReviewStarsSmall } from "./ReviewStarsSmall";
+import { Link } from "react-router-dom";
 export const BannerImageHotspot = () => {
 	return (
 		<>
 			<div className="position-absolute z-index-50 text-white top-0 start-0 end-0">
+				<img src="/svg-divider-top-lr.svg" />
 				{/* {{> svg/svg-divider-top-lr colorclassName="text-white" positionclassName="top-0 start-0 end-0" }} */}
 			</div>
 
@@ -77,23 +81,24 @@ export const BannerImageHotspot = () => {
 						</div>
 						<div className="px-4 py-4 text-center">
 							<div className="d-flex justify-content-center align-items-center mx-auto mb-1">
-								{/*  {{> reviews/review-stars-small width="80%" }} */}{" "}
+								<ReviewStarsSmall width={"80%"} />{" "}
 								<span className="small fw-bolder ms-2 text-muted"> 4.4 (1289)</span>
 							</div>
 							<p className="mb-0 mx-4">Pusher Outdoor Jeans Black Women</p>
 							<p className="lead lh-1 m-0 fw-bolder mt-2 mb-3">$199.87</p>
-							<a
-								href="/product.html"
+							<Link
+								to="/product"
 								className="fw-bolder text-link-border pb-1 fs-6"
 							>
 								Full details <i className="ri-arrow-right-line align-bottom"></i>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div className="position-absolute z-index-50 text-white bottom-0 start-0 end-0">
+				<img src="/svg-divider-bottom-rl.svg" />
 				{/* {{> svg/svg-divider-bottom-rl colorclassName="text-white" positionclassName="bottom-0 start-0 end-0" }} */}
 			</div>
 		</>

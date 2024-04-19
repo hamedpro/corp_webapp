@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { DropdownLinks } from "./DropdownLinks";
+
 export const Menu = () => {
 	return (
 		<ul className="navbar-nav py-lg-2 mx-auto">
@@ -17,7 +20,7 @@ export const Menu = () => {
 					<div className="container">
 						<div className="row g-0">
 							<div className="col-12 col-lg-7">
-								{/* {{> menus/dropdown-links }} */}
+								<DropdownLinks />
 							</div>
 
 							<div className="d-none d-lg-block col-lg-5">
@@ -48,7 +51,7 @@ export const Menu = () => {
 					<div className="container">
 						<div className="row g-0">
 							<div className="col-12 col-lg-7">
-								{/* {{> menus/dropdown-links }} */}
+								<DropdownLinks />
 							</div>
 
 							<div className="d-none d-lg-block col-lg-5">
@@ -100,36 +103,36 @@ export const Menu = () => {
 						</a>
 					</li>
 					<li>
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Category
-						</a>
+						</Link>
 					</li>
 					<li>
-						<a
+						<Link
 							className="dropdown-item"
-							href="/product.html"
+							to="/product"
 						>
 							Product
-						</a>
+						</Link>
 					</li>
 					<li>
-						<a
+						<Link
 							className="dropdown-item"
-							href="/cart.html"
+							to="/cart"
 						>
 							Cart
-						</a>
+						</Link>
 					</li>
 					<li>
-						<a
+						<Link
 							className="dropdown-item"
-							href="/checkout.html"
+							to="/checkout"
 						>
 							Checkout
-						</a>
+						</Link>
 					</li>
 				</ul>
 			</li>

@@ -35,8 +35,12 @@ export const SwiperRelatedOne = () => {
 			<div className="swiper-wrapper mb-5">
 				{category_four && (
 					<>
-						{category_four.entries.shoes.map((i) => (
-							<div className="swiper-slide align-self-stretch bg-transparent h-auto">
+						{category_four.entries.shoes.map((i, index) => (
+							<div
+								className="swiper-slide align-self-stretch bg-transparent h-auto"
+								key={index}
+							>
+								<p>missing partial: listing card five</p>
 								{/* {{> listing-cards/listing-card-five this }} */}
 							</div>
 						))}

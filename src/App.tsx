@@ -19,7 +19,7 @@ function App() {
 				/>
 				<Route
 					element={<Index />}
-					path="/cart"
+					path="/"
 				/>
 				<Route
 					element={<Checkout />}

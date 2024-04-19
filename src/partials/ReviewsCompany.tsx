@@ -1,3 +1,6 @@
+import { ReviewStarsMedium } from "./ReviewStarsMedium";
+import { ReviewStarsSmall } from "./ReviewStarsSmall";
+
 export const ReviewsCompany = () => {
 	return (
 		<>
@@ -15,7 +18,7 @@ export const ReviewsCompany = () => {
 						<small className="text-muted d-block mb-2 fw-bolder">
 							John Doe, London
 						</small>
-						{/* {{} > reviews / review - stars - small} width="75%" }} */}
+						<ReviewStarsSmall width={"70%"} />
 					</div>
 				</div>
 				<div
@@ -33,7 +36,7 @@ export const ReviewsCompany = () => {
 						<small className="text-muted d-block mb-2 fw-bolder">
 							Sally Smith, Dublin
 						</small>
-						{/* {{} > reviews / review - stars - small} width="75%" }} */}
+						<ReviewStarsSmall width={"75%"} />
 					</div>
 				</div>
 				<div
@@ -51,7 +54,7 @@ export const ReviewsCompany = () => {
 						<small className="text-muted d-block mb-2 fw-bolder">
 							John Patrick, London
 						</small>
-						{/* {{} > reviews / review - stars - small} width="75%" }} */}
+						<ReviewStarsSmall width={"75%"} />
 					</div>
 				</div>
 			</div>
@@ -59,7 +62,10 @@ export const ReviewsCompany = () => {
 				<h3 className="mb-4 fw-bold fs-4">See what others have said</h3>
 				<div className="d-flex justify-content-center align-items-center">
 					<span className="fs-3 fw-bold me-4">4.85 / 5</span>
-					{/* {{} > reviews / review - stars - medium} colour="text-dark" width="88%" }} */}
+					<ReviewStarsMedium
+						colour={"text-dark"}
+						width="88%"
+					/>
 				</div>
 				<a
 					href="#"

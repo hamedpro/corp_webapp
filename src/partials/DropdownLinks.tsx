@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const DropdownLinks = () => {
 	return (
 		<div className="row py-lg-5">
@@ -5,76 +7,76 @@ export const DropdownLinks = () => {
 				<h6 className="dropdown-heading">Waterproof Layers</h6>
 				<ul className="list-unstyled">
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Waterproof Jackets
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Insulated Jackets
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Down Jackets
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Softshell Jackets
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Casual Jackets
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Windproof Jackets
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Breathable Jackets
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Cleaning & Proofing
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item dropdown-link-all"
-							href="/category.html"
+							to="/category"
 						>
 							View All
-						</a>
+						</Link>
 					</li>
 				</ul>
 			</div>
@@ -83,76 +85,76 @@ export const DropdownLinks = () => {
 				<h6 className="dropdown-heading">Brands</h6>
 				<ul className="list-unstyled">
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Lifestyle & Casual
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Walking Shoes
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Running Shoes
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Military Boots
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Fabric Walking Boots
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Leather Walking Boots
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Wellies
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item"
-							href="/category.html"
+							to="/category"
 						>
 							Winter Footwear
-						</a>
+						</Link>
 					</li>
 					<li className="dropdown-list-item">
-						<a
+						<Link
 							className="dropdown-item dropdown-link-all"
-							href="/category.html"
+							to="/category"
 						>
 							View All
-						</a>
+						</Link>
 					</li>
 				</ul>
 			</div>

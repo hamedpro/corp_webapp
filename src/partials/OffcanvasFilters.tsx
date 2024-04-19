@@ -1,4 +1,9 @@
 import filters_one from "../data/filters-one.json";
+import { FilterCheckbox } from "./FilterCheckbox";
+import { FilterCheckboxTwo } from "./FilterCheckboxTwo";
+import { FilterColour } from "./FilterColour";
+import { FilterPrice } from "./FilterPrice";
+import { FilterText } from "./FilterText";
 export const OffcanvasFilters = () => {
 	return (
 		<div
@@ -28,9 +33,13 @@ export const OffcanvasFilters = () => {
 								<h2 className="mb-4 fs-6 mt-2 fw-bolder">Jacket Category</h2>
 								<nav>
 									<ul className="list-unstyled list-default-text">
-										{filters_one.categories.map((i) => {
-											return null;
-											//{{> filters/filter-text this }}
+										{filters_one.categories.map((i, index) => {
+											return (
+												<FilterText
+													{...i}
+													key={index}
+												/>
+											);
 										})}
 									</ul>
 								</nav>
@@ -52,7 +61,7 @@ export const OffcanvasFilters = () => {
 								id="filter-modal-price"
 								className="collapse"
 							>
-								{/* {{> filters/filter-price }} */}
+								<FilterPrice />
 							</div>
 						</div>
 
@@ -88,9 +97,15 @@ export const OffcanvasFilters = () => {
 											className="filter-options"
 											data-pixr-simplebar
 										>
-											{filters_one.brands.map((i) => {
-												return null;
-												/* {{> filters/filter-checkbox this type="brands-modal" }} */
+											{filters_one.brands.map((i, index) => {
+												return (
+													<FilterCheckbox
+														{...i}
+														type="brands-modal"
+														index={index}
+														key={index}
+													/>
+												);
 											})}
 										</div>
 									</div>
@@ -126,9 +141,15 @@ export const OffcanvasFilters = () => {
 										</span>
 									</div>
 									<div className="filter-options">
-										{filters_one.type.map((i) => {
-											return null;
-											/*  {{> filters/filter-checkbox this type="type-modal" }} */
+										{filters_one.type.map((i, index) => {
+											return (
+												<FilterCheckbox
+													{...i}
+													index={index}
+													type="type-modal"
+													key={index}
+												/>
+											);
 										})}
 									</div>
 								</div>
@@ -152,9 +173,15 @@ export const OffcanvasFilters = () => {
 									className="collapse"
 								>
 									<div className="filter-options mt-3">
-										{filters_one.sizes.map((i) => {
-											return null;
-											/* {{> filters/filter-checkbox-two this type="sizes-modal" }} */
+										{filters_one.sizes.map((i, index) => {
+											return (
+												<FilterCheckboxTwo
+													{...i}
+													type="sizes-modal"
+													index={index}
+													key={index}
+												/>
+											);
 										})}
 									</div>
 								</div>
@@ -178,9 +205,15 @@ export const OffcanvasFilters = () => {
 									className="collapse"
 								>
 									<div className="filter-options mt-3">
-										{filters_one.colours.map((i) => {
-											return null;
-											/* {{> filters/filter-colour this type="colours-modal" }} */
+										{filters_one.colours.map((i, index) => {
+											return (
+												<FilterColour
+													{...i}
+													index={index}
+													type="colours-modal"
+													key={index}
+												/>
+											);
 										})}
 									</div>
 								</div>

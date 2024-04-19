@@ -6,11 +6,11 @@
             "price": "1129.99",
             "currency": "$",
             "options": "Availble in 4 colours, 10 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-1.jpg",
-            "img-hover": "{{webRoot}}/assets/images/products/product-1b.jpg",
+            "img": "/assets/images/products/product-1.jpg",
+            "img_hover": "/assets/images/products/product-1b.jpg",
             "id": "product-1",
-            "review-width": "90%",
-            "review-count":"4.7 (456)"
+            "review_width": "90%",
+            "review_count": "4.7 (456)"
         },
         {
             "title": "Mens Sherpa Hoodie",
@@ -18,12 +18,12 @@
             "price": "150.00",
             "currency": "$",
             "options": "Availble in 4 colours, 7 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-2.jpg",
-            "sale-price": "599.55",
-            "discount-percentage": "-25%",
-            "review-count":"4.4 (1289)",
+            "img": "/assets/images/products/product-2.jpg",
+            "sale_price": "599.55",
+            "discount_percentage": "-25%",
+            "review_count": "4.4 (1289)",
             "id": "product-2",
-            "review-width": "60%"
+            "review_width": "60%"
         },
         {
             "title": "Womens Essentials Hoodie",
@@ -31,12 +31,12 @@
             "price": "1100.00",
             "currency": "$",
             "options": "Availble in 2 colours, 3 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-3.jpg",
-            "sale-price": "779.55",
-            "discount-percentage": "-65%",
-            "review-count":"4.7 (754)",
+            "img": "/assets/images/products/product-3.jpg",
+            "sale_price": "779.55",
+            "discount_percentage": "-65%",
+            "review_count": "4.7 (754)",
             "id": "product-3",
-            "review-width": "20%"
+            "review_width": "20%"
         },
         {
             "title": "Elevated Lined Hoodie",
@@ -44,10 +44,10 @@
             "price": "1829.99",
             "currency": "$",
             "options": "Availble in 4 colours, 7 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-4.jpg",
+            "img": "/assets/images/products/product-4.jpg",
             "id": "product-4",
-            "review-width": "70%",
-            "review-count":"4.4 (1289)"
+            "review_width": "70%",
+            "review_count": "4.4 (1289)"
         },
         {
             "title": "Mens Slab Hoodie",
@@ -55,11 +55,11 @@
             "price": "29.99",
             "currency": "$",
             "options": "Availble in 4 colours, 7 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-5.jpg",
-            "img-hover": "{{webRoot}}/assets/images/products/product-5b.jpg",
+            "img": "/assets/images/products/product-5.jpg",
+            "img_hover": "/assets/images/products/product-5b.jpg",
             "id": "product-5",
-            "review-width": "84%",
-            "review-count":"4.8 (189)"
+            "review_width": "84%",
+            "review_count": "4.8 (189)"
         },
         {
             "title": "Blocked Striped Hoodie",
@@ -67,10 +67,10 @@
             "price": "1329.99",
             "currency": "$",
             "options": "Availble in 4 colours, 7 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-6.jpg",
+            "img": "/assets/images/products/product-6.jpg",
             "id": "product-6",
-            "review-width": "60%",
-            "review-count":"4.5 (1567)"
+            "review_width": "60%",
+            "review_count": "4.5 (1567)"
         },
         {
             "title": "Womens Classic Hoodie",
@@ -78,12 +78,12 @@
             "price": "150.00",
             "currency": "$",
             "options": "Availble in 4 colours, 7 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-7.jpg",
-            "sale-price": "599.55",
-            "discount-percentage": "-13%",
-            "review-count":"4.4 (1289)",
+            "img": "/assets/images/products/product-7.jpg",
+            "sale_price": "599.55",
+            "discount_percentage": "-13%",
+            "review_count": "4.4 (1289)",
             "id": "product-7",
-            "review-width": "60%"
+            "review_width": "60%"
         },
         {
             "title": "Mens Sherpa Hoodie",
@@ -91,12 +91,12 @@
             "price": "1100.00",
             "currency": "$",
             "options": "Availble in 2 colours, 3 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-8.jpg",
-            "sale-price": "779.55",
-            "discount-percentage": "-33%",
-            "review-count":"4.7 (754)",
+            "img": "/assets/images/products/product-8.jpg",
+            "sale_price": "779.55",
+            "discount_percentage": "-33%",
+            "review_count": "4.7 (754)",
             "id": "product-8",
-            "review-width": "20%"
+            "review_width": "20%"
         }
     ]
 }

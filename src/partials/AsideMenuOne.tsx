@@ -1,4 +1,9 @@
 import filters_one from "../data/filters-one.json";
+import { FilterCheckbox } from "./FilterCheckbox";
+import { FilterCheckboxTwo } from "./FilterCheckboxTwo";
+import { FilterColour } from "./FilterColour";
+import { FilterPrice } from "./FilterPrice";
+import { FilterText } from "./FilterText";
 export const AsideMenuOne = () => {
 	return (
 		<aside>
@@ -7,10 +12,12 @@ export const AsideMenuOne = () => {
 					<h2 className="mb-4 fs-6 mt-2 fw-bolder">Jacket Category</h2>
 					<nav>
 						<ul className="list-unstyled list-default-text">
-							{filters_one.categories.map((i) => {
-								return null;
-								("{{> filters/filter-text this }}");
-							})}
+							{filters_one.categories.map((i, index) => (
+								<FilterText
+									{...i}
+									key={index}
+								/>
+							))}
 						</ul>
 					</nav>
 				</div>
@@ -31,7 +38,7 @@ export const AsideMenuOne = () => {
 					id="filter-price"
 					className="collapse show"
 				>
-					{/* {{> filters/filter-price }} */}
+					<FilterPrice />
 				</div>
 			</div>
 
@@ -67,9 +74,15 @@ export const AsideMenuOne = () => {
 								className="filter-options"
 								data-pixr-simplebar
 							>
-								{filters_one.brands.map((i) => {
-									return null;
-									/* {{> filters/filter-checkbox this type="brand" }} */
+								{filters_one.brands.map((i, index) => {
+									return (
+										<FilterCheckbox
+											key={index}
+											{...i}
+											type="brand"
+											index={index}
+										/>
+									);
 								})}
 							</div>
 						</div>
@@ -105,10 +118,16 @@ export const AsideMenuOne = () => {
 							</span>
 						</div>
 						<div className="filter-options">
-							{filters_one.type.map((i) => {
-								return null;
-								/* {{> filters/filter-checkbox this type="type" }} */
-							})}{" "}
+							{filters_one.type.map((i, index) => {
+								return (
+									<FilterCheckbox
+										{...i}
+										type="brand"
+										index={index}
+										key={index}
+									/>
+								);
+							})}
 						</div>
 					</div>
 				</div>
@@ -131,9 +150,15 @@ export const AsideMenuOne = () => {
 						className="collapse show"
 					>
 						<div className="filter-options mt-3">
-							{filters_one.sizes.map((i) => {
-								return null;
-								/*  {{> filters/filter-checkbox-two this type="sizes" }} */
+							{filters_one.sizes.map((i, index) => {
+								return (
+									<FilterCheckboxTwo
+										{...i}
+										type="sizes"
+										index={index}
+										key={index}
+									/>
+								);
 							})}
 						</div>
 					</div>
@@ -157,9 +182,15 @@ export const AsideMenuOne = () => {
 						className="collapse show"
 					>
 						<div className="filter-options mt-3">
-							{filters_one.colours.map((i) => {
-								return null;
-								/*  {{> filters/filter-colour this type="colours" }} */
+							{filters_one.colours.map((i, index) => {
+								return (
+									<FilterColour
+										{...i}
+										key={index}
+										type="colours"
+										index={index}
+									/>
+								);
 							})}
 						</div>
 					</div>

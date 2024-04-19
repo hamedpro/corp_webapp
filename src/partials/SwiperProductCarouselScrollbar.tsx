@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { ListingCard } from "./ListingCard";
+
 export const SwiperProductCarouselScrollbar = ({ entries }: { entries: any }) => {
 	return (
 		<div
@@ -33,22 +36,25 @@ export const SwiperProductCarouselScrollbar = ({ entries }: { entries: any }) =>
   }'
 		>
 			<div className="swiper-wrapper pb-5 pe-1">
-				{entries.map((i: any) => (
-					<div className="swiper-slide d-flex h-auto">
-						{/* {{> listing-cards/listing-card this }} */}
+				{entries.map((i: any, index: number) => (
+					<div
+						className="swiper-slide d-flex h-auto"
+						key={index}
+					>
+						<ListingCard {...i} />
 					</div>
 				))}
 
 				<div className="swiper-slide d-flex h-auto justify-content-center align-items-center">
-					<a
-						href="/category.html"
+					<Link
+						to="/category"
 						className="d-flex text-decoration-none flex-column justify-content-center align-items-center"
 					>
 						<span className="btn btn-dark btn-icon mb-3">
 							<i className="ri-arrow-right-line ri-lg lh-1"></i>
 						</span>
 						<span className="lead fw-bolder">See All</span>
-					</a>
+					</Link>
 				</div>
 			</div>
 
