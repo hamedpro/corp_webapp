@@ -8,7 +8,7 @@ export const Header = () => {
 		{ label: "کنترل اینترنتی", icon: "bi-sliders2" },
 		{ label: "درباره ما", icon: "pi pi-id-card", url: "/about-us" },
 		{ label: "تماس با ما", icon: "pi pi-phone", url: "/contact-us" },
-		{ label: "دانلود ها", icon: "bi bi-cloud-download", url: "/download-center" },
+		{ label: "دانلود ها", icon: "bi bi-cloud-download", url: "/downloads" },
 		{ label: "تنظیمات", icon: "bi bi-gear-wide-connected", url: "/admin-dashboard" },
 	];
 

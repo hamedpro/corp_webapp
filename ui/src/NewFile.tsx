@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ProgressBar } from "primereact/progressbar";
 import nice_blue_gradient_bg from "./assets/nice-blue-gradient-bg.avif";
 import { custom_axios, deep_copy, roundDownToNDigits } from "../helpers";
+import { downloadables_collection_document } from "./types";
 
 export const NewFile = () => {
 	var [queue, set_queue] = useState<
@@ -53,11 +54,21 @@ export const NewFile = () => {
 				var clone = deep_copy(prev);
 				var pointer = clone.find((queue_item) => queue_item.filename === file.name);
 				if (pointer === undefined) throw new Error();
-				pointer.status = { value: "error", message: "something went wrong" };
+				pointer.status = { value: "error", message: "متاسفانه خطایی رخ داد" };
 				return clone;
 			});
 		}
 		var { asset_id, filename }: { asset_id: number; filename: string } = response;
+		var new_downloadable: Omit<downloadables_collection_document, "id"> = {
+			file_id: asset_id,
+			name: filename,
+			category: "-",
+		};
+		await custom_axios({
+			url: "/collections/downloadables",
+			data: new_downloadable,
+			method: "post",
+		});
 		set_queue((prev) => {
 			var clone = deep_copy(prev);
 			var pointer = clone.find((queue_item) => queue_item.filename === file.name);
@@ -81,10 +92,9 @@ export const NewFile = () => {
 	return (
 		<div
 			style={{
-				height: "100vh",
-				width: "100vw",
+				height: "100%",
+				width: "100%",
 				backgroundImage: `url(${nice_blue_gradient_bg})`,
-				position: "fixed",
 				padding: "0px 12px",
 				overflowY: "auto",
 			}}
@@ -101,7 +111,7 @@ export const NewFile = () => {
 					style={{ margin: "36px 0px 12px 0px", fontSize: "46px", textAlign: "center" }}
 					className="text-neutral-800"
 				>
-					Upload New Assets
+					آپلود فایل جدید
 				</h1>
 				<p
 					className="text-neutral-500"
@@ -112,8 +122,8 @@ export const NewFile = () => {
 						margin: "6px 0px 32px 0px",
 					}}
 				>
-					select as many files as you want and process them in next step! you can use auto
-					proofreading, translation and extract questions and text from those.
+					پس از اتمام بارگذاری فایل میتوانید نام و دسته بندی فایل بارگذاری شده را ویرایش
+					کنید
 				</p>
 				<div
 					style={{
@@ -128,7 +138,6 @@ export const NewFile = () => {
 						type="file"
 						id="file_input"
 						style={{ display: "none" }}
-						accept=".pdf, image/*, audio/*"
 						onChange={(e) => {
 							if (e.target.files !== null) {
 								for (const file of e.target.files) {
@@ -165,7 +174,7 @@ export const NewFile = () => {
 							style={{ padding: "0px", marginTop: "8px", fontSize: "16px" }}
 							className="text-neutral-700"
 						>
-							Drag Files Here
+							بکشید و رها کنید
 						</p>
 						<div
 							style={{
@@ -180,13 +189,13 @@ export const NewFile = () => {
 								style={{ fontSize: "12px" }}
 								className="text-blue-500 hover:text-blue-700 cursor-pointer"
 							>
-								Browse My Computer
+								جستجو در رایانه
 							</span>
 							<span
 								style={{ fontSize: "12px" }}
 								className="text-blue-500 hover:text-blue-700 cursor-pointer"
 							>
-								Accepts pdf image audio
+								رسانه پشتیبانی شده: همه
 							</span>
 						</div>
 					</div>
@@ -232,7 +241,12 @@ export const NewFile = () => {
 										>
 											<i
 												className="pi pi-spin pi-spinner"
-												style={{ marginRight: "6px" }}
+												style={{
+													marginRight: "6px",
+													display: "flex",
+													justifyContent: "center",
+													alignItems: "center",
+												}}
 											/>
 											<span>
 												{queue_item.filename} ({" "}
@@ -261,18 +275,23 @@ export const NewFile = () => {
 												justifyContent: "space-between",
 											}}
 										>
-											<div>
+											<div style={{ display: "flex" }}>
 												<i
 													className="bi bi-check2-all"
-													style={{ marginRight: "6px" }}
+													style={{
+														marginRight: "6px",
+														display: "flex",
+														justifyContent: "center",
+														alignItems: "center",
+													}}
 												/>
 												<span>{queue_item.filename}</span>
 											</div>
 											<Link
 												className="text-blue-500"
-												to={`/data/files/${queue_item.status.asset_id}`}
+												to={`/settings/files/${queue_item.status.asset_id}`}
 											>
-												open file page
+												صفحه اطلاعات
 											</Link>
 										</div>
 									</>
@@ -288,10 +307,15 @@ export const NewFile = () => {
 										>
 											<i
 												className="bi bi-exclamation-octagon"
-												style={{ marginRight: "6px" }}
+												style={{
+													marginRight: "6px",
+													display: "flex",
+													justifyContent: "center",
+													alignItems: "center",
+												}}
 											/>
 											<span>{queue_item.filename}</span>
-											<span>Error: {queue_item.status.message}</span>
+											<span>خطا: {queue_item.status.message}</span>
 										</div>
 									</>
 								)}

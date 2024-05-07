@@ -19,7 +19,7 @@ app.add_middleware(
 
 
 mongodb_client = MongoClient("mongodb://127.0.0.1:27017")
-db = mongodb_client["next-step"]
+db = mongodb_client["corp_webapp"]
 
 
 @app.get("/collections/{collection_name}")

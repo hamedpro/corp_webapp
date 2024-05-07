@@ -11,5 +11,11 @@ body {
 	src: url("./assets/Markazi_Text/MarkaziText-VariableFont_wght.ttf");
 }
 * {
+	text-align: right;
 	font-family: "markazi_text";
+}
+i {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
