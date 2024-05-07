@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import config from "../data/config.json";
-export const OffcanvasCart = () => {
+export const OffcanvasCart = ({ visible, onHide }: { visible: boolean; onHide: () => void }) => {
 	return (
 		<div
-			className="offcanvas offcanvas-end d-none"
+			className="offcanvas offcanvas-end"
 			tabIndex={-1}
 			id="offcanvasCart"
 		>

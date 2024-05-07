@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Pagination = () => {
 	return (
 		<nav
@@ -6,48 +8,48 @@ export const Pagination = () => {
 		>
 			<ul className="pagination">
 				<li className="page-item">
-					<a
+					<Link
 						className="page-link"
-						href="#"
+						to="#"
 					>
 						<i className="ri-arrow-left-line align-bottom"></i> Prev
-					</a>
+					</Link>
 				</li>
 			</ul>
 			<ul className="pagination">
 				<li className="page-item active mx-1">
-					<a
+					<Link
 						className="page-link"
-						href="#"
+						to="#"
 					>
 						1
-					</a>
+					</Link>
 				</li>
 				<li className="page-item mx-1">
-					<a
+					<Link
 						className="page-link"
-						href="#"
+						to="#"
 					>
 						2
-					</a>
+					</Link>
 				</li>
 				<li className="page-item mx-1">
-					<a
+					<Link
 						className="page-link"
-						href="#"
+						to="#"
 					>
 						3
-					</a>
+					</Link>
 				</li>
 			</ul>
 			<ul className="pagination">
 				<li className="page-item">
-					<a
+					<Link
 						className="page-link"
-						href="#"
+						to="#"
 					>
 						Next <i className="ri-arrow-right-line align-bottom"></i>
-					</a>
+					</Link>
 				</li>
 			</ul>
 		</nav>

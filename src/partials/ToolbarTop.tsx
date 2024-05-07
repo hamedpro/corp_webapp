@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const ToolbarTop = () => {
 	return (
 		<div className="mb-4 d-md-flex justify-content-between align-items-center">
@@ -34,28 +36,28 @@ export const ToolbarTop = () => {
 					</p>
 					<ul className="dropdown-menu">
 						<li>
-							<a
+							<Link
 								className="dropdown-item fs-xs fw-bold text-uppercase text-muted-hover mb-2"
-								href="#"
+								to="#"
 							>
 								Price: Hi Low
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a
+							<Link
 								className="dropdown-item fs-xs fw-bold text-uppercase text-muted-hover mb-2"
-								href="#"
+								to="#"
 							>
 								Price: Low Hi
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a
+							<Link
 								className="dropdown-item fs-xs fw-bold text-uppercase text-muted-hover mb-2"
-								href="#"
+								to="#"
 							>
 								Name
-							</a>
+							</Link>
 						</li>
 					</ul>
 				</div>

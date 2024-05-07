@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import filters_one from "../data/filters-one.json";
 import { FilterCheckbox } from "./FilterCheckbox";
 import { FilterCheckboxTwo } from "./FilterCheckboxTwo";
@@ -24,16 +25,16 @@ export const AsideMenuOne = () => {
 			)}
 
 			<div className="py-4 widget-filter widget-filter-price border-top">
-				<a
+				<Link
 					className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 					data-bs-toggle="collapse"
-					href="#filter-price"
+					to="#filter-price"
 					role="button"
 					aria-expanded="true"
 					aria-controls="filter-price"
 				>
 					Price
-				</a>
+				</Link>
 				<div
 					id="filter-price"
 					className="collapse show"
@@ -44,16 +45,16 @@ export const AsideMenuOne = () => {
 
 			{filters_one.brands && (
 				<div className="py-4 widget-filter border-top">
-					<a
+					<Link
 						className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 						data-bs-toggle="collapse"
-						href="#filter-brands"
+						to="#filter-brands"
 						role="button"
 						aria-expanded="true"
 						aria-controls="filter-brands"
 					>
 						Brands
-					</a>
+					</Link>
 					<div
 						id="filter-brands"
 						className="collapse show"
@@ -92,16 +93,16 @@ export const AsideMenuOne = () => {
 
 			{filters_one.type && (
 				<div className="py-4 widget-filter border-top">
-					<a
+					<Link
 						className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 						data-bs-toggle="collapse"
-						href="#filter-type"
+						to="#filter-type"
 						role="button"
 						aria-expanded="true"
 						aria-controls="filter-type"
 					>
 						Type
-					</a>
+					</Link>
 					<div
 						id="filter-type"
 						className="collapse show"
@@ -135,16 +136,16 @@ export const AsideMenuOne = () => {
 
 			{filters_one.sizes && (
 				<div className="py-4 widget-filter border-top">
-					<a
+					<Link
 						className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 						data-bs-toggle="collapse"
-						href="#filter-sizes"
+						to="#filter-sizes"
 						role="button"
 						aria-expanded="true"
 						aria-controls="filter-sizes"
 					>
 						Sizes
-					</a>
+					</Link>
 					<div
 						id="filter-sizes"
 						className="collapse show"
@@ -167,16 +168,16 @@ export const AsideMenuOne = () => {
 
 			{filters_one.colours && (
 				<div className="py-4 widget-filter border-top">
-					<a
+					<Link
 						className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 						data-bs-toggle="collapse"
-						href="#filter-colour"
+						to="#filter-colour"
 						role="button"
 						aria-expanded="true"
 						aria-controls="filter-colour"
 					>
 						Colour
-					</a>
+					</Link>
 					<div
 						id="filter-colour"
 						className="collapse show"

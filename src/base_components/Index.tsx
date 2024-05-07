@@ -1,9 +1,6 @@
 import { Navbar } from "../partials/Navbar";
 import config from "../data/config.json";
-import { CartItems } from "../partials/CartItems";
-import { CartSummary } from "../partials/CartSummary";
 import { Footer } from "../partials/Footer";
-import { Offcanvas } from "../partials/Offcanvas";
 import { SearchOverlay } from "../partials/SearchOverlay";
 import { BreadcrumbsTwo } from "../partials/BreadcrumbsTwo";
 import { AsideMenuOne } from "../partials/AsideMenuOne";
@@ -18,12 +15,13 @@ import { CheckoutShippingMethod } from "../partials/CheckoutShippingMethod";
 import { CheckoutPayment } from "../partials/CheckoutPayment";
 import { CheckoutSummary } from "../partials/CheckoutSummary";
 import { SwiperHeroSlideshow } from "../partials/SwiperHeroSlideshow";
-import { SwiperProductCarouselScrollbar } from "../partials/SwiperProductCarouselScrollbar";
 import { BannerImageHotspot } from "../partials/BannerImageHotspot";
 import { SwiperLinkedCarouselSmall } from "../partials/SwiperLinkedCarouselSmall";
 import { SwiperLinkedCarouselLarge } from "../partials/SwiperLinkedCarouselLarge";
 import { BannerSaleExtended } from "../partials/BannerSaleExtended";
 import { ReviewsCompany } from "../partials/ReviewsCompany";
+import { SwiperProductCarouselScrollbar } from "../partials/SwiperProductCarouselScrollbar";
+import { Link } from "react-router-dom";
 export const Index = () => {
 	return (
 		<>
@@ -44,31 +42,31 @@ export const Index = () => {
 									data-aos="fade-up"
 									data-aos-delay="1000"
 								>
-									Where will your next adventure take you?
+									شرکت پیشرو کنترل وطن
 								</h1>
 								<div
 									data-aos="fade-in"
 									data-aos-delay="2000"
 								>
 									<div className="d-md-flex justify-content-center mt-4 mb-3 my-md-5">
-										<a
-											href="/category.html"
+										<Link
+											to="/category"
 											className="btn btn-skew-left btn-orange btn-orange-chunky text-white mx-1 w-100 w-md-auto mb-2 mb-md-0"
 										>
 											<span>
-												Shop Menswear{" "}
-												<i className="ri-arrow-right-line align-middle fw-bold"></i>
+												<i className="ri-arrow-left-line align-middle fw-bold"></i>
+												مشاهده محصولات
 											</span>
-										</a>
-										<a
-											href="/category.html"
+										</Link>
+										<Link
+											to="/category"
 											className="btn btn-skew-left btn-orange btn-orange-chunky text-white mx-1 w-100 w-md-auto mb-2 mb-md-0"
 										>
 											<span>
-												Shop Womenswear{" "}
-												<i className="ri-arrow-right-line align-middle fw-bold"></i>
+												<i className="ri-arrow-left-line align-middle fw-bold"></i>
+												درباره شرکت
 											</span>
-										</a>
+										</Link>
 									</div>
 									<i
 										className="ri-mouse-line d-block text-center animation-float ri-2x transition-all opacity-50-hover text-white"
@@ -94,9 +92,9 @@ export const Index = () => {
 						<div className="row gx-3 align-items-center">
 							<div className="col-12 justify-content-center justify-content-md-between align-items-center d-flex flex-wrap">
 								<div className="me-2 f-w-20 m-4 ms-md-0 mt-md-0 mb-md-0">
-									<a
+									<Link
 										className="d-block"
-										href="/category.html"
+										to="/category"
 										data-bs-toggle="tooltip"
 										data-bs-placement="top"
 										title="Shop Kathmandu"
@@ -106,12 +104,12 @@ export const Index = () => {
 											src="/assets/images/logos/logo-1.svg"
 											alt={`${config.defaultImgAlt}`}
 										/>
-									</a>
+									</Link>
 								</div>
 								<div className="me-2 f-w-20 m-4 ms-md-0 mt-md-0 mb-md-0">
-									<a
+									<Link
 										className="d-block"
-										href="/category.html"
+										to="/category"
 										data-bs-toggle="tooltip"
 										data-bs-placement="top"
 										title="Shop Billabong"
@@ -121,12 +119,12 @@ export const Index = () => {
 											src="/assets/images/logos/logo-2.svg"
 											alt={`${config.defaultImgAlt}`}
 										/>
-									</a>
+									</Link>
 								</div>
 								<div className="me-2 f-w-20 m-4 ms-md-0 mt-md-0 mb-md-0">
-									<a
+									<Link
 										className="d-block"
-										href="/category.html"
+										to="/category"
 										data-bs-toggle="tooltip"
 										data-bs-placement="top"
 										title="Shop Oakley"
@@ -136,12 +134,12 @@ export const Index = () => {
 											src="/assets/images/logos/logo-9.svg"
 											alt={`${config.defaultImgAlt}`}
 										/>
-									</a>
+									</Link>
 								</div>
 								<div className="me-2 f-w-20 m-4 ms-md-0 mt-md-0 mb-md-0">
-									<a
+									<Link
 										className="d-block"
-										href="/category.html"
+										to="/category"
 										data-bs-toggle="tooltip"
 										data-bs-placement="top"
 										title="Shop Patagonia"
@@ -151,12 +149,12 @@ export const Index = () => {
 											src="/assets/images/logos/logo-4.svg"
 											alt={`${config.defaultImgAlt}`}
 										/>
-									</a>
+									</Link>
 								</div>
 								<div className="me-2 f-w-20 m-4 ms-md-0 mt-md-0 mb-md-0">
-									<a
+									<Link
 										className="d-block"
-										href="/category.html"
+										to="/category"
 										data-bs-toggle="tooltip"
 										data-bs-placement="top"
 										title="Shop North Face"
@@ -166,12 +164,12 @@ export const Index = () => {
 											src="/assets/images/logos/logo-5.svg"
 											alt={`${config.defaultImgAlt}`}
 										/>
-									</a>
+									</Link>
 								</div>
 								<div className="me-2 f-w-20 m-4 ms-md-0 mt-md-0 mb-md-0">
-									<a
+									<Link
 										className="d-block"
-										href="/category.html"
+										to="/category"
 										data-bs-toggle="tooltip"
 										data-bs-placement="top"
 										title="Shop Salomon"
@@ -181,15 +179,15 @@ export const Index = () => {
 											src="/assets/images/logos/logo-7.svg"
 											alt={`${config.defaultImgAlt}`}
 										/>
-									</a>
+									</Link>
 								</div>
-								<a
-									href="/category.html"
+								<Link
+									to="/category"
 									className="btn btn-link fw-bolder"
 								>
 									Explore All Brands{" "}
 									<i className="ri-arrow-right-line align-bottom fw-bold"></i>
-								</a>
+								</Link>
 							</div>
 						</div>
 					</div>
@@ -284,8 +282,6 @@ export const Index = () => {
 				configClassList={config.classes.footer}
 				classList=""
 			/>
-			<Offcanvas />
-			<SearchOverlay />
 		</>
 	);
 };

@@ -1,14 +1,21 @@
+import { Link } from "react-router-dom";
 import { ListingCard } from "./ListingCard";
 
-export const SearchOverlay = () => {
+export const SearchOverlay = ({ visible, onHide }: { visible: boolean; onHide: () => void }) => {
 	return (
-		<section className="search-overlay">
+		<section
+			className="search-overlay"
+			style={{ display: visible ? "block" : "none", opacity: "1", zIndex: 50 }}
+		>
 			<div className="container search-container">
 				<div className="py-5">
 					<div className="d-flex justify-content-between align-items-center mb-4">
-						<p className="lead lh-1 m-0 fw-bold">What are you looking for?</p>
-						<button className="btn btn-light btn-close-search">
-							<i className="ri-close-circle-line align-bottom"></i> Close search
+						<p className="lead lh-1 m-0 fw-bold">در جستجوی چه چیزی هستید؟</p>
+						<button
+							className="btn btn-light btn-close-search"
+							onClick={onHide}
+						>
+							<i className="ri-close-circle-line align-bottom"></i> بازگشت
 						</button>
 					</div>
 					<form>
@@ -16,7 +23,7 @@ export const SearchOverlay = () => {
 							type="text"
 							className="form-control"
 							id="searchForm"
-							placeholder="Search by product or category name..."
+							placeholder="جستجو بین محصولات و دانلود ها..."
 						/>
 					</form>
 					<div className="my-5">
@@ -50,12 +57,12 @@ export const SearchOverlay = () => {
 					<div className="bg-dark p-4 text-white">
 						<p className="lead m-0">
 							Didn't find what you are looking for?{" "}
-							<a
+							<Link
 								className="transition-all opacity-50-hover text-white text-link-border border-white pb-1 border-2"
-								href="#"
+								to="#"
 							>
 								Send us a message.
-							</a>
+							</Link>
 						</p>
 					</div>
 				</div>

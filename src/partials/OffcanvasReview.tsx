@@ -1,7 +1,7 @@
 export const OffcanvasReview = () => {
 	return (
 		<div
-			className="offcanvas offcanvas-end d-none"
+			className="offcanvas offcanvas-end"
 			tabIndex={-1}
 			id="offcanvasReview"
 		>

@@ -18,81 +18,30 @@ export const BannerImageHotspot = () => {
 				}}
 			>
 				<div
-					className="hotspot d-none d-lg-block"
-					data-options='{
-        "placement": {
-            "left": "68%",
-            "bottom": "40%"
-        },
-        "alwaysVisible": true,
-        "alwaysAnimate": true,
-        "contentTarget": "#hotspot-one",
-        "trigger": "mouseenter"
-    }'
-				></div>
-				<div
-					className="hotspot d-none d-lg-block"
-					data-options='{
-        "placement": {
-            "left": "53%",
-            "top": "40%"
-        },
-        "alwaysVisible": true,
-        "alwaysAnimate": true,
-        "contentTarget": "#hotspot-one"
-    }'
-				></div>
-				<div
 					className="container py-lg-8 position-relative z-index-10 d-flex align-items-center"
 					data-aos="fade-left"
+					style={{ justifyContent: "end" }}
 				>
-					<div className="py-8 d-flex justify-content-end align-items-start align-items-lg-end flex-column col-lg-4 text-lg-end">
+					<div
+						className="py-8 d-flex justify-content-end align-items-start align-items-lg-end flex-column col-lg-4 text-lg-end"
+						style={{ direction: "rtl", alignItems: "start" }}
+					>
 						<p className="small fw-bolder text-uppercase tracking-wider mb-2 text-muted">
-							Extreme Performance
+							درباره ما
 						</p>
-						<h2 className="display-5 fw-bold mb-3">The North Face</h2>
+						<h2 className="display-5 fw-bold mb-3">شرکت پیشرو کنترل وطن</h2>
 						<p className="lead d-none d-lg-block">
-							Be ready all year round with our selection of North Face outdoor jackets
-							— perfect for any time of the year and year round. Choose from a variety
-							of colour shades and styles to warm you up in cold conditions.
+							"با افتخار معرفی می‌کنیم: پیشرو کنترل وطن، همراهی شما در جهت هوشمندی و
+							ارتقاء کیفیت زندگی. از چیلرهای پیشرفته تا وسایل هوشمند برقی، ما به شما
+							فرصتی بی‌نظیر برای تجربه‌ی تازگی، کارایی و صرفه‌جویی ارائه می‌دهیم. با
+							پیشرو کنترل وطن، به دنیایی پر از نوآوری، راحتی و اطمینان خوش آمدید."
 						</p>
-						<a
+						<Link
 							className="text-decoration-none fw-bolder"
-							href="#"
+							to="#"
 						>
-							Shop The North Face &rarr;
-						</a>
-					</div>
-				</div>
-
-				<div
-					id="hotspot-one"
-					className="d-none"
-				>
-					<div className="m-n2 rounded overflow-hidden">
-						<div className="mb-1 bg-light d-flex justify-content-center">
-							<div className="f-w-48 px-3 pt-3">
-								<img
-									className="img-fluid"
-									src="/assets/images/products/product-3.jpg"
-									alt={config.defaultImgAlt}
-								/>
-							</div>
-						</div>
-						<div className="px-4 py-4 text-center">
-							<div className="d-flex justify-content-center align-items-center mx-auto mb-1">
-								<ReviewStarsSmall width={"80%"} />{" "}
-								<span className="small fw-bolder ms-2 text-muted"> 4.4 (1289)</span>
-							</div>
-							<p className="mb-0 mx-4">Pusher Outdoor Jeans Black Women</p>
-							<p className="lead lh-1 m-0 fw-bolder mt-2 mb-3">$199.87</p>
-							<Link
-								to="/product"
-								className="fw-bolder text-link-border pb-1 fs-6"
-							>
-								Full details <i className="ri-arrow-right-line align-bottom"></i>
-							</Link>
-						</div>
+							مشاهده محصولات &larr;
+						</Link>
 					</div>
 				</div>
 			</div>

@@ -1,29 +1,8 @@
 import { Navbar } from "../partials/Navbar";
 import config from "../data/config.json";
-import { CartItems } from "../partials/CartItems";
-import { CartSummary } from "../partials/CartSummary";
 import { Footer } from "../partials/Footer";
-import { Offcanvas } from "../partials/Offcanvas";
-import { SearchOverlay } from "../partials/SearchOverlay";
-import { BreadcrumbsTwo } from "../partials/BreadcrumbsTwo";
-import { AsideMenuOne } from "../partials/AsideMenuOne";
-import { ToolbarTop } from "../partials/ToolbarTop";
 import category_products from "../data/category-products.json";
-import { ListingCard } from "../partials/ListingCard";
-import { Pagination } from "../partials/Pagination";
-import { CheckoutContact } from "../partials/CheckoutContact";
-import { CheckoutShipping } from "../partials/CheckoutShipping";
-import { CheckoutBilling } from "../partials/CheckoutBilling";
-import { CheckoutShippingMethod } from "../partials/CheckoutShippingMethod";
-import { CheckoutPayment } from "../partials/CheckoutPayment";
-import { CheckoutSummary } from "../partials/CheckoutSummary";
-import { SwiperHeroSlideshow } from "../partials/SwiperHeroSlideshow";
 import { SwiperProductCarouselScrollbar } from "../partials/SwiperProductCarouselScrollbar";
-import { BannerImageHotspot } from "../partials/BannerImageHotspot";
-import { SwiperLinkedCarouselSmall } from "../partials/SwiperLinkedCarouselSmall";
-import { SwiperLinkedCarouselLarge } from "../partials/SwiperLinkedCarouselLarge";
-import { BannerSaleExtended } from "../partials/BannerSaleExtended";
-import { ReviewsCompany } from "../partials/ReviewsCompany";
 import { BreadcrumbsOne } from "../partials/BreadcrumbsOne";
 import { ImagesSlideshowVertical } from "../partials/ImagesSlideshowVertical";
 import { InfoOne } from "../partials/InfoOne";
@@ -71,8 +50,6 @@ export const Product = () => {
 				configClassList={config.classes.footer}
 				classList=""
 			/>
-			<Offcanvas />
-			<SearchOverlay />
 		</>
 	);
 };

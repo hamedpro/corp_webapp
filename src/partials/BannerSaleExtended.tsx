@@ -59,13 +59,13 @@ export const BannerSaleExtended: React.FC = () => {
 							<p className="lead fw-bolder">
 								Discount applied to products at checkout.
 							</p>
-							<a
+							<Link
 								className="text-white fw-bolder text-link-border border-2 border-white align-self-start pb-1 transition-all opacity-50-hover"
-								href="#"
+								to="#"
 							>
 								Exclusions apply. Learn more{" "}
 								<i className="ri-arrow-right-line align-bottom"></i>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>

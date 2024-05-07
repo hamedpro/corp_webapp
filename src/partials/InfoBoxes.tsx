@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const InfoBoxes = () => {
 	return (
 		<div className="row">
@@ -10,12 +12,12 @@ export const InfoBoxes = () => {
 					<div className="ms-lg-4">
 						<p className="mb-1 lh-1 fw-bold">Customer Services</p>
 						<small className="text-muted">
-							<a
+							<Link
 								className="text-muted"
-								href="#"
+								to="#"
 							>
 								Click here
-							</a>{" "}
+							</Link>{" "}
 							to chat with our support team
 						</small>
 					</div>

@@ -3,7 +3,6 @@ import config from "../data/config.json";
 import { CartItems } from "../partials/CartItems";
 import { CartSummary } from "../partials/CartSummary";
 import { Footer } from "../partials/Footer";
-import { Offcanvas } from "../partials/Offcanvas";
 import { SearchOverlay } from "../partials/SearchOverlay";
 import { BreadcrumbsTwo } from "../partials/BreadcrumbsTwo";
 import { AsideMenuOne } from "../partials/AsideMenuOne";
@@ -12,6 +11,7 @@ import category_products from "../data/category-products.json";
 import { ListingCard } from "../partials/ListingCard";
 import { Pagination } from "../partials/Pagination";
 import { Fragment } from "react/jsx-runtime";
+import { Link } from "react-router-dom";
 export const Category = () => {
 	return (
 		<>
@@ -81,12 +81,12 @@ export const Category = () => {
 													The perfect grab-and-go layer for every hiking
 													adventure
 												</p>
-												<a
-													href="#"
+												<Link
+													to="#"
 													className="text-link-border border-2 pb-1 fw-bolder"
 												>
 													Shop Now
-												</a>
+												</Link>
 											</div>
 										</div>
 									</div>
@@ -106,48 +106,48 @@ export const Category = () => {
 							<div className="border-top mt-5 pt-5">
 								<p className="lead fw-bolder">Related Categories</p>
 								<div className="d-flex flex-wrap justify-content-start align-items-center">
-									<a
+									<Link
 										className="btn btn-sm btn-outline-dark rounded-pill me-2 mb-2 mb-md-0 text-white-hover"
-										href="#"
+										to="#"
 									>
 										Hiking Shoes
-									</a>
-									<a
+									</Link>
+									<Link
 										className="btn btn-sm btn-outline-dark rounded-pill me-2 mb-2 mb-md-0 text-white-hover"
-										href="#"
+										to="#"
 									>
 										Waterproof Trousers
-									</a>
-									<a
+									</Link>
+									<Link
 										className="btn btn-sm btn-outline-dark rounded-pill me-2 mb-2 mb-md-0 text-white-hover"
-										href="#"
+										to="#"
 									>
 										Hiking Shirts
-									</a>
-									<a
+									</Link>
+									<Link
 										className="btn btn-sm btn-outline-dark rounded-pill me-2 mb-2 mb-md-0 text-white-hover"
-										href="#"
+										to="#"
 									>
 										Jackets
-									</a>
-									<a
+									</Link>
+									<Link
 										className="btn btn-sm btn-outline-dark rounded-pill me-2 mb-2 mb-md-0 text-white-hover"
-										href="#"
+										to="#"
 									>
 										Gilets
-									</a>
-									<a
+									</Link>
+									<Link
 										className="btn btn-sm btn-outline-dark rounded-pill me-2 mb-2 mb-md-0 text-white-hover"
-										href="#"
+										to="#"
 									>
 										Hiking Socks
-									</a>
-									<a
+									</Link>
+									<Link
 										className="btn btn-sm btn-outline-dark rounded-pill me-2 mb-2 mb-md-0 text-white-hover"
-										href="#"
+										to="#"
 									>
 										Rugsacks
-									</a>
+									</Link>
 								</div>
 							</div>
 						</div>
@@ -159,8 +159,6 @@ export const Category = () => {
 				configClassList={config.classes.footer}
 				classList=""
 			/>
-			<Offcanvas />
-			<SearchOverlay />
 		</>
 	);
 };

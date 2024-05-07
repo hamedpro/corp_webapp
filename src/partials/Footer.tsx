@@ -17,36 +17,36 @@ export const Footer = ({
 					<p className="lead fw-bolder mb-0 lh-1">Find us online</p>
 					<ul className="list-unstyled d-flex justify-content-start align-items-center mb-0 ms-3 lh-1">
 						<li className="mx-1 mb-0 lh-1">
-							<a
+							<Link
 								className="text-muted text-decoration-none opacity-75-hover transition-all lh-1"
-								href="#"
+								to="#"
 							>
 								<i className="ri-instagram-fill ri-xl lh-1"></i>
-							</a>
+							</Link>
 						</li>
 						<li className="mx-1 mb-0 lh-1">
-							<a
+							<Link
 								className="text-muted text-decoration-none opacity-75-hover transition-all lh-1"
-								href="#"
+								to="#"
 							>
 								<i className="ri-facebook-fill ri-xl lh-1"></i>
-							</a>
+							</Link>
 						</li>
 						<li className="mx-1 mb-0 lh-1">
-							<a
+							<Link
 								className="text-muted text-decoration-none opacity-75-hover transition-all lh-1"
-								href="#"
+								to="#"
 							>
 								<i className="ri-twitter-fill ri-xl lh-1"></i>
-							</a>
+							</Link>
 						</li>
 						<li className="mx-1 mb-0 lh-1">
-							<a
+							<Link
 								className="text-muted text-decoration-none opacity-75-hover transition-all lh-1"
-								href="#"
+								to="#"
 							>
 								<i className="ri-snapchat-fill ri-xl lh-1"></i>
-							</a>
+							</Link>
 						</li>
 					</ul>
 				</div>
@@ -60,12 +60,12 @@ export const Footer = ({
 						Follow us on Instragram{" "}
 						<span className="text-lowercase">@{config.templateName}</span>
 					</p>
-					<a
+					<Link
 						className="text-link-border fw-bolder m-0 text-white"
-						href="#"
+						to="#"
 					>
 						More On Instagram <i className="ri-external-link-line align-bottom"></i>
-					</a>
+					</Link>
 				</div>
 			</div>
 
@@ -121,36 +121,36 @@ export const Footer = ({
 							<h6 className="mb-4 fw-bolder fs-6">Company</h6>
 							<ul className="list-unstyled">
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="#"
+										to="#"
 									>
 										About Us
-									</a>
+									</Link>
 								</li>
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="#"
+										to="#"
 									>
 										Our Blog
-									</a>
+									</Link>
 								</li>
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="#"
+										to="#"
 									>
 										FAQs
-									</a>
+									</Link>
 								</li>
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="#"
+										to="#"
 									>
 										Contact
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</nav>
@@ -159,36 +159,36 @@ export const Footer = ({
 							<h6 className="mb-4 fw-bolder fs-6">Navigation</h6>
 							<ul className="list-unstyled">
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="#"
+										to="#"
 									>
 										Register
-									</a>
+									</Link>
 								</li>
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="#"
+										to="#"
 									>
 										Cart
-									</a>
+									</Link>
 								</li>
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="#"
+										to="#"
 									>
 										Checkout
-									</a>
+									</Link>
 								</li>
 								<li className="mb-2">
-									<a
+									<Link
 										className="text-decoration-none text-white opacity-75 opacity-25-hover transition-all"
-										href="#"
+										to="#"
 									>
 										Account
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</nav>

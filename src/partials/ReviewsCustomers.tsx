@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ReviewStarsSmall } from "./ReviewStarsSmall";
 
 export const ReviewsCustomers = () => {
@@ -72,8 +73,8 @@ export const ReviewsCustomers = () => {
 							Yes, I would recommend the product
 						</small>
 						<div className="d-block d-md-flex mt-3 justify-content-between align-items-center">
-							<a
-								href="#"
+							<Link
+								to="#"
 								className="btn btn-link text-muted p-0 text-decoration-none w-100 w-md-auto fw-bolder text-start"
 								title=""
 							>
@@ -83,16 +84,16 @@ export const ReviewsCustomers = () => {
 									<i className="ri-thumb-down-line ms-2"></i>
 									23
 								</small>
-							</a>
-							<a
-								href="#"
+							</Link>
+							<Link
+								to="#"
 								className="btn btn-link text-muted p-0 text-decoration-none w-100 w-md-auto fw-bolder text-start mt-3 mt-md-0"
 								title=""
 							>
 								<small>
 									Flag as inappropriate <i className="ri-flag-2-line ms-2"></i>
 								</small>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -124,8 +125,8 @@ export const ReviewsCustomers = () => {
 							Yes, I would recommend the product
 						</small>
 						<div className="d-block d-md-flex mt-3 justify-content-between align-items-center">
-							<a
-								href="#"
+							<Link
+								to="#"
 								className="btn btn-link text-muted p-0 text-decoration-none w-100 w-md-auto fw-bolder text-start"
 								title=""
 							>
@@ -135,16 +136,16 @@ export const ReviewsCustomers = () => {
 									<i className="ri-thumb-down-line ms-2"></i>
 									23
 								</small>
-							</a>
-							<a
-								href="#"
+							</Link>
+							<Link
+								to="#"
 								className="btn btn-link text-muted p-0 text-decoration-none w-100 w-md-auto fw-bolder text-start mt-3 mt-md-0"
 								title=""
 							>
 								<small>
 									Flag as inappropriate <i className="ri-flag-2-line ms-2"></i>
 								</small>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -178,8 +179,8 @@ export const ReviewsCustomers = () => {
 							Yes, I would recommend the product
 						</small>
 						<div className="d-block d-md-flex mt-3 justify-content-between align-items-center">
-							<a
-								href="#"
+							<Link
+								to="#"
 								className="btn btn-link text-muted p-0 text-decoration-none w-100 w-md-auto fw-bolder text-start"
 								title=""
 							>
@@ -189,28 +190,28 @@ export const ReviewsCustomers = () => {
 									<i className="ri-thumb-down-line ms-2"></i>
 									23
 								</small>
-							</a>
-							<a
-								href="#"
+							</Link>
+							<Link
+								to="#"
 								className="btn btn-link text-muted p-0 text-decoration-none w-100 w-md-auto fw-bolder text-start mt-3 mt-md-0"
 								title=""
 							>
 								<small>
 									Flag as inappropriate <i className="ri-flag-2-line ms-2"></i>
 								</small>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
 			</article>
 
-			<a
-				href="#"
+			<Link
+				to="#"
 				className="btn btn-dark d-table mx-auto mt-6 mb-3 hover-lift-sm hover-boxshadow"
 				title=""
 			>
 				Load More Reviews
-			</a>
+			</Link>
 			<p className="text-muted text-center fw-bolder">Showing 3 of 1234</p>
 		</section>
 	);

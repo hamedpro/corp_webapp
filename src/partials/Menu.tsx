@@ -2,32 +2,97 @@ import { Link } from "react-router-dom";
 import { DropdownLinks } from "./DropdownLinks";
 
 export const Menu = () => {
+	var products_dropdown_model = [
+		{
+			title: "آخرین محصولات",
+			items: [
+				"لپ تاپ گیمینگ",
+				"هدفون بی‌سیم",
+				"کفش ورزشی",
+				"ساعت هوشمند",
+				"کتابخانه چوبی",
+				"صندلی اداری",
+				"ماشین اسباب‌بازی",
+				"پاوربانک قابل حمل",
+				"کیف دستی چرم",
+				"تبلت رنگی",
+			],
+		},
+		{
+			title: "پرفروش ترین ها",
+			items: [
+				"لپ تاپ گیمینگ",
+				"هدفون بی‌سیم",
+				"کفش ورزشی",
+				"ساعت هوشمند",
+				"کتابخانه چوبی",
+				"صندلی اداری",
+				"ماشین اسباب‌بازی",
+				"پاوربانک قابل حمل",
+				"کیف دستی چرم",
+				"تبلت رنگی",
+			],
+		},
+	];
+	var downloads_dropdown_model = [
+		{
+			title: "دسته بندی ها",
+			items: [
+				"فایل های چیلر ۲۲",
+				"راهنمای استفاده از ابزار ۲",
+				"عکس برد pcb",
+				"عکس مدار جدید",
+				"برنامه پریز هوشمند",
+				"اسکریپت ۶۸",
+				"عکس برد pcb",
+				"عکس مدار جدید",
+				"برنامه پریز هوشمند",
+				"اسکریپت ۶۸",
+			],
+		},
+		{
+			title: "آخرین فایل ها",
+			items: [
+				"آهنگ شادمهر عقیلی - دلم گرفته",
+				"آهنگ محسن چاوشی - دلبر",
+				"آهنگ بنیامین بهادری - دلبری",
+				"آهنگ مازیار فلاحی - بی تو برگشتم",
+				"آهنگ امیر تتلو - بی تو بی من",
+				"آهنگ محمدرضا گلزار - بی تو بی من",
+				"آهنگ محسن یگانه - بی تو بی من",
+				"آهنگ محسن چاوشی - بی تو بی من",
+				"آهنگ محسن یگانه - بی تو بی من",
+				"آهنگ محسن چاوشی - بی تو بی من",
+			],
+		},
+	];
 	return (
 		<ul className="navbar-nav py-lg-2 mx-auto">
 			<li className="nav-item me-lg-4 dropdown position-static">
-				<a
+				<Link
 					className="nav-link fw-bolder dropdown-toggle py-lg-4"
-					href="#"
+					to="#"
 					role="button"
 					data-bs-toggle="dropdown"
 					aria-haspopup="true"
 					aria-expanded="false"
 				>
-					Menswear
-				</a>
+					محصولات
+				</Link>
 
 				<div className="dropdown-menu dropdown-megamenu">
 					<div className="container">
 						<div className="row g-0">
 							<div className="col-12 col-lg-7">
-								<DropdownLinks />
+								<DropdownLinks model={products_dropdown_model} />
 							</div>
 
 							<div className="d-none d-lg-block col-lg-5">
 								<div
 									className="vw-50 h-100 bg-img-cover bg-pos-center-center position-absolute"
 									style={{
-										backgroundImage: "url(/assets/images/banners/banner-2.jpg)",
+										backgroundImage:
+											"url(/assets/images/banners/oriental-tiles.png)",
 									}}
 								></div>
 							</div>
@@ -36,22 +101,22 @@ export const Menu = () => {
 				</div>
 			</li>
 			<li className="nav-item me-lg-4 dropdown position-static">
-				<a
+				<Link
 					className="nav-link fw-bolder dropdown-toggle py-lg-4"
-					href="#"
+					to="#"
 					role="button"
 					data-bs-toggle="dropdown"
 					aria-haspopup="true"
 					aria-expanded="false"
 				>
-					Womenswear
-				</a>
+					دانلود ها
+				</Link>
 
 				<div className="dropdown-menu dropdown-megamenu">
 					<div className="container">
 						<div className="row g-0">
 							<div className="col-12 col-lg-7">
-								<DropdownLinks />
+								<DropdownLinks model={downloads_dropdown_model} />
 							</div>
 
 							<div className="d-none d-lg-block col-lg-5">
@@ -67,40 +132,38 @@ export const Menu = () => {
 				</div>
 			</li>
 			<li className="nav-item me-lg-4">
-				<a
+				<Link
 					className="nav-link fw-bolder py-lg-4"
-					href="#"
+					to="#"
 				>
-					Kidswear
-				</a>
+					درباره ما
+				</Link>
 			</li>
 			<li className="nav-item me-lg-4">
-				<a
+				<Link
 					className="nav-link fw-bolder py-lg-4"
-					href="#"
+					to="#"
 				>
-					Sale Items
-				</a>
+					تماس با ما
+				</Link>
 			</li>
-			<li className="nav-item dropdown me-lg-4">
-				<a
+			{/* <li className="nav-item dropdown me-lg-4">
+				<Link
 					className="nav-link fw-bolder dropdown-toggle py-lg-4"
-					href="#"
+					to="#"
 					role="button"
 					data-bs-toggle="dropdown"
 					aria-haspopup="true"
 					aria-expanded="false"
 				>
-					Demo Pages
-				</a>
+					بیشتر
+				</Link>
 				<ul className="dropdown-menu">
 					<li>
-						<a
+						<Link
 							className="dropdown-item"
-							href="/index.html"
-						>
-							Homepage
-						</a>
+							to="/index.html"
+						></Link>
 					</li>
 					<li>
 						<Link
@@ -135,7 +198,7 @@ export const Menu = () => {
 						</Link>
 					</li>
 				</ul>
-			</li>
+			</li> */}
 		</ul>
 	);
 };

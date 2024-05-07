@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ReviewStarsMedium } from "./ReviewStarsMedium";
 import { ReviewStarsSmall } from "./ReviewStarsSmall";
 
@@ -67,12 +68,12 @@ export const ReviewsCompany = () => {
 						width="88%"
 					/>
 				</div>
-				<a
-					href="#"
+				<Link
+					to="#"
 					className="btn btn-dark rounded-0 mt-4"
 				>
 					Read 4,215 more reviews
-				</a>
+				</Link>
 			</div>
 		</>
 	);

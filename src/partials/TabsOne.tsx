@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ReviewsCustomers } from "./ReviewsCustomers";
 
 export const TabsOne = () => {
@@ -12,65 +13,65 @@ export const TabsOne = () => {
 					className="nav-item w-100 mb-2 mb-sm-0 w-sm-auto mx-sm-3"
 					role="presentation"
 				>
-					<a
+					<Link
 						className="nav-link fs-5 fw-bolder nav-link-underline mx-sm-3 px-0 active"
 						id="details-tab"
 						data-bs-toggle="tab"
-						href="#details"
+						to="#details"
 						role="tab"
 						aria-controls="details"
 						aria-selected="true"
 					>
 						The Details
-					</a>
+					</Link>
 				</li>
 				<li
 					className="nav-item w-100 mb-2 mb-sm-0 w-sm-auto mx-sm-3"
 					role="presentation"
 				>
-					<a
+					<Link
 						className="nav-link fs-5 fw-bolder nav-link-underline mx-sm-3 px-0"
 						id="reviews-tab"
 						data-bs-toggle="tab"
-						href="#reviews"
+						to="#reviews"
 						role="tab"
 						aria-controls="reviews"
 						aria-selected="false"
 					>
 						Reviews
-					</a>
+					</Link>
 				</li>
 				<li
 					className="nav-item w-100 mb-2 mb-sm-0 w-sm-auto mx-sm-3"
 					role="presentation"
 				>
-					<a
+					<Link
 						className="nav-link fs-5 fw-bolder nav-link-underline mx-sm-3 px-0"
 						id="delivery-tab"
 						data-bs-toggle="tab"
-						href="#delivery"
+						to="#delivery"
 						role="tab"
 						aria-controls="delivery"
 						aria-selected="false"
 					>
 						Delivery
-					</a>
+					</Link>
 				</li>
 				<li
 					className="nav-item w-100 mb-2 mb-sm-0 w-sm-auto mx-sm-3"
 					role="presentation"
 				>
-					<a
+					<Link
 						className="nav-link fs-5 fw-bolder nav-link-underline mx-sm-3 px-0"
 						id="returns-tab"
 						data-bs-toggle="tab"
-						href="#returns"
+						to="#returns"
 						role="tab"
 						aria-controls="returns"
 						aria-selected="false"
 					>
 						Returns
-					</a>
+					</Link>
 				</li>
 			</ul>
 			<div
@@ -160,7 +161,7 @@ export const TabsOne = () => {
 						<div className="bg-light rounded p-3">
 							<p className="fs-6">
 								Form more information, please see our delivery FAQs{" "}
-								<a href="#">here</a>
+								<Link to="#">here</Link>
 							</p>
 							<p className="m-0 fs-6">
 								If you do not find the answer to your query, please contact our
@@ -205,7 +206,7 @@ export const TabsOne = () => {
 						<div className="bg-light rounded p-3">
 							<p className="fs-6">
 								Form more information, please see our returns FAQs{" "}
-								<a href="#">here</a>
+								<Link to="#">here</Link>
 							</p>
 							<p className="m-0 fs-6">
 								If you do not find the answer to your query, please contact our

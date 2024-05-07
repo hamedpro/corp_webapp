@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import cart_items from "../data/cart-items.json";
 import config from "../data/config.json";
 export const CheckoutSummary = () => {
@@ -77,16 +78,16 @@ export const CheckoutSummary = () => {
 					className="form-check-label fw-bolder"
 					htmlFor="accept-terms"
 				>
-					I agree to Alpine's <a href="#">terms & conditions</a>
+					I agree to Alpine's <Link to="#">terms & conditions</Link>
 				</label>
 			</div>
-			<a
-				href="#"
+			<Link
+				to="#"
 				className="btn btn-dark w-100"
 				role="button"
 			>
 				Complete Order
-			</a>
+			</Link>
 		</div>
 	);
 };

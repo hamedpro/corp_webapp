@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import filters_one from "../data/filters-one.json";
 import { FilterCheckbox } from "./FilterCheckbox";
 import { FilterCheckboxTwo } from "./FilterCheckboxTwo";
@@ -7,7 +8,7 @@ import { FilterText } from "./FilterText";
 export const OffcanvasFilters = () => {
 	return (
 		<div
-			className="offcanvas offcanvas-end d-none"
+			className="offcanvas offcanvas-end"
 			tabIndex={-1}
 			id="offcanvasFilters"
 		>
@@ -47,16 +48,16 @@ export const OffcanvasFilters = () => {
 						)}
 
 						<div className="py-4 widget-filter widget-filter-price border-top">
-							<a
+							<Link
 								className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 								data-bs-toggle="collapse"
-								href="#filter-modal-price"
+								to="#filter-modal-price"
 								role="button"
 								aria-expanded="false"
 								aria-controls="filter-modal-price"
 							>
 								Price
-							</a>
+							</Link>
 							<div
 								id="filter-modal-price"
 								className="collapse"
@@ -67,16 +68,16 @@ export const OffcanvasFilters = () => {
 
 						{filters_one.brands && (
 							<div className="py-4 widget-filter border-top">
-								<a
+								<Link
 									className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 									data-bs-toggle="collapse"
-									href="#filter-modal-brands"
+									to="#filter-modal-brands"
 									role="button"
 									aria-expanded="false"
 									aria-controls="filter-modal-brands"
 								>
 									Brands
-								</a>
+								</Link>
 								<div
 									id="filter-modal-brands"
 									className="collapse"
@@ -115,16 +116,16 @@ export const OffcanvasFilters = () => {
 
 						{filters_one.type && (
 							<div className="py-4 widget-filter border-top">
-								<a
+								<Link
 									className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 									data-bs-toggle="collapse"
-									href="#filter-modal-type"
+									to="#filter-modal-type"
 									role="button"
 									aria-expanded="false"
 									aria-controls="filter-modal-type"
 								>
 									Type
-								</a>
+								</Link>
 								<div
 									id="filter-modal-type"
 									className="collapse"
@@ -158,16 +159,16 @@ export const OffcanvasFilters = () => {
 
 						{filters_one.sizes && (
 							<div className="py-4 widget-filter border-top">
-								<a
+								<Link
 									className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 									data-bs-toggle="collapse"
-									href="#filter-modal-sizes"
+									to="#filter-modal-sizes"
 									role="button"
 									aria-expanded="false"
 									aria-controls="filter-modal-sizes"
 								>
 									Sizes
-								</a>
+								</Link>
 								<div
 									id="filter-modal-sizes"
 									className="collapse"
@@ -190,16 +191,16 @@ export const OffcanvasFilters = () => {
 
 						{filters_one.colours && (
 							<div className="py-4 widget-filter border-top">
-								<a
+								<Link
 									className="small text-body text-decoration-none text-secondary-hover transition-all transition-all fs-6 fw-bolder d-block collapse-icon-chevron"
 									data-bs-toggle="collapse"
-									href="#filter-modal-colour"
+									to="#filter-modal-colour"
 									role="button"
 									aria-expanded="false"
 									aria-controls="filter-modal-colour"
 								>
 									Colour
-								</a>
+								</Link>
 								<div
 									id="filter-modal-colour"
 									className="collapse"
@@ -222,12 +223,12 @@ export const OffcanvasFilters = () => {
 					</div>
 
 					<div className="border-top pt-3">
-						<a
-							href="#"
+						<Link
+							to="#"
 							className="btn btn-dark mt-2 d-block hover-lift-sm hover-boxshadow"
 						>
 							Done
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

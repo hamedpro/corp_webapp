@@ -22,11 +22,11 @@ export const SwiperHeroSlideshow = () => {
 						}}
 					></div>
 				</div>
-				<div className="swiper-slide position-relative">
+				{/* <div className="swiper-slide position-relative">
 					<div
 						className="w-100 h-100 bg-img-cover animation-move bg-pos-center-center"
 						style={{
-							backgroundImage: "url(/assets/images/slideshows/slideshow-1.jpg)",
+							backgroundImage: "url(/assets/images/slideshows/slideshow-2.jpg)",
 						}}
 					></div>
 				</div>
@@ -34,10 +34,10 @@ export const SwiperHeroSlideshow = () => {
 					<div
 						className="w-100 h-100 bg-img-cover animation-move bg-pos-center-center"
 						style={{
-							backgroundImage: "url(/assets/images/slideshows/slideshow-1.jpg)",
+							backgroundImage: "url(/assets/images/slideshows/slideshow-3.jpg)",
 						}}
 					></div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);
