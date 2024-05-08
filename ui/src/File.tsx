@@ -60,7 +60,20 @@ export const File = () => {
 		set_new_category("");
 		await fetch_data();
 	}
-
+	async function delete_downloadable_item() {
+		if (window.confirm("آیا از حذف این فایل اطمینان دارید؟") === false) return;
+		if (new_document === undefined)
+			throw new Error("cant put new data: new_document state is not loaded");
+		await custom_axios({
+			url: `/collections/downloadables/${new_document.id}`,
+			method: "delete",
+		});
+		toast.current?.show({
+			severity: "warn",
+			detail: "با موفقیت حذف شد",
+		});
+		nav("/settings");
+	}
 	useEffect(() => {
 		fetch_data();
 	}, []);
@@ -82,6 +95,12 @@ export const File = () => {
 					className="border-neutral-300"
 				>
 					<h1>فایل شماره {new_document.file_id}</h1>
+					<Button
+						severity="danger"
+						onClick={delete_downloadable_item}
+					>
+						<i className="bi bi-trash" />
+					</Button>
 				</div>
 				<p>
 					در این بخش می توانید اطلاعات این فایل اعم از نام و دسته بندی آن را ویرایش کنید
@@ -108,6 +127,29 @@ export const File = () => {
 					style={{ marginTop: "8px" }}
 				>
 					فایل آپلودی شما با این نام نمایش داده خواهد شد
+				</p>
+				<h3 style={{ margin: "8px 0px" }}>توضیحات</h3>
+				<InputText
+					style={{ width: "400px" }}
+					onChange={(e) =>
+						set_new_document((prev) => {
+							if (prev === undefined)
+								throw new Error(
+									"at this point new_document state must not be undefined"
+								);
+							return {
+								...prev,
+								description: e.target.value,
+							};
+						})
+					}
+					value={new_document.description}
+				/>
+				<p
+					className="text-neutral-500"
+					style={{ marginTop: "8px" }}
+				>
+					در صورت تمایل محتویات فایل را برای مشتری توضیح بدهید
 				</p>
 
 				<h3 style={{ margin: "8px 0px", alignItems: "center" }}>دسته بندی فایل</h3>
@@ -137,7 +179,6 @@ export const File = () => {
 				</div>
 				{new_document.category === "-" && (
 					<Message
-						severity="warn"
 						style={{
 							display: "flex",
 							justifyContent: "center",
