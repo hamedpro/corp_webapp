@@ -13,6 +13,7 @@ export const Downloads = () => {
 		var response = await custom_axios<downloadables_collection_document[]>({
 			url: "/collections/downloadables",
 		});
+		//console.log(response.data);
 		set_downloadables(response.data);
 	}
 	useEffect(() => {
@@ -49,6 +50,10 @@ export const Downloads = () => {
 				<Column
 					header="نام فایل"
 					field="name"
+				/>
+				<Column
+					header="توضیحات فایل"
+					field="description"
 				/>
 				<Column
 					body={(row) => (

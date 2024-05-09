@@ -9,7 +9,7 @@ export const Header = () => {
 		{ label: "درباره ما", icon: "pi pi-id-card", url: "/about-us" },
 		{ label: "تماس با ما", icon: "pi pi-phone", url: "/contact-us" },
 		{ label: "دانلود ها", icon: "bi bi-cloud-download", url: "/downloads" },
-		{ label: "تنظیمات", icon: "bi bi-gear-wide-connected", url: "/admin-dashboard" },
+		{ label: "تنظیمات", icon: "bi bi-gear-wide-connected", url: "/settings" },
 	];
 
 	return (

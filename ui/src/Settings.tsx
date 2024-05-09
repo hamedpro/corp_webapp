@@ -2,6 +2,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import { NewFile } from "./NewFile";
 import { File } from "./File";
+import { SettingsRoot } from "./SettingsRoot";
 
 export const Settings = () => {
 	var loc = useLocation();
@@ -61,6 +62,12 @@ export const Settings = () => {
 				</Button>
 			</div>
 			<div style={{ flex: "1 1 auto", overflow: "auto" }}>
+				<Routes>
+					<Route
+						path="/"
+						element={<SettingsRoot />}
+					/>
+				</Routes>
 				<Routes>
 					<Route
 						path="new_file"

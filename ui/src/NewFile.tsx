@@ -31,6 +31,7 @@ export const NewFile = () => {
 					url: "/files",
 					method: "post",
 					data: form,
+
 					onUploadProgress: (e) => {
 						set_queue((prev) => {
 							var clone = deep_copy(prev);
@@ -63,6 +64,7 @@ export const NewFile = () => {
 			file_id: asset_id,
 			name: filename,
 			category: "-",
+			description: "",
 		};
 		await custom_axios({
 			url: "/collections/downloadables",

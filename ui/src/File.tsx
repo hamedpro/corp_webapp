@@ -40,6 +40,7 @@ export const File = () => {
 				file_id: new_document.file_id,
 				name: new_document.name,
 				category: new_document.category,
+				description: new_document.description,
 			},
 		});
 		toast.current?.show({
