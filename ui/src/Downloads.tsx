@@ -5,7 +5,9 @@ import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+import { useSearchParams } from "react-router-dom";
 export const Downloads = () => {
+	var [seaech_params, set_search_params] = useSearchParams();
 	var [downloadables, set_downloadables] = useState<
 		downloadables_collection_document[] | undefined
 	>();
@@ -41,7 +43,10 @@ export const Downloads = () => {
 			<DataTable
 				emptyMessage="هیچ فایلی بارگذاری نشده است"
 				style={{ marginTop: "28px" }}
-				value={downloadables}
+				value={downloadables.filter((item) => {
+					if (seaech_params.get("category_name") === null) return true;
+					return item.category === seaech_params.get("category_name");
+				})}
 			>
 				<Column
 					header="شناسه فایل"
@@ -56,6 +61,7 @@ export const Downloads = () => {
 					field="description"
 				/>
 				<Column
+					header="گزینه ها"
 					body={(row) => (
 						<Button
 							style={{
