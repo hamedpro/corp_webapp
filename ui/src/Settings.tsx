@@ -3,6 +3,7 @@ import { Button } from "primereact/button";
 import { NewFile } from "./NewFile";
 import { File } from "./File";
 import { SettingsRoot } from "./SettingsRoot";
+import { SettingsFiles } from "./SettingsFiles";
 
 export const Settings = () => {
 	var loc = useLocation();
@@ -60,6 +61,26 @@ export const Settings = () => {
 					/>
 					<span>آپلود فایل</span>
 				</Button>
+				<Button
+					outlined={loc.pathname !== "/settings/files"}
+					style={{
+						width: "100%",
+						display: "flex",
+						alignItems: "center",
+					}}
+					onClick={() => nav("/settings/files")}
+				>
+					<i
+						className="bi bi-folder-fill"
+						style={{
+							marginLeft: "6px",
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					/>
+					<span>مدیریت فایل های آپلود شده</span>
+				</Button>
 			</div>
 			<div style={{ flex: "1 1 auto", overflow: "auto" }}>
 				<Routes>
@@ -67,17 +88,17 @@ export const Settings = () => {
 						path="/"
 						element={<SettingsRoot />}
 					/>
-				</Routes>
-				<Routes>
 					<Route
 						path="new_file"
 						element={<NewFile />}
 					/>
-				</Routes>
-				<Routes>
 					<Route
 						path="files/:file_id"
 						element={<File />}
+					/>
+					<Route
+						path="files"
+						element={<SettingsFiles />}
 					/>
 				</Routes>
 			</div>
