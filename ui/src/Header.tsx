@@ -102,7 +102,7 @@ export const Header = () => {
 							style={{ margin: "0px 4px" }}
 						/>
 					),
-					command: () => window.location.assign("https://pishro-control.ir/power2"),
+					command: () => window.location.assign("https://pishro-control.ir/timer"),
 				},
 			],
 		},
