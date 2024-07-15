@@ -6,6 +6,8 @@ import { Settings } from "./Settings";
 import { Downloads } from "./Downloads";
 import { AboutUs } from "./AboutUs";
 import { ContactUs } from "./ContactUs";
+import { Products } from "./Products";
+import { Product } from "./Product";
 
 export function App() {
 	return (
@@ -24,7 +26,14 @@ export function App() {
 					element={<Downloads />}
 					path="/downloads"
 				/>
-
+				<Route
+					element={<Products />}
+					path="/products"
+				/>
+				<Route
+					element={<Product />}
+					path="/products/:product_id"
+				/>
 				<Route
 					element={<AboutUs />}
 					path="/about-us"

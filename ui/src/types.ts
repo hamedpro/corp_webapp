@@ -5,3 +5,9 @@ export type downloadables_collection_document = {
 	category: string;
 	description: string;
 };
+export type products_collection_document = {
+	id: string;
+	cover_images: number[];
+	name: string;
+	description: string;
+};
