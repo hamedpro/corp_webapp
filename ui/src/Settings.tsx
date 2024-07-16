@@ -5,6 +5,8 @@ import { File } from "./File";
 import { SettingsRoot } from "./SettingsRoot";
 import { SettingsFiles } from "./SettingsFiles";
 import { NewProduct } from "./NewProduct";
+import { SettingsProducts } from "./SettingsProducts";
+import { SettingsProduct } from "./SettingsProduct";
 
 export const Settings = () => {
 	var loc = useLocation();
@@ -102,6 +104,26 @@ export const Settings = () => {
 					/>
 					<span>محصول جدید</span>
 				</Button>
+				<Button
+					outlined={loc.pathname !== "/settings/products"}
+					style={{
+						width: "100%",
+						display: "flex",
+						alignItems: "center",
+					}}
+					onClick={() => nav("/settings/products")}
+				>
+					<i
+						className="bi bi-folder-fill"
+						style={{
+							marginLeft: "6px",
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					/>
+					<span>مدیریت محصولات</span>
+				</Button>
 			</div>
 			<div style={{ flex: "1 1 auto", overflow: "auto" }}>
 				<Routes>
@@ -124,6 +146,14 @@ export const Settings = () => {
 					<Route
 						path="files"
 						element={<SettingsFiles />}
+					/>
+					<Route
+						path="products"
+						element={<SettingsProducts />}
+					/>
+					<Route
+						path="products/:product_id"
+						element={<SettingsProduct />}
 					/>
 				</Routes>
 			</div>

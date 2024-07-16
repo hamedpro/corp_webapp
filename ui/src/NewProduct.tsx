@@ -3,12 +3,14 @@ import { custom_axios } from "../helpers";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
+import { ProgressBar } from "primereact/progressbar";
+import { Message } from "primereact/message";
 import ImageGallery from "react-image-gallery";
+
 export const NewProduct = () => {
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
-	const [coverImages, setCoverImages] = useState<File[]>([]);
-	const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+	const [coverImages, setCoverImages] = useState<any[]>([]);
 
 	const handleNameChange = (value: string) => {
 		setName(value);
@@ -18,48 +20,78 @@ export const NewProduct = () => {
 		setDescription(value);
 	};
 
-	const handleCoverImageChange = (files: FileList) => {
+	const handleCoverImageChange = async (files: FileList) => {
 		for (const file of files) {
-			setCoverImages((prev) => [...prev, file]);
 			const reader = new FileReader();
 			reader.onload = () => {
-				setImagePreviews((prev) => [...prev, reader.result as string]);
+				const newImage = {
+					status: "uploading",
+					file,
+					progress: 0,
+					preview: reader.result as string,
+				};
+				setCoverImages((prev) => [...prev, newImage]);
+
+				uploadImage(newImage);
 			};
 			reader.readAsDataURL(file);
 		}
 	};
 
-	const handleUpload = async () => {
-		var new_assets = [];
-		for (const file of coverImages) {
-			var form = new FormData();
-			form.append("file", file);
-			var { asset_id, filename }: { asset_id: number; filename: string } = (
-				await custom_axios({
-					url: "/files",
-					method: "post",
-					data: form,
-				})
-			).data;
-			new_assets.push(asset_id);
-		}
+	const uploadImage = async (image: any) => {
+		const form = new FormData();
+		form.append("file", image.file);
+
 		try {
-			await custom_axios({
-				method: "post",
-				url: "/collections/products",
-				data: { name, description, cover_images: new_assets },
+			const { data } = await custom_axios.post("/files", form, {
+				onUploadProgress: (progressEvent) => {
+					if (progressEvent.total === undefined)
+						throw new Error("progressEvent.total was undefined");
+					const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+					setCoverImages((prevImages) =>
+						prevImages.map((img) =>
+							img.file === image.file ? { ...img, progress } : img
+						)
+					);
+				},
 			});
+
+			const { asset_id } = data;
+
+			setCoverImages((prevImages) =>
+				prevImages.map((img) =>
+					img.file === image.file ? { ...img, status: "uploaded", asset_id } : img
+				)
+			);
 		} catch (error) {
-			console.error(error);
+			console.error("خطا در آپلود فایل:", error);
 		}
-		alert("done");
 	};
+
+	const handleUpload = async () => {
+		const newAssets = coverImages
+			.filter((img) => img.status === "uploaded")
+			.map((img) => img.asset_id);
+
+		try {
+			await custom_axios.post("/collections/products", {
+				name,
+				description,
+				cover_images: newAssets,
+			});
+			alert("محصول با موفقیت ثبت شد");
+		} catch (error) {
+			console.error("خطا در ثبت محصول:", error);
+		}
+	};
+
+	const isUploading = coverImages.some((img) => img.status === "uploading");
+
 	return (
 		<div className="container py-2 px-4 flex flex-col gap-y-3">
 			<h2>محصول جدید</h2>
 
 			<label>نام محصول:</label>
-
 			<InputText
 				type="text"
 				value={name}
@@ -67,12 +99,12 @@ export const NewProduct = () => {
 			/>
 
 			<label>توضیحات محصول:</label>
-
 			<InputTextarea
 				autoResize
 				value={description}
 				onChange={(e) => handleDescriptionChange(e.target.value)}
 			/>
+
 			<div className="flex w-100 items-center justify-between">
 				<label>تصاویر محصول:</label>
 				<Button
@@ -94,7 +126,8 @@ export const NewProduct = () => {
 					}}
 				/>
 			</div>
-			{imagePreviews.length === 0 ? (
+
+			{coverImages.length === 0 ? (
 				<div className="w-100 border border-solid border-neutral-700 h-32 flex items-center justify-center flex-col">
 					<h1>هیچ عکسی انتخاب نشده است</h1>
 					<p className="text-neutral-500">حداقل یک عکس باید انتخاب شده باشد</p>
@@ -102,15 +135,43 @@ export const NewProduct = () => {
 			) : (
 				<div className="p-4 border border-neutral-700 border-solid">
 					<ImageGallery
-						items={imagePreviews.map((i) => ({ original: i, thumbnail: i }))}
+						items={coverImages.map((i) => ({
+							original: i.preview,
+							thumbnail: i.preview,
+						}))}
 					/>
 				</div>
+			)}
+
+			{coverImages.some((img) => img.status === "uploading") && (
+				<div className="my-4">
+					{coverImages.map((item, index) =>
+						item.status === "uploading" ? (
+							<div
+								key={index}
+								className="my-2"
+							>
+								<p>
+									{item.file.name} ({(item.file.size / 1024).toFixed(2)} KB)
+								</p>
+								<ProgressBar value={item.progress} />
+							</div>
+						) : null
+					)}
+				</div>
+			)}
+
+			{isUploading && (
+				<Message
+					severity="info"
+					text="در حال آپلود تصاویر، لطفا صبر کنید..."
+				/>
 			)}
 
 			<Button
 				onClick={handleUpload}
 				className="w-fit"
-				disabled={imagePreviews.length === 0}
+				disabled={isUploading || coverImages.length === 0}
 			>
 				ثبت محصول جدید
 			</Button>
