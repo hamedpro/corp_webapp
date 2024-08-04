@@ -1,25 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { downloadables_collection_document, products_collection_document } from "./types";
-import { custom_axios, download_a_file } from "../helpers";
-import { InputText } from "primereact/inputtext";
+import { products_collection_document } from "./types";
+import { custom_axios } from "../helpers";
+import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Button } from "primereact/button";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 export const SettingsProducts = () => {
-	var navigate = useNavigate();
-	var [products, set_products] = useState<products_collection_document[] | undefined>();
+	const navigate = useNavigate();
+	const [products, set_products] = useState<products_collection_document[] | undefined>();
+
+	// Fetch products data
 	async function fetch_data() {
-		var response = await custom_axios<products_collection_document[]>({
-			url: "/collections/products",
-		});
-		//console.log(response.data);
-		set_products(response.data);
+		try {
+			const response = await custom_axios<products_collection_document[]>({
+				url: "/collections/products",
+			});
+			set_products(response.data);
+		} catch (error) {
+			console.error("Failed to fetch products:", error);
+		}
 	}
+
+	// Delete a product
+	const deleteProduct = async (id: string) => {
+		try {
+			await custom_axios({
+				url: `/collections/products/${id}`,
+				method: "DELETE",
+			});
+			await fetch_data();
+			Swal.fire({
+				icon: "success",
+				title: "حذف شد!",
+				text: "محصول با موفقیت حذف شد.",
+			});
+		} catch (error) {
+			Swal.fire({
+				icon: "error",
+				title: "اوه!",
+				text: "در هنگام حذف محصول مشکلی پیش آمد.",
+			});
+		}
+	};
+
 	useEffect(() => {
 		fetch_data();
 	}, []);
-	if (products === undefined) return "products collection is not loaded";
+
+	if (products === undefined) return "لیست محصولات بارگذاری نشده است";
+
 	return (
 		<div style={{ padding: "0px 16px", display: "flex", flexDirection: "column" }}>
 			<div
@@ -35,7 +66,7 @@ export const SettingsProducts = () => {
 			>
 				<h1>محصولات</h1>
 			</div>
-			<p>برای ویرایش یا حذف هر کدام از محصول ها بر روی آن کلیک کنید</p>
+			<p>برای ویرایش یا حذف هر کدام از محصول‌ها بر روی آن کلیک کنید</p>
 
 			<DataTable
 				emptyMessage="هیچ محصولی تاکنون ثبت نشده است"
@@ -60,7 +91,7 @@ export const SettingsProducts = () => {
 					}
 				/>
 				<Column
-					header="گزینه ها"
+					header="گزینه‌ها"
 					body={(row) => (
 						<div
 							style={{ display: "flex" }}
@@ -76,6 +107,32 @@ export const SettingsProducts = () => {
 								onClick={() => navigate(`/settings/products/${row.id}`)}
 							>
 								<i className="bi-pencil" />
+							</Button>
+							<Button
+								severity="danger"
+								style={{
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+								}}
+								onClick={() => {
+									Swal.fire({
+										title: "آیا مطمئن هستید؟",
+										text: "این عمل قابل برگشت نیست!",
+										icon: "warning",
+										showCancelButton: true,
+										confirmButtonColor: "#3085d6",
+										cancelButtonColor: "#d33",
+										confirmButtonText: "بله، حذف کن!",
+										cancelButtonText: "انصراف",
+									}).then((result) => {
+										if (result.isConfirmed) {
+											deleteProduct(row.id);
+										}
+									});
+								}}
+							>
+								<i className="bi-trash" />
 							</Button>
 						</div>
 					)}
