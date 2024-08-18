@@ -92,7 +92,7 @@ export const Header = () => {
 							style={{ margin: "0px 4px" }}
 						/>
 					),
-					command: () => window.alert("این مسیر تعریف نشده است."),
+					command: () => window.location.assign("https://pishro-control.ir/cooler_hjm"),
 				},
 				{
 					label: "پریز هوشمند",
@@ -102,7 +102,8 @@ export const Header = () => {
 							style={{ margin: "0px 4px" }}
 						/>
 					),
-					command: () => window.location.assign("https://pishro-control.ir/timer"),
+					command: () =>
+						window.location.assign("https://pishro-control.ir/timer_thermo3"),
 				},
 			],
 		},
